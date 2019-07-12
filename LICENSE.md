@@ -1,4 +1,10 @@
-                    GNU GENERAL PUBLIC LICENSE
+---
+layout: page
+title: Welcome and introduction
+summary: "Agenda, resources and other useful information"
+---
+
+GNU GENERAL PUBLIC LICENSE
                        Version 3, 29 June 2007
 
  Copyright (C) 2007 Free Software Foundation, Inc. <https://fsf.org/>
