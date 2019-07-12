@@ -6,7 +6,7 @@ highlighter:      rouge
 title:            Clinical Genomics
 tagline:          '“Data analysis and interpretation for clinical genomics” using Galaxy'
 description:      '“Data analysis and interpretation for clinical genomics” using Galaxy'
-url:              https://fongandrew.github.io
+url:              'https://sigu-training.github.io/clinical_genomics'
 baseurl:          ''
                   # the optional subpath of your site, e.g. "/blog"
                   # NB: This applies to all pages in your Jekyll site.
