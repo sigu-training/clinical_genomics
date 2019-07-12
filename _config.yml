@@ -13,6 +13,10 @@ baseurl:          '/clinical_genomics'
                   # If you want to move just the blog index pages but keep
                   # other pages at root, see the paginate_path and
                   # sidebar_blog_link below.
+version: 19.07
+
+github:
+  repo: 'https://github.com/sigu-training/clinical_genomics'
 
 author:
   name:           'Andrew Fong'
