@@ -1,22 +1,34 @@
 ---
 layout: page
-title: Copy number variants
-summary: "Identification of Copy Number Variants from targeted sequencing data"
+title: Bioinformatic analysis in NGS
+summary: "Basics of file formats and bioinformatic workflows for NGS data analysis"
 sidebar_link: true
 ---
 
-# Copy Number Variants
+# Next Generation Sequencing
 
 
-- *Copy Number Variants* (CNVs) are imbalances in the copy number of the genomic material that result in either DNA **deletions** (copy loss) or **duplications**
-- *CNVs* can cause/predispose to human diseases by altering gene structure/dosage or by **position effect**
-- *CNV* size ranges from 50 bp to megabases
-- Classical methods to identify *CNVs* use array-based technologies (SNP/CGH)
-- Computational approaches have been developed to identify *CNVs* in targeted sequencing data from **hybrid capture** experiments
+- *Next (or Second) Generation Sequencing* (NGS/SGS) is an umbrella-term covering a number of approaches to DNA sequencing that have been developed after the first, widespread and for long time most commonly used Sanger sequencing.
+- *NGS* is also known as *Massive Parallel Sequencing* (MPS), a term that makes explicit the paradigm shared by all these technologies, that is to sequence in parallel a massive library of spatially separated and clonally amplified DNA templates. 
+    - For a comprehensive review of the different *NGS* technologies see [Goodwin et al., 2016](https://www.nature.com/articles/nrg.2016.49), which also includes an introduction to the third generation methods allowing sequencing of long single-molecule reads.
+    
+## NGS in the clinic
 
+In the span of less than a decade, NGS approaches have pervaded clinical laboratories revolutionizing genomic diagnostics and increasing yield and timeliness of genetic tests.
 
-## CNV detection from targeted sequencing data
+In the context of disorders with a recognized strong genetic contribution such as neurogenetic diseases, *NGS* has been firmly established as the strategy of choice to rapidly and efficiently diagnose diseases with a Mendelian basis. A general diagnostic workflow for these disorders currently embraces different *NGS*-based diagnostic options as illustrated in Figure 1.
 
+[![ngs_neuro_diagnostics]({{site.url}}{{site.baseurl}}/images/ngs_neuro_diagnostic.jpg)]
+**Figure 1**. General workflow for genetic diagnosis of neurological diseases. (\*If considering high-yield single-gene testing of more than 1–3 genes by another sequencing method, note that next-generation sequencing is often most cost-effective. †Genetic counselling is required before and after all genetic testing; other considerations include the potential for secondary findings in genomic testing, testing parents if inheritance is sporadic or recessive, and specialty referral. From [Rexach et al., 2019](https://www.thelancet.com/journals/laneur/article/PIIS1474-4422(19)30033-X/fulltext))
+
+Currently, most common *NGS* strategies in clinical laboratories are the so-called **targeted sequencing** methods that, as opposed to **genome sequencing** covering the whole genomic sequence, focus on a pre-defined set of regions of interest (the **targets**). The targets can be selected by **hybrid capture** or **amplicon sequencing**, and the target-enriched libraries is then sequenced.
+
+- **gene panels** where the coding exons of a clinically-relevant group of genes is interrogated 
+- **exome sequencing** where virtually all the protein-coding exons in a genome are simultaneously sequenced
+
+### NGS basics
+
+Apart from the different wi
 
 ### Computational approaches
 
