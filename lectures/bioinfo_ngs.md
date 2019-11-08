@@ -21,16 +21,14 @@ In the context of disorders with a recognized strong genetic contribution such a
 [![ngs_neuro_diagnostics]({{site.url}}{{site.baseurl}}/images/ngs_neuro_diagnostic.jpg)]
 **Figure 1**. General workflow for genetic diagnosis of neurological diseases. (\*If considering high-yield single-gene testing of more than 1–3 genes by another sequencing method, note that next-generation sequencing is often most cost-effective. †Genetic counselling is required before and after all genetic testing; other considerations include the potential for secondary findings in genomic testing, testing parents if inheritance is sporadic or recessive, and specialty referral. From [Rexach et al., 2019](https://www.thelancet.com/journals/laneur/article/PIIS1474-4422(19)30033-X/fulltext))
 
-Currently, the most common *NGS* strategies in clinical laboratories are:
+Currently, most common *NGS* strategies in clinical laboratories are the so-called **targeted sequencing** methods that, as opposed to **genome sequencing** covering the whole genomic sequence, focus on a pre-defined set of regions of interest (the **targets**). The targets can be selected by **hybrid capture** or **amplicon sequencing**, and the target-enriched libraries is then sequenced.
 
 - **gene panels** where the coding exons of a clinically-relevant group of genes is interrogated 
 - **exome sequencing** where virtually all the protein-coding exons in a genome are simultaneously sequenced
 
-Usually, the 
+### NGS basics
 
-
-## CNV detection from targeted sequencing data
-
+Apart from the different wi
 
 ### Computational approaches
 
