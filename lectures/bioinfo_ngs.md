@@ -14,16 +14,19 @@ sidebar_link: true
     
 ## NGS in the clinic
 
-- In the span of less than a decade, NGS approaches have pervaded clinical laboratories revolutionizing genomic diagnostics and increasing yield and timeliness of genetic tests.
-- In the context of disorders with a recognized strong genetic contribution such as neurogenetic diseases, *NGS* has been firmly established as the strategy of choice to rapidly and efficiently diagnose diseases with a Mendelian basis. A general diagnostic workflow for these disorders currently embraces different *NGS*-based diagnostic options as illustrated in Figure 1.
+In the span of less than a decade, NGS approaches have pervaded clinical laboratories revolutionizing genomic diagnostics and increasing yield and timeliness of genetic tests.
+
+In the context of disorders with a recognized strong genetic contribution such as neurogenetic diseases, *NGS* has been firmly established as the strategy of choice to rapidly and efficiently diagnose diseases with a Mendelian basis. A general diagnostic workflow for these disorders currently embraces different *NGS*-based diagnostic options as illustrated in Figure 1.
 
 [![ngs_neuro_diagnostics]({{site.url}}{{site.baseurl}}/images/ngs_neuro_diagnostic.jpg)]
-**Figure 1**. General workflow for genetic diagnosis of neurological diseases. (\*If considering high-yield single-gene testing of more than 1–3 genes by another sequencing method, note that next-generation sequencing is often most cost-effective. \†Genetic counselling is required before and after all genetic testing; other considerations include the potential for secondary findings in genomic testing, testing parents if inheritance is sporadic or recessive, and specialty referral. From [Rexach et al., 2019](https://www.thelancet.com/journals/laneur/article/PIIS1474-4422(19)30033-X/fulltext))
+**Figure 1**. General workflow for genetic diagnosis of neurological diseases. (\*If considering high-yield single-gene testing of more than 1–3 genes by another sequencing method, note that next-generation sequencing is often most cost-effective. †Genetic counselling is required before and after all genetic testing; other considerations include the potential for secondary findings in genomic testing, testing parents if inheritance is sporadic or recessive, and specialty referral. From [Rexach et al., 2019](https://www.thelancet.com/journals/laneur/article/PIIS1474-4422(19)30033-X/fulltext))
 
-- *CNVs* can cause/predispose to human diseases by altering gene structure/dosage or by **position effect**
-- *CNV* size ranges from 50 bp to megabases
-- Classical methods to identify *CNVs* use array-based technologies (SNP/CGH)
-- Computational approaches have been developed to identify *CNVs* in targeted sequencing data from **hybrid capture** experiments
+Currently, the most common *NGS* strategies in clinical laboratories are:
+
+- **gene panels** where the coding exons of a clinically-relevant group of genes is interrogated 
+- **exome sequencing** where virtually all the protein-coding exons in a genome are simultaneously sequenced
+
+Usually, the 
 
 
 ## CNV detection from targeted sequencing data
