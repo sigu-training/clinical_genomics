@@ -23,12 +23,12 @@ In the context of disorders with a recognized strong genetic contribution such a
 
 Currently, most common *NGS* strategies in clinical laboratories are the so-called **targeted sequencing** methods that, as opposed to **genome sequencing** covering the whole genomic sequence, focus on a pre-defined set of regions of interest (the **targets**). The targets can be selected by **hybrid capture** or **amplicon sequencing**, and the target-enriched libraries is then sequenced.
 
-- **gene panels** where the coding exons of a clinically-relevant group of genes is interrogated 
+- **gene panels** where the coding exons of only a clinically-relevant group of genes are targeted
 - **exome sequencing** where virtually all the protein-coding exons in a genome are simultaneously sequenced
 
 ### NGS basics
 
-Apart from the different wi
+Apart from the different width of the target space in exome and gene panels, 
 
 ### Computational approaches
 
