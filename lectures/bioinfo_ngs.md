@@ -28,30 +28,15 @@ Currently, most common *NGS* strategies in clinical laboratories are the so-call
 
 ### NGS basics
 
-Apart from the different width of the target space in exome and gene panels, 
+Apart from the different width of the target space in exome and gene panels, they usually share the same experimental procedure for NGS library preparation. After clonal amplifiation the fragmented and adapter-ligated DNA templates are sequenced from both ends of the *insert* to produce short reads in opposite orientation (**paired-end** sequencing). 
 
-### Computational approaches
+Bioinformatic analysis of NGS data usually follows a general three-step workflow. Each of these three step is marked by its "milestone" file type containing sequence data in different formats and metadata describing sequence-related information collected during the previous analysis step.
 
-
-- There are four main methods for *CNV* identification from short-read +NGS data (see figure below):
-  - **Read Count** (RC)
-  - **Read Pair** (RP)
-  - **Split Read** (SR)
-  - **De Novo Assembly** (AS)
-  
-  
-- *RP* and *SR* require continuous coverage of the *CNV* region or reads encompassing *CNV* breakpoints, as in whole genome sequencing. The sparse nature and small size of exonic targets hamper the application of these methods to targeted sequencing. 
-- *RC* is the best suited method for *CNV* detection from whole exomes or gene panels where:
-  - deletions appear as exonic targets devoid of reads
-  - duplications appear as exonic targets characterized by excess of coverage
-
-
-[![CNV detection methods]({{site.url}}{{site.baseurl}}/images/methods_identification_cnv.png)]
-**Figure 1**. Methods for detection of CNVs in short read NGS data (adapted from [Tattini et al., 2015](https://doi.org/10.3389/fbioe.2015.00092))
-
-
-### RC method and data normalization
-
+| NGS workflow step | File content | File format | File Size (individual exome) |
+| --- | --- | --- | --- |
+| Data generation | Unaligned reads | **fastQ** | Gb |
+| Reads alignment | Aligned reads | **BAM** | Gb |
+| Variant calling | Genotyped variants | **VCF** | Mb |
 
 In targeted sequencing, a method to study DNA copy number variation by *RC* (as implemented in *EXCAVATOR* tool, [Magi et al., 2013](http://genomebiology.com/2013/14/10/R120))) is to consider the **exon mean read count** (EMRC):
 
