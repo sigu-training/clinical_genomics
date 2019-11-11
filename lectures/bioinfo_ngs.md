@@ -33,9 +33,9 @@ Bioinformatic analysis of NGS data usually follows a general three-step workflow
 
 | NGS workflow step | File content | File format | File Size (individual exome) |
 | --- | --- | --- | --- |
-| Data generation | Unaligned reads and qualities | **fastQ** | gigabytes |
-| Reads alignment | Aligned reads and metadata | **BAM** | gigabytes |
-| Variant calling | Genotyped variants and metadata | **VCF** | megabytes |
+| Sample to reads | Unaligned reads and qualities | **fastQ** | gigabytes |
+| Reads to alignments | Aligned reads and metadata | **BAM** | gigabytes |
+| Alignments to variants | Genotyped variants and metadata | **VCF** | megabytes |
 
 Here are the different formats explained: 
 
@@ -45,7 +45,7 @@ Here are the different formats explained:
   - Aligned reads
 - **[VCF](http://samtools.github.io/hts-specs/VCFv4.3.pdf)** (variant call format): the standard TAB-delimited format for genotype information associated with each reported genomic position where a variant call has been recorded
 
-The steps of the ***reads-to-variants*** workflow can be connected through a bioinformatic **pipeline** ([Leipzig et al., 2017](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5429012/)).
+The steps of the ***reads-to-variants*** workflow can be connected through a bioinformatic **pipeline** ([Leipzig et al., 2017](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5429012/)), consisting in read alignments, post-alignment BAM processing and variant calling.
 
 # Alignment
 
@@ -60,7 +60,12 @@ During the bioinformatic process, *paired-end* reads from the two separate *fast
 - be in opposite orientations
 a combination which we refer to as **proper pairing**. All these data about *paired-end* reads mapping are stored in the BAM file and can be used to various purposes, from alignment quality assessment to structural variant detection.
 
-In Figure 3, the [Integrative Genomic Viewer (IGV)]() screenshot of alignment data over two adjacent *ASXL1* exons
+In Figure 3, the [Integrative Genomic Viewer (IGV)](http://software.broadinstitute.org/software/igv/) screenshot of an exome alignment data over two adjacent *ASXL1* exons is shown. Pink and violet bars are *forward* and *reverse* reads, respectively. The thin grey link between them indicates that they are *paired-end* reads. The stack of reads is concentrated where exons are as expected in an exome, and the number of read bases covering a given genomic location *e* (depicted as a hill-shaped profile at the top of the figure) defines the **depth of coverage (DoC)** over that location:
+
+*DoC*e=*number of read bases over e/genomic length of e*
+
+[![coverage]({{site.url}}{{site.baseurl}}/images/coverage.png)]
+**Figure 3**. Exome data visualization by [*IGV*](http://software.broadinstitute.org/software/igv/)
 
 # Post-alignment BAM processing
 
@@ -72,7 +77,7 @@ Regarding post-alignment *pipelines*, the most famous for germline SNP and InDel
 According to GATK best practices, in order to be ready for variant calling the BAM file should undergo the following processing:
 - [marking duplicate reads](https://software.broadinstitute.org/gatk/documentation/tooldocs/4.0.4.0/picard_sam_markduplicates_MarkDuplicates.php) to flag (or discard) reads that are mere optical or PCR-mediated duplications of the actual reads
 - [recalibrating base quality scores](https://software.broadinstitute.org/gatk/documentation/article?id=11081) to correct known biases of the native base-related qualities
-While GATK BAM processing is beyond doubt important to improve data quality, it has to be noticed that it is not needed to obtain variant calls and that non GATK-based pipelines may not use it or may use different quality reparametrization schemes.
+While GATK BAM processing is beyond doubt important to improve data quality, it has to be noticed that it is not needed to obtain variant calls and that non GATK-based pipelines may not use it or may use different quality reparametrization schemes. Duplicate flagging or removal is not recommended in *amplicon* sequencing experiments.
 
 
 
