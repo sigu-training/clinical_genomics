@@ -3,10 +3,8 @@ layout: index
 title: Home
 ---
 
-
-
-## Welcome to the documentation site of the           
-## Training Course on [“Data analysis and interpretation for clinical genomics” using Galaxy](https://sigu-training.github.io/clinical_genomics)
+     
+## On-line training tutorial on [“Data analysis and interpretation for clinical genomics” using Galaxy](https://sigu-training.github.io/clinical_genomics)
 
 ___
 
