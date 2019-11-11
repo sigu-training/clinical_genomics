@@ -81,7 +81,7 @@ a combination which we refer to as **proper pairing**. All these data about *pai
 
 In Figure 3, the [Integrative Genomic Viewer (IGV)](http://software.broadinstitute.org/software/igv/) screenshot of an exome alignment data over two adjacent *ASXL1* exons is shown. Pink and violet bars are *forward* and *reverse* reads, respectively. The thin grey link between them indicates that they are *paired-end* reads. The stack of reads is concentrated where exons are as expected in an exome, and the number of read bases covering a given genomic location *e* (depicted as a hill-shaped profile at the top of the figure) defines the **depth of coverage (DoC)** over that location:
 
-*DoC*e=*number of read bases over e/genomic length of e*
+*DoC*<sub>e</sub>=*number of read bases over e/genomic length of e*
 
 ---
 
