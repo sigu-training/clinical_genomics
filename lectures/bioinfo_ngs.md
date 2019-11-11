@@ -38,15 +38,11 @@ Bioinformatic analysis of NGS data usually follows a general three-step workflow
 | Reads alignment | Aligned reads | **BAM** | Gb |
 | Variant calling | Genotyped variants | **VCF** | Mb |
 
-In targeted sequencing, a method to study DNA copy number variation by *RC* (as implemented in *EXCAVATOR* tool, [Magi et al., 2013](http://genomebiology.com/2013/14/10/R120))) is to consider the **exon mean read count** (EMRC):
+Here are the different formats explained: 
 
-*EMRC = RCe/Le*
-
-where *RCe* is the number of reads aligned to a target genomic region e and *Le* is the size of that same genomic region in base pairs ([Magi et al., 2013](http://genomebiology.com/2013/14/10/R120))).
-Three major bias sources are known to affect *EMRC* dramatically in targeted sequencing data:
-- local **GC content** percentage
-- genomic **mappability**
-- target region **size**
+- **[fastQ](https://en.wikipedia.org/wiki/FASTQ_format)** (sequence with quality): the *de facto* standard for storing the output of high-throughput sequencing machines 
+- **[BAM](https://samtools.github.io/hts-specs/SAMv1.pdf)** (binary sequence alignment/map): the most widely used TAB-delimited file format to store alignments onto a reference sequence 
+- **[VCF](http://samtools.github.io/hts-specs/VCFv4.3.pdf)** (variant call format): the standard format for genomic position-associated genotype information
 
 These biases contribute to non uniform read depth across target regions and, together with the sparse target nature, challenge the applicability of *RC* methods to targeted data. As shown in Figure 2 (left panel), in single-sample data the *EMRC* distributions of genomic regions characterized by different copy numbers largely overlap, revealing poor *CNV* prediction capability. 
 
