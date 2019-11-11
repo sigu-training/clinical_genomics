@@ -26,12 +26,4 @@ ___
 {:/}
 
 
-### Authors and Contributors
-
- * [Tommaso Pippucci](http://www.)
- * [Alessandro Bruselles](https://www)
- * [Gianmauro Cuccuru](http://www)
- * [Giuseppe Marangi](http://www)
- * [Paolo Uva](http://www.crs4.it/peopledetails/183/paolo-uva)
-
 	  
