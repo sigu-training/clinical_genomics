@@ -5,8 +5,9 @@ summary: "Basics of file formats and bioinformatic workflows for NGS data analys
 sidebar_link: true
 ---
 
-# Next Generation Sequencing
+This is an introductory page to the basics of bioinformatic analysis of NGS data, but it is not to be intended as a tutorial on NGS pipelines and variant calling. This on-line training activity is indeed focused on data analysis for clinical interpretation. If you are looking for training on variant calling, visit this **Galaxy** tutorial on [Exome sequencing data analysis for diagnosing a genetic disease](https://galaxyproject.github.io/training-material/topics/variant-analysis/tutorials/exome-seq/tutorial.html).
 
+# Next Generation Sequencing
 
 - *Next (or Second) Generation Sequencing* (NGS/SGS) is an umbrella-term covering a number of approaches to DNA sequencing that have been developed after the first, widespread and for long time most commonly used Sanger sequencing.
 - *NGS* is also known as *Massive Parallel Sequencing* (MPS), a term that makes explicit the paradigm shared by all these technologies, that is to sequence in parallel a massive library of spatially separated and clonally amplified DNA templates. 
@@ -18,81 +19,103 @@ In the span of less than a decade, NGS approaches have pervaded clinical laborat
 
 In the context of disorders with a recognized strong genetic contribution such as neurogenetic diseases, *NGS* has been firmly established as the strategy of choice to rapidly and efficiently diagnose diseases with a Mendelian basis. A general diagnostic workflow for these disorders currently embraces different *NGS*-based diagnostic options as illustrated in Figure 1.
 
-[![ngs_neuro_diagnostics]({{site.url}}{{site.baseurl}}/images/ngs_neuro_diagnostic.jpg)]
+---
+
+![ngs_neuro_diagnostics]({{site.url}}{{site.baseurl}}/images/ngs_neuro_diagnostic.png)
 **Figure 1**. General workflow for genetic diagnosis of neurological diseases. (\*If considering high-yield single-gene testing of more than 1–3 genes by another sequencing method, note that next-generation sequencing is often most cost-effective. †Genetic counselling is required before and after all genetic testing; other considerations include the potential for secondary findings in genomic testing, testing parents if inheritance is sporadic or recessive, and specialty referral. From [Rexach et al., 2019](https://www.thelancet.com/journals/laneur/article/PIIS1474-4422(19)30033-X/fulltext))
 
-Currently, most common *NGS* strategies in clinical laboratories are the so-called **targeted sequencing** methods that, as opposed to **genome sequencing** covering the whole genomic sequence, focus on a pre-defined set of regions of interest (the **targets**). The targets can be selected by **hybrid capture** or **amplicon sequencing**, and the target-enriched libraries is then sequenced.
+---
 
-- **gene panels** where the coding exons of a clinically-relevant group of genes is interrogated 
+Currently, most common *NGS* strategies in clinical laboratories are the so-called **targeted sequencing** methods that, as opposed to **genome sequencing** covering the whole genomic sequence, focus on a pre-defined set of regions of interest (the **targets**). The targets can be selected by **hybrid capture** or **amplicon sequencing**, and the target-enriched libraries is then sequenced. The most popular target designs are:
+
+- **gene panels** where the coding exons of only a clinically-relevant group of genes are targeted
 - **exome sequencing** where virtually all the protein-coding exons in a genome are simultaneously sequenced
 
-### NGS basics
 
-Apart from the different wi
+## Basics of NGS bioinformatic analysis
 
-### Computational approaches
+Apart from the different width of the target space in exome and gene panels, these two approaches usually share the same experimental procedure for NGS library preparation. After clonal amplification, the fragmented and adapter-ligated DNA templates are sequenced from both ends of the *insert* to produce short reads in opposite (**forward** and **reverse**) orientation (**paired-end** sequencing). 
 
-
-- There are four main methods for *CNV* identification from short-read +NGS data (see figure below):
-  - **Read Count** (RC)
-  - **Read Pair** (RP)
-  - **Split Read** (SR)
-  - **De Novo Assembly** (AS)
-  
-  
-- *RP* and *SR* require continuous coverage of the *CNV* region or reads encompassing *CNV* breakpoints, as in whole genome sequencing. The sparse nature and small size of exonic targets hamper the application of these methods to targeted sequencing. 
-- *RC* is the best suited method for *CNV* detection from whole exomes or gene panels where:
-  - deletions appear as exonic targets devoid of reads
-  - duplications appear as exonic targets characterized by excess of coverage
-
-
-[![CNV detection methods]({{site.url}}{{site.baseurl}}/images/methods_identification_cnv.png)]
-**Figure 1**. Methods for detection of CNVs in short read NGS data (adapted from [Tattini et al., 2015](https://doi.org/10.3389/fbioe.2015.00092))
-
-
-### RC method and data normalization
-
-
-In targeted sequencing, a method to study DNA copy number variation by *RC* (as implemented in *EXCAVATOR* tool, [Magi et al., 2013](http://genomebiology.com/2013/14/10/R120))) is to consider the **exon mean read count** (EMRC):
-
-*EMRC = RCe/Le*
-
-where *RCe* is the number of reads aligned to a target genomic region e and *Le* is the size of that same genomic region in base pairs ([Magi et al., 2013](http://genomebiology.com/2013/14/10/R120))).
-Three major bias sources are known to affect *EMRC* dramatically in targeted sequencing data:
-- local **GC content** percentage
-- genomic **mappability**
-- target region **size**
-
-These biases contribute to non uniform read depth across target regions and, together with the sparse target nature, challenge the applicability of *RC* methods to targeted data. As shown in Figure 2 (left panel), in single-sample data the *EMRC* distributions of genomic regions characterized by different copy numbers largely overlap, revealing poor *CNV* prediction capability. 
-
-*EMRC ratio* between two samples can be used as a normalization procedure. The effect of *EMRC ratio*-based normalization is clear in Figure 2 (right panel) as a markedly improved correspondece between the predicted and the real copy number states.
-
-[![Data Normalization_1]({{site.url}}{{site.baseurl}}/images/normalization_EMRC.png)]
-**Figure 2**. Effect of *EMRC ratio* on DNA copy number prediction (adapted from [Magi et al., 2013](http://genomebiology.com/2013/14/10/R120))
-
-Similarly FPKM, a normalized measure of read depth implemented in ExomeDepth tool ([Plagnol et al., 2012](https://doi.org/10.1093/bioinformatics/bts526)), is affected by extensive exon–exon variability but comparison between pairs of exome datasets demonstrates high correlation level of the normalized read count data across samples making it possibile to use one or more combined exomes as reference set to base the CNV inference on ([Plagnol et al., 2012](https://doi.org/10.1093/bioinformatics/bts526)).
-
-[![Data Normalization_2]({{site.url}}{{site.baseurl}}/images/normalization_FPKM.png)]
-**Figure 3**. Correlation of the normalized read count data between samples (from [Plagnol et al., 2012](https://doi.org/10.1093/bioinformatics/bts526))
-
-### *CNV* detection accuracy
-
-Strong correlation is observed between Affymetrix array-SNP and exome-derived data for *CNVs* >1 Mb (Figure 4, right panel), while including CNVs of any size dramatically decreases the correlation level (Figure 4, left panel). This can be explained by the different distribution of exons and SNP probes throughout the genome. Candidate *CNV* regions as identified by *EXCAVATOR* contain a comparable number of exons and SNP probes when they are > 1 Mb (*R*=0.8), while regions <100 Kb do not (*R*=-0.02). Accordingly, [Krumm et al., 2012](https://genome.cshlp.org/content/22/8/1525.full) report 94% precision in detecting *CNVs* across three or more exons.
-
-[![Correlation_Exome_Affymetrix]({{site.url}}{{site.baseurl}}/images/corr_exome_affymetrix.png)]
-**Figure 4**. Correlation between array-SNP and exome-derived *CNVs* including all (left panel) or > 1 Mb *CNVs* (adapted from [Magi et al., 2013](http://genomebiology.com/2013/14/10/R120))
-
-To increase chances to detect *CNVs* encompassing few exons or in non-coding regions from exome data, [D'Aurizio et al., 2016](https://academic.oup.com/nar/article/44/20/e154/2607979) have proposed an extension to *EXCAVATOR* to exploit off-target read count (*EXCAVATOR2*). Similar approaches taking advantage of off-target reads have been described by [Bellos et al., 2014](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4147927/) or [Talevich et al., 2016](https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1004873).
-
-### Tools for *CNV* detection from gene panels or exome data
-
-A number of tools or pipelines implementing modified versions of previously published tools have been reported to detect single-exon *CNVs* in clinical gene panels:
-- [CoNVaDING](https://onlinelibrary.wiley.com/doi/full/10.1002/humu.22969)
-- [DeCON](https://wellcomeopenresearch.org/articles/1-20/v1)
-- [ExomeDepth v1.1.6](https://www.nature.com/articles/ejhg201742)
-- [Atlas-CNV](https://www.nature.com/articles/s41436-019-0475-4)
-- [DeviCNV](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6192323/)
-
-In addition to the above-mentioned methods, many tools have been developed that detect *CNVs* from exomes. Evaluation of these tools is not straightforward as there is lack of a gold standard for comparison. As a consequence, there is no consensus level on pipelines as high as for single nucleotide variants. [Zare et al., 2017](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5452530/pdf/12859_2017_Article_1705.pdf) have reviewed this topic with focus on cancer, reporting poor overlap of different tools and added challenges for somatic variant calling.
+Bioinformatic analysis of NGS data usually follows a general three-step workflow to variant detection. Each of these three steps is marked by its "milestone" file type containing sequence data in different formats and metadata describing sequence-related information collected during the analysis step that leads to generation of that file.
 
 ---
+
+| NGS workflow step | File content | File format | File Size (individual exome) |
+| --- | --- | --- | --- |
+| Sample to reads | Unaligned reads and qualities | **fastQ** | gigabytes |
+| Reads to alignments | Aligned reads and metadata | **BAM** | gigabytes |
+| Alignments to variants | Genotyped variants and metadata | **VCF** | megabytes |
+
+---
+
+Here are the different formats explained: 
+
+- **[fastQ](https://en.wikipedia.org/wiki/FASTQ_format)** (sequence with quality): the *de facto* standard for storing the output of high-throughput sequencing machines
+  - Usually not inspected during data analysis
+- **[BAM](https://samtools.github.io/hts-specs/SAMv1.pdf)** (binary sequence alignment/map): the most widely used TAB-delimited file format to store alignments onto a reference sequence
+  - Aligned reads
+- **[VCF](http://samtools.github.io/hts-specs/VCFv4.3.pdf)** (variant call format): the standard TAB-delimited format for genotype information associated with each reported genomic position where a variant call has been recorded
+
+The steps of the ***reads-to-variants*** workflow can be connected through a bioinformatic **pipeline** ([Leipzig et al., 2017](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5429012/)), consisting in read alignments, post-alignment BAM processing and variant calling.
+
+
+### Alignment
+
+As generated by the sequencing machines, *paired-end* reads are written to two *fastQ* files in which *forward* and *reverse* reads are stored separately together with their qualities. *FastQ* files are taken as input files by tools (the **aligners**) that align the reads onto a reference genome. One of the most used aligners is [BWA](http://bio-bwa.sourceforge.net/) among the many that have been developed (Figure 2).
+
+---
+
+![aligners_timeline]({{site.url}}{{site.baseurl}}/images/aligners_timeline.png)
+**Figure 2**. Aligners timeline 2001-2012 (from [Fonseca et al., 2012](https://academic.oup.com/bioinformatics/article/28/24/3169/245777))
+
+---
+
+During the bioinformatic process, *paired-end* reads from the two separate *fastQ* files are re-connected in the alignment, where it is expected that they will:
+- map to their correct location in the genome
+- be as distant as the insert size of the fragment they come from
+- be in opposite orientations
+a combination which we refer to as **proper pairing**. All these data about *paired-end* reads mapping are stored in the BAM file and can be used to various purposes, from alignment quality assessment to structural variant detection.
+
+In Figure 3, the [Integrative Genomic Viewer (IGV)](http://software.broadinstitute.org/software/igv/) screenshot of an exome alignment data over two adjacent *ASXL1* exons is shown. Pink and violet bars are *forward* and *reverse* reads, respectively. The thin grey link between them indicates that they are *paired-end* reads. The stack of reads is concentrated where exons are as expected in an exome, and the number of read bases covering a given genomic location *e* (depicted as a hill-shaped profile at the top of the figure) defines the **depth of coverage (DoC)** over that location:
+
+*DoC*e=*number of read bases over e/genomic length of e*
+
+---
+
+![coverage]({{site.url}}{{site.baseurl}}/images/coverage.png)
+**Figure 3**. Exome data visualization by [*IGV*](http://software.broadinstitute.org/software/igv/)
+
+---
+
+
+### Post-alignment BAM processing
+
+Regarding post-alignment *pipelines*, the most famous for germline SNP and InDel calling is probably that developed as part of the GATK toolkit (Figure 4).
+
+---
+
+![gatk_germline_pipeline]({{site.url}}{{site.baseurl}}/images/gatk_germline_snps_indels.png)
+**Figure 4**. After-alignment pipeline for germline SNP and InDel variant calling according to [GATK Best Practices](https://software.broadinstitute.org/gatk/best-practices/workflow?id=11145)
+
+---
+
+According to GATK best practices, in order to be ready for variant calling the BAM file should undergo the following processing:
+- [marking duplicate reads](https://software.broadinstitute.org/gatk/documentation/tooldocs/4.0.4.0/picard_sam_markduplicates_MarkDuplicates.php) to flag (or discard) reads that are mere optical or PCR-mediated duplications of the actual reads
+- [recalibrating base quality scores](https://software.broadinstitute.org/gatk/documentation/article?id=11081) to correct known biases of the native base-related qualities
+While GATK BAM processing is beyond doubt important to improve data quality, it has to be noticed that it is not needed to obtain variant calls and that non GATK-based pipelines may not use it or may use different quality reparametrization schemes. Duplicate flagging or removal is not recommended in *amplicon* sequencing experiments.
+
+
+### Variant calling
+
+The process of variant detection and genotyping is performed by *variant callers*. These tools use probabilistic approaches to collect evidence that non-reference read bases accumulating over a given locus support the presence of a variant. To be confident that a variant is a true event, its supporting evidence should be significantly stronger than chance; e.g. the C>T on the left of the screenshot in Figure 5 is supported by all its position-overlapping reads, claiming for a variant. In contrast, the C>A change on the right of the screenshot is seen only once over many reads, challenging its interpretation as a real variant. 
+
+---
+
+![igv_screenshot_variant]({{site.url}}{{site.baseurl}}/images/igv_variant.png)
+**Figure 5**. Variant visualization by *IGV*
+
+---
+
+*Variant callers*The GATK variant calling pipeline first produces a **genomic VCF ([gVCF](https://gatkforums.broadinstitute.org/gatk/discussion/4017/what-is-a-gvcf-and-how-is-it-different-from-a-regular-vcf))**, whose main difference with *VCF* is that it records all sites in a target whether there is a variant or not, while *VCF* contains only information for variant sites, preparing multiple samples for **joint genotyping** and creation of a **multi-sample** *VCF* whose variants can undergo quality **filtering** in order to obtain the final set of quality-curated variants ready to be annotated.
+
+In downstream analyses, annotations can be added to *VCF* files themselves or information in *VCF* files can be either annotated in TAB- or comma- deimited files to be visually inspected for *clinical* variant searching or used as input to **prioritization** programs.
