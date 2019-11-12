@@ -39,8 +39,8 @@ Registration is **free**, and you get access to **250GB** of disk space for your
 Datasets used in this course are available:
  - at [Zenodo](https://zenodo.org/record/3531578), an open-access repository developed under 
    the European OpenAIRE program and operated by CERN
- - as *Shared Data Libraries* in [Galaxy](https://usegalaxy.eu): *[FIXME NAME OF SHARED DATA LIBRARY]*
-   then *[FIXME NAME OF SUBFOLDER]*
+ - as *Shared Data Libraries* in [Galaxy](https://usegalaxy.eu/library/list): *[Sigu](https://usegalaxy.eu/library/list#folders/Fd01030bcf09560f0)*
+   
 
 To familiarize with the Galaxy interface (e.g. working with histories, importing dataset),
 we suggest to follow the [Galaxy at a Glance]({{site.url}}{{site.baseurl}}/lectures/02.galaxy.html) tutorial.
@@ -49,7 +49,7 @@ we suggest to follow the [Galaxy at a Glance]({{site.url}}{{site.baseurl}}/lectu
 
  * [Tommaso Pippucci](https://www.aosp.bo.it/content/curriculum?E=154659) - Sant’Orsola-Malpighi University Hospital, Bologna, Italy
  * [Alessandro Bruselles](https://www) - Istituto Superiore di Sanità, Rome, Italy
- * [Gianmauro Cuccuru](http://www) - Albert Ludwigs University, Freiburg, Germany
+ * [Gianmauro Cuccuru](https://gmauro.github.io) - Albert Ludwigs University, Freiburg, Germany
  * [Giuseppe Marangi](http://www) - Institute of Genomic Medicine, Fondazione Policlinico Universitario A. Gemelli IRCCS, Università Cattolica del Sacro Cuore, Roma, Italy
  * [Paolo Uva](http://www.crs4.it/peopledetails/183/paolo-uva) - Centro di Ricerca, Sviluppo e Studi Superiori in Sardegna (CRS4), Pula, Cagliari, Italy
  
