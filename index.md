@@ -4,9 +4,12 @@ title: Home
 ---
 
      
-## On-line training tutorial on [“Data analysis and interpretation for clinical genomics” using Galaxy](https://sigu-training.github.io/clinical_genomics)
+## SIGU on-line training tutorial on [“Data analysis and interpretation for clinical genomics” using Galaxy](https://sigu-training.github.io/clinical_genomics)
+
 
 ![sigu]({{site.url}}{{site.baseurl}}/images/sigu.png)
+
+---
 
 > In years 2018-2019, on behalf of the Italian Society of Human Genetics ([SIGU](https://www.sigu.net/)) an itinerant [Galaxy](https://usegalaxy.eu/)-based “hands-on-computer” training activity entitled “Data analysis and interpretation for clinical genomics” was held four times on invitation from different Italian institutions (Università Cattolica del Sacro Cuore in Rome, University of Genova, SIGU 2018 annual scientific meeting in Catania, University of Bari) and was offered to about 30 participants each time among clinical doctors, biologists, laboratory technicians and bioinformaticians. Topics covered by the course were NGS data quality check, detection of variants, copy number alterations and runs of homozygosity, annotation and filtering and clinical interpretation of sequencing results.
 
