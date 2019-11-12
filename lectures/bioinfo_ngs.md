@@ -58,6 +58,8 @@ Here are the different formats explained:
   - Aligned reads
 - **[VCF](http://samtools.github.io/hts-specs/VCFv4.3.pdf)** (variant call format): the standard TAB-delimited format for genotype information associated with each reported genomic position where a variant call has been recorded
 
+Another useful file format is [BED](https://www.ensembl.org/info/website/upload/bed.html), to list genomic regions of interest such as the exome or panel targets.
+
 The steps of the ***reads-to-variants*** workflow can be connected through a bioinformatic **pipeline** ([Leipzig et al., 2017](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5429012/)), consisting in read alignments, post-alignment BAM processing and variant calling.
 
 
