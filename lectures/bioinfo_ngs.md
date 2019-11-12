@@ -22,7 +22,7 @@ In the context of disorders with a recognized strong genetic contribution such a
 
 ---
 
-![ngs_neuro_diagnostics]({{site.url}}{{site.baseurl}}/images/ngs_neuro_diagnostic.png)
+![ngs_neuro_diagnostics]({{site.url}}{{site.baseurl}}/images/ngs_neuro_diagnostics.png)
 **Figure 1**. General workflow for genetic diagnosis of neurological diseases. (\*If considering high-yield single-gene testing of more than 1–3 genes by another sequencing method, note that next-generation sequencing is often most cost-effective. †Genetic counselling is required before and after all genetic testing; other considerations include the potential for secondary findings in genomic testing, testing parents if inheritance is sporadic or recessive, and specialty referral. From [Rexach et al., 2019](https://www.thelancet.com/journals/laneur/article/PIIS1474-4422(19)30033-X/fulltext))
 
 ---
