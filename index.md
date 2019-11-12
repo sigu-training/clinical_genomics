@@ -11,7 +11,7 @@ title: Home
 
 > Realizing the constant need for training on NGS analysis and interpretation of sequencing data in the clinical setting, we designed an on-line [Galaxy](https://usegalaxy.eu/)-based training resource articulated in presentations and practical assignments by which students will learn how to approach NGS data quality at the level of fastq, bam and VCF files and clinically-oriented examination of variants emerging from sequencing experiments.
 
-# Contributors
+### Contributors
 
  * [Tommaso Pippucci](https://www.aosp.bo.it/content/curriculum?E=154659) - Sant’Orsola-Malpighi University Hospital, Bologna, Italy
  * [Alessandro Bruselles](https://www) - Istituto Superiore di Sanità, Rome, Italy
@@ -19,7 +19,7 @@ title: Home
  * [Giuseppe Marangi](http://www) - Institute of Genomic Medicine, Fondazione Policlinico Universitario A. Gemelli IRCCS, Università Cattolica del Sacro Cuore, Roma, Italy
  * [Paolo Uva](http://www.crs4.it/peopledetails/183/paolo-uva) - Centro di Ricerca, Sviluppo e Studi Superiori in Sardegna (CRS4), Pula, Cagliari, Italy
 
-# Italian Society of Human Genetics
+### Italian Society of Human Genetics
 
 ![sigu]({{site.url}}{{site.baseurl}}/images/sigu.png)
 
