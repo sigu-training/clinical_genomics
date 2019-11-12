@@ -11,6 +11,34 @@ title: Home
 
 > Realizing the constant need for training on NGS analysis and interpretation of sequencing data in the clinical setting, we designed an on-line [Galaxy](https://usegalaxy.eu/)-based training resource articulated in presentations and practical assignments by which students will learn how to approach NGS data quality at the level of fastq, bam and VCF files and clinically-oriented examination of variants emerging from sequencing experiments.
 
+### Requirements
+
+This tutorial is based on the [Galaxy](https://galaxyproject.org/) platform,
+therefore a basic knowledge of Galaxy is required to get most out of the course.
+In particular, we'll use European Galaxy server running at [https://usegalaxy.eu](https://usegalaxy.eu).
+
+Registration is **free**, and you get access to **250GB** of disk space for your analysis.
+
+1. Open your browser. We recommend Chrome or Firefox (please don't use Internet Explorer or Safari).
+1. Go to [https://usegalaxy.eu](https://usegalaxy.eu)
+   - If you have previously registered on this server just log in:
+     - On the top menu select: User -> Login
+     - Enter your user/password
+     - Click Submit
+   - If you haven’t registered on this server, you’ll need to do now.
+     - On the top menu select: User -> Register
+     - Enter your email, choose a password, repeat it and add a one word name (lower case)
+     - Click Submit
+
+Datasets used in this course are available:
+ - at [Zenodo](https://zenodo.org/record/3531578), an open-access repository developed under 
+   the European OpenAIRE program and operated by CERN
+ - as *Shared Data Libraries* in [Galaxy](https://usegalaxy.eu): *[FIXME NAME OF SHARED DATA LIBRARY]*
+   then *[FIXME NAME OF SUBFOLDER]*
+
+To familiarize with the Galaxy interface (e.g. working with histories, importing dataset),
+we suggest to follow the [Galaxy at a Glance]({{site.url}}{{site.baseurl}}/lectures/02.galaxy.html) tutorial.
+
 ### Contributors
 
  * [Tommaso Pippucci](https://www.aosp.bo.it/content/curriculum?E=154659) - Sant’Orsola-Malpighi University Hospital, Bologna, Italy
