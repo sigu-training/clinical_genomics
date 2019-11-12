@@ -17,7 +17,7 @@ This tutorial is based on the [Galaxy](https://galaxyproject.org/) platform,
 therefore a basic knowledge of Galaxy is required to get most out of the course.
 In particular, we'll use European Galaxy server running at [https://usegalaxy.eu](https://usegalaxy.eu).
 
-Registration is free, and you get access to 250GB of disk space for your analysis.
+Registration is **free**, and you get access to **250GB** of disk space for your analysis.
 
 1. Open your browser. We recommend Chrome or Firefox (please don't use Internet Explorer or Safari).
 1. Go to [https://usegalaxy.eu](https://usegalaxy.eu)
