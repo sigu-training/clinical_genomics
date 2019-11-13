@@ -39,7 +39,7 @@ Registration is **free**, and you get access to **250GB** of disk space for your
 Datasets used in this course are available:
  - at [Zenodo](https://zenodo.org/record/3531578), an open-access repository developed under 
    the European OpenAIRE program and operated by CERN
- - as *Shared Data Libraries* in [Galaxy](https://usegalaxy.eu/library/list): *[Sigu](https://usegalaxy.eu/library/list#folders/Fd01030bcf09560f0)*
+ - as *Shared Data Libraries* in [Galaxy](https://usegalaxy.eu/library/list): *[Galaxy courses / Sigu](https://usegalaxy.eu/library/list#folders/F3d08bb711e4e3b26)*
    
 
 To familiarize with the Galaxy interface (e.g. working with histories, importing dataset),
