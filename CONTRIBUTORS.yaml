@@ -1,0 +1,583 @@
+# List of contributors
+#
+# reference maintainers/contributors by their id in tutorial metadata files
+#
+# Institutional sponsors
+#  * Collaborative Research Centre (CRC) 992 - Medical Epigenetics
+#  * de.NBI - German Network for Bioinformatics Infrastructure
+#  * NHGRI - National Human Genome Research Institute at the National Institutes of Health (USA)
+#  * NSF - National Science Foundation (USA)
+#
+# valid tags: name, email, linkedin, twitter, gitter, orcid
+#
+# collection names should be equal to github username, if not, add github: false tag
+---
+a-asai:
+    name: Atsushi Asai
+    email: tbudcm7zk@i.softbank.jp
+
+abretaud:
+    name: Anthony Bretaudeau
+    email: anthony.bretaudeau@inra.fr
+    twitter: abretau
+    gitter: abretaud
+    orcid: 0000-0003-0914-2470
+
+abdulrahmanazab:
+    name: Abdulrahman Azab
+
+abrusell:
+    name: Alessandro Bruselles
+
+afgane:
+    name: Enis Afgan
+
+aisanjiangw:
+    name: Aisanjiang Wubuli
+
+almahmoud:
+    name: Alex Mahmoud
+
+andreasrichter:
+    name: Andreas Richter
+    github: false
+
+annatrigos:
+    name: Anna Trigos
+    github: false
+
+andrewjpage:
+    name: Andrew Page
+    email: andrewjpage@gmail.com
+    twitter: andrewjpage
+    orcid: 0000-0001-6919-6062
+
+annasyme:
+    name: Anna Syme
+    
+annefou:
+    name: Anne Fouilloux
+    twitter: AnneFouilloux
+
+anuprulez:
+    name: Anup Kumar
+    email: anup.rulez@gmail.com
+    twitter: musafirtweetsz
+
+astrovsky01:
+    name: Alex Ostrovsky
+    email: a.ostrovsky@mac.com
+
+baberlevi:
+    name: Levi Baber
+
+bagnacan:
+    name: Andrea Bagnacani
+    email: andrea.bagnacani@gmail.com
+
+bebatut:
+    name: Bérénice Batut
+    email: berenice.batut@gmail.com
+    twitter: bebatut
+    linkedin: berenicebatut
+    gitter: bebatut
+    orcid: 0000-0001-9852-1987
+
+bedroesb:
+    name: Bert Droesbeke
+    email: bedro@psb.ugent.be
+    gitter: bedroesb
+    orcid: 0000-0003-0522-5674
+
+bernt-matthias:
+    name: Matthias Bernt
+
+bgruening:
+    name: Björn Grüning
+    email: bjoern.gruening@gmail.com
+    twitter: bjoerngruening
+    gitter: bgruening
+    orcid: 0000-0002-3079-6586
+    linkedin: bgruening
+
+blankclemens:
+    name: Clemens Blank
+    email: blankclemens@gmail.com
+
+blankenberg:
+    name: Daniel Blankenberg
+    twitter: dblankenberg
+    orcid: 0000-0002-6833-9049
+
+bphipson:
+    name: Belinda Phipson
+
+cecilecanlet:
+    name: Cécile Canlet
+    github: false
+
+charitylaw:
+    name: Charity Law
+
+cicozhang:
+    name: Chao (Cico) Zhang
+    maintainer_contact: https://hi-it.org
+    twitter: CicoCN
+
+claraurf:
+    name: Clara Urfer
+
+claresloggett:
+    name: Clare Sloggett
+
+cmonjeau:
+    name: Cyril Monjeaud
+
+combesf:
+    name: Florence Combes
+    email: florence.combes@cea.fr
+
+cganote:
+    name: Carrie Ganote
+
+chrisbarnettster:
+    name: Christopher Barnettster
+    gitter: chrisbarnettster
+    
+daltis20012009:
+    name: Krzys Poterlowicz
+    github: false
+
+dannon:
+    name: Dannon Baker
+
+davidchristiany:
+    name: David Christiany
+
+delphine-l:
+    name: Delphine Lariviere
+    email: delphine.lariviere@galaxy.org
+
+dmaticzka:
+    name: Daniel Maticzka
+
+dpryan79:
+    name: Devon Ryan
+
+dsobral:
+    name: Daniel Sobral
+
+SanneAbeln:
+    name: Sanne Abeln
+
+dyusuf:
+    name: Dilmurat Yusuf
+
+emmaleith:
+    name: Emma Leith
+    email: leith023@umn.edu
+
+emichn:
+    name: Elisa Michon
+
+erasche:
+    name: Helena Rasche
+    email: helena.rasche@gmail.com
+    orcid: 0000-0001-9760-8992
+    maintainer_contact: gitter
+    gitter: erasche
+
+erxleben:
+    name: Anika Erxleben
+    email: anikaerxleben@gmail.com
+    orcid: 0000-0002-7427-6478
+
+ethering:
+    name: Graham Etherington
+    orcid: 0000-0002-5003-1425
+
+fabio-cumbo:
+    name: Fabio Cumbo
+    email: fabio.cumbo@gmail.com
+    twitter: cumbofabio
+    linkedin: fabiocumbo
+    gitter: fabio-cumbo
+    orcid: 0000-0003-2920-5838
+
+fidelram:
+    name: Fidel Ramirez
+
+foellmelanie:
+    name: Melanie Foell
+
+fpsom:
+    name: Fotis E. Psomopoulos
+    email: fpsom@certh.gr
+    twitter: fopsom
+    gitter: fpsom
+    orcid: 0000-0002-0222-4273
+    linkedin: fpsom
+
+fmareuil:
+    name: Fabien Mareuil
+
+frederikcoppens:
+    name: Frederik Coppens
+
+friedue:
+    name: Friederike Dündar
+
+gmauro:
+    name: Gianmauro Cuccuru
+
+guerler:
+    name: Aysam Guerler
+
+hdashnow:
+    name: Harriet Dashnow
+
+heylf:
+    name: Florian Heyl
+
+hmenager:
+    name: Hervé Ménager
+
+hrhotz:
+    name: Hans-Rudolf Hotz
+    email: hrhotz@googlemail.com
+    twitter: hrhotz
+    gitter: hrhotz
+    orcid: 0000-0002-2799-424X
+    linkedin: hans-rudolf-hotz-542b31
+
+ic4f:
+    name: Sergey Golitsynskiy
+
+igcbioinformatics:
+    name: IGC Bioinformatics Unit
+
+jennaj:
+    name: Jennifer Hillman-Jackson
+    maintainer_contact: https://biostar.usegalaxy.org
+    email: jen@galaxyproject.org
+    gitter: jennaj
+    twitter: jenhjackson
+    linkedin: jennifer.hillman.jackson
+    orcid: 0000-0003-4012-8116
+
+jennydg:
+    name: Jennifer Del Giudice
+
+jfallmann:
+    name: Joerg Fallmann
+
+jfrancoismartin:
+    name: Jean-François Martin
+
+jgoecks:
+    name: Jeremy Goecks
+
+jj-umn:
+    name: James Johnson
+    email: jj@umn.edu
+
+jmchilton:
+    name: John Chilton
+    email: jmchilton@gmail.com
+
+joachimwolff:
+    name: Joachim Wolff
+    email: wolffj@informatik.uni-freiburg.de
+
+JovMaksimovic:
+    name: Jovana Maksimovic
+
+jpmaree:
+
+jraysajulga:
+    name: Ray Sajulga
+    email: rsajulga@umn.edu
+
+jxtx:
+    name: James Taylor
+
+katrinleinweber:
+    name: Katrin Leinweber
+    email: katrin.leinweber@tib.eu
+    orcid: 0000-0001-5135-5758
+
+khanteymoori:
+    name: Alireza Khanteymoori
+    email: khanteymoori@gmail.com
+    orcid: 0000-0001-6811-9196
+
+lecorguille:
+    name: Gildas Le Corguillé
+
+LeilyR:
+    name: Leily Rabbani
+
+lldelisle:
+    name: Lucille Delisle
+    email: lucille.delisle@epfl.ch
+    orcid: 0000-0002-1964-4960
+
+loraine-gueguen:
+    name: Loraine Guéguen
+
+kilpert:
+    name: Fabian Kilpert
+
+kpbioteam:
+    name: Katarzyna Murat
+
+kpoterlowicz:
+    name: Krzysztof Poterlowicz
+
+m-giuseppe:
+    name: Giuseppe Marangi
+
+malloryfreeberg:
+    name: Mallory Freeberg
+
+manabuishii:
+    name: Manabu ISHII
+
+martenson:
+    name: Martin Čech
+    email: marten@bx.psu.edu
+
+marziacremona:
+    name: Marzia A Cremona
+    email: mac78@psu.edu
+
+matthias313:
+    name: Matthias
+
+mblue9:
+    name: Maria Doyle
+
+mccalluc:
+    name: Chuck McCallum
+
+melpetera:
+    name: Mélanie Petera
+
+michelemaroni89:
+    name: Michele Maroni
+
+moffmade:
+    name: Cory Maughmer
+
+moheydarian:
+    name: Mo Heydarian
+    email: mheydarian@gmail.com
+
+mritchie:
+    name: Matt Ritchie
+
+mtekman:
+    name: Mehmet Tekman
+    email: mtekman89@gmail.com
+
+mvdbeek:
+    name: Marius van den Beek
+
+mwolfien:
+    name: Markus Wolfien
+
+nagoue:
+    name: Nadia Goué
+    email: nadia.goue@uca.fr
+    orcid: 0000-0003-2750-1473
+
+natefoo:
+    name: Nate Coraor
+    gitter: natefoo
+    twitter: natefoo
+    email: nate@bx.psu.edu
+
+nekrut:
+    name: Anton Nekrutenko
+    email: anton@nekrut.org
+
+nicherndon:
+    name: Nic Herndon
+
+NickSto:
+    name: Nick Stoler
+    twitter: NickStoler
+
+nsoranzo:
+    name: Nicola Soranzo
+    gitter: nsoranzo
+    orcid: 0000-0003-3627-5340
+    twitter: NicolaSoranzo
+
+nuwang:
+    name: Nuwan Goonasekera
+
+nvk747:
+    name: Vijay
+
+odoppelt:
+    name: Olivia Doppelt-Azeroual
+
+olanag1:
+    name: Olha Nahorna
+
+pajanne:
+    name: Anne Pajon
+
+pavanvidem:
+    name: Pavankumar Videm
+
+pcm32:
+    name: Pablo Moreno
+
+polkhe:
+    name: Ekaterina Polkh
+
+pratikdjagtap:
+    name: Pratik Jagtap
+    email: pjagtap@umn.edu
+
+pravs3683:
+    name: Praveen Kumar
+    email: kumar207@umn.edu
+
+puva:
+    name: Paolo Uva
+
+pvanheus:
+    name: Peter van Heusden
+
+reginaesinamabotsi:
+    name: Regina Esinam Abotsi
+
+sanneabeln:
+    name: Sanne Abeln
+
+sarah-peter:
+    name: Sarah Peter
+
+sbenateau:
+    name: Simon Benateau
+    email: simon.benateau@mnhn.fr
+    twitter: sbenateau
+
+Shians:
+    name: Shian Su
+
+shiltemann:
+    name: Saskia Hiltemann
+    maintainer_contact: gitter
+    email: saskia.hiltemann@gmail.com
+    twitter: shiltemann
+    linkedin: shiltemann
+    gitter: shiltemann
+    orcid: 0000-0003-3803-468X
+
+simonbray:
+    name: Simon Bray
+
+slegras:
+    name: Stéphanie Legras
+
+slugger70:
+    name: Simon Gladman
+    email: simon.gladman@unimelb.edu.au
+
+stortebecker:
+    name: Florian Christoph Sigloch
+    email: sigloch+github@mailbox.org
+
+subinamehta:
+    name: Subina Mehta
+    email: subinamehta@gmail.com
+    twitter: Subina_Mehta
+    linkedin: subinamehta
+    gitter: subinamehta
+    orcid: 0000-0001-9818-0537
+    
+    
+tealiie:
+
+thomasmanke:
+    name: Thomas Manke
+
+thomaswollmann:
+    name: Thomas Wollmann
+    orcid: 0000-0002-4741-3844
+
+timothygriffin:
+    name: Timothy J. Griffin
+    email: tgriffin@umn.edu
+    github: false
+
+tizzir:
+    name: Matthew Spelchak
+
+tnabtaf:
+    name: Dave Clements
+
+tobyhodges:
+    name: Toby Hodges
+    email: tbyhdgs@gmail.com
+    twitter: tbyhdgs
+    orcid: 0000-0003-1766-456X
+
+tommasopippucci:
+    name: Tommaso Pippucci
+
+torhou:
+    name: Torsten Houwaart
+
+tseemann:
+    name: Torsten Seemann
+
+tsenapathi:
+    name: Tharindu Senapathi
+
+tklingstrom:
+    name: Tomas Klingstrom
+
+valentinmarcon:
+    name: Valentin Marcon
+
+vdda:
+    name: Victoria Dominguez del Angel
+
+vivekbhr:
+    name: Vivek Bhardwaj
+
+vloux:
+    name: Valentin Loux
+
+willdurand:
+    name: William Durand
+
+willemdek11:
+    name: Willem de Koning
+
+workflow4metabolomics:
+    name: Workflow4Metabolomics core team
+
+wm75:
+    name: Wolfgang Maier
+
+yguitton:
+    name: Yann Guitton
+
+yhoogstrate:
+    name: Youri Hoogstrate
+
+yvandenb:
+    name: Yves Vandenbrouck
+
+yvanlebras:
+    name: Yvan Le Bras
+    email: yvan.le-bras@mnhn.fr
+    twitter: Yvan2935
+    gitter: yvanlebras
+    orcid: 0000-0002-8504-068X
