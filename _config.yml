@@ -174,12 +174,8 @@ exclude:
   - templates/
   - vendor/
   - node_modules/
-  - topics/variant-analysis/index.md
   - faq.md
   - 404.md
-  - hall-of-fame.md
-  - topics.archive/
-  - metadata.archive/
 
 include:
   - .nojekyll
