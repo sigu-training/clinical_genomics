@@ -375,7 +375,7 @@ You may use files provided as examples with this tutorial and called `Panel_alig
 Please check that uploaded file datatypes (formats) are properly recognized by selecting `edit attributes` (i.e. the pencil sign in correspondence of each file you can find in your history) (indicated by the red arrow in figure 1) and then the tab datatypes (the blue arrow in figure 1). If the datatype is wrong, select the correct one from the drop-down list and press the `change datatype` button (the green arrow n figure 1).
 
 **Figure 1**
-![Figure 1]({{site.url}}{{site.baseurl}}/images/cov_fig1.png)
+![Figure 1]({{site.baseurl}}/images/cov_fig1.png)
 
 Once ready, you can select the tool named `bedtools Compute both the depth and breadth of coverage` in the `Operate on Genomic Intervals` section (see the red arrow in figure 2).
 
@@ -385,7 +385,7 @@ Once ready, you can select the tool named `bedtools Compute both the depth and b
 4. Star (Execute) the analysis.
 
 **Figure 2**
-![Figure 2]({{site.url}}{{site.baseurl}}/images/cov_fig2.png)
+![Figure 2](/images/cov_fig2.png)
 
 Output file, which will be called "coverage_depth.bed" from now on, will contain all the fields of the original target_regions.bed file plus two further columns:
 1. the first value indicates a specific base within the reported genomic interval. For instance, if the genomic interval described by the first 3 field is "chr2 50149071 50149072" and the first new field reports the number 1000, it means that the coverage value refers to nucleotide 50150071 (i.e.: 50149071 + 1000) on chromosome 2;
