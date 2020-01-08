@@ -111,39 +111,32 @@
                 <div class="col-sm-10">
                     <h1 class="no_toc" id="introduction">Introduction</h1>
 
-<p>When sequencing genomic material from a human tumor, the underlying clinical or
-research question typically is <strong>what spectrum of mutations distinguishes this
-tumor from healthy tissue</strong>.</p>
+<p>In years 2018-2019, on behalf of the Italian Society of Human Genetics (<a href="https://www.sigu.net/">SIGU</a>) an itinerant <a href="https://usegalaxy.eu/"><span class="notranslate">Galaxy</span></a>-based “hands-on-computer” training activity entitled “Data analysis and interpretation for clinical genomics” was held four times on invitation from different Italian institutions (Università Cattolica del Sacro Cuore in Rome, University of Genova, SIGU 2018 annual scientific meeting in Catania, University of Bari) and was offered to about 30 participants each time among clinical doctors, biologists, laboratory technicians and bioinformaticians. Topics covered by the course were NGS data quality check, detection of variants, copy number alterations and runs of homozygosity, annotation and filtering and clinical interpretation of sequencing results.</p>
 
-<p>This question cannot be answered adequately just by comparing the tumor tissue
-to the human reference genome because even in healthy tissue there will be many
-thousands of variants compared to the reference genome. This is because every
-individual inherits a unique pattern of that many variants from her parents. A
-fundamental difference between these variants and the tumor-specific mutations
-is that the former are present in the carrier’s germline, while the latter have
-been acquired somatically and will, thus, not be transmitted to offspring.
-Therefor, we talk of germline variants to refer to variants present in healthy
-and tumor tissue alike, and of somatic variants to refer to tumor-specific
-variants. To be able to distinguish between these two types of variants always
-requires a direct comparison of data from tumor and normal tissue samples.</p>
+<p>Realizing the constant need for training on NGS analysis and interpretation of sequencing data in the clinical setting, we designed an on-line <a href="https://usegalaxy.eu/"><span class="notranslate">Galaxy</span></a>-based training resource articulated in presentations and practical assignments by which students will learn how to approach NGS data quality at the level of fastq, bam and VCF files and clinically-oriented examination of variants emerging from sequencing experiments.</p>
 
-<p>In addition to acquiring new variants, tumors can also lose or gain chromosomal
-copies of variants found heterozygously in an individual’s germline. This
-phenomenon is termed <em>loss of heterozygosity</em> (LOH) because only one of the two
-original alleles persists in the tumor (either in a hemizygous state if the
-other allele is simply dropped, or in a homozygous state in the case of a
-duplication of one allelic copy accompanied by loss of the other).
-The detection of LOH events, again, is dependent on a comparison of tumor and
-normal tissue data.</p>
+<p>This training course is not to be intended as a tutorial on NGS pipelines and variant calling. This on-line training activity is indeed focused on data analysis for clinical interpretation. If you are looking for training on variant calling, visit this <strong><span class="notranslate">Galaxy</span></strong> tutorial on <a href="https://galaxyproject.github.io/training-material/topics/variant-analysis/tutorials/exome-seq/tutorial.html">Exome sequencing data analysis for diagnosing a genetic disease</a>.</p>
 
-<p>In this tutorial we are going to identify somatic and germline variants, as
-well as variants affected by LOH, from a tumor and a normal sample of the same
-patient. Our goal is to report the variant sites, and the genes affected by
-them, annotated with the content of general human genetic and cancer-specific
-databases. Ideally, this may provide insight into the genetic events driving
-tumor formation and growth in the patient, and might be of prognostic and even
-therapeutic value by revealing variants known to affect drug
-resistance/sensitivity, tumor aggressiveness, <em>etc</em>.</p>
+<blockquote>
+  <blockquote class="comment">
+    <h3 id="comment-sigu"><i class="fa fa-commenting-o" aria-hidden="true"></i><span class="visually-hidden">comment</span> SIGU</h3>
+    <p>The <em>Italian Society of Human Genetics</em> (<strong>SIGU</strong>) was established on November 14,
+1997, when the pre-existing Italian Association of Medical Genetics and the Italian
+Association of Medical Cytogenetics joined.
+SIGU is one of the 27 member societies of FEGS (Federation of European Genetic
+Societies).
+Animated by a predominant scientific spirit, SIGU wants to be reference for
+all health-care issues involving human genetics in all its applications.
+Its specific missions are to develop quality criteria for medical genetic
+laboratories, to promote writing of guidelines in the field of human genetics
+and public awareness of the role and limitations of genetic diagnostic techniques. 
+SIGU coordinates activities of several working groups: Clinical Genetics,
+Cytogenetics, Prenatal Diagnosis, Neurogenetics, Fingerprinting, Oncological 
+Genetics, Immunogenetics, Genetic Counseling, Quality Control, Medical Genetics 
+Services, Bioethics. More than 1000 medical geneticists and biologists are active
+members of the society.</p>
+  </blockquote>
+</blockquote>
 
 <blockquote class="agenda">
   <h3 id="agenda">Agenda</h3>
@@ -151,45 +144,99 @@ resistance/sensitivity, tumor aggressiveness, <em>etc</em>.</p>
   <p>In this tutorial, we will cover:</p>
 
 <ol id="markdown-toc">
-  <li><a href="#data-preparation" id="markdown-toc-data-preparation">Data Preparation</a>    <ol>
+  <li><a href="#requirements" id="markdown-toc-requirements">Requirements</a></li>
+  <li><a href="#datasets" id="markdown-toc-datasets">Datasets</a>    <ol>
       <li><a href="#get-data" id="markdown-toc-get-data">Get data</a></li>
     </ol>
   </li>
-  <li><a href="#quality-control-and-mapping-of-ngs-reads" id="markdown-toc-quality-control-and-mapping-of-ngs-reads">Quality control and <span class="notranslate">mapping</span> of NGS <span class="notranslate">reads</span></a>    <ol>
-      <li><a href="#quality-control" id="markdown-toc-quality-control">Quality control</a></li>
-      <li><a href="#read-trimming-and-filtering" id="markdown-toc-read-trimming-and-filtering">Read trimming and filtering</a></li>
-      <li><a href="#read-mapping" id="markdown-toc-read-mapping">Read <span class="notranslate">Mapping</span></a></li>
+  <li><a href="#next-generation-sequencing" id="markdown-toc-next-generation-sequencing">Next Generation Sequencing</a>    <ol>
+      <li><a href="#ngs-in-the-clinic" id="markdown-toc-ngs-in-the-clinic">NGS in the clinic</a></li>
+      <li><a href="#basics-of-ngs-bioinformatic-analysis" id="markdown-toc-basics-of-ngs-bioinformatic-analysis">Basics of NGS bioinformatic analysis</a></li>
+      <li><a href="#alignment" id="markdown-toc-alignment">Alignment</a></li>
+      <li><a href="#post-alignment-bam-processing" id="markdown-toc-post-alignment-bam-processing">Post-alignment BAM processing</a></li>
+      <li><a href="#variant-calling" id="markdown-toc-variant-calling">Variant calling</a></li>
     </ol>
   </li>
-  <li><a href="#mapped-reads-postprocessing" id="markdown-toc-mapped-reads-postprocessing">Mapped <span class="notranslate">reads</span> postprocessing</a>    <ol>
-      <li><a href="#filtering-on-mapped-reads-properties" id="markdown-toc-filtering-on-mapped-reads-properties">Filtering on mapped <span class="notranslate">reads</span> properties</a></li>
-      <li><a href="#removing-duplicate-reads" id="markdown-toc-removing-duplicate-reads">Removing duplicate <span class="notranslate">reads</span></a></li>
-      <li><a href="#left-align-reads-around-indels" id="markdown-toc-left-align-reads-around-indels">Left-align <span class="notranslate">reads</span> around indels</a></li>
-      <li><a href="#recalibrate-read-mapping-qualities" id="markdown-toc-recalibrate-read-mapping-qualities">Recalibrate read <span class="notranslate">mapping</span> qualities</a></li>
-      <li><a href="#refilter-reads-based-on-mapping-quality" id="markdown-toc-refilter-reads-based-on-mapping-quality">Refilter <span class="notranslate">reads</span> based on <span class="notranslate">mapping</span> quality</a></li>
+  <li><a href="#quality-control" id="markdown-toc-quality-control">Quality control</a>    <ol>
+      <li><a href="#quality-control-of-fastq-files" id="markdown-toc-quality-control-of-fastq-files">Quality control of FASTQ files</a></li>
+      <li><a href="#computation-of-per-base-coverage-depth-at-specific-genomic-intervals" id="markdown-toc-computation-of-per-base-coverage-depth-at-specific-genomic-intervals">Computation of per-base coverage depth at specific genomic intervals</a></li>
     </ol>
   </li>
-  <li><a href="#variant-calling-and-classification" id="markdown-toc-variant-calling-and-classification">Variant calling and classification</a></li>
-  <li><a href="#variant-annotation-and-reporting" id="markdown-toc-variant-annotation-and-reporting">Variant annotation and reporting</a>    <ol>
-      <li><a href="#get-data-1" id="markdown-toc-get-data-1">Get data</a></li>
-      <li><a href="#adding-annotations-to-the-called-variants" id="markdown-toc-adding-annotations-to-the-called-variants">Adding annotations to the called variants</a></li>
-      <li><a href="#reporting-selected-subsets-of-variants" id="markdown-toc-reporting-selected-subsets-of-variants">Reporting selected subsets of variants</a></li>
-      <li><a href="#generating-reports-of-genes-affected-by-variants" id="markdown-toc-generating-reports-of-genes-affected-by-variants">Generating reports of genes affected by variants</a></li>
-      <li><a href="#adding-additional-annotations-to-the-gene-centered-report" id="markdown-toc-adding-additional-annotations-to-the-gene-centered-report">Adding additional annotations to the gene-centered report</a></li>
+  <li><a href="#variant-annotation" id="markdown-toc-variant-annotation">Variant annotation</a>    <ol>
+      <li><a href="#gene-model" id="markdown-toc-gene-model">Gene model</a></li>
+      <li><a href="#sequence-variant-nomenclature" id="markdown-toc-sequence-variant-nomenclature">Sequence variant nomenclature</a></li>
+      <li><a href="#variant-class" id="markdown-toc-variant-class">Variant class</a></li>
+      <li><a href="#population-sequencing-db" id="markdown-toc-population-sequencing-db">Population sequencing db</a></li>
+      <li><a href="#variant-diseasegene-disease-db" id="markdown-toc-variant-diseasegene-disease-db">Variant-disease/gene-disease db</a></li>
+      <li><a href="#annotation-software-and-tools" id="markdown-toc-annotation-software-and-tools">Annotation Software and tools</a></li>
+      <li><a href="#annotation-and-filtering-with-wannovar" id="markdown-toc-annotation-and-filtering-with-wannovar">Annotation and filtering with wANNOVAR</a></li>
+      <li><a href="#clinical-databases-for-further-manual-variant-annotation" id="markdown-toc-clinical-databases-for-further-manual-variant-annotation">Clinical databases for further manual variant annotation</a></li>
+    </ol>
+  </li>
+  <li><a href="#variant-prioritization" id="markdown-toc-variant-prioritization">Variant prioritization</a>    <ol>
+      <li><a href="#variant-impact" id="markdown-toc-variant-impact">Variant impact</a></li>
+      <li><a href="#variant-frequency" id="markdown-toc-variant-frequency">Variant frequency</a></li>
+      <li><a href="#variant-effect-prediction-tools" id="markdown-toc-variant-effect-prediction-tools">Variant effect prediction Tools</a></li>
+      <li><a href="#acmgamp-2015-guidelines" id="markdown-toc-acmgamp-2015-guidelines">ACMG/AMP 2015 guidelines</a></li>
+      <li><a href="#prioritization" id="markdown-toc-prioritization">Prioritization</a></li>
+    </ol>
+  </li>
+  <li><a href="#cnv-detection-from-targeted-sequencing-data" id="markdown-toc-cnv-detection-from-targeted-sequencing-data">CNV detection from targeted sequencing data</a>    <ol>
+      <li><a href="#computational-approaches" id="markdown-toc-computational-approaches">Computational approaches</a></li>
+      <li><a href="#rc-method-and-data-normalization" id="markdown-toc-rc-method-and-data-normalization">RC method and data normalization</a></li>
+      <li><a href="#cnv-detection-accuracy" id="markdown-toc-cnv-detection-accuracy"><em>CNV</em> detection accuracy</a></li>
+      <li><a href="#tools-for-cnv-detection-from-gene-panels-or-exome-data" id="markdown-toc-tools-for-cnv-detection-from-gene-panels-or-exome-data">Tools for <em>CNV</em> detection from gene panels or exome data</a></li>
+    </ol>
+  </li>
+  <li><a href="#regions-of-homozygosity" id="markdown-toc-regions-of-homozygosity">Regions of Homozygosity</a>    <ol>
+      <li><a href="#homozygosity-mapping" id="markdown-toc-homozygosity-mapping">Homozygosity <span class="notranslate">mapping</span></a></li>
+      <li><a href="#computational-approaches-1" id="markdown-toc-computational-approaches-1">Computational approaches</a></li>
     </ol>
   </li>
 </ol>
 
 </blockquote>
 
-<h1 id="data-preparation">Data Preparation</h1>
+<h1 id="requirements">Requirements</h1>
 
-<p>First we need to upload and prepare some input data to analyze. The sequencing
-<span class="notranslate">reads</span> we are going to analyze are from real-world data from a cancer patient’s
-tumor and normal tissue samples.
-For the sake of an acceptable speed of the analysis, the original data has been
-downsampled though to include only the <span class="notranslate">reads</span> from human chromosomes 5, 12 and
-17.</p>
+<p>This tutorial is based on the <a href="https://galaxyproject.org/"><span class="notranslate">Galaxy</span></a> platform,
+therefore a basic knowledge of <span class="notranslate">Galaxy</span> is required to get most out of the course.
+In particular, we’ll use European <span class="notranslate">Galaxy</span> server running at <a href="https://usegalaxy.eu">https://use<span class="notranslate">galaxy</span>.eu</a>.</p>
+
+<p>Registration is <strong>free</strong>, and you get access to <strong>250GB</strong> of disk space for your analysis.</p>
+
+<ol>
+  <li>Open your browser. We recommend Chrome or Firefox (please don’t use Internet Explorer or Safari).</li>
+  <li>Go to <a href="https://usegalaxy.eu">https://use<span class="notranslate">galaxy</span>.eu</a>
+    <ul>
+      <li>If you have previously registered on this server just log in:
+        <ul>
+          <li>On the top menu select: User -&gt; Login</li>
+          <li>Enter your user/password</li>
+          <li>Click Submit</li>
+        </ul>
+      </li>
+      <li>If you haven’t registered on this server, you’ll need to do now.
+        <ul>
+          <li>On the top menu select: User -&gt; Register</li>
+          <li>Enter your email, choose a password, repeat it and add a one word name (lower case)</li>
+          <li>Click Submit</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ol>
+
+<p>To familiarize with the <span class="notranslate">Galaxy</span> interface (e.g. working with histories, importing dataset),
+we suggest to follow the <a href="https://galaxyproject.github.io/training-material/topics/introduction/tutorials/galaxy-intro-101/tutorial.html"><span class="notranslate">Galaxy</span> 101</a> tutorial.</p>
+
+<h1 id="datasets">Datasets</h1>
+
+<p>Input datasets used in this course are available:</p>
+<ul>
+  <li>at <a href="https://zenodo.org/record/3531578">Zenodo</a>, an open-access repository developed under the European OpenAIRE program and operated by CERN</li>
+  <li>as <em>Shared Data Libraries</em> in <a href="https://usegalaxy.eu/library/list"><span class="notranslate">Galaxy</span></a>: <em><a href="https://usegalaxy.eu/library/list#folders/F3d08bb711e4e3b26"><span class="notranslate">Galaxy</span> courses / Sigu</a></em></li>
+</ul>
 
 <h2 id="get-data">Get data</h2>
 
@@ -198,7 +245,7 @@ downsampled though to include only the <span class="notranslate">reads</span> fr
 
   <ol>
     <li>
-      <p>Create a new history for this tutorial and give it a meaningful name</p>
+      <p>Create a new history for this tutorial and give it a meaningful name (e.g. Clinical genomics)</p>
 
       <blockquote class="tip">
 
@@ -225,22 +272,17 @@ downsampled though to include only the <span class="notranslate">reads</span> fr
       </blockquote>
     </li>
     <li>
-      <p>Import the following four files from
-<a href="https://zenodo.org/record/2582555">Zenodo</a>:</p>
+      <p>Import files from <a href="https://zenodo.org/record/3531578">Zenodo</a> or Shared Data Library:</p>
 
-      <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>https://zenodo.org/record/2582555/files/SLGFSK-N_231335_r1_chr5_12_17.fastq.gz
-https://zenodo.org/record/2582555/files/SLGFSK-N_231335_r2_chr5_12_17.fastq.gz
-https://zenodo.org/record/2582555/files/SLGFSK-T_231336_r1_chr5_12_17.fastq.gz
-https://zenodo.org/record/2582555/files/SLGFSK-T_231336_r2_chr5_12_17.fastq.gz
+      <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>https://zenodo.org/record/3531578/files/CNV_case.bam
+https://zenodo.org/record/3531578/files/CNV_control.bam
+https://zenodo.org/record/3531578/files/CNV_TruSeq_Chr2.<span class="notranslate">bed</span>
+https://zenodo.org/record/3531578/files/HighQuality_<span class="notranslate">Reads</span>.fastq.gz
+https://zenodo.org/record/3531578/files/LowQuality_<span class="notranslate">Reads</span>.fastq.gz
+https://zenodo.org/record/3531578/files/Panel_alignment.bam
+https://zenodo.org/record/3531578/files/Panel_target_regions.<span class="notranslate">bed</span>
+https://zenodo.org/record/3531578/files/Sample1.all_exons.hg19.vcf
 </code></pre></div>      </div>
-      <p>where the first two files represent the forward and reverse <span class="notranslate">reads</span> sequence
-data from a patient’s <strong>normal</strong> tissue, and the last two represent the
-data of the same patient’s <strong>tumor</strong> tissue.</p>
-
-      <p>Alte<span class="notranslate">rna</span>tively, the same files may be available on your <span class="notranslate">Galaxy</span> server
-through a shared data library (your instructor may tell you so), in which
-case you may prefer to import the data directly from there.</p>
-
       <blockquote class="tip">
 
         <h3 id="tip-tip-importing-data-via-links"><i class="fa fa-lightbulb-o" aria-hidden="true"></i><span class="visually-hidden">tip</span> Tip: Importing data via links</h3>
@@ -267,6 +309,11 @@ case you may prefer to import the data directly from there.</p>
 
       </blockquote>
 
+      <p>The same files may be available on the <span class="notranslate">Galaxy</span> server
+through a <em>Shared Data Libraries</em> in 
+<em><a href="https://usegalaxy.eu/library/list#folders/F3d08bb711e4e3b26"><span class="notranslate">Galaxy</span> courses/Sigu</a></em>.
+You may prefer to import the data directly from there.</p>
+
       <blockquote class="tip">
 
         <h3 id="tip-tip-importing-data-from-a-data-library"><i class="fa fa-lightbulb-o" aria-hidden="true"></i><span class="visually-hidden">tip</span> Tip: Importing data from a data library</h3>
@@ -286,10 +333,18 @@ case you may prefer to import the data directly from there.</p>
           <li>Click on <strong>Import</strong></li>
         </ul>
       </blockquote>
+
+      <blockquote class="comment">
+        <h3 id="comment-note"><i class="fa fa-commenting-o" aria-hidden="true"></i><span class="visually-hidden">comment</span> Note</h3>
+        <p>All the files are based on <code class="highlighter-rouge">hg19</code> reference genome which is
+available with pre-built indexes for widely used tools such as 
+<em>bwa-mem</em> <strong>and</strong> <em>samtools</em> by selecting <code class="highlighter-rouge">hg19</code> version as an option under
+<em>“(Using) reference genome”</em>).</p>
+      </blockquote>
     </li>
     <li>
-      <p>Check that all newly created datasets in your history have their datatypes assigned 
-correctly, and fix any missing or wrong datatype assignment</p>
+      <p>In case you import datasets from Zenodo, check that all datasets in your history
+have their datatypes assigned correctly, and fix it when necessary.</p>
 
       <blockquote class="tip">
 
@@ -303,11 +358,10 @@ correctly, and fix any missing or wrong datatype assignment</p>
       </blockquote>
     </li>
     <li>
-      <p>Rename the datasets and add appropriate tags to them</p>
+      <p>Rename the datasets</p>
 
-      <p>For datasets that you upload via a link, <span class="notranslate">Galaxy</span> will pick the link
-address as the dataset name, which you will likely want to shorten to
-just the file names.</p>
+      <p>For datasets uploaded via a link, <span class="notranslate">Galaxy</span> will use the link
+as the dataset name. In this case you may rename datasets.</p>
 
       <blockquote class="tip">
 
@@ -318,1780 +372,870 @@ just the file names.</p>
           <li>Click the <strong>Save</strong> button</li>
         </ul>
       </blockquote>
-
-      <p>Large parts of the analysis in this tutorial will consist of
-identical steps performed on the normal and on the tumor tissue data
-in parallel.</p>
-
-      <p>To make it easier to keep track of which dataset represents which
-branch of an analysis in a linear history, <span class="notranslate">Galaxy</span> supports dataset
-tags. In particular, if you attach a tag starting with <code class="highlighter-rouge">#</code> to any
-dataset, that tag will automatically propagate to any new dataset
-derived from the tagged dataset.</p>
-
-      <blockquote class="tip">
-
-        <h3 id="tip-tip-adding-a-tag"><i class="fa fa-lightbulb-o" aria-hidden="true"></i><span class="visually-hidden">tip</span> Tip: Adding a tag</h3>
-        <ul>
-          <li>Click on the dataset</li>
-          <li>Click on <i class="fa fa-tags" aria-hidden="true"></i><span class="visually-hidden"><span class="notranslate">galaxy</span>-tags</span> <strong>Edit dataset tags</strong></li>
-          <li>
-            <p>Add a tag starting with <code class="highlighter-rouge">#</code></p>
-
-            <p>Tags starting with <code class="highlighter-rouge">#</code> will be automatically propagated to the outputs of tools using this dataset.</p>
-          </li>
-          <li>Check that the tag is appearing below the dataset name</li>
-        </ul>
-
-      </blockquote>
-
-      <p>Before starting our analysis it is, thus, a good idea to tag the two
-fastq datasets representing the normal tissue with, <em>e.g.</em>, <code class="highlighter-rouge">#normal</code>
-and the two datasets representing the tumor tissue with, <em>e.g.</em>,
-<code class="highlighter-rouge">#tumor</code>.</p>
-    </li>
-    <li>
-      <p>Import the reference genome with the <code class="highlighter-rouge">hg19</code> version of the sequences of
-human chromosomes 5, 12 and 17:</p>
-
-      <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>https://zenodo.org/record/2582555/files/hg19.chr5_12_17.fa.gz
-</code></pre></div>      </div>
-
-      <p>Make sure you specify the datatype as <code class="highlighter-rouge">fasta</code> in the import dialog.</p>
-
-      <blockquote class="comment">
-        <h3 id="comment-shortcut"><i class="fa fa-commenting-o" aria-hidden="true"></i><span class="visually-hidden">comment</span> Shortcut</h3>
-        <p>You can skip this step if the <span class="notranslate">Galaxy</span> server you are working on offers
-a <code class="highlighter-rouge">hg19</code> version of the human reference genome with prebuilt indexes for
-<em>bwa-mem</em> <strong>and</strong> <em>samtools</em> (ask your instructor, or check the tools
-<strong>Map with BWA-MEM</strong> <i class="fa fa-wrench" aria-hidden="true"></i><span class="visually-hidden">tool</span> and <strong>VarScan Somatic</strong>
-<i class="fa fa-wrench" aria-hidden="true"></i><span class="visually-hidden">tool</span> if they list a <code class="highlighter-rouge">hg19</code> version as an option under
-<em>“(Using) reference genome”</em>).</p>
-      </blockquote>
-
-      <p>Alte<span class="notranslate">rna</span>tively, load the dataset from a shared data library.</p>
-    </li>
-    <li>
-      <p>Rename the reference genome</p>
-
-      <p>The reference genome you have imported above came as a compressed
-file, but got unpacked by <span class="notranslate">Galaxy</span> to plain <code class="highlighter-rouge">fasta</code> format according to
-your datatype selection. You may now wish to remove the <code class="highlighter-rouge">.gz</code> suffix
-from the dataset name.</p>
     </li>
   </ol>
 
 </blockquote>
 
-<h1 id="quality-control-and-mapping-of-ngs-reads">Quality control and <span class="notranslate">mapping</span> of NGS <span class="notranslate">reads</span></h1>
+<h1 id="next-generation-sequencing">Next Generation Sequencing</h1>
 
-<p>Before starting our analysis, we would like to make sure that the input data
-is of good quality, <em>i.e.</em>, that there haven’t been any major issues during
-<span class="notranslate">DNA</span> preparation, exon capture, or during actual sequencing. To avoid spurious
-variant calls due to low input quality, we can ensure that all sequencing <span class="notranslate">reads</span>
-used in the analysis meet some minimal quality criteria by trimming low-quality
-parts off of the ends of <span class="notranslate">reads</span> and/or discarding <span class="notranslate">reads</span> of poor quality
-altogether. The resulting set of polished <span class="notranslate">reads</span> then needs to be mapped to the
-human reference genome because knowing the genomic positions that the bases of
-a read provide evidence for is, of course, a prerequisite for variant calling.</p>
-
-<blockquote class="comment">
-  <h3 id="comment-more-on-quality-control-and-mapping"><i class="fa fa-commenting-o" aria-hidden="true"></i><span class="visually-hidden">comment</span> More on quality control and <span class="notranslate">mapping</span></h3>
-  <p>If you would like to explore the topics of quality control and read <span class="notranslate">mapping</span>
-in detail, you should take a look at the separate
-[Quality Control]
-and [<span class="notranslate">Mapping</span>]
-tutorials.
-Here, we will only illustrate the concrete steps necessary for quality
-control and read <span class="notranslate">mapping</span> of our particular datasets.</p>
-</blockquote>
-
-<h2 id="quality-control">Quality control</h2>
-
-<blockquote class="notranslate hands_on">
-  <h3 id="hands_on-hands-on-quality-control-of-the-input-datasets"><i class="fa fa-pencil" aria-hidden="true"></i><span class="visually-hidden">hands_on</span> Hands-on: Quality control of the input datasets</h3>
-  <ol>
-    <li>Run <strong>FastQC</strong> <i class="fa fa-wrench" aria-hidden="true"></i><span class="visually-hidden">tool</span> on each of your four fastq datasets
-      <ul>
-        <li><i class="fa fa-files-o" aria-hidden="true"></i><span class="visually-hidden">param-files</span> <em>“Short read data from your current history”</em>: all 4 FASTQ  datasets selected with <strong>Multiple datasets</strong></li>
-      </ul>
-
-      <blockquote class="tip">
-
-        <h3 id="tip-tip-select-multiple-datasets"><i class="fa fa-lightbulb-o" aria-hidden="true"></i><span class="visually-hidden">tip</span> Tip: Select multiple datasets</h3>
-
-        <ol>
-          <li>Click on <i class="fa fa-files-o" aria-hidden="true"></i><span class="visually-hidden">param-files</span> <strong>Multiple datasets</strong></li>
-          <li>Select several files by keeping the <kbd>Ctrl</kbd> (or
-<kbd>COMMAND</kbd>) key pressed and clicking on the files of interest</li>
-        </ol>
-      </blockquote>
-
-      <p>When you start this job, eight new datasets (one with the calculated raw
-data, another one with an html report of the findings for each input
-dataset) will get added to your history.</p>
-    </li>
-    <li>Use <strong>MultiQC</strong> <i class="fa fa-wrench" aria-hidden="true"></i><span class="visually-hidden">tool</span> to aggregate the raw <strong>FastQC</strong> data of all four input datasets into one report
-      <ul>
-        <li>In <em>“Results”</em>
-          <ul>
-            <li><em>“Which tool was used generate logs?”</em>: <code class="highlighter-rouge">FastQC</code></li>
-            <li>In <em>“FastQC output”</em>
-              <ul>
-                <li><em>“Type of FastQC output?”</em>: <code class="highlighter-rouge">Raw data</code></li>
-                <li><i class="fa fa-files-o" aria-hidden="true"></i><span class="visually-hidden">param-files</span> <em>“FastQC output”</em>: all four <em>RawData</em>
-outputs of <strong>FastQC</strong> <i class="fa fa-wrench" aria-hidden="true"></i><span class="visually-hidden">tool</span>)</li>
-              </ul>
-            </li>
-          </ul>
-        </li>
-      </ul>
-    </li>
-    <li>
-      <p>Inspect the <em>Webpage</em> output produced by the tool</p>
-
-      <blockquote class="question">
-        <h3 id="question-questions"><i class="fa fa-question-circle" aria-hidden="true"></i><span class="visually-hidden">question</span> Questions</h3>
-
-        <ol>
-          <li>What do you think of the base qualities of the sequences?</li>
-          <li>Which aspect of the quality report is most puzzling to you?
-(Hint: Have a look at the GC content of the <span class="notranslate">reads</span>)</li>
-        </ol>
-
-        <blockquote class="solution">
-          <h3 id="solution-solution"><i class="fa fa-eye" aria-hidden="true"></i><span class="visually-hidden">solution</span> Solution</h3>
-
-          <ol>
-            <li>
-              <p>The quality of the sequences looks promising. There are no
-discernible systematic problems with it.</p>
-
-              <p>Even the reverse <span class="notranslate">reads</span>, which are typically of somewhat poorer
-quality than the corresponding forward <span class="notranslate">reads</span>, look good on average.</p>
-            </li>
-            <li>
-              <p>The GC content plots of the forward and the reverse <span class="notranslate">reads</span> from both
-samples reveal a very peculiar bimodal distribution.</p>
-
-              <p>Typically, a non-normal distribution of the GC content of the <span class="notranslate">reads</span>
-from a sample is considered to hint at possible contamination.
-Here, however, we are dealing with sequencing data from captured
-exomes, <em>i.e</em>, the <span class="notranslate">reads</span> are not representing random sequences from
-a genome, but rather an arbitrary selection.
-In fact, the samples at hand were prepared using Agilent’s
-SureSelect V5 technology for exome enrichment, and bimodal GC
-content distributions can be seen as a hallmark of that capture
-method in several publications (see, for example, Fig. 4C in
-<a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4477645/">Meienberg et al., 2015</a>
-).</p>
-            </li>
-          </ol>
-
-        </blockquote>
-      </blockquote>
-    </li>
-  </ol>
-</blockquote>
-
-<h2 id="read-trimming-and-filtering">Read trimming and filtering</h2>
-<p>Although the raw <span class="notranslate">reads</span> used in this tutorial are of relatively good overall
-quality already, we will apply read trimming and filtering to see if we can
-improve things still a bit, but also to demonstrate the general concept.</p>
-
-<blockquote class="notranslate hands_on">
-  <h3 id="hands_on-hands-on-read-trimming-and-filtering-of-the-normal-tissue-reads"><i class="fa fa-pencil" aria-hidden="true"></i><span class="visually-hidden">hands_on</span> Hands-on: Read trimming and filtering of the normal tissue <span class="notranslate">reads</span></h3>
-  <ol>
-    <li><strong>Trimmomatic</strong> <i class="fa fa-wrench" aria-hidden="true"></i><span class="visually-hidden">tool</span> to trim and filter the normal tissue <span class="notranslate">reads</span>
-      <ul>
-        <li>
-          <p><em>“Single-end or paired-end <span class="notranslate">reads</span>?”</em>: <code class="highlighter-rouge">Paired-end (two separate
-input files)</code></p>
-
-          <p>This makes the tool treat the forward and reverse <span class="notranslate">reads</span> simultaneously.</p>
-
-          <ul>
-            <li><i class="fa fa-file-o" aria-hidden="true"></i><span class="visually-hidden">param-file</span> <em>“Input FASTQ file (R1/first of pair)”</em>: the
-forward <span class="notranslate">reads</span> (r1) dataset of the normal tissue sample</li>
-            <li><i class="fa fa-file-o" aria-hidden="true"></i><span class="visually-hidden">param-file</span> <em>“Input FASTQ file (R2/second of pair)”</em>: the
-reverse <span class="notranslate">reads</span> (r2) dataset of the normal tissue sample</li>
-          </ul>
-        </li>
-        <li><em>“Perform initial ILLUMINACLIP step?”</em>: <code class="highlighter-rouge">Yes</code>
-          <ul>
-            <li><em>“Select standard adapter sequences or provide custom?”</em>: <code class="highlighter-rouge">Standard</code>
-              <ul>
-                <li><em>“Adapter sequences to use”</em>: <code class="highlighter-rouge">TruSeq3 (paired-ended, for MiSeq and
- HiSeq)</code></li>
-              </ul>
-            </li>
-            <li><em>“Maximum mismatch count which will still allow a full match to be
-  performed”</em>: <code class="highlighter-rouge">2</code></li>
-            <li><em>“How accurate the match between the two ‘adapter ligated’ <span class="notranslate">reads</span> must
-  be for PE palindrome read alignment”</em>: <code class="highlighter-rouge">30</code></li>
-            <li><em>“How accurate the match between any adapter etc. sequence must be
-  against a read”</em>: <code class="highlighter-rouge">10</code></li>
-            <li><em>“Minimum length of adapter that needs to be detected (PE specific/
-  palindrome mode)”</em>: <code class="highlighter-rouge">8</code></li>
-            <li><em>“Always keep both <span class="notranslate">reads</span> (PE specific/palindrome mode)?”</em>: <code class="highlighter-rouge">Yes</code></li>
-          </ul>
-
-          <p>These parameters are used to cut ILLUMINA-specific adapter sequences
- from the <span class="notranslate">reads</span>.</p>
-        </li>
-        <li>In <em>“Trimmomatic Operation”</em>
-          <ul>
-            <li>In <em>“1: Trimmomatic Operation”</em>
-              <ul>
-                <li><em>“Select Trimmomatic operation to perform”</em>: <code class="highlighter-rouge">Cut the specified number
- of bases from the start of the read (HEADCROP)</code>
-                  <ul>
-                    <li><em>“Number of bases to remove from the start of the read”</em>: <code class="highlighter-rouge">3</code></li>
-                  </ul>
-                </li>
-              </ul>
-            </li>
-            <li><i class="fa fa-plus-square-o" aria-hidden="true"></i><span class="visually-hidden">param-repeat</span> “Insert Trimmomatic Operation”*</li>
-            <li>In <em>“2: Trimmomatic Operation”</em>
-              <ul>
-                <li><em>“Select Trimmomatic operation to perform”</em>: <code class="highlighter-rouge">Cut bases off the end of
- a read, if below a threshold quality (TRAILING)</code>
-                  <ul>
-                    <li><em>“Minimum quality required to keep a base”</em>: <code class="highlighter-rouge">10</code></li>
-                  </ul>
-                </li>
-              </ul>
-            </li>
-            <li><i class="fa fa-plus-square-o" aria-hidden="true"></i><span class="visually-hidden">param-repeat</span> “Insert Trimmomatic Operation”*</li>
-            <li>In <em>“3: Trimmomatic Operation”</em>
-              <ul>
-                <li><em>“Select Trimmomatic operation to perform”</em>: <code class="highlighter-rouge">Drop <span class="notranslate">reads</span> below a
- specified length (MINLEN)</code>
-                  <ul>
-                    <li><em>“Minimum quality required to keep a base”</em>: <code class="highlighter-rouge">25</code></li>
-                  </ul>
-                </li>
-              </ul>
-            </li>
-          </ul>
-
-          <p>These three trimming and filtering operations will be applied to the
- <span class="notranslate">reads</span> in the given order after adapter trimming.</p>
-        </li>
-      </ul>
-    </li>
-  </ol>
-
-</blockquote>
-
-<p>Running this job will generate four output datasets:</p>
 <ul>
-  <li>two for the trimmed forward and reverse <span class="notranslate">reads</span> that still have a proper
-mate in the other dataset</li>
-  <li>two more datasets of orphaned forward and reverse <span class="notranslate">reads</span>, for which the
-corresponding mate got dropped because of insufficient length after
-trimming; when you inspect these two files, however, you should find
-that they are empty because none of our relatively high quality <span class="notranslate">reads</span>
-got trimmed that excessively. You can delete the two datasets to keep
-your history more compact.</li>
+  <li><em>Next (or Second) Generation Sequencing</em> (NGS/SGS) is an umbrella-term covering a number of approaches to <span class="notranslate">DNA</span> sequencing that have been developed after the first, widespread and for long time most commonly used Sanger sequencing.</li>
+  <li><em>NGS</em> is also known as <em>Massive Parallel Sequencing</em> (MPS), a term that makes explicit the paradigm shared by all these technologies, that is to sequence in parallel a massive library of spatially separated and clonally amplified <span class="notranslate">DNA</span> templates.</li>
+  <li>For a comprehensive review of the different <em>NGS</em> technologies see <a href="https://www.nature.com/articles/nrg.2016.49">Goodwin et al., 2016</a>, which also includes an introduction to the third generation methods allowing sequencing of long single-molecule <span class="notranslate">reads</span>.</li>
 </ul>
 
-<blockquote class="details">
-  <h3 id="details-more-on-handling-unpaired-reads-in-paired-end-data"><i class="fa fa-info-circle" aria-hidden="true"></i><span class="visually-hidden">details</span> More on handling unpaired <span class="notranslate">reads</span> in paired-end data</h3>
-  <p>Splitting out potential unpaired <span class="notranslate">reads</span> into separate datasets like this
-is important because read mappers, typically, expect <span class="notranslate">reads</span> in forward
-and reverse input datasets to be arranged in proper pairs, and <span class="notranslate">reads</span>
-in one of the datasets without a counterpart in the other would destroy
-that expected structure. Therefor, when your data is paired-end data
-always make sure you use Trimmomatic in paired-end mode, too!</p>
-</blockquote>
+<h2 id="ngs-in-the-clinic">NGS in the clinic</h2>
 
-<blockquote class="notranslate hands_on">
-  <h3 id="hands_on-hands-on-read-trimming-and-filtering-of-the-tumor-tissue-reads"><i class="fa fa-pencil" aria-hidden="true"></i><span class="visually-hidden">hands_on</span> Hands-on: Read trimming and filtering of the tumor tissue <span class="notranslate">reads</span></h3>
-  <ol>
-    <li>
-      <p>Trim and filter the <strong>tumor tissue</strong> <span class="notranslate">reads</span> following the same steps as above, just change the two input datasets to treat the tumor tissue <span class="notranslate">reads</span> with identical settings.</p>
-    </li>
-    <li>
-      <p>Check that the two unpaired <span class="notranslate">reads</span> datasets are empty, and delete them.</p>
-    </li>
-  </ol>
-</blockquote>
+<p>In the span of less than a decade, NGS approaches have pervaded clinical laboratories revolutionizing genomic diagnostics and increasing yield and timeliness of genetic tests.</p>
 
-<blockquote class="notranslate hands_on">
-  <h3 id="hands_on-exercise-quality-control-of-the-polished-datasets"><i class="fa fa-pencil" aria-hidden="true"></i><span class="visually-hidden">hands_on</span> Exercise: Quality control of the polished datasets</h3>
-  <p>Use <strong>FastQC</strong> <i class="fa fa-wrench" aria-hidden="true"></i><span class="visually-hidden">tool</span> and <strong>MultiQC</strong> <i class="fa fa-wrench" aria-hidden="true"></i><span class="visually-hidden">tool</span> like before,
-but using the four trimmed datasets produced by Trimmomatic as input.</p>
+<p>In the context of disorders with a recognized strong genetic contribution such as neurogenetic diseases, <em>NGS</em> has been firmly established as the strategy of choice to rapidly and efficiently diagnose diseases with a Mendelian basis. A general diagnostic <span class="notranslate">workflow</span> for these disorders currently embraces different <em>NGS</em>-based diagnostic options as illustrated in <strong>Figure 1</strong>.</p>
 
-  <blockquote class="question">
-    <h3 id="question-questions-1"><i class="fa fa-question-circle" aria-hidden="true"></i><span class="visually-hidden">question</span> Questions</h3>
+<hr />
 
-    <p>How did read trimming affect the quality reports?</p>
+<p><img src="http://0.0.0.0:4000/clinical_genomics/images/ngs_neuro_diagnostics.png" alt="ngs_neuro_diagnostics" /></p>
 
-    <blockquote class="solution">
-      <h3 id="solution-solution-1"><i class="fa fa-eye" aria-hidden="true"></i><span class="visually-hidden">solution</span> Solution</h3>
+<p><strong>Figure 1</strong>. General <span class="notranslate">workflow</span> for genetic diagnosis of neurological diseases. (*If considering high-yield single-gene testing of more than 1–3 genes by another sequencing method, note that next-generation sequencing is often most cost-effective. †Genetic counselling is required before and after all genetic testing; other considerations include the potential for secondary findings in genomic testing, testing parents if inheritance is sporadic or recessive, and specialty referral.) From <a href="https://www.thelancet.com/journals/laneur/article/PIIS1474-4422(19)30033-X/fulltext">Rexach et al., 2019</a></p>
 
-      <p>As expected, trimming the relatively high-quality raw <span class="notranslate">reads</span> did not
-have any substantial impact on average. A small fraction of successful
-adapter removal is visible though.</p>
+<hr />
 
-    </blockquote>
-  </blockquote>
-</blockquote>
+<p>Currently, most common <em>NGS</em> strategies in clinical laboratories are the so-called <strong>targeted sequencing</strong> methods that, as opposed to <strong>genome sequencing</strong> covering the whole genomic sequence, focus on a pre-defined set of regions of interest (the <strong>targets</strong>). The targets can be selected by <strong>hybrid capture</strong> or <strong>amplicon sequencing</strong>, and the target-enriched libraries is then sequenced. The most popular target designs are:</p>
 
-<h2 id="read-mapping">Read <span class="notranslate">Mapping</span></h2>
+<ul>
+  <li><strong>gene panels</strong> where the coding exons of only a clinically-relevant group of genes are targeted</li>
+  <li><strong>exome sequencing</strong> where virtually all the protein-coding exons in a genome are simultaneously sequenced</li>
+</ul>
 
-<blockquote class="notranslate hands_on">
-  <h3 id="hands_on-hands-on-read-mapping"><i class="fa fa-pencil" aria-hidden="true"></i><span class="visually-hidden">hands_on</span> Hands-on: Read <span class="notranslate">Mapping</span></h3>
-  <ol>
-    <li><strong>Map with BWA-MEM</strong> <i class="fa fa-wrench" aria-hidden="true"></i><span class="visually-hidden">tool</span> to map the <span class="notranslate">reads</span> from the <strong>normal tissue</strong> sample to the reference genome
-      <ul>
-        <li><em>“Will you select a reference genome from your history or use a built-in index?”</em>: <code class="highlighter-rouge">Use a built-in genome index</code>
-          <ul>
-            <li><em>“Using reference genome”</em>: <code class="highlighter-rouge">Human: hg19</code> (or a similarly named option)</li>
-          </ul>
+<h2 id="basics-of-ngs-bioinformatic-analysis">Basics of NGS bioinformatic analysis</h2>
 
-          <blockquote class="comment">
-            <h3 id="comment-using-the-imported-hg19-sequence"><i class="fa fa-commenting-o" aria-hidden="true"></i><span class="visually-hidden">comment</span> Using the imported <code class="highlighter-rouge">hg19</code> sequence</h3>
-            <p>If you have imported the <code class="highlighter-rouge">hg19</code> sequence as a fasta dataset into your
-history instead:</p>
-            <ul>
-              <li><em>“Will you select a reference genome from your history or use a
-built-in index?”</em>: <code class="highlighter-rouge">Use a genome from history and build index</code>
-                <ul>
-                  <li><i class="fa fa-file-o" aria-hidden="true"></i><span class="visually-hidden">param-file</span> <em>“Use the following dataset as the reference sequence”</em>: your imported <code class="highlighter-rouge">hg19</code> fasta dataset.</li>
-                </ul>
-              </li>
-            </ul>
-          </blockquote>
-        </li>
-        <li><em>“Single or Paired-end <span class="notranslate">reads</span>”</em>: <code class="highlighter-rouge">Paired</code>
-          <ul>
-            <li><i class="fa fa-file-o" aria-hidden="true"></i><span class="visually-hidden">param-file</span> <em>“Select first set of <span class="notranslate">reads</span>”</em>: the trimmed 
-forward <span class="notranslate">reads</span> (r1) dataset of the <strong>normal tissue</strong> sample; output of
-<strong>Trimmomatic</strong> <i class="fa fa-wrench" aria-hidden="true"></i><span class="visually-hidden">tool</span></li>
-            <li><i class="fa fa-file-o" aria-hidden="true"></i><span class="visually-hidden">param-file</span> <em>“Select second set of <span class="notranslate">reads</span>”</em>: the trimmed
-reverse <span class="notranslate">reads</span> (r2) dataset of the <strong>normal tissue</strong> sample; output of
-<strong>Trimmomatic</strong> <i class="fa fa-wrench" aria-hidden="true"></i><span class="visually-hidden">tool</span></li>
-          </ul>
-        </li>
-        <li><em>“Set read groups information?”</em>: <code class="highlighter-rouge">Set read groups (SAM/BAM specification)</code>
-          <ul>
-            <li><em>“Auto-assign”</em>: <code class="highlighter-rouge">No</code>
-              <ul>
-                <li><em>“Read group identifier (ID)”</em>: <code class="highlighter-rouge">231335</code> (this value being taken
-from the original name of the normal tissue input files)</li>
-              </ul>
-            </li>
-            <li><em>“Auto-assign”</em>: <code class="highlighter-rouge">No</code>
-              <ul>
-                <li><em>“Read group sample name (SM)”</em>: <code class="highlighter-rouge">Normal</code></li>
-              </ul>
-            </li>
-          </ul>
-        </li>
-      </ul>
+<p>Apart from the different width of the target space in exome and gene panels, these two approaches usually share the same experimental procedure for NGS library preparation. After clonal amplification, the fragmented and adapter-ligated <span class="notranslate">DNA</span> templates are sequenced from both ends of the <em>insert</em> to produce short <span class="notranslate">reads</span> in opposite (<strong>forward</strong> and <strong>reverse</strong>) orientation (<strong>paired-end</strong> sequencing).</p>
 
-      <blockquote class="comment">
-        <h3 id="comment-more-on-read-group-identifiers-and-sample-names"><i class="fa fa-commenting-o" aria-hidden="true"></i><span class="visually-hidden">comment</span> More on read group identifiers and sample names</h3>
-        <p>In general, you are free to choose ID and SM values to your liking,
-but the ID should unambiguously identify the sequencing run that
-produced the <span class="notranslate">reads</span>, while the SM value should identify the
-biological sample.</p>
-      </blockquote>
-    </li>
-    <li><strong>Map with BWA-MEM</strong> <i class="fa fa-wrench" aria-hidden="true"></i><span class="visually-hidden">tool</span> to map the <span class="notranslate">reads</span> from the <strong>tumor tissue</strong> sample,
-      <ul>
-        <li><em>“Will you select a reference genome from your history or use a built-in index?”</em>: <code class="highlighter-rouge">Use a built-in genome index</code>
-          <ul>
-            <li><em>“Using reference genome”</em>: <code class="highlighter-rouge">Human: hg19</code> (or a similarly named option)</li>
-          </ul>
+<p>Bioinformatic analysis of NGS data usually follows a general three-step <span class="notranslate">workflow</span> to variant detection. Each of these three steps is marked by its “milestone” file type containing sequence data in different formats and metadata describing sequence-related information collected during the analysis step that leads to generation of that file.</p>
 
-          <p>Adjust these settings as before if you are using the imported reference
-genome.</p>
-        </li>
-        <li><em>“Single or Paired-end <span class="notranslate">reads</span>”</em>: <code class="highlighter-rouge">Paired</code>
-          <ul>
-            <li><i class="fa fa-file-o" aria-hidden="true"></i><span class="visually-hidden">param-file</span> <em>“Select first set of <span class="notranslate">reads</span>”</em>: the trimmed
-forward <span class="notranslate">reads</span> (r1) dataset of the <strong>tumor tissue</strong> sample; output of
-<strong>Trimmomatic</strong> <i class="fa fa-wrench" aria-hidden="true"></i><span class="visually-hidden">tool</span></li>
-            <li><i class="fa fa-file-o" aria-hidden="true"></i><span class="visually-hidden">param-file</span> <em>“Select second set of <span class="notranslate">reads</span>”</em>: the reverse
-<span class="notranslate">reads</span> (r2) dataset of the <strong>tumor tissue</strong> sample; output of
-<strong>Trimmomatic</strong> <i class="fa fa-wrench" aria-hidden="true"></i><span class="visually-hidden">tool</span></li>
-          </ul>
-        </li>
-        <li><em>“Set read groups information?”</em>: <code class="highlighter-rouge">Set read groups (SAM/BAM specification)</code>
-          <ul>
-            <li><em>“Auto-assign”</em>: <code class="highlighter-rouge">No</code>
-              <ul>
-                <li><em>“Read group identifier (ID)”</em>: <code class="highlighter-rouge">231336</code> (this value, again, being
-taken from the original name of the tumor tissue input files)</li>
-              </ul>
-            </li>
-            <li><em>“Auto-assign”</em>: <code class="highlighter-rouge">No</code>
-              <ul>
-                <li><em>“Read group sample name (SM)”</em>: <code class="highlighter-rouge">Tumor</code></li>
-              </ul>
-            </li>
-          </ul>
-        </li>
-      </ul>
-    </li>
-  </ol>
+<hr />
 
-</blockquote>
+<table>
+  <thead>
+    <tr>
+      <th>NGS <span class="notranslate">workflow</span> step</th>
+      <th>File content</th>
+      <th>File format</th>
+      <th>File Size (individual exome)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Sample to <span class="notranslate">reads</span></td>
+      <td>Unaligned <span class="notranslate">reads</span> and qualities</td>
+      <td><strong>fastQ</strong></td>
+      <td>gigabytes</td>
+    </tr>
+    <tr>
+      <td><span class="notranslate">Reads</span> to alignments</td>
+      <td>Aligned <span class="notranslate">reads</span> and metadata</td>
+      <td><strong>BAM</strong></td>
+      <td>gigabytes</td>
+    </tr>
+    <tr>
+      <td>Alignments to variants</td>
+      <td>Genotyped variants and metadata</td>
+      <td><strong>VCF</strong></td>
+      <td>megabytes</td>
+    </tr>
+  </tbody>
+</table>
 
-<h1 id="mapped-reads-postprocessing">Mapped <span class="notranslate">reads</span> postprocessing</h1>
+<hr />
 
-<p>To ensure that we base our variant analysis only on unambiguous, high-quality
-read <span class="notranslate">mapping</span>s we will do some postprocessing next.</p>
+<p>Here are the different formats explained:</p>
 
-<h2 id="filtering-on-mapped-reads-properties">Filtering on mapped <span class="notranslate">reads</span> properties</h2>
-
-<p>To produce new filtered BAM datasets with only those <span class="notranslate">reads</span> retained that have
-been mapped to the reference successfully, have a minimal <span class="notranslate">mapping</span> quality of 1,
-and for which the mate read has also been mapped:</p>
-
-<blockquote class="notranslate hands_on">
-  <h3 id="hands_on-hands-on-filtering-for-mapping-status-and-quality"><i class="fa fa-pencil" aria-hidden="true"></i><span class="visually-hidden">hands_on</span> Hands-on: Filtering for <span class="notranslate">mapping</span> status and quality</h3>
-
-  <ol>
-    <li><strong>Filter BAM datasets on a variety of attributes</strong> <i class="fa fa-wrench" aria-hidden="true"></i><span class="visually-hidden">tool</span> with the following parameters:
-      <ul>
-        <li><i class="fa fa-files-o" aria-hidden="true"></i><span class="visually-hidden">param-files</span> <em>“BAM dataset(s) to filter”</em>: mapped <span class="notranslate">reads</span>
- datasets from the normal <em>and</em> the tumor tissue data, outputs of
- <strong>Map with BWA-MEM</strong> <i class="fa fa-wrench" aria-hidden="true"></i><span class="visually-hidden">tool</span></li>
-        <li>In <em>“Condition”</em>:</li>
-      </ul>
-      <ul>
-        <li>In <em>“1: Condition”</em>:
-          <ul>
-            <li>In <em>“Filter”</em>:
-              <ul>
-                <li>In <em>“1: Filter”</em>:
-                  <ul>
-                    <li><em>“Select BAM property to filter on”</em>: <code class="highlighter-rouge">mapQuality</code>
-                      <ul>
-                        <li><em>“Filter on read <span class="notranslate">mapping</span> quality (phred scale)”</em>: <code class="highlighter-rouge">&gt;=1</code></li>
-                      </ul>
-                    </li>
-                  </ul>
-                </li>
-                <li>In <em>“2: Filter”</em>:
-                  <ul>
-                    <li><em>“Select BAM property to filter on”</em>: <code class="highlighter-rouge">isMapped</code>
-                      <ul>
-                        <li><em>“Selected mapped <span class="notranslate">reads</span>”</em>: <code class="highlighter-rouge">Yes</code></li>
-                      </ul>
-                    </li>
-                  </ul>
-                </li>
-                <li>Click on <em>“Insert Filter”</em></li>
-                <li>In <em>“3: Filter”</em>:
-                  <ul>
-                    <li><em>“Select BAM property to filter on”</em>: <code class="highlighter-rouge">isMateMapped</code>
-                      <ul>
-                        <li><em>“Select <span class="notranslate">reads</span> with mapped mate”</em>: <code class="highlighter-rouge">Yes</code></li>
-                      </ul>
-                    </li>
-                  </ul>
-                </li>
-              </ul>
-            </li>
-          </ul>
-
-          <p>When you configure multiple filters within one condition, <span class="notranslate">reads</span> have
-to pass <em>all</em> the filters to be retained in the output. The above
-settings, thus, retain only read pairs, for which both mates are
-mapped.</p>
-
-          <p>Note that filtering for a minimal <span class="notranslate">mapping</span> quality is not strictly
-necessary. Most variant callers (including **VarScan somatic, which we
-will be using later) have an option for using only <span class="notranslate">reads</span> above a
-certain <span class="notranslate">mapping</span> quality. In this section, however, we are going to
-process the retained <span class="notranslate">reads</span> further rather extensively so it pays off
-in terms of performance to eliminate <span class="notranslate">reads</span> we do not plan to use at an
-early step.</p>
-        </li>
-      </ul>
-    </li>
-  </ol>
-
-  <ul>
-    <li><em>“Would you like to set rules?”</em>: <code class="highlighter-rouge">No</code></li>
-  </ul>
-
-</blockquote>
-
-<p>This will result in two new datasets, one for each of the normal and tumor data.</p>
-
-<blockquote class="details">
-  <h3 id="details-tools-for-filtering-bam-datasets"><i class="fa fa-info-circle" aria-hidden="true"></i><span class="visually-hidden">details</span> Tools for filtering BAM datasets</h3>
-  <p>The related tutorial on variant detection from exome-seq data, demonstrates
-nearly identical filtering of BAM datasets using the tool <strong>Filter BAM
-datasets on a variety of attributes</strong> <i class="fa fa-wrench" aria-hidden="true"></i><span class="visually-hidden">tool</span>.</p>
-
-  <p>These two tools offer very similar functionality and can often be used
-interchangeably. Under the hood, <strong>Filter SAM or BAM, output SAM or BAM</strong>
-<i class="fa fa-wrench" aria-hidden="true"></i><span class="visually-hidden">tool</span> uses the <code class="highlighter-rouge">samtools view</code> command line tool, while <strong>Filter
-BAM datasets on a variety of attributes</strong> <i class="fa fa-wrench" aria-hidden="true"></i><span class="visually-hidden">tool</span> uses <code class="highlighter-rouge">bamtools
-filter</code>. Whatever the BAM filtering task, you should be able to perform it in
-<span class="notranslate">Galaxy</span> with one of these two tools.</p>
-
-</blockquote>
-
-<h2 id="removing-duplicate-reads">Removing duplicate <span class="notranslate">reads</span></h2>
-
-<blockquote class="notranslate hands_on">
-  <h3 id="hands_on-hands-on-remove-duplicates"><i class="fa fa-pencil" aria-hidden="true"></i><span class="visually-hidden">hands_on</span> Hands-on: Remove duplicates</h3>
-
-  <ol>
-    <li><strong>RmDup</strong> <i class="fa fa-wrench" aria-hidden="true"></i><span class="visually-hidden">tool</span> with the following parameters:
-      <ul>
-        <li><i class="fa fa-files-o" aria-hidden="true"></i><span class="visually-hidden">param-files</span> <em>“BAM file”</em>: filtered <span class="notranslate">reads</span> datasets from
- the normal <em>and</em> the tumor tissue data; the outputs of
- <strong>Filter SAM or BAM</strong></li>
-        <li><em>“Is this paired-end or single end data”</em>: <code class="highlighter-rouge">BAM is paired-end</code></li>
-      </ul>
-      <ul>
-        <li><em>“Treat as single-end”</em>: <code class="highlighter-rouge">No</code></li>
-      </ul>
-    </li>
-  </ol>
-
-</blockquote>
-
-<p>Again, this will produce two new datasets, one for each of the normal and
-tumor data.</p>
-
-<h2 id="left-align-reads-around-indels">Left-align <span class="notranslate">reads</span> around indels</h2>
-
-<blockquote class="notranslate hands_on">
-  <h3 id="hands_on-hands-on-left-align"><i class="fa fa-pencil" aria-hidden="true"></i><span class="visually-hidden">hands_on</span> Hands-on: Left-align</h3>
-
-  <ol>
-    <li><strong>BamLeftAlign</strong> <i class="fa fa-wrench" aria-hidden="true"></i><span class="visually-hidden">tool</span> with the following parameters:
-      <ul>
-        <li><em>“Choose the source for the reference genome”</em>: <code class="highlighter-rouge">Locally cached</code>
-          <ul>
-            <li><i class="fa fa-files-o" aria-hidden="true"></i><span class="visually-hidden">param-files</span> <em>“BAM dataset to re-align”</em>: your
-filtered and deduplicated <span class="notranslate">reads</span> datasets from the normal <em>and</em> the tumor
-tissue data; the outputs of <strong>RmDup</strong></li>
-            <li><em>“Using reference genome”</em>: <code class="highlighter-rouge">Human: hg19</code> (or a similarly
-named choice)
-     - <em>“Maximum number of iterations”</em>: <code class="highlighter-rouge">5</code></li>
-          </ul>
-        </li>
-      </ul>
-    </li>
-  </ol>
-
-  <blockquote class="comment">
-    <h3 id="comment-using-the-imported-hg19-sequence-1"><i class="fa fa-commenting-o" aria-hidden="true"></i><span class="visually-hidden">comment</span> Using the imported <code class="highlighter-rouge">hg19</code> sequence</h3>
-    <p>If you have imported the <code class="highlighter-rouge">hg19</code> sequence as a fasta dataset into your
-history instead:</p>
+<ul>
+  <li><strong><a href="https://en.wikipedia.org/wiki/FASTQ_format">fastQ</a></strong> (sequence with quality): the <em>de facto</em> standard for storing the output of high-throughput sequencing machines
     <ul>
-      <li><em>“Choose the source for the reference genome”</em>: <code class="highlighter-rouge">History</code>
+      <li>Usually not inspected during data analysis</li>
+    </ul>
+  </li>
+  <li><strong><a href="https://samtools.github.io/hts-specs/SAMv1.pdf">BAM</a></strong> (binary sequence alignment/map): the most widely used TAB-delimited file format to store alignments onto a reference sequence
+    <ul>
+      <li>Aligned <span class="notranslate">reads</span></li>
+    </ul>
+  </li>
+  <li><strong><a href="http://samtools.github.io/hts-specs/VCFv4.3.pdf">VCF</a></strong> (variant call format): the standard TAB-delimited format for genotype information associated with each reported genomic position where a variant call has been recorded</li>
+</ul>
+
+<p>Another useful file format is <a href="https://www.ensembl.org/info/website/upload/bed.html"><span class="notranslate">BED</span></a>, to list genomic regions of interest such as the exome or panel targets.</p>
+
+<p>The steps of the <strong><em><span class="notranslate">reads</span>-to-variants</em></strong> <span class="notranslate">workflow</span> can be connected through a bioinformatic <strong>pipeline</strong> (<a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5429012/">Leipzig et al., 2017</a>), consisting in read alignments, post-alignment BAM processing and variant calling.</p>
+
+<h2 id="alignment">Alignment</h2>
+
+<p>As generated by the sequencing machines, <em>paired-end</em> <span class="notranslate">reads</span> are written to two <em>fastQ</em> files in which <em>forward</em> and <em>reverse</em> <span class="notranslate">reads</span> are stored separately together with their qualities. <em>FastQ</em> files are taken as input files by tools (the <strong>aligners</strong>) that align the <span class="notranslate">reads</span> onto a reference genome. One of the most used aligners is <a href="http://bio-bwa.sourceforge.net/">BWA</a> among the many that have been developed (Figure 2).</p>
+
+<hr />
+
+<p><img src="http://0.0.0.0:4000/clinical_genomics/images/aligners_timeline.png" alt="aligners_timeline" /></p>
+
+<p><strong>Figure 2</strong>. Aligners timeline 2001-2012 (from <a href="https://academic.oup.com/bioinformatics/article/28/24/3169/245777">Fonseca et al., 2012</a>)</p>
+
+<hr />
+
+<p>During the bioinformatic process, <em>paired-end</em> <span class="notranslate">reads</span> from the two separate <em>fastQ</em> files are re-connected in the alignment, where it is expected that they will:</p>
+<ul>
+  <li>map to their correct location in the genome</li>
+  <li>be as distant as the insert size of the fragment they come from</li>
+  <li>be in opposite orientations
+a combination which we refer to as <strong>proper pairing</strong>. All these data about <em>paired-end</em> <span class="notranslate">reads</span> <span class="notranslate">mapping</span> are stored in the BAM file and can be used to various purposes, from alignment quality assessment to structural variant detection.</li>
+</ul>
+
+<p>In <strong>Figure 3</strong>, the <a href="http://software.broadinstitute.org/software/igv/">Integrative Genomic Viewer (IGV)</a> screenshot of an exome alignment data over two adjacent <em>ASXL1</em> exons is shown. Pink and violet bars are <em>forward</em> and <em>reverse</em> <span class="notranslate">reads</span>, respectively. The thin grey link between them indicates that they are <em>paired-end</em> <span class="notranslate">reads</span>. The stack of <span class="notranslate">reads</span> is concentrated where exons are as expected in an exome, and the number of read bases covering a given genomic location <em>e</em> (depicted as a hill-shaped profile at the top of the figure) defines the <strong>depth of coverage (DoC)</strong> over that location:</p>
+
+<p><em>DoC</em><sub>e</sub>=<em>number of read bases over e/genomic length of e</em></p>
+
+<hr />
+
+<p><img src="http://0.0.0.0:4000/clinical_genomics/images/coverage.png" alt="coverage" />
+<strong>Figure 3</strong>. Exome data visualization by <a href="http://software.broadinstitute.org/software/igv/"><em>IGV</em></a></p>
+
+<hr />
+
+<h2 id="post-alignment-bam-processing">Post-alignment BAM processing</h2>
+
+<p>Regarding post-alignment <em>pipelines</em>, the most famous for germline SNP and InDel calling is probably that developed as part of the GATK toolkit (<strong>Figure 4</strong>).</p>
+
+<hr />
+
+<p><img src="http://0.0.0.0:4000/clinical_genomics/images/gatk_germline_snps_indels.png" alt="gatk_germline_pipeline" /></p>
+
+<p><strong>Figure 4</strong>. After-alignment pipeline for germline SNP and InDel variant calling according to <a href="https://software.broadinstitute.org/gatk/best-practices/workflow?id=11145">GATK Best Practices</a></p>
+
+<hr />
+
+<p>According to GATK best practices, in order to be ready for variant calling the BAM file should undergo the following processing:</p>
+<ul>
+  <li><a href="https://software.broadinstitute.org/gatk/documentation/tooldocs/4.0.4.0/picard_sam_markduplicates_MarkDuplicates.php">marking duplicate <span class="notranslate">reads</span></a> to flag (or discard) <span class="notranslate">reads</span> that are mere optical or PCR-mediated duplications of the actual <span class="notranslate">reads</span></li>
+  <li><a href="https://software.broadinstitute.org/gatk/documentation/article?id=11081">recalibrating base quality scores</a> to correct known biases of the native base-related qualities
+While GATK BAM processing is beyond doubt important to improve data quality, it has to be noticed that it is not needed to obtain variant calls and that non GATK-based pipelines may not use it or may use different quality reparametrization schemes. Duplicate flagging or removal is not recommended in <em>amplicon</em> sequencing experiments.</li>
+</ul>
+
+<h2 id="variant-calling">Variant calling</h2>
+
+<p>The process of variant detection and genotyping is performed by <em>variant callers</em>. These tools use probabilistic approaches to collect evidence that non-reference read bases accumulating over a given locus support the presence of a variant. To be confident that a variant is a true event, its supporting evidence should be significantly stronger than chance; e.g. the C&gt;T on the left of the screenshot in Figure 5 is supported by all its position-overlapping <span class="notranslate">reads</span>, claiming for a variant. In contrast, the C&gt;A change on the right of the screenshot is seen only once over many <span class="notranslate">reads</span>, challenging its interpretation as a real variant.</p>
+
+<hr />
+
+<p><img src="http://0.0.0.0:4000/clinical_genomics/images/igv_variant.png" alt="igv_screenshot_variant" /></p>
+
+<p><strong>Figure 5</strong>. Variant visualization by <em>IGV</em></p>
+
+<hr />
+
+<p>The GATK variant calling pipeline first produces a <strong>genomic VCF (<a href="https://gatkforums.broadinstitute.org/gatk/discussion/4017/what-is-a-gvcf-and-how-is-it-different-from-a-regular-vcf">gVCF</a>)</strong>, whose main difference with <em>VCF</em> is that it records all sites in a target whether there is a variant or not, while <em>VCF</em> contains only information for variant sites, preparing multiple samples for <strong>joint genotyping</strong> and creation of a <strong>multi-sample</strong> <em>VCF</em> whose variants can undergo quality <strong>filtering</strong> in order to obtain the final set of quality-curated variants ready to be annotated.</p>
+
+<p>In <span class="notranslate">downstream</span> analyses, annotations can be added to <em>VCF</em> files themselves or information in <em>VCF</em> files can be either annotated in TAB- or comma- deimited files to be visually inspected for <em>clinical</em> variant searching or used as input to <strong>prioritization</strong> programs.</p>
+
+<h1 id="quality-control">Quality control</h1>
+
+<p>Before data analysis, it is crucial to check the quality of the data at different levels of the analysis <span class="notranslate">workflow</span>:</p>
+<ol>
+  <li>Raw sequences in FASTQ format</li>
+  <li>BAM files containing the sequences aligned to the reference genome</li>
+  <li>Final list of variants if VCF format</li>
+</ol>
+
+<p>We will use several tools available at <a href="https://usegalaxy.eu">https://use<span class="notranslate">galaxy</span>.eu</a>
+for checking the quality of data at each step of the analysis, as well as to evaluate the per-base coverage depth at specific genomic intervals</p>
+
+<p><img src="http://0.0.0.0:4000/clinical_genomics/images/qc_overview.png" alt="Quality control overview" />
+<strong>Software for quality control</strong>, at each step of the analysis <span class="notranslate">workflow</span></p>
+
+<h2 id="quality-control-of-fastq-files">Quality control of FASTQ files</h2>
+
+<p>We’ll use the <strong>FastQC</strong> software, with the FASTQ files available in the Shared Data Libraries: <em>HighQuality_<span class="notranslate">Reads</span>.fastq</em> and 
+<em>LowQuality_<span class="notranslate">Reads</span>.fastq</em></p>
+
+<p><em>FastQC</em> is relatively easy to use. A detailed help cab be found the <a href="http://www.bioinformatics.babraham.ac.uk/projects/fastqc/Help/">help manual</a>.</p>
+
+<ul>
+  <li>Copy the FASTQ file in your history from the <span class="notranslate">Galaxy</span> Shared Data Libraries. Help needed? Follow the <a href="http://0.0.0.0:4000/clinical_genomics/lectures/02.galaxy.html"><span class="notranslate">Galaxy</span> at a Glance</a> tutorial</li>
+  <li>Select <em>FastQC</em> from the left panel</li>
+  <li>Select the FASTQ file as input</li>
+  <li>Click <em>Execute</em></li>
+</ul>
+
+<p>The output of FASTQC consists of multiple modules analysing a specific aspect of the quality of the data.</p>
+
+<p>The names of the modules are preceded by an icon that reflects the quality of the data. The icon indicates whether the results of the module are:</p>
+<ul>
+  <li>normal (green)</li>
+  <li>slightly abnormal (orange)</li>
+  <li>very unusual (red)</li>
+</ul>
+
+<p>These evaluations must be taken in the context of what you are expecting from your dataset. For FASTQC a <em>normal</em> includes random sequences with high diversity. If your experiment generates libraries biased in particular ways (e.g. low complexity libraries) you should consider the report with attention. In general, you should concentrate on the icons different from green and try to understand the reasons for this behaviour.</p>
+
+<h3 id="sequence-quality-by-position">Sequence quality by position.</h3>
+
+<p>Phred scores represent base call quality. The higher the score the more reliable the base call. Often the quality of <span class="notranslate">reads</span> decreases over the length of the read. Therefore, it is common practice to plot the distribution of the Phred scores at each position using boxplots.</p>
+
+<p>The average Phred score is depicted by the blue line, the median Phred score by the red line. The yellow boxes contain 50% of all Phred scores. The background of the graph divides the plot in three regions: good quality (green), reasonable quality (orange), poor quality (red; Phred score &lt; 20).</p>
+
+<p><img src="http://0.0.0.0:4000/clinical_genomics/images/fastqc_sequence_quality.png" alt="High Quality reads" />
+Example of datasets with high (left) and low (right) sequence quality</p>
+
+<h3 id="check-overall-sequence-quality">Check overall sequence quality</h3>
+<p>Calculates the average Phred score of each read and show a cumulative plot of the average qualities of all the <span class="notranslate">reads</span>.</p>
+
+<h3 id="check-quality-per-tile">Check quality per tile</h3>
+<p>This plot is specific for Illumina flowcells which are divided into tiles. To check whether there is a loss in quality associated with a specific area of the flowcell, FASTQC plots the average quality scores for each tile across all positions in the <span class="notranslate">reads</span>.</p>
+
+<p>A good plot should be blue on all the area. Deviations from blue are positions where the quality was different from the average. Failures could be due to bubbles through the flowcells, presence of debris or, Illumina not patterned flow-cell, high density of clusters due to overlad. 
+Failures affecting small areas of the flow-cell can be safely ignored.</p>
+
+<h3 id="check-sequence-duplication">Check sequence duplication</h3>
+<p>Due to random fragmentation, in a diverse library generated by shearing most fragments will occur only once. High level of duplication may indicate enrichment bias such as library contamination or PCR over-amplification.</p>
+
+<p>The plot shows the relative number of <span class="notranslate">reads</span> with different degrees of duplication.</p>
+<ul>
+  <li>The red line represents the number of <strong>distinct</strong> sequences that are duplicated, where the percentage is relative to the total number of distinct sequences</li>
+  <li>The blue line represents the counts of all the duplicated sequences, where the percentage is computed relative to the total number of <span class="notranslate">reads</span></li>
+</ul>
+
+<p>Most sequences should fall in the left part of the plot (low sequence duplication level).
+Contaminants are visible as peaks in the blue line (high proportion of original sequences) but should be absent in the red line as they contribute as a minor fraction of the deduplicated dataset. If peaks are still present in the red line after deduplication, you may have a large number of different duplicated sequences which might indicate contamination.</p>
+
+<h3 id="check-per-base-sequence-content">Check per base sequence content</h3>
+<p>In presence of random sequences, the fraction of A, C, G and T should be the same on each position, producing four straight lines on this plot, one for each nucleotide. However you will often see several peaks for the first positions. This bias in the first positions arises from the protocol used to generate <span class="notranslate">RNA</span>-Seq libraries, either transposase based or priming with random examers. The bias is not due to a single sequence, but depends on different K-mers at the 5’ end of the <span class="notranslate">reads</span>, therefore cannot be removed by trimming a specific sequence from the 5’ end.
+However, the presence of such bias, if limited to the first bases, do not affect <span class="notranslate">downstream</span> analyses.</p>
+
+<h3 id="over-represented-sequences">Over-represented sequences</h3>
+
+<p>This module checks for the presence of specific sequences which are over-represented in your library, i.e. <span class="notranslate">reads</span> that make a substantial fraction (&gt; 0.1%) of the total number of <span class="notranslate">reads</span>. In this module only the first 50bp are considered by FASTQC. Each overrepresented sequence is compared to a list of common contaminants to try to identify it.</p>
+
+<p>You can see which position of the read is greatly affected (plot), and check the list of possible contaminants in the table with the list of sequences which make &gt; 0.1% of the total <span class="notranslate">reads</span>.</p>
+
+<p>For <span class="notranslate">DNA</span>-Seq ideally you shouldn’t see any sequence in the table, even if a small fraction of adapter sequences can be observed, which can be easily removed by adding a step for adapter removal in the analysis pipeline. For <span class="notranslate">RNA</span>-Seq, highly abundant transcripts could be tracked as overrepresented sequences.</p>
+
+<p>The presence of adapter sequences impacts the rate and speed of alignment.</p>
+
+<h2 id="computation-of-per-base-coverage-depth-at-specific-genomic-intervals">Computation of per-base coverage depth at specific genomic intervals</h2>
+
+<p>Commercial next-generation sequencing platform usually provide users with analysis programs that include tools for the identification of low coverage regions (for instance, target regions that have a coverage depth lower than 20x).</p>
+
+<p>The present tutorial is aimed to show how to perform a custom coverage analysis of NGS experiment(s) by using tools that are available in <span class="notranslate">Galaxy</span>.</p>
+
+<p>Starting material:</p>
+<ul>
+  <li>Alignment (<em>bam</em>) file(s) on which you want to perform the coverage evaluation.</li>
+  <li>A reference <em><span class="notranslate">bed</span></em> file listing the genomic regions for which you want to obtain coverage data. If you performed a targeted sequencing experiment by using commercial kits (either custom or from the catalogue), you should already have obtained a <em><span class="notranslate">bed</span></em> file listing the target regions: it should be the file you want to use.</li>
+</ul>
+
+<blockquote>
+  <h4 id="note-bed-format-specifications">NOTE: <span class="notranslate">BED</span> format specifications</h4>
+
+  <p><strong><span class="notranslate">BED</span> files</strong> are tab-delimited files with one line for each genomic region.
+The first 3 fields (columns) are required:</p>
+  <ol>
+    <li>chromosome;</li>
+    <li>the starting position;</li>
+    <li>the ending position.</li>
+  </ol>
+
+  <p>Further columns may be present but are optional.</p>
+
+  <p>Further details may be found here: <a href="https://genome.ucsc.edu/FAQ/FAQformat.html#format1">UCSC <span class="notranslate">BED</span> format specifications</a></p>
+
+  <p>Please be aware that in <span class="notranslate">BED</span> files the description of genomic regions follows the “0-start, half-open” coordinate system. Further details may be found here: <a href="http://genome.ucsc.edu/blog/the-ucsc-genome-browser-coordinate-counting-systems/">the “0-based, half-open” UCSC Genome Browser Coordinate Counting Systems</a>. Practically speaking, it means that the starting position is diminished by 1 bp with respect to the actual position. For instance, the region “chr2 50149071 50149399” in a <em><span class="notranslate">bed</span></em> file corresponds to the genomic interval from position 50149072 (included) to position 50149399 (included) on chromosome 2 (when the first base of the chromosome is defined as position 1). If you want to indicate a single base position in a <em><span class="notranslate">bed</span></em> file, it should be written like this: “chr2 50149071 50149072”.</p>
+</blockquote>
+
+<h3 id="1compute-per-base-coverage-depth-with-bedtools">1.Compute per base coverage depth with <span class="notranslate">BED</span>tools</h3>
+<p>Before starting, you have to upload the files you need for the analysis, following standard <span class="notranslate">Galaxy</span> procedure.</p>
+
+<p>You may use files provided as examples with this tutorial and called <code class="highlighter-rouge">Panel_alignment.bam</code> and <code class="highlighter-rouge">Panel_Target_regions.<span class="notranslate">bed</span></code>.</p>
+
+<p>Please check that uploaded file datatypes (formats) are properly recognized by selecting <code class="highlighter-rouge">edit attributes</code> (i.e. the pencil sign in correspondence of each file you can find in your history) (indicated by the red arrow in figure 1) and then the tab datatypes (the blue arrow in figure 1). If the datatype is wrong, select the correct one from the drop-down list and press the <code class="highlighter-rouge">change datatype</code> button (the green arrow n figure 1).</p>
+
+<p><strong>Figure 1</strong>
+<img src="http://0.0.0.0:4000/clinical_genomics/images/cov_fig1.png" alt="Figure 1" /></p>
+
+<p>Once ready, you can select the tool named <code class="highlighter-rouge"><span class="notranslate">bed</span>tools Compute both the depth and breadth of coverage</code> in the <code class="highlighter-rouge">Operate on Genomic Intervals</code> section (see the red arrow in figure 2).</p>
+
+<ol>
+  <li>Select the <em><span class="notranslate">bed</span></em> file listing the target regions as “file A” (blue arrow in figure 2) and the <em>bam</em> file(s) you want to analyze as “file B” (green arrow in figure 2) (they should be listed in the drop-down menu if they have the correct format). You may analyze one or more <em>bam</em> files in a single run.</li>
+  <li>If you want to analyze two or more .bam files, you can further choose if you want all the results in a single file or one output file per input “file B” by selecting the desired option under the <code class="highlighter-rouge">Combined or separate output files</code> menu.</li>
+  <li>Select “Yes” for the option <code class="highlighter-rouge">Report the depth at each position in each A feature</code> (yellow arrow in figure 2) and check that all the other options are set to “No”.</li>
+  <li>Star (Execute) the analysis.</li>
+</ol>
+
+<p><strong>Figure 2</strong>
+<img src="http://0.0.0.0:4000/clinical_genomics/images/cov_fig2.png" alt="Figure 2" /></p>
+
+<p>Output file, which will be called “coverage_depth.<span class="notranslate">bed</span>” from now on, will contain all the fields of the original target_regions.<span class="notranslate">bed</span> file plus two further columns:</p>
+<ol>
+  <li>the first value indicates a specific base within the reported genomic interval. For instance, if the genomic interval described by the first 3 field is “chr2 50149071 50149072” and the first new field reports the number 1000, it means that the coverage value refers to nucleotide 50150071 (i.e.: 50149071 + 1000) on chromosome 2;</li>
+  <li>the second value indicates the depth of coverage for the defined base.</li>
+</ol>
+
+<h3 id="2sort-files">2.Sort files</h3>
+<p>Since entries in the “coverage_depth.<span class="notranslate">bed</span>” may not be in the desired order, you can sort it by genomic positions.
+For this purpose you may want to use the <code class="highlighter-rouge">Sort</code> tool in the <code class="highlighter-rouge">Text Manipulation</code> section (check out the blue arrow in figure 3).</p>
+
+<p>You may sequentially sort on different columns:</p>
+<ol>
+  <li>first you can sort by chromosome by selecting column 1 (green arrow in figure 3) in “ascending order” and selecting the “flavor” <code class="highlighter-rouge">Natural/Version sort (-V)</code>, which allows for sorting chromosomes in their “natural” order (with alphabetical order chr10 will be right after chr1, chr2 after chr19 and so on);</li>
+  <li>after inserting a new column section (red arrow in figure 3), you can sort by column 2 in “ascending order” with <code class="highlighter-rouge">Fast numeric sort (-n)</code>;</li>
+  <li>after inserting a further column section, you can sort by column 3 in “ascending order” with <code class="highlighter-rouge">Fast numeric sort (-n)</code>;</li>
+  <li>after inserting a final column section, you can sort by column 3 in “ascending order” with <code class="highlighter-rouge">Fast numeric sort (-n)</code>.</li>
+</ol>
+
+<p><strong>Figure 3</strong>
+<img src="http://0.0.0.0:4000/clinical_genomics/images/cov_fig3.png" alt="Figure 3" /></p>
+
+<p>The obtained output file, which will be called “sorted_coverage_depth.<span class="notranslate">bed</span>” from now on, will be sorted first by chromosome, then by starting position, by ending position and by the actual position of the specific base in the considered genomic interval.</p>
+
+<h3 id="3remove-duplicate-rows">3.Remove duplicate rows</h3>
+<p>If your file contains duplicated lines you may want to remove them for further processing.
+For this purpose you can use the <code class="highlighter-rouge">Unique lines assuming sorted input file</code> tool in the <code class="highlighter-rouge">Text Manipulation</code> section.</p>
+
+<h3 id="4some-manipulation-of-the-bed-file">4.Some manipulation of the <em><span class="notranslate">bed</span></em> file</h3>
+<p>You may follow the following steps to manipulate the “sorted_coverage_depth.<span class="notranslate">bed</span>” and to obtain a <em><span class="notranslate">bed</span></em> file listing the exact base position to which each coverage value is referred.
+For instance instead of having “chr2 50149071 50149399 NRXN1 1 2335” in the first row of your file, you will get “chr2 50149071 50149072 NRXN1 2335”.</p>
+
+<p>These steps will add further columns at the end of each line defining the base position with the “0-start, half-open” coordinate system.</p>
+
+<ol>
+  <li>Select the <code class="highlighter-rouge">Compute an <span class="notranslate">expression</span> on every row</code> tool in the <code class="highlighter-rouge">Text Manipulation</code> section (indicated by the blue arrow in figure 4);</li>
+  <li>add the following <span class="notranslate">expression</span> “c2+c5-1” to obtain the sum of the values in columns 2 and 5 minus 1 (it will be used as the new starting position in the final file);</li>
+  <li>select the file “sorted_coverage_depth.<span class="notranslate">bed</span>”;</li>
+  <li>select “yes” to <code class="highlighter-rouge">round Results?</code> (green arrow in figure 4);</li>
+  <li>execute;</li>
+  <li>you can rename the output as “temp1_coverage_depth.<span class="notranslate">bed</span>”;</li>
+  <li>select the <code class="highlighter-rouge">Compute an <span class="notranslate">expression</span> on every row</code> tool in the <code class="highlighter-rouge">Text Manipulation</code> section;</li>
+  <li>add the following <span class="notranslate">expression</span> “c2+c5” to obtain the sum of the values in columns 2 and 5 (it will be used as the new ending position in the final file). You can also use the <span class="notranslate">expression</span> ;</li>
+  <li>select the file “temp1_coverage_depth.<span class="notranslate">bed</span>”;</li>
+  <li>select “yes” to <code class="highlighter-rouge">round Results?</code>;</li>
+  <li>execute;</li>
+  <li>you can rename the output as “temp2_coverage_depth.<span class="notranslate">bed</span>”;</li>
+  <li>select the <code class="highlighter-rouge">Table Compute</code> tool in the <code class="highlighter-rouge">Text Manipulation</code> section (indicated by the blue arrow in figure 5);</li>
+  <li>select the file “temp2_coverage_depth.<span class="notranslate">bed</span>”;</li>
+  <li>select the option <code class="highlighter-rouge">Drop, keep or duplicate rows and columns</code> from the drop-down menu <code class="highlighter-rouge">Type of table operation</code> (indicated by the green arrow in figure 5);</li>
+  <li>fill the field <code class="highlighter-rouge">List of columns to select</code> with “1,7,8,4,6” (the red arrow in figure 5);</li>
+  <li>unselect all the other options;</li>
+  <li>execute;</li>
+  <li>set the output file datatype to <em><span class="notranslate">bed</span></em>;</li>
+  <li>you can rename the output as “final_coverage_depth.<span class="notranslate">bed</span>”.</li>
+</ol>
+
+<p><strong>Figure 4</strong>
+<img src="http://0.0.0.0:4000/clinical_genomics/images/cov_fig4.png" alt="Figure 4" /></p>
+
+<p><strong>Figure 5</strong>
+<img src="http://0.0.0.0:4000/clinical_genomics/images/cov_fig5.png" alt="Figure 5" /></p>
+
+<h3 id="5select-positions-with-low-coverage-depth">5.Select positions with low coverage depth</h3>
+<p>The following procedure can be used to obtain a <em><span class="notranslate">bed</span></em> file listing base positions with a coverage depth lower than a certain threshold (for instance 20x).</p>
+
+<ol>
+  <li>Select the <code class="highlighter-rouge">Filter</code> tool in the <code class="highlighter-rouge">Filter and Sort</code> section (indicated by the blue arrow in figure 6);</li>
+  <li>select the file “final_coverage_depth.<span class="notranslate">bed</span>”;</li>
+  <li>add the following <span class="notranslate">expression</span> “c5&lt;20” to filter all positions with a coverage depth lower than (green arrow in figure 6)(“c5” stands for the fifth column, in this case reporting the coverage depth);</li>
+  <li>execute.</li>
+</ol>
+
+<p><strong>Figure 6</strong>
+<img src="http://0.0.0.0:4000/clinical_genomics/images/cov_fig6.png" alt="Figure 6" /></p>
+
+<p>The output file, which will be called “low_coverage_depth.<span class="notranslate">bed</span>” from now on, will only list all the positions with a depth lower than 20x.</p>
+
+<h3 id="6merge-low-coverage-regions">6.Merge low coverage regions</h3>
+<p>If you want to merge the positions with low coverage depth in larger genomic intervals to be used for further analyses (i.e.: Sanger sequencing of regions not covered by your NGS experiment), you may want to use the <code class="highlighter-rouge"><span class="notranslate">bed</span>tools MergeBED</code> tool in the <code class="highlighter-rouge">Operate on Genomic Intervals</code> section (see the blue arrow in figure 7).</p>
+
+<ol>
+  <li>Select the file “low_coverage_depth.<span class="notranslate">bed</span>”;</li>
+  <li>set the maximum distance between features (i.e.: the different positions listed in your file) allowed for features to be merged (green arrow in figure 7): if it is 0 only overlapping and/or book-ended features are merged, while if it is set to 10 (or any other different positive integer of your choice), features at the maximum distance of 10 bases will be merged;</li>
+  <li>if you want, you may apply some operations to certain columns to get further information in your output file. For instance you may:
+    <ol>
+      <li>click on “Insert Applying operations to columns from merged intervals” (red arrow in figure 7),</li>
+      <li>specify the column on which you want to perform the operation (in this case column 5),</li>
+      <li>and select the operation from the drop-down list(in this case “Min”, which calculates the minimum value of coverage depth among all the positions that will be merged in a single interval) (yellow arrow in figure 7);</li>
+    </ol>
+  </li>
+  <li>you may add as many operations as you need. In this example we will also calculate the maximum value of coverage depth;</li>
+  <li>execute.</li>
+</ol>
+
+<p><strong>Figure 7</strong>
+<img src="http://0.0.0.0:4000/clinical_genomics/images/cov_fig7.png" alt="Figure 7" /></p>
+
+<p>The output file will have the following fields (columns): chromosome, starting and ending positions of low coverage regions, the minimum and the maximum coverage depth in each region.</p>
+
+<hr />
+<p><strong>Warning</strong>: please be aware that the columns to use for calculations may be different compared to the example here considered, depending on the amount of columns of your <em><span class="notranslate">bed</span></em> files.</p>
+
+<p><strong>Warning</strong>: please be aware that the <span class="notranslate">Galaxy</span> preview of your file shows a header row that does not properly define columns in your files (it is just a standard header for the UCSC <span class="notranslate">bed</span> format).</p>
+
+<hr />
+
+<blockquote>
+  <h4 id="final-notes">Final notes</h4>
+  <p>The procedures listed above are to be taken as examples of the possible operations that can be performed on <span class="notranslate">bed</span> files with <span class="notranslate">bed</span>tools (you may check out their website to get further information: <a href="https://bedtools.readthedocs.io/en/latest/content/bedtools-suite.html"><span class="notranslate">BED</span>tools</a>) ad text manipulation tools available on <span class="notranslate">Galaxy</span>.</p>
+
+  <p>Furthermore, please be aware that the tool <code class="highlighter-rouge"><span class="notranslate">bed</span>tools Compute both the depth and breadth of coverage</code> does not perform any filtering based on read quality: if your are interested in that aspect you may want to rely on different tools.</p>
+</blockquote>
+
+<h1 id="variant-annotation">Variant annotation</h1>
+
+<p>Once called, variants (SNPs and InDels) need to be annotated.</p>
+
+<p>We want to know for example if a variant is located in a gene, if it’s in the coding portion of that gene, if it causes an aminoacid substitution, if that substitution is deleterious for the encoded protein function.</p>
+
+<p><strong>Variant annotation</strong> is the process of attaching biological information from multiple available source (<strong>public databases</strong>) to variants</p>
+
+<hr />
+<h2 id="gene-model">Gene model</h2>
+
+<p>The choice of gene model is essential for variant <span class="notranslate">downstream</span> variant annotation: it describe genomic positions of genes and each exon-intron exact locations</p>
+
+<p>Different gene models can give different annotations:</p>
+<ul>
+  <li><img src="http://0.0.0.0:4000/clinical_genomics/images/brca1_var.jpg" alt="BRCA1" /></li>
+</ul>
+
+<p><strong>Figure 1.</strong> Variant indicated by the red dashed line can be annotated as <em>intronic</em> or <em>exonic</em> (on one of the UCSC transcript variants), depending on the adopted gene model</p>
+
+<ul>
+  <li><a href="https://www.ncbi.nlm.nih.gov/refseq/">RefSeq</a></li>
+  <li><a href="https://www.ensembl.org/Homo_sapiens/Info/Index">Ensembl</a></li>
+  <li><a href="https://www.gencodegenes.org/human/">Gencode</a></li>
+</ul>
+
+<hr />
+<h2 id="sequence-variant-nomenclature">Sequence variant nomenclature</h2>
+
+<p>Variant nomenclature should be described univocally:</p>
+
+<ul>
+  <li><a href="https://varnomen.hgvs.org/">HGVS</a></li>
+  <li><a href="https://www.genenames.org/">HGMC</a></li>
+</ul>
+
+<hr />
+<h2 id="variant-class">Variant class</h2>
+
+<ul>
+  <li><a href="http://www.sequenceontology.org/">Sequence Ontology</a></li>
+  <li><img src="http://0.0.0.0:4000/clinical_genomics/images/seqOnt.png" alt="Sequence Ontology" /></li>
+</ul>
+
+<hr />
+<h2 id="population-sequencing-db">Population sequencing db</h2>
+
+<ul>
+  <li><a href="https://gnomad.broadinstitute.org/">gnomAD</a></li>
+  <li><a href="http://exac.broadinstitute.org/">ExAC</a></li>
+  <li><a href="https://www.internationalgenome.org/">1000 Genomes Project</a></li>
+  <li><a href="https://evs.gs.washington.edu/EVS/">NHLBI-ESP 6500 exomes</a></li>
+  <li><a href="https://www.ncbi.nlm.nih.gov/snp/">dbSNP</a></li>
+</ul>
+
+<hr />
+<h2 id="variant-diseasegene-disease-db">Variant-disease/gene-disease db</h2>
+
+<ul>
+  <li><a href="http://www.hgmd.cf.ac.uk/ac/index.php">Human Gene Mutation Database</a></li>
+  <li><a href="https://www.ncbi.nlm.nih.gov/clinvar/">clinically relevant variants known in a gene</a></li>
+  <li><a href="http://simple-clinvar.broadinstitute.org/">Simple ClinVar</a></li>
+  <li><a href="https://www.omim.org/">Online Mendelian Inheritance in Man</a></li>
+</ul>
+
+<hr />
+
+<ul>
+  <li><a href="https://sites.google.com/site/jpopgen/dbNSFP"><strong>dbNSFP</strong></a>, a big database of curated annotations and precomputed functional predictions for all potential non-synonymous and splice-site single-nucleotide variants in the human genome</li>
+</ul>
+
+<hr />
+<h2 id="annotation-software-and-tools">Annotation Software and tools</h2>
+
+<ul>
+  <li><a href="https://www.ensembl.org/info/docs/tools/vep/index.html">Variant Effect Predictor</a></li>
+  <li><a href="http://annovar.openbioinformatics.org/en/latest/">ANNOVAR</a></li>
+  <li><a href="http://snpeff.sourceforge.net/">Single Nucleotide Polymorphism Effect</a></li>
+  <li>
+    <p><a href="http://grass.cgs.hku.hk/limx/kggseq/">KGGSeq</a></p>
+  </li>
+  <li>Web Interface:
+    <ul>
+      <li><a href="http://wannovar.wglab.org">wAnnovar</a></li>
+      <li><a href="http://grch37.ensembl.org/Homo_sapiens/Tools/VEP">VEP</a></li>
+    </ul>
+  </li>
+</ul>
+
+<hr />
+<h2 id="annotation-and-filtering-with-wannovar">Annotation and filtering with wANNOVAR</h2>
+
+<ul>
+  <li>The web tool <a href="http://wannovar.wglab.org/index.php">wANNOVAR</a> allows for rapid annotation of your variants and for some basic filtering steps to find disease genes.</li>
+  <li>It is based on its command line counterpart <a href="http://annovar.openbioinformatics.org/">ANNOVAR</a>, but it is more user-friendly since it does not require any programming skills.</li>
+  <li>The output consist in tabular text files that can be easily manipulated with Excel or other sp<span class="notranslate">reads</span>heet programs.</li>
+  <li>The annotation is performed against some of the most commonly used databases: RefSeq, UCSC Known, ENSEMBL/Genecode, dbSNP, ClinVar, 1000genomes, ExAC, ESP6500, gnomAD (minor allele frequencies in different populations are reported) and various precalculated prediction scores for any possible single nucleotide variant in coding regions (see <a href="https://sites.google.com/site/jpopgen/dbNSFP">dbNSFP</a>).</li>
+  <li>The gene-based annotation results in a single row for each input variant: only the most deleterious consequence is reported (i.e.: if a certain variant may result to be missense for one transcript and nonsense for a second transcript, only the latter consequence will be reported).</li>
+  <li>Unfortunately, unlike the command line version, wANNOVAR does neither allow for the use of custom annotation databases, nor for the selection of different pubblicly available databases.</li>
+  <li>To annotate your file with wANNOVAR you need to provide your email address, to be notified when the annotation is complete,  and just upload your input file (or paste a series of variant in the designated field).</li>
+  <li><img src="http://0.0.0.0:4000/clinical_genomics/images/wann_fig1.png" alt="Figure 1" /></li>
+  <li>Results are usually ready within minutes.</li>
+  <li>You will get both <em>csv</em> files or <em>txt</em> files (which can be saved as they are by clicking on the specific link, right-clicking in any point of the page and selecting <code class="highlighter-rouge">Save as</code>). They can be both opened with Excel or other sp<span class="notranslate">reads</span>heet programs (concerning <em>csv</em> files, please ensure that comma are set as default list separator/delimiter in your version of Excel).</li>
+  <li>You will also get both <code class="highlighter-rouge">exome summary results</code> (only conding variants are included) and <code class="highlighter-rouge">genome summary results</code> (all variants included).</li>
+  <li>You can also provide a list of Disease or Phenotype Terms that the program can use for filtering your results (only for single sample <code class="highlighter-rouge">vcf</code> files).</li>
+  <li><img src="http://0.0.0.0:4000/clinical_genomics/images/wann_fig2.png" alt="Figure 2" /></li>
+</ul>
+
+<p>Finally, there are some Parameter Settings that can be modified:</p>
+<ul>
+  <li>Result duration: it can now only be set to “1 day”, since your files will be automatically removed after 24 hours.</li>
+  <li>Reference genome: you can choose between hg19 (GRCh37) and hg38 (GRCh38).</li>
+  <li>Input Format: you can upload not only <em>vcf</em> files, but also other kinds of variant files.</li>
+  <li>Gene Definition: the database you want to use for gene function annotation. Three oprtions are available: RefSeq, UCSC Known, ENSEMBL/Gencode</li>
+  <li>Individual analysis: the “Individual analysis” option allows you to perform further filtering steps (based on the Disease/Phenotype terms or the Disease Model) on a single sample (if you upload a multisample <em>vcf</em> only the first sample will be considered); the “All Annotaions” option will annotate all variants in your multisample <em>vcf</em>, maintaining the original columns of your <em>vcf</em> as the last columns of your output file.</li>
+  <li>Disease Model: this options allows for some basic filtering of your variants based on the expected mechanism of inheritance. In mainly consider frequencies, sample genotypes and consequences at level of genic function. FIltering step are summarized among the results and they are only performed on a single sample: the program does not perform any multisample evaluation (i.e.: variant segregation in a trio) and cannot classify any variant as de novo even if you provide a multisample <em>vcf</em> with parental genotypes.</li>
+</ul>
+
+<hr />
+<h2 id="clinical-databases-for-further-manual-variant-annotation">Clinical databases for further manual variant annotation</h2>
+
+<ul>
+  <li>
+    <p>Once you have obtained a file with the annotation of your variants, you might find useful to annotate also the involved genes, in order to know, for instance, the list of diseases that may be associated with them.</p>
+  </li>
+  <li>Some databases that can the jb are the following:
+    <ol>
+      <li>The gene2phenotype dataset (<a href="https://www.ebi.ac.uk/gene2phenotype/disclaimer">G2P</a>) integrates data on genes, variants and phenotypes for example relating to developmental disorders. In the “Download” section you will find both databases of genes related to cancer and to developmental disorders. Those files report for each gene listed: the OMIM number, the associated disease name, the disease OMIM number, the disease category (you can fing more details in the “Terminology” section), whether the disease is caused by biallelic or monoallelic variants (“allelic requirement”), the expected category of variant to be causative of the disease, and a few other details.</li>
+      <li>In the “Download” section of the <a href="https://www.omim.org/downloads/">OMIM database</a>, if you register for research and educational use, you may obtain different lists of OMIM genes and their associated phenotypes.</li>
+      <li>Among the files available for download from the <a href="https://gnomad.broadinstitute.org/downloads#constraint">gnomAD database</a>, you may get per-gene constraint scores (for further details, please check the paper by the Exome Aggregation Consortium on “Nature. 2016 Aug 18; 536(7616):285–291.”). Those score may indicate if a specific gene is expected to be intolerant to loss-of-function variants (pLI) (haploinsufficiency), or if it is predicted to be associate to recessive diseases.</li>
+    </ol>
+  </li>
+  <li>In the end, you can add these annotations to your wANNOVAR files by using the <code class="highlighter-rouge">VLOOKUP</code> function in Excel.</li>
+</ul>
+
+<h1 id="variant-prioritization">Variant prioritization</h1>
+
+<p>Once annotated, variants need to be filtered and prioritized</p>
+
+<ul>
+  <li>WES: Tens of thousands</li>
+  <li>WGS: Millions</li>
+</ul>
+
+<p><strong>No universal filters, they depend on the experimental features</strong></p>
+
+<hr />
+<h2 id="variant-impact">Variant impact</h2>
+
+<p>First of all you usually want to filter variants by consequence on the encoded protein, keeping those which have an higher impact on protein:</p>
+
+<ul>
+  <li>Missense</li>
+  <li>Nonsense</li>
+  <li>Splice sites</li>
+  <li>Frameshift indels</li>
+  <li>Inframe indels</li>
+</ul>
+
+<hr />
+<h2 id="variant-frequency">Variant frequency</h2>
+
+<ul>
+  <li>Common variants are unlikely associated with a clinical condition</li>
+  <li>A rare variant will probably have a higher functional effect on the protein</li>
+  <li>Frequency cut-off have to be customized on each different case</li>
+  <li>Typical cut-offs: 1% - 0.1%</li>
+  <li>Allele frequencies may differ a lot between different populations</li>
+</ul>
+
+<hr />
+<h2 id="variant-effect-prediction-tools">Variant effect prediction Tools</h2>
+
+<ul>
+  <li>Tools that predict consequences of amino acid substitutions on protein function</li>
+  <li>
+    <p>They give a score and/or a prediction in terms of “Tolerated”, “Deleterious” (SIFT) or “Probably Damaging”, “Possibly Damaging”, “Benign” (Polyphen2)</p>
+
+    <ul>
+      <li>fitCons</li>
+      <li>GERP++</li>
+      <li>SIFT</li>
+      <li>PolyPhen2</li>
+      <li>CADD</li>
+      <li>DANN</li>
+      <li>Condel</li>
+      <li>fathmm</li>
+      <li>MutationTaster</li>
+      <li>MutationAssessor</li>
+      <li>REVEL</li>
+    </ul>
+  </li>
+</ul>
+
+<hr />
+<h2 id="acmgamp-2015-guidelines">ACMG/AMP 2015 guidelines</h2>
+
+<p>The <em>American College of Medical Genetics</em> and the <em>Association for Molecular Pathology</em> published guidelines for the interpretation of sequence variants in May of 2015 <a href="https://www.nature.com/articles/gim201530">(Richards S. et al, 2015)</a>. This report describes updated standards and guidelines for classifying sequence variants by using criteria informed by expert opinion and experience</p>
+
+<ul>
+  <li>28 evaluation criteria for the clinical interpretation of variants
+    <ul>
+      <li>Criteria falls into 3 sets:
         <ul>
-          <li><i class="fa fa-file-o" aria-hidden="true"></i><span class="visually-hidden">param-file</span> <em>“Using reference file”</em>: your imported <code class="highlighter-rouge">hg19</code> fasta dataset</li>
+          <li>pathogenic/likely pathogenic (P/LP)</li>
+          <li>benign/likely benign (B/LB)</li>
+          <li>variant of unknown significance (VUS)</li>
         </ul>
       </li>
     </ul>
-  </blockquote>
-</blockquote>
-
-<p>As before, this will generate two new datasets, one for each of the normal and tumor data.</p>
-
-<h2 id="recalibrate-read-mapping-qualities">Recalibrate read <span class="notranslate">mapping</span> qualities</h2>
-
-<blockquote class="notranslate hands_on">
-  <h3 id="hands_on-hands-on-recalibrate-read-quality-scores"><i class="fa fa-pencil" aria-hidden="true"></i><span class="visually-hidden">hands_on</span> Hands-on: Recalibrate read quality scores</h3>
-
-  <ol>
-    <li><strong>CalMD</strong> <i class="fa fa-wrench" aria-hidden="true"></i><span class="visually-hidden">tool</span> with the following parameters:
-      <ul>
-        <li><i class="fa fa-files-o" aria-hidden="true"></i><span class="visually-hidden">param-files</span> <em>“BAM file to recalculate”</em>: the left-aligned
-datasets from the normal and the tumor tissue data; the outputs of
-<strong>BamLeftAlign</strong> <i class="fa fa-wrench" aria-hidden="true"></i><span class="visually-hidden">tool</span></li>
-        <li><em>“Choose the source for the reference genome”</em>: <code class="highlighter-rouge">Use a built-in genome</code>
-          <ul>
-            <li><em>“Using reference genome”</em>: <code class="highlighter-rouge">Human: hg19</code> (or a similarly named choice)</li>
-          </ul>
-
-          <blockquote class="comment">
-            <h3 id="comment-using-the-imported-hg19-sequence-2"><i class="fa fa-commenting-o" aria-hidden="true"></i><span class="visually-hidden">comment</span> Using the imported <code class="highlighter-rouge">hg19</code> sequence</h3>
-            <p>If you have imported the <code class="highlighter-rouge">hg19</code> sequence as a fasta dataset into your
-history instead:</p>
-            <ul>
-              <li><em>“Choose the source for the reference genome”</em>: <code class="highlighter-rouge">Use a genome from the history</code>
-                <ul>
-                  <li><i class="fa fa-file-o" aria-hidden="true"></i><span class="visually-hidden">param-file</span> <em>“Using reference file”</em>: your imported <code class="highlighter-rouge">hg19</code> fasta dataset.</li>
-                </ul>
-              </li>
-            </ul>
-          </blockquote>
-        </li>
-        <li>
-          <p><em>“Do you also want BAQ (Base Alignment Quality) scores to be calculated?”</em>: <code class="highlighter-rouge">No</code></p>
-
-          <p>The <em>VarScan somatic</em> tool that we are going to use for calling variants at
-the next step is typically used in combination with unadjusted base quality
-scores because the general opinion is that the base quality downgrades
-performed by <em>CalMD</em> and other tools from the <em>samtools</em> suite of tools
-are too severe for <em>VarScan</em> to retain good sensitivity. We are sticking
-with this practice in this tutorial.</p>
-
-          <blockquote class="comment">
-            <h3 id="comment-using-adjusted-base-quality-scores"><i class="fa fa-commenting-o" aria-hidden="true"></i><span class="visually-hidden">comment</span> Using adjusted base quality scores</h3>
-            <p>If, for your own data, you would like to experiment with adjusted base
-quality scores, it is important to understand that <em>VarScan somatic</em> will
-only make use of the adjusted scores if they are incorporated directly into
-the read base qualities of a BAM input dataset, but not if they are written
-to the dataset separately.</p>
-
-            <p>Hence, should you ever decide to use:</p>
-            <ul>
-              <li>
-                <p><em>“Do you also want BAQ (Base Alignment Quality) scores to be calculated?”</em>: <code class="highlighter-rouge">Yes, run BAQ calculation</code></p>
-
-                <p>and you want this setting to affect <span class="notranslate">downstream</span> variant calling with
-<em>VarScan somatic</em>, make sure you also set then:</p>
-                <ul>
-                  <li><em>“Use BAQ to cap read base qualities”</em>: <code class="highlighter-rouge">Yes</code></li>
-                </ul>
-              </li>
-            </ul>
-
-            <p>Please also note that BAQ scores are quite expensive to calculate so
-be prepared to see a substantial (up to 10x!) increase in job run time 
-when enabling it.</p>
-          </blockquote>
-        </li>
-        <li><em>“Additional options”</em>: <code class="highlighter-rouge">Advanced options</code>
-          <ul>
-            <li><em>“Change identical bases to ‘=’“</em>: <code class="highlighter-rouge">No</code></li>
-            <li>
-              <p><em>“Coefficient to cap <span class="notranslate">mapping</span> quality of poorly mapped <span class="notranslate">reads</span>”</em>: <code class="highlighter-rouge">50</code></p>
-
-              <p>This last setting is the real reason why we use CalMD at this point.
-It is an empirical, but well-established finding that the <span class="notranslate">mapping</span>
-quality of <span class="notranslate">reads</span> mapped with <em>bwa</em> should be capped this way before
-variant calling.</p>
-            </li>
-          </ul>
-        </li>
-      </ul>
-    </li>
-  </ol>
-
-</blockquote>
-
-<p>This will, once more, produce two new datasets, one for each of the normal
-and tumor data.</p>
-
-<h2 id="refilter-reads-based-on-mapping-quality">Refilter <span class="notranslate">reads</span> based on <span class="notranslate">mapping</span> quality</h2>
-
-<p>During recalibration of read <span class="notranslate">mapping</span> qualities <strong>CalMD</strong> may have set some
-<span class="notranslate">mapping</span> quality scores to 255. This special value is reserved for <em>undefined</em>
-<span class="notranslate">mapping</span> qualities and is used by the tool when a recalibrated <span class="notranslate">mapping</span> quality
-would drop below zero. In other words, a value of 255 does not indicate a
-particularly good <span class="notranslate">mapping</span> score, but a really poor one.
-To remove such <span class="notranslate">reads</span> from the data:</p>
-
-<blockquote class="notranslate hands_on">
-  <h3 id="hands_on-hands-on-eliminating-reads-with-undefined-mapping-quality"><i class="fa fa-pencil" aria-hidden="true"></i><span class="visually-hidden">hands_on</span> Hands-on: Eliminating <span class="notranslate">reads</span> with undefined <span class="notranslate">mapping</span> quality</h3>
-
-  <ol>
-    <li><strong>Filter BAM datasets on a variety of attributes</strong> <i class="fa fa-wrench" aria-hidden="true"></i><span class="visually-hidden">tool</span> with the following parameters:
-      <ul>
-        <li><i class="fa fa-files-o" aria-hidden="true"></i><span class="visually-hidden">param-files</span> <em>“BAM dataset(s) to filter”</em>: the recalibrated
- datasets from the normal and the tumor tissue data; the outputs of
- <strong>CalMD</strong> <i class="fa fa-wrench" aria-hidden="true"></i><span class="visually-hidden">tool</span></li>
-        <li>In <em>“Condition”</em>:</li>
-      </ul>
-      <ul>
-        <li>In <em>“1: Condition”</em>:
-          <ul>
-            <li>In <em>“Filter”</em>:
-              <ul>
-                <li>In <em>“1: Filter”</em>:
-                  <ul>
-                    <li><em>“Select BAM property to filter on”</em>: <code class="highlighter-rouge">mapQuality</code>
-                      <ul>
-                        <li><em>“Filter on read <span class="notranslate">mapping</span> quality (phred scale)”</em>: <code class="highlighter-rouge">&lt;=254</code></li>
-                      </ul>
-                    </li>
-                  </ul>
-                </li>
-              </ul>
-            </li>
-          </ul>
-        </li>
-      </ul>
-    </li>
-  </ol>
-
-</blockquote>
-
-<h1 id="variant-calling-and-classification">Variant calling and classification</h1>
-
-<p>Having generated a high-quality set of mapped read pairs, we can proceed to
-variant calling. The tool <strong>VarScan somatic</strong> is a dedicated solution for
-somatic variant calling that:</p>
-
-<ul>
-  <li>detects variant alleles in tumor/normal sample pairs</li>
-  <li>calls sample genotypes at variant sites</li>
-  <li>classifies variants into germline, somatic and LOH event variants using
-solid classical statistics even in the presence of non-pure samples like
-those obtained from biopsies</li>
-</ul>
-
-<blockquote class="notranslate hands_on">
-  <h3 id="hands_on-hands-on-variant-calling-and-classification"><i class="fa fa-pencil" aria-hidden="true"></i><span class="visually-hidden">hands_on</span> Hands-on: Variant calling and classification</h3>
-
-  <ol>
-    <li><strong>VarScan somatic</strong> <i class="fa fa-wrench" aria-hidden="true"></i><span class="visually-hidden">tool</span> with the following parameters:
-      <ul>
-        <li><em>“Will you select a reference genome from your history or use a built-in
-genome?”</em>: <code class="highlighter-rouge">Use a built-in genome</code>
-          <ul>
-            <li><em>“reference genome”</em>: <code class="highlighter-rouge">Human: hg19</code> (or a similarly named choice)</li>
-          </ul>
-
-          <blockquote class="comment">
-            <h3 id="comment-using-the-imported-hg19-sequence-3"><i class="fa fa-commenting-o" aria-hidden="true"></i><span class="visually-hidden">comment</span> Using the imported <code class="highlighter-rouge">hg19</code> sequence</h3>
-            <p>If you have imported the <code class="highlighter-rouge">hg19</code> sequence as a fasta dataset into your
-history instead:</p>
-            <ul>
-              <li><em>“Will you select a reference genome from your history or use a
-built-in genome?”</em>: <code class="highlighter-rouge">Use a genome from the history</code>
-                <ul>
-                  <li><i class="fa fa-file-o" aria-hidden="true"></i><span class="visually-hidden">param-file</span> <em>“reference genome”</em>: your imported <code class="highlighter-rouge">hg19</code> fasta dataset.</li>
-                </ul>
-              </li>
-            </ul>
-          </blockquote>
-        </li>
-        <li><i class="fa fa-file-o" aria-hidden="true"></i><span class="visually-hidden">param-file</span> <em>“aligned <span class="notranslate">reads</span> from normal sample”</em>: the mapped
-and fully post-processed normal tissue dataset; one of the two outputs
-of <strong>CalMD</strong> <i class="fa fa-wrench" aria-hidden="true"></i><span class="visually-hidden">tool</span></li>
-        <li><i class="fa fa-file-o" aria-hidden="true"></i><span class="visually-hidden">param-file</span><em>“aligned <span class="notranslate">reads</span> from tumor sample”</em>: the mapped
-and fully post-processed tumor tissue dataset; the other output of
-<strong>CalMD</strong> <i class="fa fa-wrench" aria-hidden="true"></i><span class="visually-hidden">tool</span></li>
-        <li><em>“Estimated purity (non-tumor content) of normal sample”</em>: <code class="highlighter-rouge">1</code></li>
-        <li><em>“Estimated purity (tumor content) of tumor sample”</em>: <code class="highlighter-rouge">0.5</code></li>
-        <li><em>“Generate separate output datasets for SNP and indel calls?”</em>: <code class="highlighter-rouge">No</code></li>
-        <li><em>“Settings for Variant Calling”</em>: <code class="highlighter-rouge">Customize settings</code>
-          <ul>
-            <li>
-              <p><em>“Minimum base quality”</em>: <code class="highlighter-rouge">28</code></p>
-
-              <p>We have seen, at the quality control step, that our sequencing data is of
-really good quality, and we have chosen not to downgrade base qualities at
-the quality scores recalibration step above, so we can increase the base
-quality required at any given position without throwing away too much of
-our data.</p>
-            </li>
-            <li>
-              <p><em>“Minimum <span class="notranslate">mapping</span> quality”</em>: <code class="highlighter-rouge">1</code></p>
-
-              <p>During postprocessing, we have filtered our <span class="notranslate">reads</span> for ones with a
-<span class="notranslate">mapping</span> quality of at least one, but <strong>CalMD</strong> may have lowered some
-<span class="notranslate">mapping</span> qualities to zero afterwards.</p>
-            </li>
-          </ul>
-
-          <p>Leave all other settings in this section at their default values.</p>
-        </li>
-        <li><em>“Settings for Posterior Variant Filtering”</em>: <code class="highlighter-rouge">Use default values</code></li>
-      </ul>
-    </li>
-  </ol>
-</blockquote>
-
-<h1 id="variant-annotation-and-reporting">Variant annotation and reporting</h1>
-
-<p>For this tutorial we are going to use variant and gene annotations from many
-different sources. Most of these are handled for us by the tools we are going
-to use in this section, but we need to take care of importing the data from
-four sources into <span class="notranslate">Galaxy</span> separately:</p>
-
-<ul>
-  <li>variant annotations from <a href="https://www.cancerhotspots.org">Cancer Hotspots</a></li>
-  <li>variant and gene information from the
-<a href="https://www.cancergenomeinterpreter.org/biomarkers">Cancer Biomarkers database</a>
-of the Cancer Genome Interpreter (CGI) project</li>
-  <li>variant and gene information from the <a href="https://civicdb.org">CIViC</a> database</li>
-  <li>variant annotations from <a href="https://www.ncbi.nlm.nih.gov/snp">dbSNP</a></li>
-  <li>lists of genes annotated with the keywords <em>proto-oncogene</em> or <em>tumor
-suppressor</em> at <a href="https://www.uniprot.org/">UniProt</a></li>
-</ul>
-
-<p>Each of these annotation sets has been released either in the public domain or
-under a free data license, which allows you to use them as part of this
-tutorial, but also for other purposes.</p>
-
-<p>Starting from the data downloaded from each of these sites, we have generated
-a set of new data files tailored to the requirements of the <span class="notranslate">workflow</span> of this
-tutorial and have made them available through Zenodo, again under a free data
-license.</p>
-
-<h2 id="get-data-1">Get data</h2>
-
-<blockquote class="notranslate hands_on">
-  <h3 id="hands_on-hands-on-data-upload-1"><i class="fa fa-pencil" aria-hidden="true"></i><span class="visually-hidden">hands_on</span> Hands-on: Data upload</h3>
-
-  <ol>
-    <li>
-      <p>Import the following <strong>variant annotation files</strong> from
-<a href="https://zenodo.org/record/2581873">Zenodo</a>:</p>
-
-      <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>https://zenodo.org/record/2581873/files/hotspots.<span class="notranslate">bed</span>
-https://zenodo.org/record/2581873/files/cgi_variant_positions.<span class="notranslate">bed</span>
-https://zenodo.org/record/2581873/files/01-Feb-2019-CIVic.<span class="notranslate">bed</span>
-https://zenodo.org/record/2582555/files/dbsnp.b147.chr5_12_17.vcf.gz
-</code></pre></div>      </div>
-
-      <p>Make sure you select <code class="highlighter-rouge"><span class="notranslate">bed</span></code> as the datatype for the first three files and
-<code class="highlighter-rouge">vcf</code> for the last file.</p>
-
-      <p>Alte<span class="notranslate">rna</span>tively, add the files from a shared data library on your <span class="notranslate">Galaxy</span>
-server instance.</p>
-    </li>
-    <li>
-      <p>Import some <strong>gene-level annotation files</strong> from
-<a href="https://zenodo.org/record/2581881">Zenodo</a>:</p>
-
-      <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>https://zenodo.org/record/2581881/files/Uniprot_Cancer_Genes.13Feb2019.txt
-https://zenodo.org/record/2581881/files/cgi_genes.txt
-https://zenodo.org/record/2581881/files/01-Feb-2019-GeneSummaries.tsv
-</code></pre></div>      </div>
-
-      <p>and make sure you select <code class="highlighter-rouge">tabular</code> as their datatype, or add them from
-the shared data library.</p>
-    </li>
-    <li>
-      <p>Download <strong>SnpEff functional genomic annotations</strong></p>
-
-      <blockquote class="comment">
-        <h3 id="comment-shortcut-1"><i class="fa fa-commenting-o" aria-hidden="true"></i><span class="visually-hidden">comment</span> Shortcut</h3>
-        <p>You can skip this step if the <span class="notranslate">Galaxy</span> server you are working on offers
-<code class="highlighter-rouge">Homo sapiens: hg19</code> as a locally installed snpEff database. You can
-check the <strong>SnpEff eff</strong> <i class="fa fa-wrench" aria-hidden="true"></i><span class="visually-hidden">tool</span> tool under <strong>Genome source</strong> to
-see if this is the case.</p>
-      </blockquote>
-
-      <p>Use <strong>SnpEff Download</strong> <i class="fa fa-wrench" aria-hidden="true"></i><span class="visually-hidden">tool</span> to download genome annotation
-database <code class="highlighter-rouge">hg19</code>.</p>
-    </li>
-    <li>
-      <p>Check that the datatypes of all new datasets have been set correctly, and
-change them if necessary. You may also want to shorten some of the
-dataset names.</p>
-    </li>
-  </ol>
-
-</blockquote>
-
-<h2 id="adding-annotations-to-the-called-variants">Adding annotations to the called variants</h2>
-
-<h3 id="adding-functional-genomic-annotations">Adding functional genomic annotations</h3>
-
-<p>Certainly, not all variants are equal. Many may just be silent mutations with
-no effect at the amino acid level, while a few others may be disrupting the
-coding sequence of a protein by introducing a premature stop codon or a
-frameshift. Of course, it is also important to know <em>which</em> gene is affected
-by a variant.
-Such functional genomic annotations can be added to a VCF dataset of variants
-with <em>SnpEff</em>.</p>
-
-<blockquote class="notranslate hands_on">
-  <h3 id="hands_on-hands-on-adding-annotations-with-snpeff"><i class="fa fa-pencil" aria-hidden="true"></i><span class="visually-hidden">hands_on</span> Hands-on: Adding annotations with SnpEff</h3>
-  <ol>
-    <li><strong>SnpEff eff</strong> <i class="fa fa-wrench" aria-hidden="true"></i><span class="visually-hidden">tool</span>
-      <ul>
-        <li><i class="fa fa-file-o" aria-hidden="true"></i><span class="visually-hidden">param-file</span> <em>“Sequence changes (SNPs, MNPs, InDels)”</em>: the
-output of <strong>VarScan somatic</strong> <i class="fa fa-wrench" aria-hidden="true"></i><span class="visually-hidden">tool</span></li>
-        <li><em>“Input format”</em>: <code class="highlighter-rouge">VCF</code></li>
-        <li><em>“Output format”</em>: <code class="highlighter-rouge">VCF (only if input is VCF)</code></li>
-        <li><em>“Genome source”</em>: <code class="highlighter-rouge">Locally installed reference genome</code>
-          <ul>
-            <li><em>“Genome”</em>: <code class="highlighter-rouge">Homo sapiens: hg19</code> (or a similarly named option)</li>
-          </ul>
-
-          <blockquote class="comment">
-            <h3 id="comment-using-the-imported-hg19-snpeff-genome-database"><i class="fa fa-commenting-o" aria-hidden="true"></i><span class="visually-hidden">comment</span> Using the imported <code class="highlighter-rouge">hg19</code> SnpEff genome database</h3>
-            <p>If you have imported the <code class="highlighter-rouge">hg19</code> SnpEff genome database into your
-history instead:</p>
-            <ul>
-              <li><em>“Genome source”</em>: <code class="highlighter-rouge">Downloaded snpEff database in your history</code>
-                <ul>
-                  <li><i class="fa fa-file-o" aria-hidden="true"></i><span class="visually-hidden">param-file</span> <em>“SnpEff4.3 Genome Data”</em>: your imported <code class="highlighter-rouge">hg19</code> SnpEff dataset.</li>
-                </ul>
-              </li>
-            </ul>
-          </blockquote>
-        </li>
-        <li><em>“Produce Summary Stats”</em>: <code class="highlighter-rouge">No</code></li>
-      </ul>
-    </li>
-  </ol>
-
-</blockquote>
-
-<h3 id="adding-genetic-and-clinical-evidence-based-annotations">Adding genetic and clinical evidence-based annotations</h3>
-
-<p>Other interesting pieces of information about a variant include aspects like
-whether the variant has been observed before in the human population and,
-if so, at which frequency. If a variant is known to be associated with specific
-diseases, we would also very much like to know that.
-To proceed with this kind of genetic and clinical evidence-based annotations,
-we are going to convert our list of variants into a database that can be
-handled more efficiently than a VCF dataset. We will use the <em>GEMINI</em> tool
-suite for this task and for all further work with the variants.</p>
-
-<blockquote class="notranslate hands_on">
-  <h3 id="hands_on-hands-on-creating-a-gemini-database-from-a-variants-dataset"><i class="fa fa-pencil" aria-hidden="true"></i><span class="visually-hidden">hands_on</span> Hands-on: Creating a GEMINI database from a variants dataset</h3>
-  <ol>
-    <li><strong>GEMINI load</strong> <i class="fa fa-wrench" aria-hidden="true"></i><span class="visually-hidden">tool</span> with
-      <ul>
-        <li><i class="fa fa-file-o" aria-hidden="true"></i><span class="visually-hidden">param-file</span> <em>“VCF dataset to be loaded in the GEMINI database”</em>:
-the output of <strong>SnpEff eff</strong> <i class="fa fa-wrench" aria-hidden="true"></i><span class="visually-hidden">tool</span></li>
-        <li><em>“The variants in this input are”</em>: <code class="highlighter-rouge">annotated with snpEff</code></li>
-        <li>
-          <p><em>“This input comes with genotype calls for its samples”</em>: <code class="highlighter-rouge">Yes</code></p>
-
-          <p>Calling sample genotypes was part of what we used VarScan somatic for.</p>
-        </li>
-        <li><em>“Choose a gemini annotation source”</em>: select the latest available annotations snapshot (most likely, there will be only one)</li>
-        <li><em>“Sample and family information in PED format”</em>: <code class="highlighter-rouge">Nothing selected</code></li>
-        <li><em>“Load the following optional content into the database”</em>
-          <ul>
-            <li><i class="fa fa-check-square-o" aria-hidden="true"></i><span class="visually-hidden">param-check</span> <em>“GERP scores”</em></li>
-            <li><i class="fa fa-check-square-o" aria-hidden="true"></i><span class="visually-hidden">param-check</span> <em>“CADD scores”</em></li>
-            <li><i class="fa fa-check-square-o" aria-hidden="true"></i><span class="visually-hidden">param-check</span> <em>“Gene tables”</em></li>
-            <li><i class="fa fa-check-square-o" aria-hidden="true"></i><span class="visually-hidden">param-check</span> <em>“Sample genotypes”</em></li>
-            <li><i class="fa fa-check-square-o" aria-hidden="true"></i><span class="visually-hidden">param-check</span> <em>“variant INFO field”</em></li>
-          </ul>
-
-          <p>Be careful to leave <strong>unchecked</strong>:</p>
-          <ul>
-            <li>
-              <p><em>“Genotype likelihoods (sample PLs)”</em></p>
-
-              <p>VarScan somatic does not generate these values</p>
-            </li>
-            <li>
-              <p><em>“only variants that passed all filters”</em></p>
-
-              <p>It is simple and more flexible to filter for this property later</p>
-            </li>
-          </ul>
-        </li>
-      </ul>
-    </li>
-  </ol>
-</blockquote>
-
-<p>During the creation of the database <em>GEMINI</em> already (silently) adds an
-impressive amount of annotations it knows about to our variants (including,
-<em>e.g.</em>, the frequency at which every variant has been observed in large human
-genome sequencing projects). We have gotten all of these for free, just by converting the variants to a GEMINI database!</p>
-
-<p><em>GEMINI</em> also extracts a lot of the information stored in the VCF input dataset for us (such as the functional genomic annotations that we added with
-<em>SnpEff</em>).</p>
-
-<p>However, there are typically additional annotations from other sources (not
-incorporated into <em>GEMINI</em>) that one would like to add. In addition, <em>GEMINI</em>
-is not prepared to extract some non-standard information from VCF datasets,
-including some important bits added by <em>VarScan somatic</em>.</p>
-
-<p><strong>GEMINI annotate</strong> <i class="fa fa-wrench" aria-hidden="true"></i><span class="visually-hidden">tool</span> is the tool that is designed to help you
-with these rather common issues. It lets you add further annotations to the
-variants in an already loaded GEMINI database.</p>
-
-<p>As a first step, we are going to use the tool to add some crucial information
-generated by <em>VarScan somatic</em>, but not recognized by <em>GEMINI load</em>, to the
-database. Specifically, we are interested in three values calculated by
-<em>VarScan somatic</em> for each variant it detected:</p>
-
-<ul>
-  <li>
-    <p><em>Somatic status (SS)</em></p>
-
-    <p>This is a simple numeric code, in which a value of <code class="highlighter-rouge">1</code> indicates a germline
-variant, <code class="highlighter-rouge">2</code> a somatic variant and <code class="highlighter-rouge">3</code> an LOH event.</p>
   </li>
-  <li>
-    <p><em>Germline p-value (GPV)</em></p>
-
-    <p>For variants with a somatic status of 1, this is the error probability
-associated with that status call.</p>
-  </li>
-  <li>
-    <p><em>Somatic p-value (SPV)</em></p>
-
-    <p>This is the error probability associated with status calls of 2 and 3
-(somatic and LOH calls).</p>
+  <li><a href="http://wintervar.wglab.org"><strong>Intervar</strong></a>: software for automatically interpretation of the 28 criteria
+    <ul>
+      <li>Two major steps:
+        <ul>
+          <li>automatically interpretation by 28 criteria</li>
+          <li>manual adjustment to re-interpret the clinical significance</li>
+        </ul>
+      </li>
+    </ul>
   </li>
 </ul>
 
-<p>These values are encoded in the <em>INFO</em> column of the VarScan-generated VCF
-dataset and we are going to extract them from there and add them to the
-<em>GEMINI</em> database.</p>
+<hr />
+<h2 id="prioritization">Prioritization</h2>
 
-<blockquote class="details">
-  <h3 id="details-handling-of-the-vcf-info-field-by-gemini-load"><i class="fa fa-info-circle" aria-hidden="true"></i><span class="visually-hidden">details</span> Handling of the VCF INFO field by GEMINI load</h3>
-  <p>If you paid close attention to how we generated the GEMINI database, you
-might remember that, under <em>“Load the following optional content into the
-database”</em>, we checked the option <i class="fa fa-check-square-o" aria-hidden="true"></i><span class="visually-hidden">param-check</span> <em>“variant INFO
-field”</em>. Did the tool not do what it was supposed to do?</p>
-
-  <p>The answer is that it did, but not in the way you may expect.</p>
-
-  <p>In fact, <em>GEMINI load</em> always extracts INFO field elements it knows about and
-stores them into predefined columns of the variants table in the database.
-In addition, it can store the <em>whole</em> INFO field of each variant into a
-separate <em>info</em> column so that no information gets lost on the way from the
-VCF input to the GEMINI database, and that’s the optional behavior we have
-been asking for. To keep things compact, however, this column stores the INFO
-content in compressed form, which is not readily accessible.</p>
-
-  <p>That’s why it is necessary to extract non-standard INFO field elements
-explicitly if they are supposed to be used for filtering and querying.</p>
-</blockquote>
-
-<blockquote class="notranslate hands_on">
-  <h3 id="hands_on-hands-on-making-variant-call-statistics-accessible"><i class="fa fa-pencil" aria-hidden="true"></i><span class="visually-hidden">hands_on</span> Hands-on: Making variant call statistics accessible</h3>
-  <ol>
-    <li><strong>GEMINI annotate</strong> <i class="fa fa-wrench" aria-hidden="true"></i><span class="visually-hidden">tool</span>:
-      <ul>
-        <li><i class="fa fa-file-o" aria-hidden="true"></i><span class="visually-hidden">param-file</span> <em>“GEMINI database”</em>: output of <strong>GEMINI load</strong></li>
-        <li><i class="fa fa-file-o" aria-hidden="true"></i><span class="visually-hidden">param-file</span> <em>“Dataset to use as the annotation source”</em>: output of <strong>VarScan somatic</strong></li>
-        <li>
-          <p><em>“Strict variant-identity matching of database and annotation records
-(VCF format only)”</em>: <code class="highlighter-rouge">Yes</code></p>
-
-          <p>This setting does not really matter here since you have built the GEMINI
-database from the exact same list of variants that we are now retrieving
-annotations from and because VarScan somatic does not call multiple alleles
-at single sites. Matching on variant-identity is the behavior we would
-like to see though, so we may as well be explicit about it.</p>
-        </li>
-        <li>
-          <p><em>“Type of information to add to the database variants”</em>: <code class="highlighter-rouge">Specific values
-extracted from matching records in the annotation source (extract)</code></p>
-
-          <ul>
-            <li>In <em>“1: Annotation extraction recipe”</em>:
-              <ul>
-                <li><em>“Elements to extract from the annotation source”</em>: <code class="highlighter-rouge">SS</code></li>
-                <li><em>“Database column name to use for recording annotations”</em>:
-<code class="highlighter-rouge">somatic_status</code></li>
-                <li><em>“What type of data are you trying to extract?”</em>: <code class="highlighter-rouge">Integer numbers</code></li>
-                <li><em>“If multiple annotations are found for the same variant,
-store …“</em>: <code class="highlighter-rouge">the first annotation found</code></li>
-              </ul>
-
-              <p>This is the recipe for extracting the VarScan-generated <em>SS</em> field and
-adding it as a new column <em>somatic_status</em> to the GEMINI database.</p>
-            </li>
-            <li><i class="fa fa-plus-square-o" aria-hidden="true"></i><span class="visually-hidden">param-repeat</span> <em>“Insert Annotation extraction recipe”</em></li>
-            <li>In <em>“2: Annotation extraction recipe”</em>:
-              <ul>
-                <li><em>“Elements to extract from the annotation source”</em>: <code class="highlighter-rouge">GPV</code></li>
-                <li><em>“Database column name to use for recording annotations”</em>:
- <code class="highlighter-rouge">germline_p</code></li>
-                <li><em>“What type of data are you trying to extract?”</em>: <code class="highlighter-rouge">Numbers with
-decimal precision</code></li>
-                <li><em>“If multiple annotations are found for the same variant,
-store …“</em>: <code class="highlighter-rouge">the first annotation found</code></li>
-              </ul>
-
-              <p>This is the recipe for extracting the VarScan-generated <em>GPV</em> field
-and adding it as a new column <em>germline_p</em> to the GEMINI database.</p>
-            </li>
-            <li><i class="fa fa-plus-square-o" aria-hidden="true"></i><span class="visually-hidden">param-repeat</span> <em>“Insert Annotation extraction recipe”</em></li>
-            <li>In <em>“3: Annotation extraction recipe”</em>:
-              <ul>
-                <li><em>“Elements to extract from the annotation source”</em>: <code class="highlighter-rouge">SPV</code></li>
-                <li><em>“Database column name to use for recording annotations”</em>:
- <code class="highlighter-rouge">somatic_p</code></li>
-                <li><em>“What type of data are you trying to extract?”</em>: <code class="highlighter-rouge">Numbers with
-decimal precision</code></li>
-                <li><em>“If multiple annotations are found for the same variant,
-store …“</em>: <code class="highlighter-rouge">the first annotation found</code></li>
-              </ul>
-
-              <p>This is the recipe for extracting the VarScan-generated <em>SPV</em> field
-and adding it as a new column <em>somatic_p</em> to the GEMINI database.</p>
-            </li>
-          </ul>
-        </li>
-      </ul>
-    </li>
-  </ol>
-
-</blockquote>
-
-<p>Next, we are going to add additional annotations beyond the ones directly
-obtainable through <em>GEMINI</em> or from the input VCF dataset. Specifically we
-want to add:</p>
+<p>Phenotype-based prioritization tools are methods working by comparing the phenotypes of a patient with gene-phenotype known associations.</p>
 
 <ul>
-  <li>
-    <p>more information from <strong>dbSNP</strong></p>
-
-    <p>As part of the database creation process, GEMINI already checks all
-variants whether they occur in dbSNP and, if so, stores their dbSNP IDs.
-Hence, we only need to extract some additional information of interest.</p>
-  </li>
-  <li>information from <strong>Cancer Hotspots</strong></li>
-  <li>links to the <strong>CIViC</strong> database</li>
-  <li>information from the <strong>Cancer Genome Interpreter (CGI)</strong></li>
+  <li><a href="http://phenolyzer.wglab.org/">Phenolyzer</a>: Phenotype Based Gene Analyzer, a tool to prioritize genes based on user-specific disease/phenotype terms</li>
 </ul>
 
-<blockquote class="notranslate hands_on">
-  <h3 id="hands_on-hands-on-adding-further-annotations"><i class="fa fa-pencil" aria-hidden="true"></i><span class="visually-hidden">hands_on</span> Hands-on: Adding further annotations</h3>
-  <ol>
-    <li><strong>GEMINI annotate</strong> <i class="fa fa-wrench" aria-hidden="true"></i><span class="visually-hidden">tool</span> to add further annotations from <strong>dbSNP</strong>
-      <ul>
-        <li><i class="fa fa-file-o" aria-hidden="true"></i><span class="visually-hidden">param-file</span> <em>“GEMINI database”</em>: the output of the last
-<strong>GEMINI annotate</strong> <i class="fa fa-wrench" aria-hidden="true"></i><span class="visually-hidden">tool</span> run</li>
-        <li><i class="fa fa-file-o" aria-hidden="true"></i><span class="visually-hidden">param-file</span> <em>“Dataset to use as the annotation source”</em>: the imported <code class="highlighter-rouge">dbsnp.b147.chr5_12_17.vcf</code></li>
-        <li>
-          <p><em>“Strict variant-identity matching of database and annotation records
-(VCF format only)”</em>: <code class="highlighter-rouge">Yes</code></p>
-
-          <p>dbSNP stores information about specific SNPs observed in human
-populations and we would like to record if any exact same SNPs are among
-our variants.</p>
-        </li>
-        <li><em>“Type of information to add to the database variants”</em>: <code class="highlighter-rouge">Specific
-values extracted from matching records in the annotation source
-(extract)</code>
-          <ul>
-            <li>In <em>“1: Annotation extraction recipe”</em>:
-              <ul>
-                <li><em>“Elements to extract from the annotation source”</em>: <code class="highlighter-rouge">SAO</code></li>
-                <li><em>“Database column name to use for recording annotations”</em>:
-<code class="highlighter-rouge">rs_ss</code></li>
-                <li><em>“What type of data are you trying to extract?”</em>: <code class="highlighter-rouge">Integer numbers</code></li>
-                <li><em>“If multiple annotations are found for the same variant,
-store …“</em>: <code class="highlighter-rouge">the first annotation found</code></li>
-              </ul>
-
-              <p>This recipe extracts the dbSNP <em>SAO</em> field and adds it as <em>rs_ss</em> to
-the GEMINI database.</p>
-            </li>
-          </ul>
-        </li>
-      </ul>
-    </li>
-    <li><strong>GEMINI annotate</strong> <i class="fa fa-wrench" aria-hidden="true"></i><span class="visually-hidden">tool</span> to add further annotations from <strong>cancerhotspots</strong>
-      <ul>
-        <li><i class="fa fa-file-o" aria-hidden="true"></i><span class="visually-hidden">param-file</span> <em>“GEMINI database”</em>: the output of the last
-<strong>GEMINI annotate</strong> <i class="fa fa-wrench" aria-hidden="true"></i><span class="visually-hidden">tool</span> run</li>
-        <li><i class="fa fa-file-o" aria-hidden="true"></i><span class="visually-hidden">param-file</span> <em>“Dataset to use as the annotation source”</em>: the imported <code class="highlighter-rouge">cancerhotspots_v2.<span class="notranslate">bed</span></code></li>
-        <li>
-          <p><em>“Strict variant-identity matching of database and annotation records
-(VCF format only)”</em>: <code class="highlighter-rouge">Yes</code> (with input in <span class="notranslate">BED</span> format this setting will
-be ignored)</p>
-
-          <p>For the cancerhotspots data, we are simply going to record the best
-q-value associated with any cancerhotspots variant overlapping one
-of our variant sites.</p>
-        </li>
-        <li><em>“Type of information to add to the database variants”</em>: <code class="highlighter-rouge">Specific
-values extracted from matching records in the annotation source
-(extract)</code>
-          <ul>
-            <li>In <em>“1: Annotation extraction recipe”</em>:
-              <ul>
-                <li>
-                  <p><em>“Elements to extract from the annotation source”</em>: <code class="highlighter-rouge">5</code></p>
-
-                  <p>The q-values are stored in the fifth column of the <span class="notranslate">BED</span> dataset.</p>
-                </li>
-                <li><em>“Database column name to use for recording annotations”</em>:
-<code class="highlighter-rouge">hs_qvalue</code></li>
-                <li><em>“What type of data are you trying to extract?”</em>: <code class="highlighter-rouge">Numbers with
- decimal precision</code></li>
-                <li><em>“If multiple annotations are found for the same variant,
-store …“</em>: <code class="highlighter-rouge">the smallest of the (numeric) values</code></li>
-              </ul>
-
-              <p>This is the recipe for extracting the <em>q-values</em> of overlapping
-cancerhotspots sites and adding them as <em>hs_qvalue</em> to the GEMINI
-database.</p>
-            </li>
-          </ul>
-        </li>
-      </ul>
-    </li>
-    <li><strong>GEMINI annotate</strong> <i class="fa fa-wrench" aria-hidden="true"></i><span class="visually-hidden">tool</span> to add links to <strong>CIViC</strong>
-      <ul>
-        <li><i class="fa fa-file-o" aria-hidden="true"></i><span class="visually-hidden">param-file</span> <em>“GEMINI database”</em>: the output of the last
-<strong>GEMINI annotate</strong> <i class="fa fa-wrench" aria-hidden="true"></i><span class="visually-hidden">tool</span> run</li>
-        <li><i class="fa fa-file-o" aria-hidden="true"></i><span class="visually-hidden">param-file</span> <em>“Dataset to use as the annotation source”</em>: the imported <code class="highlighter-rouge">CIViC.<span class="notranslate">bed</span></code></li>
-        <li>
-          <p><em>“Strict variant-identity matching of database and annotation records
-(VCF format only)”</em>: <code class="highlighter-rouge">Yes</code> (with input in <span class="notranslate">BED</span> format this setting will
-be ignored)</p>
-
-          <p>For the CIViC data, we are going to record the hyperlink to any variant
-found in the CIViC database that overlaps one of our variant sites.</p>
-        </li>
-        <li><em>“Type of information to add to the database variants”</em>: <code class="highlighter-rouge">Specific
-values extracted from matching records in the annotation source
-(extract)</code>
-          <ul>
-            <li>In <em>“1: Annotation extraction recipe”</em>:
-              <ul>
-                <li>
-                  <p><em>“Elements to extract from the annotation source”</em>: <code class="highlighter-rouge">4</code></p>
-
-                  <p>The hyperlinks are stored in the fourth column of the <span class="notranslate">BED</span> dataset.</p>
-                </li>
-                <li><em>“Database column name to use for recording annotations”</em>:
-<code class="highlighter-rouge">overlapping_civic_url</code></li>
-                <li><em>“What type of data are you trying to extract?”</em>: <code class="highlighter-rouge">Text (text)</code></li>
-                <li><em>“If multiple annotations are found for the same variant,
-store …“</em>: <code class="highlighter-rouge">a comma-separated list of non-redundant (text) values</code></li>
-              </ul>
-
-              <p>This is the recipe for extracting the hyperlinks of overlapping CIViC
-sites and adding them as a list of <em>overlapping_civic_urls</em> to the
-GEMINI database.</p>
-            </li>
-          </ul>
-        </li>
-      </ul>
-    </li>
-    <li><strong>GEMINI annotate</strong> <i class="fa fa-wrench" aria-hidden="true"></i><span class="visually-hidden">tool</span> to add information from the <strong>Cancer Genome Interpreter (CGI)</strong>
-      <ul>
-        <li><i class="fa fa-file-o" aria-hidden="true"></i><span class="visually-hidden">param-file</span> <em>“GEMINI database”</em>: the output of the last
-<strong>GEMINI annotate</strong> <i class="fa fa-wrench" aria-hidden="true"></i><span class="visually-hidden">tool</span> run</li>
-        <li><i class="fa fa-file-o" aria-hidden="true"></i><span class="visually-hidden">param-file</span> <em>“Dataset to use as the annotation source”</em>: the imported <code class="highlighter-rouge">cgi_variant_positions.<span class="notranslate">bed</span></code></li>
-        <li>
-          <p><em>“Strict variant-identity matching of database and annotation records
-(VCF format only)”</em>: <code class="highlighter-rouge">Yes</code> (with input in <span class="notranslate">BED</span> format this setting will
-be ignored)</p>
-
-          <p>For the CGI data, we are going to record if any of our variant sites
-is overlapped by a variant in the CGI biomarkers database.</p>
-        </li>
-        <li><em>“Type of information to add to the database variants”</em>: <code class="highlighter-rouge">Binary
-indicator (1=found, 0=not found) of whether the variant had any match in
-the annotation source (boolean)</code>
-          <ul>
-            <li><em>“Database column name to use for recording annotations”</em>: <code class="highlighter-rouge">in_cgidb</code></li>
-          </ul>
-        </li>
-      </ul>
-    </li>
-  </ol>
-
-</blockquote>
-
-<h2 id="reporting-selected-subsets-of-variants">Reporting selected subsets of variants</h2>
-
-<p>Now that we have built our GEMINI database and enriched it with additional
-annotations, it is time that we explore the wealth of information stored in it.
-The goal is to produce filtered variant reports that list specific classes
-(somatic, germline, LOH) of high-quality variants together with their most
-relevant annotations. The way to achieve this is through <strong>GEMINI queries</strong>
-that specify:</p>
-
-<ol>
-  <li>filters we want to apply to the variant list stored in the database</li>
-  <li>the pieces of information about the filtered variants that we would like to
-retrieve</li>
-</ol>
-
-<blockquote class="comment">
-  <h3 id="comment-the-gemini-query-language"><i class="fa fa-commenting-o" aria-hidden="true"></i><span class="visually-hidden">comment</span> The GEMINI query language</h3>
-  <p>GEMINI queries are extremely flexible, enabling users to express many
-different ideas to explore the variant space, and as such, the complete
-query syntax can be a bit overwhelming for beginners.</p>
-
-  <p>In this section, we will start off with a rather simple query, then build on
-it stepwise before trying a really complex query in the next section.</p>
-
-  <p>For a more detailed explanation of the query syntax, you should consult the
-<a href="https://gemini.readthedocs.io/en/latest/content/querying.html">query section of the GEMINI documentation</a>.
-Since the GEMINI query syntax is built on the <em>SQLite</em> dialect of <em>SQL</em>, the
-<em>SQLite</em> documentation, in particular, its chapter on
-<a href="https://sqlite.org/lang_corefunc.html">SQLite core functions</a>, is another
-really helpful resource for understanding more sophisticated queries.</p>
-</blockquote>
-
-<p>Lets start by configuring a simple query to obtain a report of <em>bona fide</em>
-somatic variants. Our strategy for retrieving them is to:</p>
-
-<ol>
-  <li>rely on the <em>somatic status</em> of the variants called by <strong>VarScan somatic</strong>
-<i class="fa fa-wrench" aria-hidden="true"></i><span class="visually-hidden">tool</span></li>
-  <li>disregard questionable variants, for which either a non-negligible amount of
-supporting sequencing <span class="notranslate">reads</span> is also found in the normal tissue data, or
-which are only supported by a very small fraction of the <span class="notranslate">reads</span> from the
-tumor sample</li>
-</ol>
+<hr />
 
 <blockquote class="notranslate hands_on">
-  <h3 id="hands_on-hands-on-querying-the-gemini-database-for-somatic-variants"><i class="fa fa-pencil" aria-hidden="true"></i><span class="visually-hidden">hands_on</span> Hands-on: Querying the GEMINI database for somatic variants</h3>
-  <ol>
-    <li><strong>GEMINI query</strong> <i class="fa fa-wrench" aria-hidden="true"></i><span class="visually-hidden">tool</span> with:
-      <ul>
-        <li><i class="fa fa-file-o" aria-hidden="true"></i><span class="visually-hidden">param-file</span> <em>“GEMINI database”</em>: the fully annotated database
-created in the last <strong>GEMINI annotate</strong> <i class="fa fa-wrench" aria-hidden="true"></i><span class="visually-hidden">tool</span> step</li>
-        <li><em>“Build GEMINI query using”</em>: <code class="highlighter-rouge">Basic variant query constructor</code>
-          <ul>
-            <li><i class="fa fa-plus-square-o" aria-hidden="true"></i><span class="visually-hidden">param-repeat</span> <em>“Insert Genotype filter <span class="notranslate">expression</span>”</em>
-              <ul>
-                <li><em>“Restrictions to apply to genotype values”</em>:
-<code class="highlighter-rouge">gt_alt_freqs.NORMAL &lt;= 0.05 AND gt_alt_freqs.TUMOR &gt;= 0.10</code></li>
-              </ul>
+  <h3 id="hands_on-hands-on-variant-prioritization"><i class="fa fa-pencil" aria-hidden="true"></i><span class="visually-hidden">hands_on</span> Hands-on: Variant prioritization</h3>
 
-              <p>With this genotype-based filter, we retain only those variants that
-are supported by less than 5% of the <span class="notranslate">reads</span> of the normal sample, but
-by more than 10% of the <span class="notranslate">reads</span> of the tumor sample.</p>
-            </li>
-            <li>
-              <p><em>“Additional constraints expressed in SQL syntax”</em>: <code class="highlighter-rouge">somatic_status = 2</code></p>
-
-              <p>Among the info stored in the GEMINI database is the somatic status
-VarScan somatic has called for every variant (remember we
-used GEMINI annotate to add it). With the condition
-<code class="highlighter-rouge">somatic_status = 2</code> we retain only those variants passing the
-genotype filter above <strong>and</strong> considered somatic variants by the
-variant caller.</p>
-            </li>
-            <li>In <em>“Output format options”</em>
-              <ul>
-                <li><em>“Type of report to generate”</em>: <code class="highlighter-rouge">tabular (GEMINI default)</code>
-                  <ul>
-                    <li><em>“Add a header of column names to the output”</em>: <code class="highlighter-rouge">Yes</code></li>
-                    <li><em>“Set of columns to include in the variant report table”</em>: <code class="highlighter-rouge">Custom
-(report user-specified columns)</code>
-                      <ul>
-                        <li>In <em>“Choose columns to include in the report”</em>:
-                          <ul>
-                            <li><i class="fa fa-check-square-o" aria-hidden="true"></i><span class="visually-hidden">param-check</span> <em>“chrom”</em></li>
-                            <li><i class="fa fa-check-square-o" aria-hidden="true"></i><span class="visually-hidden">param-check</span> <em>“start”</em></li>
-                            <li><i class="fa fa-check-square-o" aria-hidden="true"></i><span class="visually-hidden">param-check</span> <em>“ref”</em></li>
-                            <li><i class="fa fa-check-square-o" aria-hidden="true"></i><span class="visually-hidden">param-check</span> <em>“alt”</em></li>
-                          </ul>
-                        </li>
-                        <li><em>“Additional columns (comma-separated)”</em>: <code class="highlighter-rouge">gene, aa_change, rs_ids,
-hs_qvalue, cosmic_ids</code></li>
-                      </ul>
-                    </li>
-                  </ul>
-                </li>
-              </ul>
-
-              <p>Here we specify, which columns (from the <em>variants</em> table of the
-GEMINI database) we want to have included, in the specified order, in
-a <code class="highlighter-rouge">tabular</code> variant report.</p>
-            </li>
-          </ul>
-        </li>
-      </ul>
-    </li>
-  </ol>
-
-</blockquote>
-
-<blockquote class="comment">
-  <h3 id="comment-how-am-i-supposed-to-know-these-column-names"><i class="fa fa-commenting-o" aria-hidden="true"></i><span class="visually-hidden">comment</span> How am I supposed to know these column names?</h3>
-  <p>Obviously, you need to know the names of the columns (in the tables of the
-GEMINI database) to include them in the report, but how are you supposed to
-know them?</p>
-
-  <p>The standard ones (added by <em>GEMINI load</em> when building the database) are
-listed in the
-<a href="https://gemini.readthedocs.io/en/latest/content/database_schema.html">GEMINI documentation</a>.
-The non-standard columns (the ones you added with <em>GEMINI annotate</em>) have
-the names you gave them, when you added them.</p>
-
-  <p>Alte<span class="notranslate">rna</span>tively, to get the tables and column names of a specific database
-listed, you can use <strong>GEMINI database info</strong> <i class="fa fa-wrench" aria-hidden="true"></i><span class="visually-hidden">tool</span> like so:</p>
-
-  <ul>
-    <li><em>“GEMINI database”</em>: the database you want to explore</li>
-    <li><em>“Information to retrieve from the database”</em>: <code class="highlighter-rouge">Names of database tables
-and their columns</code></li>
-  </ul>
-</blockquote>
-
-<p>What about more sophisticated filtering?</p>
-
-<blockquote class="notranslate hands_on">
-  <h3 id="hands_on-hands-on-more-complex-filter-criteria"><i class="fa fa-pencil" aria-hidden="true"></i><span class="visually-hidden">hands_on</span> Hands-on: More complex filter criteria</h3>
-  <ol>
-    <li><strong>GEMINI query</strong> <i class="fa fa-wrench" aria-hidden="true"></i><span class="visually-hidden">tool</span> with the exact same settings as before, but:
-      <ul>
-        <li><em>“Additional constraints expressed in SQL syntax”</em>: <code class="highlighter-rouge">somatic_status = 2 AND somatic_p &lt;= 0.05 AND filter IS NULL</code></li>
-      </ul>
-
-      <p>This translates into “variants classified as somatic with a p-value &lt;=
- 0.05, which haven’t been flagged as likely false-positives”.</p>
-    </li>
-  </ol>
-</blockquote>
-
-<blockquote class="comment">
-  <h3 id="comment-sql-keywords"><i class="fa fa-commenting-o" aria-hidden="true"></i><span class="visually-hidden">comment</span> SQL keywords</h3>
-  <p>In the condition above, SQL keywords are given in uppercase. This is not a
-requirement, but it makes it easier to understand the syntax.</p>
-
-  <p>You can check whether any cell in a data table is empty with <code class="highlighter-rouge">IS NULL</code>, and
-whether it contains <em>any</em> value with <code class="highlighter-rouge">IS NOT NULL</code>. To combine different
-filter criteria logically, you can use <code class="highlighter-rouge">AND</code> and <code class="highlighter-rouge">OR</code>, and parentheses to
-group conditions if required.</p>
-</blockquote>
-
-<p>If you have followed all steps up to here exactly, running this job should give
-you a tabular dataset of 43 variants, and with the annotations in the report
-it is relatively easy to pick out a few interesting ones.
-Before we focus on the content of the report, however, we could enhance the
-report format a bit more.</p>
-
-<blockquote class="notranslate hands_on">
-  <h3 id="hands_on-hands-on-sql-based-output-formatting"><i class="fa fa-pencil" aria-hidden="true"></i><span class="visually-hidden">hands_on</span> Hands-on: SQL-based output formatting</h3>
-  <ol>
-    <li><strong>GEMINI query</strong> <i class="fa fa-wrench" aria-hidden="true"></i><span class="visually-hidden">tool</span> with the exact same settings as in the
-last example, but:
-      <ul>
-        <li>In <em>“Output format options”</em>
-          <ul>
-            <li><em>“Additional columns (comma-separated)”</em>: <code class="highlighter-rouge">type, gt_alt_freqs.TUMOR, gt_alt_freqs.NORMAL,
-ifnull(nullif(round(max_aaf_all,2),-1.0),0) AS MAF, gene, impact_so,
-aa_change, ifnull(round(cadd_scaled,2),'.') AS cadd_scaled,
-round(gerp_bp_score,2) AS gerp_bp, ifnull(round(gerp_element_pval,2),'.')
-AS gerp_element_pval, ifnull(round(hs_qvalue,2), '.') AS hs_qvalue,
-in_omim, ifnull(clinvar_sig,'.') AS clinvar_sig,
-ifnull(clinvar_disease_name,'.') AS clinvar_disease_name,
-ifnull(rs_ids,'.') AS dbsnp_ids, rs_ss, ifnull(cosmic_ids,'.') AS
-cosmic_ids, ifnull(overlapping_civic_url,'.') AS overlapping_civic_url,
-in_cgidb</code></li>
-          </ul>
-        </li>
-      </ul>
-    </li>
-  </ol>
-</blockquote>
-
-<p>This last query adds a lot more annotations to the report, and it also
-demonstrates the use of the <code class="highlighter-rouge">AS</code> keyword to rename columns and of some
-<a href="https://sqlite.org/lang_corefunc.html">SQLite functions</a> to clean up the
-output.</p>
-
-<blockquote class="question">
-  <h3 id="question-question"><i class="fa fa-question-circle" aria-hidden="true"></i><span class="visually-hidden">question</span> Question</h3>
-  <p>Compare the new report to the previous one to see what has changed.</p>
-</blockquote>
-
-<blockquote class="details">
-  <h3 id="details-limitations-of-genotype-column-queries"><i class="fa fa-info-circle" aria-hidden="true"></i><span class="visually-hidden">details</span> Limitations of genotype column queries</h3>
-  <p>In case you are wondering why the above query does not use rounding on
-the alte<span class="notranslate">rna</span>te allele frequencies of the samples, <em>i.e.</em>, on
-<code class="highlighter-rouge">gt_alt_freqs.TUMOR</code> and <code class="highlighter-rouge">gt_alt_freqs.NORMAL</code>, or why it does not rename
-these columns, that is because it would break the query.</p>
-
-  <p>As a general rule, note that all columns in the variants table starting
-with <code class="highlighter-rouge">gt</code> (the genotype columns, calculated from the genotype fields of a
-VCF dataset) cannot be used like regular SQLite columns, but are parsed by
-GEMINI separately. That is why you cannot mix them with regular SQLite
-elements like functions and alias specifications with <code class="highlighter-rouge">AS</code>.
-You may also have noticed that <code class="highlighter-rouge">gt_alt_freqs.TUMOR</code> and
-<code class="highlighter-rouge">gt_alt_freqs.NORMAL</code> do not obey the column order specification of the
-query, but end up as the last columns of the tabular report. This is
-another artefact of GEMINI’s special treatment of <code class="highlighter-rouge">gt</code> columns.</p>
-</blockquote>
-
-<h2 id="generating-reports-of-genes-affected-by-variants">Generating reports of genes affected by variants</h2>
-
-<p>As a final step, let us now try to generate a gene-centered report based on the
-same somatic variants we just selected above.</p>
-
-<p>Such a gene-centered report would include annotations that apply to a whole
-gene affected by a variant rather than to the variant itself. Examples of such
-annotations include known synonyms of an affected gene, its NCBI entrez number,
-the ClinVar phenotype, if any, associated with the gene, a hyperlink to the
-gene’s page at CIViC.org, <em>etc.</em>.</p>
-
-<p>Some of this information comes built-in into every GEMINI database, but it is
-stored in a separate table called <code class="highlighter-rouge">gene_detailed</code>, while all information we
-used and queried so far was from the <code class="highlighter-rouge">variants</code> table.</p>
-
-<p>To access information from the <code class="highlighter-rouge">variants</code> and the <code class="highlighter-rouge">gene_detailed</code> table in the
-same query we need to join the two tables. Such an operation is not possible
-with the <code class="highlighter-rouge">Basic query constructor</code> we have used so far, but requires an
-advanced mode for composing the query.</p>
-
-<blockquote class="notranslate hands_on">
-  <h3 id="hands_on-hands-on-turning-query-results-into-gene-centered-reports"><i class="fa fa-pencil" aria-hidden="true"></i><span class="visually-hidden">hands_on</span> Hands-on: Turning query results into gene-centered reports</h3>
-  <ol>
-    <li><strong>GEMINI query</strong> <i class="fa fa-wrench" aria-hidden="true"></i><span class="visually-hidden">tool</span> in advanced mode by choosing
-      <ul>
-        <li><em>“Build GEMINI query using”</em>: <code class="highlighter-rouge">Advanced query constructor</code></li>
-        <li><em>“The query to be issued to the database”</em>: <code class="highlighter-rouge">SELECT v.gene, v.chrom,
- g.synonym, g.hgnc_id, g.entrez_id, g.rvis_pct, v.clinvar_gene_phenotype
- FROM variants v, gene_detailed g WHERE v.chrom = g.chrom AND
- v.gene = g.gene AND v.somatic_status = 2 AND v.somatic_p &lt;= 0.05 AND
- v.filter IS NULL GROUP BY g.gene</code></li>
-      </ul>
-
-      <blockquote class="comment">
-        <h3 id="comment-elements-of-the-sql-query"><i class="fa fa-commenting-o" aria-hidden="true"></i><span class="visually-hidden">comment</span> Elements of the SQL query</h3>
-        <p>In this full SQL query, the part between <code class="highlighter-rouge">SELECT</code> and <code class="highlighter-rouge">FROM</code> states which
-columns from which database tables we wish to retrieve, while the part
-between <code class="highlighter-rouge">FROM</code> and <code class="highlighter-rouge">WHERE</code> specifies the database tables that need to be
-consulted and gives them simpler aliases (<code class="highlighter-rouge">v</code> becomes an alias for
-the <code class="highlighter-rouge">variants</code> table, <code class="highlighter-rouge">g</code> for the <code class="highlighter-rouge">gene_detailed</code> table), which we can then
-use everywhere else in the query.</p>
-
-        <p>The part following <code class="highlighter-rouge">WHERE</code> are the filter criteria we want to apply. Note
-that these criteria are almost the same as those we have used in our
-earlier somatic variants query, but since we are working with two tables
-instead of just one, we need to state which table the filter columns come
-from through table prefixes. Thus, <code class="highlighter-rouge">somatic_status</code> becomes
-<code class="highlighter-rouge">v.somatic_status</code>, <em>etc.</em>. In addition, we want to report, of course,
-corresponding information from the two tables, which is ensured by the
-additional criteria <code class="highlighter-rouge">v.chrom = g.chrom</code> and <code class="highlighter-rouge">v.gene = g.gene</code> (the SQL
-terminology for this is: we want to join the <code class="highlighter-rouge">variants</code> and the
-<code class="highlighter-rouge">gene_detailed</code> tables on their <code class="highlighter-rouge">chrom</code> and <code class="highlighter-rouge">gene</code> columns).</p>
-
-        <p>The <code class="highlighter-rouge">GROUP BY</code> part, finally, specifies that we want to collapse records
-affecting the same gene into one.</p>
-      </blockquote>
-    </li>
-  </ol>
+  <p>Using knowledge gained on <a href="http://0.0.0.0:4000/clinical_genomics/lectures/04.db.html">Genomic databases and variant annotation</a> section, try to <strong><em>annotate</em></strong>, <strong><em>filter</em></strong> and <strong><em>prioritize</em></strong> an example exome variant data, using two disease terms</p>
 
   <ul>
     <li>
-      <p><em>“Genotype filter <span class="notranslate">expression</span>”</em>: <code class="highlighter-rouge">gt_alt_freqs.NORMAL &lt;= 0.05 AND
-gt_alt_freqs.TUMOR &gt;= 0.10</code></p>
+      <p>Download file Sample1.all_exons.hg19.vcf from the <em>dataset</em>, as learned in the <a href="http://0.0.0.0:4000/clinical_genomics/lectures/01.home.html">Home</a> section</p>
+    </li>
+    <li>
+      <p>Go to <a href="http://wannovar.wglab.org/">wANNOVAR</a></p>
+    </li>
+    <li>
+      <p>Use the vcf file as <strong>input file</strong> and <em>hearing loss</em> and <em>deafness autosomal recessive</em>, as disease terms to prioritize results</p>
+    </li>
+    <li>
+      <p>Choose <em>rare recessive Mendelian disease</em> as Disease Model in the <strong><em>Parameter Settings</em></strong> section</p>
+    </li>
+    <li>
+      <p>Provide an istitutional email address and submit the Job</p>
+    </li>
+    <li>
+      <p>… <em>wait for results</em> …</p>
 
-      <p>This remains the same as in the previous somatic variants query.</p>
+      <p>In the results page you can navigate and download results.
+ Click <strong><em>Show</em></strong> in the <em>Network Visualization</em> section to see
+ Phenolyzer prioritization results</p>
     </li>
   </ul>
 </blockquote>
 
-<h2 id="adding-additional-annotations-to-the-gene-centered-report">Adding additional annotations to the gene-centered report</h2>
+<ul>
+  <li><em>Copy Number Variants</em> (CNVs) are imbalances in the copy number of the genomic material that result in either <span class="notranslate">DNA</span> <strong>deletions</strong> (copy loss) or <strong>duplications</strong></li>
+  <li><em>CNVs</em> can cause/predispose to human diseases by altering gene structure/dosage or by <strong>position effect</strong></li>
+  <li><em>CNV</em> size ranges from 50 bp to megabases</li>
+  <li>Classical methods to identify <em>CNVs</em> use array-based technologies (SNP/CGH)</li>
+  <li>Computational approaches have been developed to identify <em>CNVs</em> in targeted sequencing data from <strong>hybrid capture</strong> experiments</li>
+</ul>
 
-<p>Unfortunately, <em>GEMINI annotate</em> lets you add columns only to the variants
-table of a GEMINI database, but there is no simple way to enhance the
-<code class="highlighter-rouge">gene_detailed</code> table with additional annotations. That’s why we are going to
-add such extra annotations now to the tabular gene-centered report using more
-general-purpose <span class="notranslate">Galaxy</span> tools.</p>
+<h1 id="cnv-detection-from-targeted-sequencing-data">CNV detection from targeted sequencing data</h1>
 
-<p>Annotating the tabular gene report produced with GEMINI is a two-step
-process, in which we first <em>join</em> the report and tabular annotation sources
-into a larger tabular dataset, from which we then eliminate redundant and
-unwanted columns, while <em>rearranging</em> the remaining ones.</p>
+<h2 id="computational-approaches">Computational approaches</h2>
 
-<p><strong>Step 1</strong> consists of three separate <em>join</em> operations that sequentially pull in the annotations found in the three gene-based tabular datasets that you imported in the <em>Get Data</em> step of this section.</p>
+<ul>
+  <li>There are four main methods for <em>CNV</em> identification from short-read +NGS data (see figure below):
+    <ul>
+      <li><strong>Read Count</strong> (RC)</li>
+      <li><strong>Read Pair</strong> (RP)</li>
+      <li><strong>Split Read</strong> (SR)</li>
+      <li><strong>De Novo Assembly</strong> (AS)</li>
+    </ul>
+  </li>
+  <li><em>RP</em> and <em>SR</em> require continuous coverage of the <em>CNV</em> region or <span class="notranslate">reads</span> encompassing <em>CNV</em> breakpoints, as in whole genome sequencing. The sparse nature and small size of exonic targets hamper the application of these methods to targeted sequencing.</li>
+  <li><em>RC</em> is the best suited method for <em>CNV</em> detection from whole exomes or gene panels where:
+    <ul>
+      <li>deletions appear as exonic targets devoid of <span class="notranslate">reads</span></li>
+      <li>duplications appear as exonic targets characterized by excess of coverage</li>
+    </ul>
+  </li>
+</ul>
+
+<hr />
+
+<p><img src="http://0.0.0.0:4000/clinical_genomics/images/methods_identification_cnv.png" alt="CNV detection methods" />
+<strong>Figure 1</strong>. Methods for detection of CNVs in short read NGS data (adapted from <a href="https://doi.org/10.3389/fbioe.2015.00092">Tattini et al., 2015</a>)</p>
+
+<hr />
+
+<h2 id="rc-method-and-data-normalization">RC method and data normalization</h2>
+
+<p>In targeted sequencing, a method to study <span class="notranslate">DNA</span> copy number variation by <em>RC</em> (as implemented in <em>EXCAVATOR</em> tool, <a href="http://genomebiology.com/2013/14/10/R120">Magi et al., 2013</a>)) is to consider the <strong>exon mean read count</strong> (EMRC):</p>
+
+<p><em>EMRC</em> = <em>RC</em><sub>e</sub>/<em>L</em><sub>e</sub></p>
+
+<p>where <em>RC</em><sub>e</sub> is the number of <span class="notranslate">reads</span> aligned to a target genomic region e and <em>L</em><sub>e</sub> is the size of that same genomic region in base pairs (<a href="http://genomebiology.com/2013/14/10/R120">Magi et al., 2013</a>)).
+Three major bias sources are known to affect <em>EMRC</em> dramatically in targeted sequencing data:</p>
+<ul>
+  <li>local <strong>GC content</strong> percentage</li>
+  <li>genomic <strong>mappability</strong></li>
+  <li>target region <strong>size</strong></li>
+</ul>
+
+<p>These biases contribute to non uniform read depth across target regions and, together with the sparse target nature, challenge the applicability of <em>RC</em> methods to targeted data. As shown in Figure 2 (left panel), in single-sample data the <em>EMRC</em> distributions of genomic regions characterized by different copy numbers largely overlap, revealing poor <em>CNV</em> prediction capability.</p>
+
+<p><em>EMRC ratio</em> between two samples can be used as a normalization procedure. The effect of <em>EMRC ratio</em>-based normalization is clear in Figure 2 (right panel) as a markedly improved correspondece between the predicted and the real copy number states.</p>
+
+<hr />
+
+<p><img src="http://0.0.0.0:4000/clinical_genomics/images/normalization_EMRC.png" alt="Data Normalization_1" />
+<strong>Figure 2</strong>. Effect of <em>EMRC ratio</em> on <span class="notranslate">DNA</span> copy number prediction (adapted from <a href="http://genomebiology.com/2013/14/10/R120">Magi et al., 2013</a>)</p>
+
+<hr />
+
+<p>Similarly FPKM, a normalized measure of read depth implemented in ExomeDepth tool (<a href="https://doi.org/10.1093/bioinformatics/bts526">Plagnol et al., 2012</a>), is affected by extensive exon–exon variability but comparison between pairs of exome datasets demonstrates high correlation level of the normalized read count data across samples making it possibile to use one or more combined exomes as reference set to base the CNV inference on (<a href="https://doi.org/10.1093/bioinformatics/bts526">Plagnol et al., 2012</a>).</p>
+
+<hr />
+
+<p><img src="http://0.0.0.0:4000/clinical_genomics/images/normalization_FPKM.png" alt="Data Normalization_2" />
+<strong>Figure 3</strong>. Correlation of the normalized read count data between samples (from <a href="https://doi.org/10.1093/bioinformatics/bts526">Plagnol et al., 2012</a>)</p>
+
+<hr />
+
+<h2 id="cnv-detection-accuracy"><em>CNV</em> detection accuracy</h2>
+
+<p>Strong correlation is observed between Affymetrix array-SNP and exome-derived data for <em>CNVs</em> &gt;1 Mb (Figure 4, right panel), while including CNVs of any size dramatically decreases the correlation level (Figure 4, left panel). This can be explained by the different distribution of exons and SNP probes throughout the genome. Candidate <em>CNV</em> regions as identified by <em>EXCAVATOR</em> contain a comparable number of exons and SNP probes when they are &gt; 1 Mb (<em>R</em>=0.8), while regions &lt;100 Kb do not (<em>R</em>=-0.02). Accordingly, <a href="https://genome.cshlp.org/content/22/8/1525.full">Krumm et al., 2012</a> report 94% precision in detecting <em>CNVs</em> across three or more exons.</p>
+
+<hr />
+
+<p><img src="http://0.0.0.0:4000/clinical_genomics/images/corr_exome_affymetrix.png" alt="Correlation_Exome_Affymetrix" />
+<strong>Figure 4</strong>. Correlation between array-SNP and exome-derived <em>CNVs</em> including all (left panel) or &gt; 1 Mb <em>CNVs</em> (adapted from <a href="http://genomebiology.com/2013/14/10/R120">Magi et al., 2013</a>)</p>
+
+<hr />
+
+<p>To increase chances to detect <em>CNVs</em> encompassing few exons or in non-coding regions from exome data, <a href="https://academic.oup.com/nar/article/44/20/e154/2607979">D’Aurizio et al., 2016</a> have proposed an extension to <em>EXCAVATOR</em> to exploit off-target read count (<em>EXCAVATOR2</em>). Similar approaches taking advantage of off-target <span class="notranslate">reads</span> have been described by <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4147927/">Bellos et al., 2014</a> or <a href="https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1004873">Talevich et al., 2016</a>.</p>
+
+<h2 id="tools-for-cnv-detection-from-gene-panels-or-exome-data">Tools for <em>CNV</em> detection from gene panels or exome data</h2>
+
+<p>A number of tools or pipelines implementing modified versions of previously published tools have been reported to detect single-exon <em>CNVs</em> in clinical gene panels:</p>
+<ul>
+  <li><a href="https://onlinelibrary.wiley.com/doi/full/10.1002/humu.22969">CoNVaDING</a></li>
+  <li><a href="https://wellcomeopenresearch.org/articles/1-20/v1">DeCON</a></li>
+  <li><a href="https://www.nature.com/articles/ejhg201742">ExomeDepth v1.1.6</a></li>
+  <li><a href="https://www.nature.com/articles/s41436-019-0475-4">Atlas-CNV</a></li>
+  <li><a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6192323/">DeviCNV</a></li>
+</ul>
+
+<p>In addition to the above-mentioned methods, many tools have been developed that detect <em>CNVs</em> from exomes. Evaluation of these tools is not straightforward as there is lack of a gold standard for comparison. As a consequence, there is no consensus level on pipelines as high as for single nucleotide variants. <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5452530/pdf/12859_2017_Article_1705.pdf">Zare et al., 2017</a> have reviewed this topic with focus on cancer, reporting poor overlap of different tools and added challenges for somatic variant calling.</p>
+
+<hr />
 
 <blockquote class="notranslate hands_on">
-  <h3 id="hands_on-hands-on-join"><i class="fa fa-pencil" aria-hidden="true"></i><span class="visually-hidden">hands_on</span> Hands-on: Join</h3>
+  <h3 id="hands_on-hands-on-cnv-calling-with-exomedepth"><i class="fa fa-pencil" aria-hidden="true"></i><span class="visually-hidden">hands_on</span> Hands-on: CNV calling with ExomeDepth</h3>
+  <p>ExomeDepth uses pairs of case and control exomes to identify copy number imbalances in case(s) compared to control(s).
+   Here we provide a small data set including a pair of case/control BAM files and an exome target <span class="notranslate">BED</span> file restricted to a specific polymorphic region on chromosome 2q.</p>
 
-  <ol>
-    <li><strong>Join two files</strong> <i class="fa fa-wrench" aria-hidden="true"></i><span class="visually-hidden">tool</span> to add <strong>UniProt cancer genes</strong> information
-      <ul>
-        <li><i class="fa fa-file-o" aria-hidden="true"></i><span class="visually-hidden">param-file</span> <em>“1st file”</em>: the GEMINI-generated gene report from the previous step</li>
-        <li><em>“Column to use from 1st file”</em>: <code class="highlighter-rouge">Column: 1</code></li>
-        <li><i class="fa fa-file-o" aria-hidden="true"></i><span class="visually-hidden">param-file</span>  <em>“2nd file”</em>: the imported <code class="highlighter-rouge">Uniprot_Cancer_Genes</code> dataset</li>
-        <li><em>“Column to use from 2nd file”</em>: <code class="highlighter-rouge">Column: 1</code></li>
-        <li>
-          <p><em>“Output lines appearing in”</em>: <code class="highlighter-rouge">Both 1st &amp; 2nd file, plus unpairable
-lines from 1st file. (-a 1)</code></p>
+  <ul>
+    <li>CNV_case.bam.</li>
+    <li>CNV_control.bam.</li>
+    <li>
+      <p>CNV_TruSeq_Chr2.bam</p>
 
-          <p>If a variant-affected gene is not listed as a Uniprot cancer gene, then,
-obviously, we still want to have it included in the final report.</p>
-        </li>
-        <li><em>“First line is a header line”</em>: <code class="highlighter-rouge">Yes</code></li>
-        <li><em>“Ignore case”</em>: <code class="highlighter-rouge">No</code></li>
-        <li>
-          <p><em>“Value to put in unpaired (empty) fields”</em>: <code class="highlighter-rouge">0</code></p>
-
-          <p>If you inspect the <code class="highlighter-rouge">Uniprot_Cancer_Genes</code> dataset, you will see that it
-has two annotation columns - one indicating, using <code class="highlighter-rouge">1</code> and <code class="highlighter-rouge">0</code>, whether
-a given gene is a <em>proto-oncogene</em> or not, the other one indicating
-<em>tumor suppressor</em> genes the same way. For genes missing from this
-annotation dataset, we want to fill the corresponding two columns of the
-join result with <code class="highlighter-rouge">0</code> to indicate the common case that a gene affected by
-a variant is neither a known proto-oncogene, nor a tumor suppressor
-gene.</p>
-        </li>
-      </ul>
+      <p>Your aim is to identify a large polymorphic deletion in case.</p>
     </li>
-    <li><strong>Join two files</strong> <i class="fa fa-wrench" aria-hidden="true"></i><span class="visually-hidden">tool</span> to add <strong>CGI biomarkers</strong> information
-      <ul>
-        <li><i class="fa fa-file-o" aria-hidden="true"></i><span class="visually-hidden">param-file</span> <em>“1st file”</em>: the partially annotated dataset from the previous</li>
-        <li><em>“Column to use from 1st file”</em>: <code class="highlighter-rouge">Column: 1</code></li>
-        <li><i class="fa fa-file-o" aria-hidden="true"></i><span class="visually-hidden">param-file</span> <em>“2nd file”</em>: the imported <code class="highlighter-rouge">cgi_genes</code> dataset</li>
-        <li><em>“Column to use from 2nd file”</em>: <code class="highlighter-rouge">Column: 1</code></li>
-        <li><em>“Output lines appearing in”</em>: <code class="highlighter-rouge">Both 1st &amp; 2nd file, plus unpairable
-lines from 1st file. (-a 1)</code></li>
-        <li><em>“First line is a header line”</em>: <code class="highlighter-rouge">Yes</code></li>
-        <li><em>“Ignore case”</em>: <code class="highlighter-rouge">No</code></li>
-        <li><em>“Value to put in unpaired (empty) fields”</em>: <code class="highlighter-rouge">0</code></li>
-      </ul>
-
-      <p>Inspect the input and the result dataset to make sure you understand what
-happened at this step.</p>
-    </li>
-    <li><strong>Join two files</strong> <i class="fa fa-wrench" aria-hidden="true"></i><span class="visually-hidden">tool</span> to add gene information from <strong>CIViC</strong>
-      <ul>
-        <li><i class="fa fa-file-o" aria-hidden="true"></i><span class="visually-hidden">param-file</span> <em>“1st file”</em>: the partially annotated dataset from step 2</li>
-        <li><em>“Column to use from 1st file”</em>: <code class="highlighter-rouge">Column: 1</code></li>
-        <li><i class="fa fa-file-o" aria-hidden="true"></i><span class="visually-hidden">param-file</span> <em>“2nd file”</em>: the imported <code class="highlighter-rouge">GeneSummaries</code> dataset</li>
-        <li>
-          <p><em>“Column to use from 2nd file”</em>: <code class="highlighter-rouge">Column: 3</code></p>
-
-          <p>The gene column in the CIViC gene summaries annotation dataset is <em>not</em> the first one!</p>
-        </li>
-        <li><em>“Output lines appearing in”</em>: <code class="highlighter-rouge">Both 1st &amp; 2nd file, plus unpairable
-lines from 1st file. (-a 1)</code></li>
-        <li><em>“First line is a header line”</em>: <code class="highlighter-rouge">Yes</code></li>
-        <li><em>“Ignore case”</em>: <code class="highlighter-rouge">No</code></li>
-        <li><em>“Value to put in unpaired (empty) fields”</em>: <code class="highlighter-rouge">.</code></li>
-      </ul>
-
-      <p>Inspect the input and the result dataset to make sure you understand what
-happened at this step.</p>
-    </li>
-  </ol>
-
+  </ul>
 </blockquote>
 
-<p>If you took a look at all output datasets as suggested, you will have noticed
-that each of the <em>join</em> operations kept the gene columns from both input
-datasets. In addition, we had no control over the order, in which columns got
-added to the report, nor could we exclude columns.</p>
+<h1 id="regions-of-homozygosity">Regions of Homozygosity</h1>
 
-<p>In <strong>Step 2</strong> of the report preparation we are going to address all of these
-issues and rearrange to get a fully annotated gene report.</p>
+<ul>
+  <li><em>Runs of Homozygosity</em> (ROHs) are sizeable stretches of consecutive homozygous markers encompassing genomic regions where the two haplotypes are identical</li>
+  <li>Haplotypes in <em>ROHs</em> can underlie identity either by <strong>state</strong> (IBS) or by <strong>descent</strong> (IBD). IBD occurs when two haplotypes originate from a common ancestor (Figure 1), a condition whcih we refer to as <strong>autozygosity</strong></li>
+  <li><em>Autozygosity</em> in an individual is the hallmark of high levels of genomic inbreeding (g<em>F</em>), often occurring in the offspring from consanguineous unions where parents are related as second-degree cousins or closer</li>
+  <li>The most well-known medical impact of parental consanguinity is the increased risk of rare autosomal recessive diseases in the progeny, with excess risk inversely proportional to the disease-allele frequency (<a href="https://onlinelibrary.wiley.com/doi/full/10.1034/j.1399-0004.2001.600201.x?sid=nlm%3Apubmed">Bittles, 2001</a>)</li>
+</ul>
 
-<blockquote class="notranslate hands_on">
-  <h3 id="hands_on-hands-on-rearrange-to-get-a-fully-annotated-gene-report"><i class="fa fa-pencil" aria-hidden="true"></i><span class="visually-hidden">hands_on</span> Hands-on: Rearrange to get a fully annotated gene report</h3>
-  <ol>
-    <li><strong>Column arrange by header name</strong> <i class="fa fa-wrench" aria-hidden="true"></i><span class="visually-hidden">tool</span> configured like
-this:
-      <ul>
-        <li><i class="fa fa-file-o" aria-hidden="true"></i><span class="visually-hidden">param-file</span> <em>“file to rearrange”</em>: the final <strong>Join</strong> result dataset from step 3</li>
-        <li>In <em>“Specify the first few columns by name”</em>
-          <ul>
-            <li>In <em>“1: Specify the first few columns by name”</em>
-              <ul>
-                <li><em>“column”</em>: <code class="highlighter-rouge">gene</code></li>
-              </ul>
-            </li>
-            <li><i class="fa fa-plus-square-o" aria-hidden="true"></i><span class="visually-hidden">param-repeat</span> <em>“Specify the first few columns by name”</em></li>
-            <li>In <em>“2: Specify the first few columns by name”</em>
-              <ul>
-                <li><em>“column”</em>: <code class="highlighter-rouge">chrom</code></li>
-              </ul>
-            </li>
-            <li><i class="fa fa-plus-square-o" aria-hidden="true"></i><span class="visually-hidden">param-repeat</span> <em>“Specify the first few columns by name”</em></li>
-            <li>In <em>“3: Specify the first few columns by name”</em>
-              <ul>
-                <li><em>“column”</em>: <code class="highlighter-rouge">synonym</code></li>
-              </ul>
-            </li>
-            <li><i class="fa fa-plus-square-o" aria-hidden="true"></i><span class="visually-hidden">param-repeat</span> <em>“Specify the first few columns by name”</em></li>
-            <li>In <em>“4: Specify the first few columns by name”</em>
-              <ul>
-                <li><em>“column”</em>: <code class="highlighter-rouge">hgnc_id</code></li>
-              </ul>
-            </li>
-            <li><i class="fa fa-plus-square-o" aria-hidden="true"></i><span class="visually-hidden">param-repeat</span> <em>“Specify the first few columns by name”</em></li>
-            <li>In <em>“5: Specify the first few columns by name”</em>
-              <ul>
-                <li><em>“column”</em>: <code class="highlighter-rouge">entrez_id</code></li>
-              </ul>
-            </li>
-            <li><i class="fa fa-plus-square-o" aria-hidden="true"></i><span class="visually-hidden">param-repeat</span> <em>“Specify the first few columns by name”</em></li>
-            <li>In <em>“6: Specify the first few columns by name”</em>
-              <ul>
-                <li><em>“column”</em>: <code class="highlighter-rouge">rvis_pct</code></li>
-              </ul>
-            </li>
-            <li><i class="fa fa-plus-square-o" aria-hidden="true"></i><span class="visually-hidden">param-repeat</span> <em>“Specify the first few columns by name”</em></li>
-            <li>In <em>“7: Specify the first few columns by name”</em>
-              <ul>
-                <li><em>“column”</em>: <code class="highlighter-rouge">is_OG</code></li>
-              </ul>
-            </li>
-            <li><i class="fa fa-plus-square-o" aria-hidden="true"></i><span class="visually-hidden">param-repeat</span> <em>“Specify the first few columns by name”</em></li>
-            <li>In <em>“8: Specify the first few columns by name”</em>
-              <ul>
-                <li><em>“column”</em>: <code class="highlighter-rouge">is_TS</code></li>
-              </ul>
-            </li>
-            <li><i class="fa fa-plus-square-o" aria-hidden="true"></i><span class="visually-hidden">param-repeat</span> <em>“Specify the first few columns by name”</em></li>
-            <li>In <em>“9: Specify the first few columns by name”</em>
-              <ul>
-                <li><em>“column”</em>: <code class="highlighter-rouge">in_cgi_biomarkers</code></li>
-              </ul>
-            </li>
-            <li><i class="fa fa-plus-square-o" aria-hidden="true"></i><span class="visually-hidden">param-repeat</span> <em>“Specify the first few columns by name”</em></li>
-            <li>In <em>“10: Specify the first few columns by name”</em>
-              <ul>
-                <li><em>“column”</em>: <code class="highlighter-rouge">clinvar_gene_phenotype</code></li>
-              </ul>
-            </li>
-            <li><i class="fa fa-plus-square-o" aria-hidden="true"></i><span class="visually-hidden">param-repeat</span> <em>“Specify the first few columns by name”</em></li>
-            <li>In <em>“11: Specify the first few columns by name”</em>
-              <ul>
-                <li><em>“column”</em>: <code class="highlighter-rouge">gene_civic_url</code></li>
-              </ul>
-            </li>
-            <li><i class="fa fa-plus-square-o" aria-hidden="true"></i><span class="visually-hidden">param-repeat</span> <em>“Specify the first few columns by name”</em></li>
-            <li>In <em>“12: Specify the first few columns by name”</em>
-              <ul>
-                <li><em>“column”</em>: <code class="highlighter-rouge">description</code></li>
-              </ul>
-            </li>
-          </ul>
-        </li>
-        <li><em>“Discard unspecified columns”</em>: <code class="highlighter-rouge">Yes</code></li>
-      </ul>
-    </li>
-  </ol>
+<hr />
 
-  <blockquote class="comment">
-    <h3 id="comment-alternative-tool-suggestion"><i class="fa fa-commenting-o" aria-hidden="true"></i><span class="visually-hidden">comment</span> Alte<span class="notranslate">rna</span>tive tool suggestion</h3>
-    <p>If your <span class="notranslate">Galaxy</span> server does not offer the <em>Column arrange</em> tool, it will
-almost certainly offer <strong>Cut columns from a table</strong> <i class="fa fa-wrench" aria-hidden="true"></i><span class="visually-hidden">tool</span>,
-which can be used as a drop-in replacement.
-Instead of column names, however, this tool expects a comma-separated list
-of column indexes, like <code class="highlighter-rouge">c1,c2</code> for the first and second column, so you
-will have to first figure out the column numbers of your columns of
-interest.</p>
+<p><img src="http://0.0.0.0:4000/clinical_genomics/images/homozygosity_mapping.png" alt="homozygosity_mapping" />
+<strong>Figure 1</strong>. Schematic of haplotype flow along a consanguineous pedigrees to form autozygous <em>ROHs</em> in the progeny (from <a href="https://www.sciencedirect.com/science/article/pii/S000292970800445X?via%3Dihub">McQuillan et al., 2008</a>)</p>
 
-    <p><strong>Note</strong>: Be sure not to confuse the suggested tool with <em>Cut
-columns from a table (cut)</em>, which does <em>not</em> let you change the order of
-columns!</p>
-  </blockquote>
-</blockquote>
+<hr />
 
-<h1 class="no_toc" id="conclusion">Conclusion</h1>
+<h2 id="homozygosity-mapping">Homozygosity <span class="notranslate">mapping</span></h2>
 
-<p>In addition to merely calling variants, <em>somatic variant calling</em> tries to
-distinguish <em>somatic mutations</em>, which are private to tumor tissue, from
-<em>germline</em> mutations, that are shared by tumor and healthy tissue, and
-<em>loss-of-heterozygosity</em> events, which involve the loss, from tumor tissue, of
-one of two alleles found at a biallelic site in healthy tissue.</p>
+<ul>
+  <li>We refer to <em>homozygosity <span class="notranslate">mapping</span></em> (<a href="https://science.sciencemag.org/content/236/4808/1567.long">Lander and Botstein, 1987</a>) as an approach that infers <em>autozygosity</em> from the detection of long ROHs to map genes associated with recessive diseases</li>
+  <li>A classical strategy to identify <em>ROHs</em> is based on SNP-array data and analysis with <a href="http://zzz.bwh.harvard.edu/plink/">PLINK</a></li>
+  <li>The combination of <em>homozygosity <span class="notranslate">mapping</span></em> with exome sequencing has boosted genomic research and diagnosis of recessive diseases in recent years (<a href="https://www.sciencedirect.com/science/article/pii/S2211124714010444?via%3Dihub">Alazami et al., 2015</a>; <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5502059/">Monies et al., 2017</a>)</li>
+  <li><em>ROHs</em> may be of clinical interest also since they can unmask <strong>uniparental isodisomy</strong></li>
+  <li>Computational approaches have been developed to identify <em>ROHs</em> directly in exome data, allowing <strong>simultaneous detection of variants and surrounding ROHs</strong> from the same datasets.</li>
+</ul>
 
-<p>Dedicated somatic variant callers can perform this classification on
-statistical grounds, but the interpretation of any list of variants (somatic,
-germline or LOH) also depends crucially on rich genetic and cancer-specific
-variant and gene annotations.</p>
+<h2 id="computational-approaches-1">Computational approaches</h2>
+
+<p>As for CNVs, the sparse nature and small size of exonic targets are a challenge for the identification of continuous strethces of homozygous markers throughout the genome. This may affect the performance of tools originally tailored to SNPs when applied to exome data.</p>
+
+<p>In Figure 2 a synthetic overview is given of algorithms, input data and output file types in bioinformatic tools for exome-based <em>ROH</em> detection. <em>ROHs</em> are divided in three size classes reflecting different mechanisms that have shaped them (according to <a href="https://www.sciencedirect.com/science/article/pii/S0002929712003230?via%3Dihub">Pemberton et al., 2012</a>).</p>
+
+<p>Usually, long ROH (approximately &gt;1.5 Mb) arise as a result of close parental consanguinity, but also short-medium <em>ROHs</em> can be of medical interest in populations as involved in disease susceptibility, natural selection and founder effects (<a href="https://www.nature.com/articles/nrg.2017.109">Ceballos et al., 2018</a>).</p>
+
+<hr />
+
+<p><img src="http://0.0.0.0:4000/clinical_genomics/images/roh_exome_methods.png" alt="roh_exome_methods" />
+<strong>Figure 2</strong>. Summary of the tools for <em>ROH</em> detection from exome data (from <a href="https://www.karger.com/Article/Pdf/362412">Pippucci et al., 2014</a>)</p>
+
+<hr />
+
+<h3 id="h3m2">H<sup>3</sup>M<sup>2</sup></h3>
+
+<p><em>H<sup>3</sup>M<sup>2</sup></em> (<a href="https://academic.oup.com/bioinformatics/article/30/20/2852/2422169">Magi et al., 2014</a>) is based on an heterogeneous <a href="https://en.wikipedia.org/wiki/Hidden_Markov_model"><em>Hidden Markov Model</em></a> (HMM) that incorporates inter-marker distances to detect <em>ROHs</em> from exome data.</p>
+
+<p><em>H<sup>3</sup>M<sup>2</sup></em> calculates B-allele frequencies of a set of polymorphic sites throughout the exome as the ratio between allele <em>B</em> counts and the total read count at site <em>i</em>:</p>
+
+<p><em>BAF</em><sub>i</sub> = <em>N<sub>b</sub>/N</em></p>
+
+<p><em>H<sup>3</sup>M<sup>2</sup></em> retrieves <em>BAF</em><sub>i</sub> <strong>directly from BAM files</strong> to predict the heterozygous/homozygous genotype state at each polymorphic position <em>i</em>:</p>
+
+<ul>
+  <li>when <em>BAF</em><sub>i</sub> ~ 0 the predicted genotype is <strong>homozygous reference</strong></li>
+  <li>when <em>BAF</em><sub>i</sub> ~ 0.5 the predicted genotype is <strong>heterozygous</strong></li>
+  <li>when <em>BAF</em><sub>i</sub> ~ 1 the predicted genotype is <strong>homozygous alte<span class="notranslate">rna</span>tive</strong></li>
+</ul>
+
+<p><em>H<sup>3</sup>M<sup>2</sup></em> models <em>BAF</em> data by means of the <em>HMM</em> algorithm to discriminate between regions of homozygosity and non-homozygosity according to the <em>BAF</em> distribution along the genome (Figure 3).</p>
+
+<hr />
+
+<p><img src="http://0.0.0.0:4000/clinical_genomics/images/h3m2_baf.png" alt="h3m2_baf" />
+<strong>Figure 3</strong>. <strong><em>BAF</em> data distribution</strong> Panels a, b and c show the distributions of BAF values against the genotype calls generated by the HapMap consortium on SNP-array data ( a ), the genotype calls made by SAMtools ( b ) and the genotype calls made by GATK ( c ). For each genotype caller, the distribution of BAF values is reported for homozygous reference calls (HMr), heterozygous calls (HT) and homozygous alte<span class="notranslate">rna</span>tive calls (HMa). R is the Pearson correlation coefficient. Panels d–g show the distribution of BAF values in all the regions of the genome ( d ), in heterozygous regions ( e ), in homozygous regions ( f ) and in the X chromosome of male individuals ( g ). For each panel, the main plot reports the zoomed histogram, the left subplot shows the BAF values against genomic positions, whereas the right subplot shows the entire histogram of BAF values. (from <a href="https://academic.oup.com/bioinformatics/article/30/20/2852/2422169">Magi et al., 2014</a>)</p>
+
+<h1 class="no_toc" id="contributors">Contributors</h1>
+
+<ul>
+  <li><a href="https://www.aosp.bo.it/content/curriculum?E=154659">Tommaso Pippucci</a> - Sant’Orsola-Malpighi University Hospital, Bologna, Italy</li>
+  <li><a href="https://www">Alessandro Bruselles</a> - Istituto Superiore di Sanità, Rome, Italy</li>
+  <li><a href="https://gmauro.github.io">Gianmauro Cuccuru</a> - Albert Ludwigs University, Freiburg, Germany</li>
+  <li><a href="http://www">Giuseppe Marangi</a> - Institute of Genomic Medicine, Fondazione Policlinico Universitario A. Gemelli IRCCS, Università Cattolica del Sacro Cuore, Roma, Italy</li>
+  <li><a href="http://www.crs4.it/peopledetails/183/paolo-uva">Paolo Uva</a> - Centro di Ricerca, Sviluppo e Studi Superiori in Sardegna (CRS4), Pula, Cagliari, Italy</li>
+</ul>
+
 
 
                     
