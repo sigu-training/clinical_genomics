@@ -4,6 +4,14 @@ In years 2018-2019, on behalf of the Italian Society of Human Genetics ([SIGU](h
 
 Realizing the constant need for training on NGS analysis and interpretation of sequencing data in the clinical setting, we designed an on-line [Galaxy](https://usegalaxy.eu/)-based training resource articulated in presentations and practical assignments by which students will learn how to approach NGS data quality at the level of fastq, bam and VCF files and clinically-oriented examination of variants emerging from sequencing experiments.
 
+### Updating GitHub Pages - for Admins only
+Automatic update of GitHub pages through Jekyll is disabled. To update pages you have to:
+
+ * Clone this repository.
+ * Build the website locally. Have a look at the [tutorial](https://galaxyproject.github.io/training-material/topics/contributing/tutorials/running-jekyll/tutorial.html).
+ * Run **make clean**, than **make build**. This will generate the new Pages in *docs* folder.
+ * Push the updated *docs* folder. 
+
 ### Contributors
 
  * [Tommaso Pippucci](https://www.aosp.bo.it/content/curriculum?E=154659) - Sant’Orsola-Malpighi University Hospital, Bologna, Italy

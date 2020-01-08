@@ -37,6 +37,7 @@ layout: base
 <script src="https://sidecar.gitter.im/dist/sidecar.v1.js" async defer></script>
 {% endif %}
 
+{% comment %}
 <header>
     <nav class="navbar navbar-expand-lg navbar-dark">
         <div class="container">
@@ -81,6 +82,7 @@ layout: base
         </div>
     </nav>
 </header>
+{% endcomment %}
 
 <div class="container main-content">
     <script type="application/ld+json">
@@ -302,13 +304,10 @@ document.getElementById("citation-text").innerHTML = document.getElementById("ci
         <hr>
         <br>
 
-        <p class="text-muted">Did you use this material as an instructor? Feel free to give us feedback on <a href="https://github.com/galaxyproject/training-material/issues/1452" target="_blank">how it went</a>.</p>
-        <iframe id="feedback-google" class="google-form" src="https://docs.google.com/forms/d/e/1FAIpQLSd4VZptFTQ03kHkMz0JyW9b6_S8geU5KjNE_tLM0dixT3ZQmA/viewform?embedded=true&entry.1235803833={{ page.title }} ({{ topic.title }})">Loading...
-        </iframe>
-
         <blockquote class="feedback">
-            <h3>{% icon feedback %} Give us even more feedback on this content!</h3>
-            <p>To give us more detailed feedback about these materials, please take a moment to fill in the extended <a href="https://docs.google.com/forms/d/e/1FAIpQLSc_GLZRpxZGAL9tN6DA1bE6WkNhmQdXT7B16TpOb-X4YwKUsQ/viewform?entry.1548889262={{ page.title }} ({{ topic.title }})">Feedback Form</a>.</p>
+            <h3>{% icon feedback %} Give us feedback on this content!</h3>
+            <p>To give us feedback about these materials, or to get in touch with us, post a message in
+               the forum <a href="https://groups.google.com/d/forum/sigu-training">https://groups.google.com/d/forum/sigu-training</a>.</p>
         </blockquote>
     </section>
 </div>
@@ -317,13 +316,11 @@ document.getElementById("citation-text").innerHTML = document.getElementById("ci
 <footer>
     <div class="container">
         <p>
-            This material is the result of a collaborative work. Thanks to the
-            <a href="https://wiki.galaxyproject.org/Teach/GTN">Galaxy Training Network</a>
-            and all the <a href="{{ site.baseurl }}/hall-of-fame">contributors</a> ({% include _includes/contributor-text-list.html contributors=page.contributors %})!
+            The layout of this page is based on the <a href="https://training.galaxyproject.org/">Galaxy Training Resources</a> collection.
         </p>
         <p>
             Found a typo? Something is wrong in this tutorial? Edit it on
-            <a href="{{ site.github.repository_url }}/tree/{{ site.repository_branch }}/topics/{{ topic.name }}/tutorials/{{ page.tutorial_name }}/tutorial.md">GitHub</a>.
+            <a href="{{ site.github.repository_url }}/blob/master/index.md">GitHub</a>.
         </p>
     </div>
 </footer>

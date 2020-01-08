@@ -1,5 +1,5 @@
 ---
-layout: tutorial_hands_on_sigu
+layout: tutorial_hands_on
 
 title: Data analysis and interpretation for clinical genomics using Galaxy
 zenodo_link: https://doi.org/10.5281/zenodo.3531577
@@ -14,7 +14,7 @@ objectives:
 time_estimation: 6h
 key_points:
 - Focus on clinical interpretation of variants.
-- Provides real uses cases: singletons and trio.
+- Provides real uses cases.
 - Use public tools and free annotation servers.
 contributors:
 - abrusell

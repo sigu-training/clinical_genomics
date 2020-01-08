@@ -5,16 +5,16 @@ layout: base
 {% assign contributors = site.data['contributors'] %}
 {% assign stories = site.pages | where:"layout", "training_philosophy" %}
 
-
+{% comment %}
 {% include _includes/default-header.html %}
+{% endcomment %}
 
 <div class="container main-content">
     <section>
-        <h1>Hall of Fame</h1>
+        <h1>Contributors</h1>
 
         <p class="lead">
-            A big <em>Thank You!</em> to the <strong>{{ contributors|size }}</strong>
-            awesome contributors to the Galaxy training materials!
+            Contributors to the training materials.
         </p>
 
         <div class="hall-of-fame">
@@ -88,4 +88,6 @@ layout: base
     </section>
 </div>
 
+{% comment %}
 {% include _includes/default-footer.html %}
+{% endcomment %}
