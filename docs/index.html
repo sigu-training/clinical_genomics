@@ -297,9 +297,6 @@ https://zenodo.org/record/3531578/files/Sample1.all_exons.hg19.vcf
             <p>Paste the link into the text field</p>
           </li>
           <li>
-            <p>Change <strong>Type</strong> from “Auto-detect” to <code class="highlighter-rouge">fastqsanger.gz</code></p>
-          </li>
-          <li>
             <p>Press <strong>Start</strong></p>
           </li>
           <li><strong>Close</strong> the window</li>
@@ -344,7 +341,8 @@ available with pre-built indexes for widely used tools such as
     </li>
     <li>
       <p>In case you import datasets from Zenodo, check that all datasets in your history
-have their datatypes assigned correctly, and fix it when necessary.</p>
+have their datatypes assigned correctly, and fix it when necessary.
+For example, to assign <span class="notranslate">BED</span> datatype do the following:</p>
 
       <blockquote class="tip">
 
@@ -352,7 +350,7 @@ have their datatypes assigned correctly, and fix it when necessary.</p>
         <ul>
           <li>Click on the <i class="fa fa-pencil" aria-hidden="true"></i><span class="visually-hidden"><span class="notranslate">galaxy</span>-pencil</span> <strong>pencil icon</strong> for the dataset to edit its attributes</li>
           <li>In the central panel, click on the <i class="fa fa fa-database" aria-hidden="true"></i><span class="visually-hidden"><span class="notranslate">galaxy</span>-chart-select-data</span> <strong>Datatypes</strong> tab on the top</li>
-          <li>Select <code class="highlighter-rouge">fastqsanger.gz</code></li>
+          <li>Select <code class="highlighter-rouge"><span class="notranslate">bed</span></code></li>
           <li>Click the <strong>Change datatype</strong> button</li>
         </ul>
       </blockquote>
@@ -379,11 +377,11 @@ as the dataset name. In this case you may rename datasets.</p>
 
 <h1 id="next-generation-sequencing">Next Generation Sequencing</h1>
 
-<ul>
-  <li><em>Next (or Second) Generation Sequencing</em> (NGS/SGS) is an umbrella-term covering a number of approaches to <span class="notranslate">DNA</span> sequencing that have been developed after the first, widespread and for long time most commonly used Sanger sequencing.</li>
-  <li><em>NGS</em> is also known as <em>Massive Parallel Sequencing</em> (MPS), a term that makes explicit the paradigm shared by all these technologies, that is to sequence in parallel a massive library of spatially separated and clonally amplified <span class="notranslate">DNA</span> templates.</li>
-  <li>For a comprehensive review of the different <em>NGS</em> technologies see <a href="https://www.nature.com/articles/nrg.2016.49">Goodwin et al., 2016</a>, which also includes an introduction to the third generation methods allowing sequencing of long single-molecule <span class="notranslate">reads</span>.</li>
-</ul>
+<p><em>Next (or Second) Generation Sequencing</em> (NGS/SGS) is an umbrella-term covering a number of approaches to <span class="notranslate">DNA</span> sequencing that have been developed after the first, widespread and for long time most commonly used Sanger sequencing.</p>
+
+<p><em>NGS</em> is also known as <em>Massive Parallel Sequencing</em> (MPS), a term that makes explicit the paradigm shared by all these technologies, that is to sequence in parallel a massive library of spatially separated and clonally amplified <span class="notranslate">DNA</span> templates.</p>
+
+<p>For a comprehensive review of the different <em>NGS</em> technologies see <a href="https://www.nature.com/articles/nrg.2016.49">Goodwin et al., 2016</a>, which also includes an introduction to the third generation methods allowing sequencing of long single-molecule <span class="notranslate">reads</span>.</p>
 
 <h2 id="ngs-in-the-clinic">NGS in the clinic</h2>
 
@@ -411,8 +409,6 @@ as the dataset name. In this case you may rename datasets.</p>
 <p>Apart from the different width of the target space in exome and gene panels, these two approaches usually share the same experimental procedure for NGS library preparation. After clonal amplification, the fragmented and adapter-ligated <span class="notranslate">DNA</span> templates are sequenced from both ends of the <em>insert</em> to produce short <span class="notranslate">reads</span> in opposite (<strong>forward</strong> and <strong>reverse</strong>) orientation (<strong>paired-end</strong> sequencing).</p>
 
 <p>Bioinformatic analysis of NGS data usually follows a general three-step <span class="notranslate">workflow</span> to variant detection. Each of these three steps is marked by its “milestone” file type containing sequence data in different formats and metadata describing sequence-related information collected during the analysis step that leads to generation of that file.</p>
-
-<hr />
 
 <table>
   <thead>
@@ -444,8 +440,6 @@ as the dataset name. In this case you may rename datasets.</p>
     </tr>
   </tbody>
 </table>
-
-<hr />
 
 <p>Here are the different formats explained:</p>
 
@@ -545,18 +539,21 @@ While GATK BAM processing is beyond doubt important to improve data quality, it 
 <p>We will use several tools available at <a href="https://usegalaxy.eu">https://use<span class="notranslate">galaxy</span>.eu</a>
 for checking the quality of data at each step of the analysis, as well as to evaluate the per-base coverage depth at specific genomic intervals</p>
 
+<hr />
 <p><img src="/clinical_genomics/images/qc_overview.png" alt="Quality control overview" />
-<strong>Software for quality control</strong>, at each step of the analysis <span class="notranslate">workflow</span></p>
+<strong>Software for quality control</strong>, at each step of the analysis <span class="notranslate">workflow</span>.</p>
+
+<hr />
 
 <h2 id="quality-control-of-fastq-files">Quality control of FASTQ files</h2>
 
 <p>We’ll use the <strong>FastQC</strong> software, with the FASTQ files available in the Shared Data Libraries: <em>HighQuality_<span class="notranslate">Reads</span>.fastq</em> and 
 <em>LowQuality_<span class="notranslate">Reads</span>.fastq</em></p>
 
-<p><em>FastQC</em> is relatively easy to use. A detailed help cab be found the <a href="http://www.bioinformatics.babraham.ac.uk/projects/fastqc/Help/">help manual</a>.</p>
+<p><em>FastQC</em> is relatively easy to use. A detailed help can be found in the <a href="http://www.bioinformatics.babraham.ac.uk/projects/fastqc/Help/">help manual</a>.</p>
 
 <ul>
-  <li>Copy the FASTQ file in your history from the <span class="notranslate">Galaxy</span> Shared Data Libraries. Help needed? Follow the <a href="http://0.0.0.0:4000/clinical_genomics/lectures/02.galaxy.html"><span class="notranslate">Galaxy</span> at a Glance</a> tutorial</li>
+  <li>Copy the FASTQ file in your history from the <span class="notranslate">Galaxy</span> Shared Data Libraries</li>
   <li>Select <em>FastQC</em> from the left panel</li>
   <li>Select the FASTQ file as input</li>
   <li>Click <em>Execute</em></li>
@@ -573,14 +570,15 @@ for checking the quality of data at each step of the analysis, as well as to eva
 
 <p>These evaluations must be taken in the context of what you are expecting from your dataset. For FASTQC a <em>normal</em> includes random sequences with high diversity. If your experiment generates libraries biased in particular ways (e.g. low complexity libraries) you should consider the report with attention. In general, you should concentrate on the icons different from green and try to understand the reasons for this behaviour.</p>
 
-<h3 id="sequence-quality-by-position">Sequence quality by position.</h3>
+<h3 id="sequence-quality-by-position">Sequence quality by position</h3>
 
 <p>Phred scores represent base call quality. The higher the score the more reliable the base call. Often the quality of <span class="notranslate">reads</span> decreases over the length of the read. Therefore, it is common practice to plot the distribution of the Phred scores at each position using boxplots.</p>
 
 <p>The average Phred score is depicted by the blue line, the median Phred score by the red line. The yellow boxes contain 50% of all Phred scores. The background of the graph divides the plot in three regions: good quality (green), reasonable quality (orange), poor quality (red; Phred score &lt; 20).</p>
 
-<p><img src="/clinical_genomics/images/fastqc_sequence_quality.png" alt="High Quality reads" />
-Example of datasets with high (left) and low (right) sequence quality</p>
+<p>Below examples of datasets with high (left) and low (right) sequence quality</p>
+
+<p><img src="/clinical_genomics/images/fastqc_sequence_quality.png" alt="High Quality reads" /></p>
 
 <h3 id="check-overall-sequence-quality">Check overall sequence quality</h3>
 <p>Calculates the average Phred score of each read and show a cumulative plot of the average qualities of all the <span class="notranslate">reads</span>.</p>
@@ -621,7 +619,8 @@ However, the presence of such bias, if limited to the first bases, do not affect
 
 <p>Commercial next-generation sequencing platform usually provide users with analysis programs that include tools for the identification of low coverage regions (for instance, target regions that have a coverage depth lower than 20x).</p>
 
-<p>The present tutorial is aimed to show how to perform a custom coverage analysis of NGS experiment(s) by using tools that are available in <span class="notranslate">Galaxy</span>.</p>
+<p>The present tutorial is aimed to show how to perform a custom coverage analysis
+of NGS experiment(s) by using tools that are available in <span class="notranslate">Galaxy</span>.</p>
 
 <p>Starting material:</p>
 <ul>
@@ -630,157 +629,218 @@ However, the presence of such bias, if limited to the first bases, do not affect
 </ul>
 
 <blockquote>
-  <h4 id="note-bed-format-specifications">NOTE: <span class="notranslate">BED</span> format specifications</h4>
-
-  <p><strong><span class="notranslate">BED</span> files</strong> are tab-delimited files with one line for each genomic region.
+  <blockquote class="comment">
+    <h3 id="comment-bed-format-specifications"><i class="fa fa-commenting-o" aria-hidden="true"></i><span class="visually-hidden">comment</span> <span class="notranslate">BED</span> format specifications</h3>
+    <p><strong><span class="notranslate">BED</span> files</strong> are tab-delimited files with one line for each genomic region.
 The first 3 fields (columns) are required:</p>
+    <ol>
+      <li>chromosome</li>
+      <li>the starting position</li>
+      <li>the ending position</li>
+    </ol>
+
+    <p>Further columns may be present but are optional.
+Additional details may be found here: <a href="https://genome.ucsc.edu/FAQ/FAQformat.html#format1">UCSC <span class="notranslate">BED</span> format specifications</a></p>
+
+    <p>Please be aware that in <span class="notranslate">BED</span> files the description of genomic regions follows the “0-start, half-open” coordinate system. Further details may be found here: <a href="http://genome.ucsc.edu/blog/the-ucsc-genome-browser-coordinate-counting-systems/">the “0-based, half-open” UCSC Genome Browser Coordinate Counting Systems</a>. Practically speaking, it means that the starting position is diminished by 1 bp with respect to the actual position. For instance, the region “chr2 50149071 50149399” in a <em><span class="notranslate">bed</span></em> file corresponds to the genomic interval from position 50149072 (included) to position 50149399 (included) on chromosome 2 (when the first base of the chromosome is defined as position 1). If you want to indicate a single base position in a <em><span class="notranslate">bed</span></em> file, it should be written like this: “chr2 50149071 50149072” .</p>
+  </blockquote>
+</blockquote>
+
+<blockquote class="notranslate hands_on">
+  <h3 id="hands_on-hands-on-compute-per-base-coverage-depth-with-bedtools"><i class="fa fa-pencil" aria-hidden="true"></i><span class="visually-hidden">hands_on</span> Hands-on: Compute per base coverage depth with <span class="notranslate">BED</span>tools</h3>
+  <p>Before starting, you have to upload the files you need for the analysis,
+   following standard <span class="notranslate">Galaxy</span> procedure.</p>
+
+  <p>You may use files provided as examples with this tutorial and called
+   <code class="highlighter-rouge">Panel_alignment.bam</code> and <code class="highlighter-rouge">Panel_Target_regions.<span class="notranslate">bed</span></code>.</p>
+
+  <p>Please check that uploaded file datatypes (formats) are properly recognized by
+   selecting <code class="highlighter-rouge">edit attributes</code> (i.e. the pencil sign in correspondence of each file
+   you can find in your history) (indicated by the red arrow in figure 1)
+   and then the tab datatypes (the blue arrow in figure 1).
+   If the datatype is wrong, select the correct one from the drop-down list
+   and press the <code class="highlighter-rouge">change datatype</code> button (the green arrow in figure 1).</p>
+
+  <hr />
+  <p><img src="/clinical_genomics/images/cov_fig1.png" alt="Figure 1" />
+   <strong>Figure 1</strong></p>
+
+  <hr />
+
+  <p>Once ready, you can select the tool named <code class="highlighter-rouge"><span class="notranslate">bed</span>tools Compute both the depth and
+   breadth of coverage</code> in the <code class="highlighter-rouge">Operate on Genomic Intervals</code> section
+   (see the red arrow in figure 2).</p>
+
   <ol>
-    <li>chromosome;</li>
-    <li>the starting position;</li>
-    <li>the ending position.</li>
+    <li>Select the <em><span class="notranslate">bed</span></em> file listing the target regions as “file A” (blue arrow in figure 2)
+and the <em>bam</em> file(s) you want to analyze as “file B” (green arrow in figure 2)
+(they should be listed in the drop-down menu if they have the correct format).
+You may analyze one or more <em>bam</em> files in a single run.</li>
+    <li>If you want to analyze two or more .bam files, you can further choose if you want
+all the results in a single file or one output file per input “file B” by selecting
+the desired option under the <code class="highlighter-rouge">Combined or separate output files</code> menu.</li>
+    <li>Select “Yes” for the option <code class="highlighter-rouge">Report the depth at each position in each A feature</code>
+  (yellow arrow in figure 2) and check that all the other options are set to “No”.</li>
+    <li>
+      <p>Star (Execute) the analysis.</p>
+
+      <p><img src="/clinical_genomics/images/cov_fig2.png" alt="Figure 2" />
+<strong>Figure 2</strong></p>
+    </li>
   </ol>
 
-  <p>Further columns may be present but are optional.</p>
+  <hr />
 
-  <p>Further details may be found here: <a href="https://genome.ucsc.edu/FAQ/FAQformat.html#format1">UCSC <span class="notranslate">BED</span> format specifications</a></p>
-
-  <p>Please be aware that in <span class="notranslate">BED</span> files the description of genomic regions follows the “0-start, half-open” coordinate system. Further details may be found here: <a href="http://genome.ucsc.edu/blog/the-ucsc-genome-browser-coordinate-counting-systems/">the “0-based, half-open” UCSC Genome Browser Coordinate Counting Systems</a>. Practically speaking, it means that the starting position is diminished by 1 bp with respect to the actual position. For instance, the region “chr2 50149071 50149399” in a <em><span class="notranslate">bed</span></em> file corresponds to the genomic interval from position 50149072 (included) to position 50149399 (included) on chromosome 2 (when the first base of the chromosome is defined as position 1). If you want to indicate a single base position in a <em><span class="notranslate">bed</span></em> file, it should be written like this: “chr2 50149071 50149072”.</p>
+  <p>Output file, which will be called “coverage_depth.<span class="notranslate">bed</span>” from now on, 
+   will contain all the fields of the original target_regions.<span class="notranslate">bed</span> file plus
+   two further columns:</p>
+  <ol>
+    <li>the first value indicates a specific base within the reported genomic interval.
+For instance, if the genomic interval described by the first 3 field is
+“chr2 50149071 50149072” and the first new field reports the number 1000,
+it means that the coverage value refers to nucleotide 50150071
+(i.e.: 50149071 + 1000) on chromosome 2;</li>
+    <li>the second value indicates the depth of coverage for the defined base.</li>
+  </ol>
 </blockquote>
 
-<h3 id="1compute-per-base-coverage-depth-with-bedtools">1.Compute per base coverage depth with <span class="notranslate">BED</span>tools</h3>
-<p>Before starting, you have to upload the files you need for the analysis, following standard <span class="notranslate">Galaxy</span> procedure.</p>
+<blockquote class="notranslate hands_on">
+  <h3 id="hands_on-hands-on-sort-files"><i class="fa fa-pencil" aria-hidden="true"></i><span class="visually-hidden">hands_on</span> Hands-on: Sort files</h3>
+  <p>Since entries in the “coverage_depth.<span class="notranslate">bed</span>” may not be in the desired order, you can sort it by genomic positions.
+   For this purpose you may want to use the <code class="highlighter-rouge">Sort</code> tool in the <code class="highlighter-rouge">Text Manipulation</code> section (check out the blue arrow in figure 3).</p>
 
-<p>You may use files provided as examples with this tutorial and called <code class="highlighter-rouge">Panel_alignment.bam</code> and <code class="highlighter-rouge">Panel_Target_regions.<span class="notranslate">bed</span></code>.</p>
+  <p>You may sequentially sort on different columns:</p>
+  <ol>
+    <li>first you can sort by chromosome by selecting column 1 (green arrow in figure 3) in “ascending order” and selecting the “flavor” <code class="highlighter-rouge">Natural/Version sort (-V)</code>, which allows for sorting chromosomes in their “natural” order (with alphabetical order chr10 will be right after chr1, chr2 after chr19 and so on);</li>
+    <li>after inserting a new column section (red arrow in figure 3), you can sort by column 2 in “ascending order” with <code class="highlighter-rouge">Fast numeric sort (-n)</code>;</li>
+    <li>after inserting a further column section, you can sort by column 3 in “ascending order” with <code class="highlighter-rouge">Fast numeric sort (-n)</code>;</li>
+    <li>after inserting a final column section, you can sort by column 3 in “ascending order” with <code class="highlighter-rouge">Fast numeric sort (-n)</code>.</li>
+  </ol>
 
-<p>Please check that uploaded file datatypes (formats) are properly recognized by selecting <code class="highlighter-rouge">edit attributes</code> (i.e. the pencil sign in correspondence of each file you can find in your history) (indicated by the red arrow in figure 1) and then the tab datatypes (the blue arrow in figure 1). If the datatype is wrong, select the correct one from the drop-down list and press the <code class="highlighter-rouge">change datatype</code> button (the green arrow n figure 1).</p>
+  <hr />
+  <p><img src="/clinical_genomics/images/cov_fig3.png" alt="Figure 3" />
+   <strong>Figure 3</strong></p>
 
-<p><strong>Figure 1</strong>
-<img src="/clinical_genomics/images/cov_fig1.png" alt="Figure 1" /></p>
+  <hr />
 
-<p>Once ready, you can select the tool named <code class="highlighter-rouge"><span class="notranslate">bed</span>tools Compute both the depth and breadth of coverage</code> in the <code class="highlighter-rouge">Operate on Genomic Intervals</code> section (see the red arrow in figure 2).</p>
-
-<ol>
-  <li>Select the <em><span class="notranslate">bed</span></em> file listing the target regions as “file A” (blue arrow in figure 2) and the <em>bam</em> file(s) you want to analyze as “file B” (green arrow in figure 2) (they should be listed in the drop-down menu if they have the correct format). You may analyze one or more <em>bam</em> files in a single run.</li>
-  <li>If you want to analyze two or more .bam files, you can further choose if you want all the results in a single file or one output file per input “file B” by selecting the desired option under the <code class="highlighter-rouge">Combined or separate output files</code> menu.</li>
-  <li>Select “Yes” for the option <code class="highlighter-rouge">Report the depth at each position in each A feature</code> (yellow arrow in figure 2) and check that all the other options are set to “No”.</li>
-  <li>Star (Execute) the analysis.</li>
-</ol>
-
-<p><strong>Figure 2</strong>
-<img src="/clinical_genomics/images/cov_fig2.png" alt="Figure 2" /></p>
-
-<p>Output file, which will be called “coverage_depth.<span class="notranslate">bed</span>” from now on, will contain all the fields of the original target_regions.<span class="notranslate">bed</span> file plus two further columns:</p>
-<ol>
-  <li>the first value indicates a specific base within the reported genomic interval. For instance, if the genomic interval described by the first 3 field is “chr2 50149071 50149072” and the first new field reports the number 1000, it means that the coverage value refers to nucleotide 50150071 (i.e.: 50149071 + 1000) on chromosome 2;</li>
-  <li>the second value indicates the depth of coverage for the defined base.</li>
-</ol>
-
-<h3 id="2sort-files">2.Sort files</h3>
-<p>Since entries in the “coverage_depth.<span class="notranslate">bed</span>” may not be in the desired order, you can sort it by genomic positions.
-For this purpose you may want to use the <code class="highlighter-rouge">Sort</code> tool in the <code class="highlighter-rouge">Text Manipulation</code> section (check out the blue arrow in figure 3).</p>
-
-<p>You may sequentially sort on different columns:</p>
-<ol>
-  <li>first you can sort by chromosome by selecting column 1 (green arrow in figure 3) in “ascending order” and selecting the “flavor” <code class="highlighter-rouge">Natural/Version sort (-V)</code>, which allows for sorting chromosomes in their “natural” order (with alphabetical order chr10 will be right after chr1, chr2 after chr19 and so on);</li>
-  <li>after inserting a new column section (red arrow in figure 3), you can sort by column 2 in “ascending order” with <code class="highlighter-rouge">Fast numeric sort (-n)</code>;</li>
-  <li>after inserting a further column section, you can sort by column 3 in “ascending order” with <code class="highlighter-rouge">Fast numeric sort (-n)</code>;</li>
-  <li>after inserting a final column section, you can sort by column 3 in “ascending order” with <code class="highlighter-rouge">Fast numeric sort (-n)</code>.</li>
-</ol>
-
-<p><strong>Figure 3</strong>
-<img src="/clinical_genomics/images/cov_fig3.png" alt="Figure 3" /></p>
-
-<p>The obtained output file, which will be called “sorted_coverage_depth.<span class="notranslate">bed</span>” from now on, will be sorted first by chromosome, then by starting position, by ending position and by the actual position of the specific base in the considered genomic interval.</p>
-
-<h3 id="3remove-duplicate-rows">3.Remove duplicate rows</h3>
-<p>If your file contains duplicated lines you may want to remove them for further processing.
-For this purpose you can use the <code class="highlighter-rouge">Unique lines assuming sorted input file</code> tool in the <code class="highlighter-rouge">Text Manipulation</code> section.</p>
-
-<h3 id="4some-manipulation-of-the-bed-file">4.Some manipulation of the <em><span class="notranslate">bed</span></em> file</h3>
-<p>You may follow the following steps to manipulate the “sorted_coverage_depth.<span class="notranslate">bed</span>” and to obtain a <em><span class="notranslate">bed</span></em> file listing the exact base position to which each coverage value is referred.
-For instance instead of having “chr2 50149071 50149399 NRXN1 1 2335” in the first row of your file, you will get “chr2 50149071 50149072 NRXN1 2335”.</p>
-
-<p>These steps will add further columns at the end of each line defining the base position with the “0-start, half-open” coordinate system.</p>
-
-<ol>
-  <li>Select the <code class="highlighter-rouge">Compute an <span class="notranslate">expression</span> on every row</code> tool in the <code class="highlighter-rouge">Text Manipulation</code> section (indicated by the blue arrow in figure 4);</li>
-  <li>add the following <span class="notranslate">expression</span> “c2+c5-1” to obtain the sum of the values in columns 2 and 5 minus 1 (it will be used as the new starting position in the final file);</li>
-  <li>select the file “sorted_coverage_depth.<span class="notranslate">bed</span>”;</li>
-  <li>select “yes” to <code class="highlighter-rouge">round Results?</code> (green arrow in figure 4);</li>
-  <li>execute;</li>
-  <li>you can rename the output as “temp1_coverage_depth.<span class="notranslate">bed</span>”;</li>
-  <li>select the <code class="highlighter-rouge">Compute an <span class="notranslate">expression</span> on every row</code> tool in the <code class="highlighter-rouge">Text Manipulation</code> section;</li>
-  <li>add the following <span class="notranslate">expression</span> “c2+c5” to obtain the sum of the values in columns 2 and 5 (it will be used as the new ending position in the final file). You can also use the <span class="notranslate">expression</span> ;</li>
-  <li>select the file “temp1_coverage_depth.<span class="notranslate">bed</span>”;</li>
-  <li>select “yes” to <code class="highlighter-rouge">round Results?</code>;</li>
-  <li>execute;</li>
-  <li>you can rename the output as “temp2_coverage_depth.<span class="notranslate">bed</span>”;</li>
-  <li>select the <code class="highlighter-rouge">Table Compute</code> tool in the <code class="highlighter-rouge">Text Manipulation</code> section (indicated by the blue arrow in figure 5);</li>
-  <li>select the file “temp2_coverage_depth.<span class="notranslate">bed</span>”;</li>
-  <li>select the option <code class="highlighter-rouge">Drop, keep or duplicate rows and columns</code> from the drop-down menu <code class="highlighter-rouge">Type of table operation</code> (indicated by the green arrow in figure 5);</li>
-  <li>fill the field <code class="highlighter-rouge">List of columns to select</code> with “1,7,8,4,6” (the red arrow in figure 5);</li>
-  <li>unselect all the other options;</li>
-  <li>execute;</li>
-  <li>set the output file datatype to <em><span class="notranslate">bed</span></em>;</li>
-  <li>you can rename the output as “final_coverage_depth.<span class="notranslate">bed</span>”.</li>
-</ol>
-
-<p><strong>Figure 4</strong>
-<img src="/clinical_genomics/images/cov_fig4.png" alt="Figure 4" /></p>
-
-<p><strong>Figure 5</strong>
-<img src="/clinical_genomics/images/cov_fig5.png" alt="Figure 5" /></p>
-
-<h3 id="5select-positions-with-low-coverage-depth">5.Select positions with low coverage depth</h3>
-<p>The following procedure can be used to obtain a <em><span class="notranslate">bed</span></em> file listing base positions with a coverage depth lower than a certain threshold (for instance 20x).</p>
-
-<ol>
-  <li>Select the <code class="highlighter-rouge">Filter</code> tool in the <code class="highlighter-rouge">Filter and Sort</code> section (indicated by the blue arrow in figure 6);</li>
-  <li>select the file “final_coverage_depth.<span class="notranslate">bed</span>”;</li>
-  <li>add the following <span class="notranslate">expression</span> “c5&lt;20” to filter all positions with a coverage depth lower than (green arrow in figure 6)(“c5” stands for the fifth column, in this case reporting the coverage depth);</li>
-  <li>execute.</li>
-</ol>
-
-<p><strong>Figure 6</strong>
-<img src="/clinical_genomics/images/cov_fig6.png" alt="Figure 6" /></p>
-
-<p>The output file, which will be called “low_coverage_depth.<span class="notranslate">bed</span>” from now on, will only list all the positions with a depth lower than 20x.</p>
-
-<h3 id="6merge-low-coverage-regions">6.Merge low coverage regions</h3>
-<p>If you want to merge the positions with low coverage depth in larger genomic intervals to be used for further analyses (i.e.: Sanger sequencing of regions not covered by your NGS experiment), you may want to use the <code class="highlighter-rouge"><span class="notranslate">bed</span>tools MergeBED</code> tool in the <code class="highlighter-rouge">Operate on Genomic Intervals</code> section (see the blue arrow in figure 7).</p>
-
-<ol>
-  <li>Select the file “low_coverage_depth.<span class="notranslate">bed</span>”;</li>
-  <li>set the maximum distance between features (i.e.: the different positions listed in your file) allowed for features to be merged (green arrow in figure 7): if it is 0 only overlapping and/or book-ended features are merged, while if it is set to 10 (or any other different positive integer of your choice), features at the maximum distance of 10 bases will be merged;</li>
-  <li>if you want, you may apply some operations to certain columns to get further information in your output file. For instance you may:
-    <ol>
-      <li>click on “Insert Applying operations to columns from merged intervals” (red arrow in figure 7),</li>
-      <li>specify the column on which you want to perform the operation (in this case column 5),</li>
-      <li>and select the operation from the drop-down list(in this case “Min”, which calculates the minimum value of coverage depth among all the positions that will be merged in a single interval) (yellow arrow in figure 7);</li>
-    </ol>
-  </li>
-  <li>you may add as many operations as you need. In this example we will also calculate the maximum value of coverage depth;</li>
-  <li>execute.</li>
-</ol>
-
-<p><strong>Figure 7</strong>
-<img src="/clinical_genomics/images/cov_fig7.png" alt="Figure 7" /></p>
-
-<p>The output file will have the following fields (columns): chromosome, starting and ending positions of low coverage regions, the minimum and the maximum coverage depth in each region.</p>
-
-<hr />
-<p><strong>Warning</strong>: please be aware that the columns to use for calculations may be different compared to the example here considered, depending on the amount of columns of your <em><span class="notranslate">bed</span></em> files.</p>
-
-<p><strong>Warning</strong>: please be aware that the <span class="notranslate">Galaxy</span> preview of your file shows a header row that does not properly define columns in your files (it is just a standard header for the UCSC <span class="notranslate">bed</span> format).</p>
-
-<hr />
-
-<blockquote>
-  <h4 id="final-notes">Final notes</h4>
-  <p>The procedures listed above are to be taken as examples of the possible operations that can be performed on <span class="notranslate">bed</span> files with <span class="notranslate">bed</span>tools (you may check out their website to get further information: <a href="https://bedtools.readthedocs.io/en/latest/content/bedtools-suite.html"><span class="notranslate">BED</span>tools</a>) ad text manipulation tools available on <span class="notranslate">Galaxy</span>.</p>
-
-  <p>Furthermore, please be aware that the tool <code class="highlighter-rouge"><span class="notranslate">bed</span>tools Compute both the depth and breadth of coverage</code> does not perform any filtering based on read quality: if your are interested in that aspect you may want to rely on different tools.</p>
+  <p>The obtained output file, which will be called “sorted_coverage_depth.<span class="notranslate">bed</span>”
+   from now on, will be sorted first by chromosome, then by starting position,
+   by ending position and by the actual position of the specific base in the
+   considered genomic interval.</p>
 </blockquote>
+
+<blockquote class="notranslate hands_on">
+  <h3 id="hands_on-hands-on-remove-duplicate-rows"><i class="fa fa-pencil" aria-hidden="true"></i><span class="visually-hidden">hands_on</span> Hands-on: Remove duplicate rows</h3>
+  <p>If your file contains duplicated lines you may want to remove them for further processing.
+   For this purpose you can use the <code class="highlighter-rouge">Unique lines assuming sorted input file</code> tool in the <code class="highlighter-rouge">Text Manipulation</code> section.</p>
+</blockquote>
+
+<blockquote class="notranslate hands_on">
+  <h3 id="hands_on-hands-on-some-manipulation-of-the-bed-file"><i class="fa fa-pencil" aria-hidden="true"></i><span class="visually-hidden">hands_on</span> Hands-on: Some manipulation of the <em><span class="notranslate">bed</span></em> file</h3>
+  <p>You may follow the following steps to manipulate the “sorted_coverage_depth.<span class="notranslate">bed</span>” and to obtain a <em><span class="notranslate">bed</span></em> file listing the exact base position to which each coverage value is referred.
+   For instance instead of having “chr2 50149071 50149399 NRXN1 1 2335” in the first row of your file, you will get “chr2 50149071 50149072 NRXN1 2335”.</p>
+
+  <p>These steps will add further columns at the end of each line defining the base position with the “0-start, half-open” coordinate system.</p>
+
+  <ol>
+    <li>Select the <code class="highlighter-rouge">Compute an <span class="notranslate">expression</span> on every row</code> tool in the <code class="highlighter-rouge">Text Manipulation</code> section (indicated by the blue arrow in figure 4);</li>
+    <li>add the following <span class="notranslate">expression</span> “c2+c5-1” to obtain the sum of the values in columns 2 and 5 minus 1 (it will be used as the new starting position in the final file);</li>
+    <li>select the file “sorted_coverage_depth.<span class="notranslate">bed</span>”;</li>
+    <li>select “yes” to <code class="highlighter-rouge">round Results?</code> (green arrow in figure 4);</li>
+    <li>execute;</li>
+    <li>you can rename the output as “temp1_coverage_depth.<span class="notranslate">bed</span>”;</li>
+    <li>select the <code class="highlighter-rouge">Compute an <span class="notranslate">expression</span> on every row</code> tool in the <code class="highlighter-rouge">Text Manipulation</code> section;</li>
+    <li>add the following <span class="notranslate">expression</span> “c2+c5” to obtain the sum of the values in columns 2 and 5 (it will be used as the new ending position in the final file). You can also use the <span class="notranslate">expression</span> ;</li>
+    <li>select the file “temp1_coverage_depth.<span class="notranslate">bed</span>”;</li>
+    <li>select “yes” to <code class="highlighter-rouge">round Results?</code>;</li>
+    <li>execute;</li>
+    <li>you can rename the output as “temp2_coverage_depth.<span class="notranslate">bed</span>”;</li>
+    <li>select the <code class="highlighter-rouge">Table Compute</code> tool in the <code class="highlighter-rouge">Text Manipulation</code> section (indicated by the blue arrow in figure 5);</li>
+    <li>select the file “temp2_coverage_depth.<span class="notranslate">bed</span>”;</li>
+    <li>select the option <code class="highlighter-rouge">Drop, keep or duplicate rows and columns</code> from the drop-down menu <code class="highlighter-rouge">Type of table operation</code> (indicated by the green arrow in figure 5);</li>
+    <li>fill the field <code class="highlighter-rouge">List of columns to select</code> with “1,7,8,4,6” (the red arrow in figure 5);</li>
+    <li>unselect all the other options;</li>
+    <li>execute;</li>
+    <li>set the output file datatype to <em><span class="notranslate">bed</span></em>;</li>
+    <li>you can rename the output as “final_coverage_depth.<span class="notranslate">bed</span>”.</li>
+  </ol>
+
+  <hr />
+  <p><img src="/clinical_genomics/images/cov_fig4.png" alt="Figure 4" />
+   <strong>Figure 4</strong></p>
+
+  <p><img src="/clinical_genomics/images/cov_fig5.png" alt="Figure 5" />
+   <strong>Figure 5</strong></p>
+
+  <hr />
+</blockquote>
+
+<blockquote class="notranslate hands_on">
+  <h3 id="hands_on-hands-on-select-positions-with-low-coverage-depth"><i class="fa fa-pencil" aria-hidden="true"></i><span class="visually-hidden">hands_on</span> Hands-on: Select positions with low coverage depth</h3>
+  <p>The following procedure can be used to obtain a <em><span class="notranslate">bed</span></em> file listing base positions with a coverage depth lower than a certain threshold (for instance 20x).</p>
+
+  <ol>
+    <li>Select the <code class="highlighter-rouge">Filter</code> tool in the <code class="highlighter-rouge">Filter and Sort</code> section (indicated by the blue arrow in figure 6);</li>
+    <li>select the file “final_coverage_depth.<span class="notranslate">bed</span>”;</li>
+    <li>add the following <span class="notranslate">expression</span> “c5&lt;20” to filter all positions with a coverage depth lower than (green arrow in figure 6)(“c5” stands for the fifth column, in this case reporting the coverage depth);</li>
+    <li>execute.</li>
+  </ol>
+
+  <hr />
+  <p><img src="/clinical_genomics/images/cov_fig6.png" alt="Figure 6" />
+   <strong>Figure 6</strong></p>
+
+  <hr />
+
+  <p>The output file, which will be called “low_coverage_depth.<span class="notranslate">bed</span>” from now on, will only list all the positions with a depth lower than 20x.</p>
+</blockquote>
+
+<blockquote class="notranslate hands_on">
+  <h3 id="hands_on-hands-on-merge-low-coverage-regions"><i class="fa fa-pencil" aria-hidden="true"></i><span class="visually-hidden">hands_on</span> Hands-on: Merge low coverage regions</h3>
+  <p>If you want to merge the positions with low coverage depth in larger genomic intervals to be used for further analyses (i.e.: Sanger sequencing of regions not covered by your NGS experiment), you may want to use the <code class="highlighter-rouge"><span class="notranslate">bed</span>tools MergeBED</code> tool in the <code class="highlighter-rouge">Operate on Genomic Intervals</code> section (see the blue arrow in figure 7).</p>
+
+  <ol>
+    <li>Select the file “low_coverage_depth.<span class="notranslate">bed</span>”;</li>
+    <li>set the maximum distance between features (i.e.: the different positions listed in your file) allowed for features to be merged (green arrow in figure 7): if it is 0 only overlapping and/or book-ended features are merged, while if it is set to 10 (or any other different positive integer of your choice), features at the maximum distance of 10 bases will be merged;</li>
+    <li>if you want, you may apply some operations to certain columns to get further information in your output file. For instance you may:
+      <ol>
+        <li>click on “Insert Applying operations to columns from merged intervals” (red arrow in figure 7),</li>
+        <li>specify the column on which you want to perform the operation (in this case column 5),</li>
+        <li>and select the operation from the drop-down list(in this case “Min”, which calculates the minimum value of coverage depth among all the positions that will be merged in a single interval) (yellow arrow in figure 7);</li>
+      </ol>
+    </li>
+    <li>you may add as many operations as you need. In this example we will also calculate the maximum value of coverage depth;</li>
+    <li>execute.</li>
+  </ol>
+
+  <hr />
+  <p><img src="/clinical_genomics/images/cov_fig7.png" alt="Figure 7" />
+   <strong>Figure 7</strong></p>
+
+  <hr />
+  <p>The output file will have the following fields (columns): chromosome, starting and ending positions of low coverage regions, the minimum and the maximum coverage depth in each region.</p>
+
+  <blockquote class="warning">
+    <h3 id="warning-bed-files-may-have-different-columns"><i class="fa fa-warning" aria-hidden="true"></i><span class="visually-hidden">warning</span> <span class="notranslate">BED</span> files may have different columns</h3>
+    <p>Please be aware that the columns to use for calculations may be different
+compared to the example here considered, depending on the amount of columns
+of your <em><span class="notranslate">bed</span></em> files.</p>
+  </blockquote>
+
+  <blockquote class="warning">
+    <h3 id="warning-preview-of-bed-files"><i class="fa fa-warning" aria-hidden="true"></i><span class="visually-hidden">warning</span> Preview of <span class="notranslate">BED</span> files</h3>
+    <p>Please be aware that the <span class="notranslate">Galaxy</span> preview of your file shows a header row that
+does not properly define columns in your files
+(it is just a standard header for the UCSC <span class="notranslate">bed</span> format).</p>
+  </blockquote>
+
+</blockquote>
+
+<h3 id="final-notes">Final notes</h3>
+<p>The procedures listed above are to be taken as examples of the possible operations that can be performed on <span class="notranslate">bed</span> files with <span class="notranslate">bed</span>tools (you may check out their website to get further information:
+<a href="https://bedtools.readthedocs.io/en/latest/content/bedtools-suite.html"><span class="notranslate">BED</span>tools</a>) ad text manipulation tools available on <span class="notranslate">Galaxy</span>.</p>
+
+<p>Furthermore, please be aware that the tool <code class="highlighter-rouge"><span class="notranslate">bed</span>tools Compute both the depth and breadth of coverage</code> does not perform any filtering based on read quality: if your are interested in that aspect you may want to rely on different tools.</p>
 
 <h1 id="variant-annotation">Variant annotation</h1>
 
@@ -795,12 +855,10 @@ For instance instead of having “chr2 50149071 50149399 NRXN1 1 2335” in the 
 
 <p>The choice of gene model is essential for variant <span class="notranslate">downstream</span> variant annotation: it describe genomic positions of genes and each exon-intron exact locations</p>
 
-<p>Different gene models can give different annotations:</p>
-<ul>
-  <li><img src="/clinical_genomics/images/brca1_var.jpg" alt="BRCA1" /></li>
-</ul>
+<p>Different gene models can give different annotations:
+<img src="/clinical_genomics/images/brca1_var.jpg" alt="BRCA1" /></p>
 
-<p><strong>Figure 1.</strong> Variant indicated by the red dashed line can be annotated as <em>intronic</em> or <em>exonic</em> (on one of the UCSC transcript variants), depending on the adopted gene model</p>
+<p><strong>Figure 1.</strong> Variant indicated by the red dashed line can be annotated as <em>intronic</em> or <em>exonic</em> (on one of the UCSC transcript variants), depending on the adopted gene model:</p>
 
 <ul>
   <li><a href="https://www.ncbi.nlm.nih.gov/refseq/">RefSeq</a></li>
@@ -818,7 +876,6 @@ For instance instead of having “chr2 50149071 50149399 NRXN1 1 2335” in the 
   <li><a href="https://www.genenames.org/">HGMC</a></li>
 </ul>
 
-<hr />
 <h2 id="variant-class">Variant class</h2>
 
 <ul>
@@ -826,7 +883,6 @@ For instance instead of having “chr2 50149071 50149399 NRXN1 1 2335” in the 
   <li><img src="/clinical_genomics/images/seqOnt.png" alt="Sequence Ontology" /></li>
 </ul>
 
-<hr />
 <h2 id="population-sequencing-db">Population sequencing db</h2>
 
 <ul>
@@ -837,23 +893,18 @@ For instance instead of having “chr2 50149071 50149399 NRXN1 1 2335” in the 
   <li><a href="https://www.ncbi.nlm.nih.gov/snp/">dbSNP</a></li>
 </ul>
 
-<hr />
 <h2 id="variant-diseasegene-disease-db">Variant-disease/gene-disease db</h2>
 
 <ul>
   <li><a href="http://www.hgmd.cf.ac.uk/ac/index.php">Human Gene Mutation Database</a></li>
   <li><a href="https://www.ncbi.nlm.nih.gov/clinvar/">clinically relevant variants known in a gene</a></li>
   <li><a href="http://simple-clinvar.broadinstitute.org/">Simple ClinVar</a></li>
-  <li><a href="https://www.omim.org/">Online Mendelian Inheritance in Man</a></li>
-</ul>
-
-<hr />
-
-<ul>
+  <li>
+    <p><a href="https://www.omim.org/">Online Mendelian Inheritance in Man</a></p>
+  </li>
   <li><a href="https://sites.google.com/site/jpopgen/dbNSFP"><strong>dbNSFP</strong></a>, a big database of curated annotations and precomputed functional predictions for all potential non-synonymous and splice-site single-nucleotide variants in the human genome</li>
 </ul>
 
-<hr />
 <h2 id="annotation-software-and-tools">Annotation Software and tools</h2>
 
 <ul>
@@ -874,21 +925,26 @@ For instance instead of having “chr2 50149071 50149399 NRXN1 1 2335” in the 
 <hr />
 <h2 id="annotation-and-filtering-with-wannovar">Annotation and filtering with wANNOVAR</h2>
 
-<ul>
-  <li>The web tool <a href="http://wannovar.wglab.org/index.php">wANNOVAR</a> allows for rapid annotation of your variants and for some basic filtering steps to find disease genes.</li>
-  <li>It is based on its command line counterpart <a href="http://annovar.openbioinformatics.org/">ANNOVAR</a>, but it is more user-friendly since it does not require any programming skills.</li>
-  <li>The output consist in tabular text files that can be easily manipulated with Excel or other sp<span class="notranslate">reads</span>heet programs.</li>
-  <li>The annotation is performed against some of the most commonly used databases: RefSeq, UCSC Known, ENSEMBL/Genecode, dbSNP, ClinVar, 1000genomes, ExAC, ESP6500, gnomAD (minor allele frequencies in different populations are reported) and various precalculated prediction scores for any possible single nucleotide variant in coding regions (see <a href="https://sites.google.com/site/jpopgen/dbNSFP">dbNSFP</a>).</li>
-  <li>The gene-based annotation results in a single row for each input variant: only the most deleterious consequence is reported (i.e.: if a certain variant may result to be missense for one transcript and nonsense for a second transcript, only the latter consequence will be reported).</li>
-  <li>Unfortunately, unlike the command line version, wANNOVAR does neither allow for the use of custom annotation databases, nor for the selection of different pubblicly available databases.</li>
-  <li>To annotate your file with wANNOVAR you need to provide your email address, to be notified when the annotation is complete,  and just upload your input file (or paste a series of variant in the designated field).</li>
-  <li><img src="/clinical_genomics/images/wann_fig1.png" alt="Figure 1" /></li>
-  <li>Results are usually ready within minutes.</li>
-  <li>You will get both <em>csv</em> files or <em>txt</em> files (which can be saved as they are by clicking on the specific link, right-clicking in any point of the page and selecting <code class="highlighter-rouge">Save as</code>). They can be both opened with Excel or other sp<span class="notranslate">reads</span>heet programs (concerning <em>csv</em> files, please ensure that comma are set as default list separator/delimiter in your version of Excel).</li>
-  <li>You will also get both <code class="highlighter-rouge">exome summary results</code> (only conding variants are included) and <code class="highlighter-rouge">genome summary results</code> (all variants included).</li>
-  <li>You can also provide a list of Disease or Phenotype Terms that the program can use for filtering your results (only for single sample <code class="highlighter-rouge">vcf</code> files).</li>
-  <li><img src="/clinical_genomics/images/wann_fig2.png" alt="Figure 2" /></li>
-</ul>
+<p>The web tool <a href="http://wannovar.wglab.org/index.php">wANNOVAR</a> allows for rapid annotation of your variants and for some basic filtering steps to find disease genes.
+It is based on its command line counterpart <a href="http://annovar.openbioinformatics.org/">ANNOVAR</a>, but it is more user-friendly since it does not require any programming skills.</p>
+
+<p>The output consist in tabular text files that can be easily manipulated with Excel or other sp<span class="notranslate">reads</span>heet programs.</p>
+
+<p>The annotation is performed against some of the most commonly used databases: RefSeq, UCSC Known, ENSEMBL/Genecode, dbSNP, ClinVar, 1000genomes, ExAC, ESP6500, gnomAD (minor allele frequencies in different populations are reported) and various precalculated prediction scores for any possible single nucleotide variant in coding regions (see <a href="https://sites.google.com/site/jpopgen/dbNSFP">dbNSFP</a>).</p>
+
+<p>The gene-based annotation results in a single row for each input variant: only the most deleterious consequence is reported (i.e.: if a certain variant may result to be missense for one transcript and nonsense for a second transcript, only the latter consequence will be reported).</p>
+
+<p>Unfortunately, unlike the command line version, wANNOVAR does neither allow for the use of custom annotation databases, nor for the selection of different pubblicly available databases.</p>
+
+<p>To annotate your file with wANNOVAR you need to provide your email address, to be notified when the annotation is complete, and just upload your input file (or paste a series of variant in the designated field). Results are usually ready within minutes.
+<img src="/clinical_genomics/images/wann_fig1.png" alt="Figure 1" /></p>
+
+<p>You will get both <em>csv</em> files or <em>txt</em> files (which can be saved as they are by clicking on the specific link, right-clicking in any point of the page and selecting <code class="highlighter-rouge">Save as</code>). They can be both opened with Excel or other sp<span class="notranslate">reads</span>heet programs (concerning <em>csv</em> files, please ensure that comma are set as default list separator/delimiter in your version of Excel).</p>
+
+<p>You will also get both <code class="highlighter-rouge">exome summary results</code> (only conding variants are included) and <code class="highlighter-rouge">genome summary results</code> (all variants included).</p>
+
+<p>You can also provide a list of Disease or Phenotype Terms that the program can use for filtering your results (only for single sample <code class="highlighter-rouge">vcf</code> files).
+<img src="/clinical_genomics/images/wann_fig2.png" alt="Figure 2" /></p>
 
 <p>Finally, there are some Parameter Settings that can be modified:</p>
 <ul>
@@ -900,22 +956,18 @@ For instance instead of having “chr2 50149071 50149399 NRXN1 1 2335” in the 
   <li>Disease Model: this options allows for some basic filtering of your variants based on the expected mechanism of inheritance. In mainly consider frequencies, sample genotypes and consequences at level of genic function. FIltering step are summarized among the results and they are only performed on a single sample: the program does not perform any multisample evaluation (i.e.: variant segregation in a trio) and cannot classify any variant as de novo even if you provide a multisample <em>vcf</em> with parental genotypes.</li>
 </ul>
 
-<hr />
 <h2 id="clinical-databases-for-further-manual-variant-annotation">Clinical databases for further manual variant annotation</h2>
 
-<ul>
-  <li>
-    <p>Once you have obtained a file with the annotation of your variants, you might find useful to annotate also the involved genes, in order to know, for instance, the list of diseases that may be associated with them.</p>
-  </li>
-  <li>Some databases that can the jb are the following:
-    <ol>
-      <li>The gene2phenotype dataset (<a href="https://www.ebi.ac.uk/gene2phenotype/disclaimer">G2P</a>) integrates data on genes, variants and phenotypes for example relating to developmental disorders. In the “Download” section you will find both databases of genes related to cancer and to developmental disorders. Those files report for each gene listed: the OMIM number, the associated disease name, the disease OMIM number, the disease category (you can fing more details in the “Terminology” section), whether the disease is caused by biallelic or monoallelic variants (“allelic requirement”), the expected category of variant to be causative of the disease, and a few other details.</li>
-      <li>In the “Download” section of the <a href="https://www.omim.org/downloads/">OMIM database</a>, if you register for research and educational use, you may obtain different lists of OMIM genes and their associated phenotypes.</li>
-      <li>Among the files available for download from the <a href="https://gnomad.broadinstitute.org/downloads#constraint">gnomAD database</a>, you may get per-gene constraint scores (for further details, please check the paper by the Exome Aggregation Consortium on “Nature. 2016 Aug 18; 536(7616):285–291.”). Those score may indicate if a specific gene is expected to be intolerant to loss-of-function variants (pLI) (haploinsufficiency), or if it is predicted to be associate to recessive diseases.</li>
-    </ol>
-  </li>
-  <li>In the end, you can add these annotations to your wANNOVAR files by using the <code class="highlighter-rouge">VLOOKUP</code> function in Excel.</li>
-</ul>
+<p>Once you have obtained a file with the annotation of your variants, you might find useful to annotate also the involved genes, in order to know, for instance, the list of diseases that may be associated with them.</p>
+
+<p>Some databases that can the jb are the following:</p>
+<ol>
+  <li>The gene2phenotype dataset (<a href="https://www.ebi.ac.uk/gene2phenotype/disclaimer">G2P</a>) integrates data on genes, variants and phenotypes for example relating to developmental disorders. In the “Download” section you will find both databases of genes related to cancer and to developmental disorders. Those files report for each gene listed: the OMIM number, the associated disease name, the disease OMIM number, the disease category (you can fing more details in the “Terminology” section), whether the disease is caused by biallelic or monoallelic variants (“allelic requirement”), the expected category of variant to be causative of the disease, and a few other details.</li>
+  <li>In the “Download” section of the <a href="https://www.omim.org/downloads/">OMIM database</a>, if you register for research and educational use, you may obtain different lists of OMIM genes and their associated phenotypes.</li>
+  <li>Among the files available for download from the <a href="https://gnomad.broadinstitute.org/downloads#constraint">gnomAD database</a>, you may get per-gene constraint scores (for further details, please check the paper by the Exome Aggregation Consortium on “Nature. 2016 Aug 18; 536(7616):285–291.”). Those score may indicate if a specific gene is expected to be intolerant to loss-of-function variants (pLI) (haploinsufficiency), or if it is predicted to be associate to recessive diseases.</li>
+</ol>
+
+<p>In the end, you can add these annotations to your wANNOVAR files by using the <code class="highlighter-rouge">VLOOKUP</code> function in Excel.</p>
 
 <h1 id="variant-prioritization">Variant prioritization</h1>
 
@@ -928,7 +980,6 @@ For instance instead of having “chr2 50149071 50149399 NRXN1 1 2335” in the 
 
 <p><strong>No universal filters, they depend on the experimental features</strong></p>
 
-<hr />
 <h2 id="variant-impact">Variant impact</h2>
 
 <p>First of all you usually want to filter variants by consequence on the encoded protein, keeping those which have an higher impact on protein:</p>
@@ -941,7 +992,6 @@ For instance instead of having “chr2 50149071 50149399 NRXN1 1 2335” in the 
   <li>Inframe indels</li>
 </ul>
 
-<hr />
 <h2 id="variant-frequency">Variant frequency</h2>
 
 <ul>
@@ -952,7 +1002,6 @@ For instance instead of having “chr2 50149071 50149399 NRXN1 1 2335” in the 
   <li>Allele frequencies may differ a lot between different populations</li>
 </ul>
 
-<hr />
 <h2 id="variant-effect-prediction-tools">Variant effect prediction Tools</h2>
 
 <ul>
@@ -976,36 +1025,23 @@ For instance instead of having “chr2 50149071 50149399 NRXN1 1 2335” in the 
   </li>
 </ul>
 
-<hr />
 <h2 id="acmgamp-2015-guidelines">ACMG/AMP 2015 guidelines</h2>
 
 <p>The <em>American College of Medical Genetics</em> and the <em>Association for Molecular Pathology</em> published guidelines for the interpretation of sequence variants in May of 2015 <a href="https://www.nature.com/articles/gim201530">(Richards S. et al, 2015)</a>. This report describes updated standards and guidelines for classifying sequence variants by using criteria informed by expert opinion and experience</p>
 
 <ul>
-  <li>28 evaluation criteria for the clinical interpretation of variants
+  <li>28 evaluation criteria for the clinical interpretation of variants. Criteria falls into 3 sets:
     <ul>
-      <li>Criteria falls into 3 sets:
-        <ul>
-          <li>pathogenic/likely pathogenic (P/LP)</li>
-          <li>benign/likely benign (B/LB)</li>
-          <li>variant of unknown significance (VUS)</li>
-        </ul>
-      </li>
+      <li>pathogenic/likely pathogenic (P/LP)</li>
+      <li>benign/likely benign (B/LB)</li>
+      <li>variant of unknown significance (VUS)</li>
     </ul>
   </li>
-  <li><a href="http://wintervar.wglab.org"><strong>Intervar</strong></a>: software for automatically interpretation of the 28 criteria
-    <ul>
-      <li>Two major steps:
-        <ul>
-          <li>automatically interpretation by 28 criteria</li>
-          <li>manual adjustment to re-interpret the clinical significance</li>
-        </ul>
-      </li>
-    </ul>
-  </li>
+  <li><a href="http://wintervar.wglab.org"><strong>Intervar</strong></a>: software for automatical interpretation of the 28 criteria. Two major steps:</li>
+  <li>automatical interpretation by 28 criteria</li>
+  <li>manual adjustment to re-interpret the clinical significance</li>
 </ul>
 
-<hr />
 <h2 id="prioritization">Prioritization</h2>
 
 <p>Phenotype-based prioritization tools are methods working by comparing the phenotypes of a patient with gene-phenotype known associations.</p>
@@ -1013,8 +1049,6 @@ For instance instead of having “chr2 50149071 50149399 NRXN1 1 2335” in the 
 <ul>
   <li><a href="http://phenolyzer.wglab.org/">Phenolyzer</a>: Phenotype Based Gene Analyzer, a tool to prioritize genes based on user-specific disease/phenotype terms</li>
 </ul>
-
-<hr />
 
 <blockquote class="notranslate hands_on">
   <h3 id="hands_on-hands-on-variant-prioritization"><i class="fa fa-pencil" aria-hidden="true"></i><span class="visually-hidden">hands_on</span> Hands-on: Variant prioritization</h3>
@@ -1047,6 +1081,8 @@ For instance instead of having “chr2 50149071 50149399 NRXN1 1 2335” in the 
   </ul>
 </blockquote>
 
+<h1 id="cnv-detection-from-targeted-sequencing-data">CNV detection from targeted sequencing data</h1>
+
 <ul>
   <li><em>Copy Number Variants</em> (CNVs) are imbalances in the copy number of the genomic material that result in either <span class="notranslate">DNA</span> <strong>deletions</strong> (copy loss) or <strong>duplications</strong></li>
   <li><em>CNVs</em> can cause/predispose to human diseases by altering gene structure/dosage or by <strong>position effect</strong></li>
@@ -1055,32 +1091,27 @@ For instance instead of having “chr2 50149071 50149399 NRXN1 1 2335” in the 
   <li>Computational approaches have been developed to identify <em>CNVs</em> in targeted sequencing data from <strong>hybrid capture</strong> experiments</li>
 </ul>
 
-<h1 id="cnv-detection-from-targeted-sequencing-data">CNV detection from targeted sequencing data</h1>
-
 <h2 id="computational-approaches">Computational approaches</h2>
 
+<p>There are four main methods for <em>CNV</em> identification from short-read +NGS data (see figure below):</p>
 <ul>
-  <li>There are four main methods for <em>CNV</em> identification from short-read +NGS data (see figure below):
-    <ul>
-      <li><strong>Read Count</strong> (RC)</li>
-      <li><strong>Read Pair</strong> (RP)</li>
-      <li><strong>Split Read</strong> (SR)</li>
-      <li><strong>De Novo Assembly</strong> (AS)</li>
-    </ul>
+  <li><strong>Read Count</strong> (RC)</li>
+  <li><strong>Read Pair</strong> (RP)</li>
+  <li><strong>Split Read</strong> (SR)</li>
+  <li>
+    <p><strong>De Novo Assembly</strong> (AS)</p>
   </li>
   <li><em>RP</em> and <em>SR</em> require continuous coverage of the <em>CNV</em> region or <span class="notranslate">reads</span> encompassing <em>CNV</em> breakpoints, as in whole genome sequencing. The sparse nature and small size of exonic targets hamper the application of these methods to targeted sequencing.</li>
-  <li><em>RC</em> is the best suited method for <em>CNV</em> detection from whole exomes or gene panels where:
-    <ul>
-      <li>deletions appear as exonic targets devoid of <span class="notranslate">reads</span></li>
-      <li>duplications appear as exonic targets characterized by excess of coverage</li>
-    </ul>
-  </li>
+  <li><em>RC</em> is the best suited method for <em>CNV</em> detection from whole exomes or gene panels where:</li>
+  <li>deletions appear as exonic targets devoid of <span class="notranslate">reads</span></li>
+  <li>duplications appear as exonic targets characterized by excess of coverage</li>
 </ul>
 
 <hr />
 
-<p><img src="/clinical_genomics/images/methods_identification_cnv.png" alt="CNV detection methods" />
-<strong>Figure 1</strong>. Methods for detection of CNVs in short read NGS data (adapted from <a href="https://doi.org/10.3389/fbioe.2015.00092">Tattini et al., 2015</a>)</p>
+<p><img src="/clinical_genomics/images/methods_identification_cnv.png" alt="CNV detection methods" /></p>
+
+<p><strong>Figure 1</strong>. Methods for detection of CNVs in short read NGS data (adapted from <a href="https://doi.org/10.3389/fbioe.2015.00092">Tattini et al., 2015</a>)</p>
 
 <hr />
 
@@ -1104,8 +1135,9 @@ Three major bias sources are known to affect <em>EMRC</em> dramatically in targe
 
 <hr />
 
-<p><img src="/clinical_genomics/images/normalization_EMRC.png" alt="Data Normalization_1" />
-<strong>Figure 2</strong>. Effect of <em>EMRC ratio</em> on <span class="notranslate">DNA</span> copy number prediction (adapted from <a href="http://genomebiology.com/2013/14/10/R120">Magi et al., 2013</a>)</p>
+<p><img src="/clinical_genomics/images/normalization_EMRC.png" alt="Data Normalization_1" /></p>
+
+<p><strong>Figure 2</strong>. Effect of <em>EMRC ratio</em> on <span class="notranslate">DNA</span> copy number prediction (adapted from <a href="http://genomebiology.com/2013/14/10/R120">Magi et al., 2013</a>)</p>
 
 <hr />
 
@@ -1113,8 +1145,9 @@ Three major bias sources are known to affect <em>EMRC</em> dramatically in targe
 
 <hr />
 
-<p><img src="/clinical_genomics/images/normalization_FPKM.png" alt="Data Normalization_2" />
-<strong>Figure 3</strong>. Correlation of the normalized read count data between samples (from <a href="https://doi.org/10.1093/bioinformatics/bts526">Plagnol et al., 2012</a>)</p>
+<p><img src="/clinical_genomics/images/normalization_FPKM.png" alt="Data Normalization_2" /></p>
+
+<p><strong>Figure 3</strong>. Correlation of the normalized read count data between samples (from <a href="https://doi.org/10.1093/bioinformatics/bts526">Plagnol et al., 2012</a>)</p>
 
 <hr />
 
@@ -1124,8 +1157,9 @@ Three major bias sources are known to affect <em>EMRC</em> dramatically in targe
 
 <hr />
 
-<p><img src="/clinical_genomics/images/corr_exome_affymetrix.png" alt="Correlation_Exome_Affymetrix" />
-<strong>Figure 4</strong>. Correlation between array-SNP and exome-derived <em>CNVs</em> including all (left panel) or &gt; 1 Mb <em>CNVs</em> (adapted from <a href="http://genomebiology.com/2013/14/10/R120">Magi et al., 2013</a>)</p>
+<p><img src="/clinical_genomics/images/corr_exome_affymetrix.png" alt="Correlation_Exome_Affymetrix" /></p>
+
+<p><strong>Figure 4</strong>. Correlation between array-SNP and exome-derived <em>CNVs</em> including all (left panel) or &gt; 1 Mb <em>CNVs</em> (adapted from <a href="http://genomebiology.com/2013/14/10/R120">Magi et al., 2013</a>)</p>
 
 <hr />
 

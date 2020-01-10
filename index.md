@@ -114,7 +114,7 @@ Input datasets used in this course are available:
 >    https://zenodo.org/record/3531578/files/Panel_target_regions.bed
 >    https://zenodo.org/record/3531578/files/Sample1.all_exons.hg19.vcf
 >    ```
->    {% include snippets/import_via_link.md format="fastqsanger.gz" %} 
+>    {% include snippets/import_via_link.md %} 
 >
 >    The same files may be available on the Galaxy server
 >    through a *Shared Data Libraries* in 
@@ -132,8 +132,9 @@ Input datasets used in this course are available:
 >
 > 3. In case you import datasets from Zenodo, check that all datasets in your history
 >    have their datatypes assigned correctly, and fix it when necessary.
->
->    {% include snippets/change_datatype.md datatype="fastqsanger.gz" %}
+>    For example, to assign BED datatype do the following:
+>     
+>    {% include snippets/change_datatype.md datatype="bed" %}
 >
 > 4. Rename the datasets
 >
@@ -148,9 +149,11 @@ Input datasets used in this course are available:
 
 # Next Generation Sequencing
 
- - *Next (or Second) Generation Sequencing* (NGS/SGS) is an umbrella-term covering a number of approaches to DNA sequencing that have been developed after the first, widespread and for long time most commonly used Sanger sequencing.
- - *NGS* is also known as *Massive Parallel Sequencing* (MPS), a term that makes explicit the paradigm shared by all these technologies, that is to sequence in parallel a massive library of spatially separated and clonally amplified DNA templates. 
- - For a comprehensive review of the different *NGS* technologies see [Goodwin et al., 2016](https://www.nature.com/articles/nrg.2016.49), which also includes an introduction to the third generation methods allowing sequencing of long single-molecule reads.
+*Next (or Second) Generation Sequencing* (NGS/SGS) is an umbrella-term covering a number of approaches to DNA sequencing that have been developed after the first, widespread and for long time most commonly used Sanger sequencing.
+
+*NGS* is also known as *Massive Parallel Sequencing* (MPS), a term that makes explicit the paradigm shared by all these technologies, that is to sequence in parallel a massive library of spatially separated and clonally amplified DNA templates. 
+
+For a comprehensive review of the different *NGS* technologies see [Goodwin et al., 2016](https://www.nature.com/articles/nrg.2016.49), which also includes an introduction to the third generation methods allowing sequencing of long single-molecule reads.
 
 ## NGS in the clinic
 
@@ -177,15 +180,11 @@ Apart from the different width of the target space in exome and gene panels, the
 
 Bioinformatic analysis of NGS data usually follows a general three-step workflow to variant detection. Each of these three steps is marked by its "milestone" file type containing sequence data in different formats and metadata describing sequence-related information collected during the analysis step that leads to generation of that file.
 
----
-
 | NGS workflow step | File content | File format | File Size (individual exome) |
 | --- | --- | --- | --- |
 | Sample to reads | Unaligned reads and qualities | **fastQ** | gigabytes |
 | Reads to alignments | Aligned reads and metadata | **BAM** | gigabytes |
 | Alignments to variants | Genotyped variants and metadata | **VCF** | megabytes |
-
----
 
 
 Here are the different formats explained: 
@@ -275,8 +274,11 @@ Before data analysis, it is crucial to check the quality of the data at differen
 We will use several tools available at [https://usegalaxy.eu](https://usegalaxy.eu)
 for checking the quality of data at each step of the analysis, as well as to evaluate the per-base coverage depth at specific genomic intervals
 
+---
 ![Quality control overview]({{site.baseurl}}/images/qc_overview.png)
-**Software for quality control**, at each step of the analysis workflow
+**Software for quality control**, at each step of the analysis workflow.
+
+---
 
 ## Quality control of FASTQ files
 
@@ -284,9 +286,9 @@ We'll use the **FastQC** software, with the FASTQ files available in the Shared 
 *LowQuality_Reads.fastq*
 
 
-*FastQC* is relatively easy to use. A detailed help cab be found the [help manual](http://www.bioinformatics.babraham.ac.uk/projects/fastqc/Help/). 
+*FastQC* is relatively easy to use. A detailed help can be found in the [help manual](http://www.bioinformatics.babraham.ac.uk/projects/fastqc/Help/). 
 
- - Copy the FASTQ file in your history from the Galaxy Shared Data Libraries. Help needed? Follow the [Galaxy at a Glance]({{site.url}}{{site.baseurl}}/lectures/02.galaxy.html) tutorial
+ - Copy the FASTQ file in your history from the Galaxy Shared Data Libraries
  - Select *FastQC* from the left panel
  - Select the FASTQ file as input
  - Click *Execute*
@@ -300,15 +302,15 @@ The names of the modules are preceded by an icon that reflects the quality of th
  
 These evaluations must be taken in the context of what you are expecting from your dataset. For FASTQC a *normal* includes random sequences with high diversity. If your experiment generates libraries biased in particular ways (e.g. low complexity libraries) you should consider the report with attention. In general, you should concentrate on the icons different from green and try to understand the reasons for this behaviour.
 
-### Sequence quality by position.
+### Sequence quality by position
 
 Phred scores represent base call quality. The higher the score the more reliable the base call. Often the quality of reads decreases over the length of the read. Therefore, it is common practice to plot the distribution of the Phred scores at each position using boxplots.
     
 The average Phred score is depicted by the blue line, the median Phred score by the red line. The yellow boxes contain 50% of all Phred scores. The background of the graph divides the plot in three regions: good quality (green), reasonable quality (orange), poor quality (red; Phred score < 20).
 
-![High Quality reads]({{site.baseurl}}/images/fastqc_sequence_quality.png)
-Example of datasets with high (left) and low (right) sequence quality
+Below examples of datasets with high (left) and low (right) sequence quality
 
+![High Quality reads]({{site.baseurl}}/images/fastqc_sequence_quality.png)
 
 ### Check overall sequence quality
 Calculates the average Phred score of each read and show a cumulative plot of the average qualities of all the reads.
@@ -347,143 +349,198 @@ The presence of adapter sequences impacts the rate and speed of alignment.
 
 Commercial next-generation sequencing platform usually provide users with analysis programs that include tools for the identification of low coverage regions (for instance, target regions that have a coverage depth lower than 20x).
 
-The present tutorial is aimed to show how to perform a custom coverage analysis of NGS experiment(s) by using tools that are available in Galaxy.
- 
+The present tutorial is aimed to show how to perform a custom coverage analysis
+of NGS experiment(s) by using tools that are available in Galaxy.
+
 Starting material:
 * Alignment (*bam*) file(s) on which you want to perform the coverage evaluation.
 * A reference *bed* file listing the genomic regions for which you want to obtain coverage data. If you performed a targeted sequencing experiment by using commercial kits (either custom or from the catalogue), you should already have obtained a *bed* file listing the target regions: it should be the file you want to use.
 
->#### NOTE: BED format specifications 
+>    > ### {% icon comment %} BED format specifications
+>    > **BED files** are tab-delimited files with one line for each genomic region.
+>    > The first 3 fields (columns) are required: 
+>    > 1. chromosome
+>    > 2. the starting position
+>    > 2. the ending position
+>    >
+>    > Further columns may be present but are optional.
+>    > Additional details may be found here: [UCSC BED format specifications](https://genome.ucsc.edu/FAQ/FAQformat.html#format1)
+>    >
+>    > Please be aware that in BED files the description of genomic regions follows the “0-start, half-open” coordinate system. Further details may be found here: [the "0-based, half-open" UCSC Genome Browser Coordinate Counting Systems](http://genome.ucsc.edu/blog/the-ucsc-genome-browser-coordinate-counting-systems/). Practically speaking, it means that the starting position is diminished by 1 bp with respect to the actual position. For instance, the region "chr2 50149071 50149399" in a *bed* file corresponds to the genomic interval from position 50149072 (included) to position 50149399 (included) on chromosome 2 (when the first base of the chromosome is defined as position 1). If you want to indicate a single base position in a *bed* file, it should be written like this: "chr2 50149071 50149072" .
+>    {: .comment}
+
+ 
+> ### {% icon hands_on %} Hands-on: Compute per base coverage depth with BEDtools
+>    Before starting, you have to upload the files you need for the analysis,
+>    following standard Galaxy procedure. 
 >
->**BED files** are tab-delimited files with one line for each genomic region.
->The first 3 fields (columns) are required:
->1. chromosome; 
->2. the starting position;
->3. the ending position.
+>    You may use files provided as examples with this tutorial and called
+>    `Panel_alignment.bam` and `Panel_Target_regions.bed`. 
 >
->Further columns may be present but are optional.
+>    Please check that uploaded file datatypes (formats) are properly recognized by
+>    selecting `edit attributes` (i.e. the pencil sign in correspondence of each file
+>    you can find in your history) (indicated by the red arrow in figure 1)
+>    and then the tab datatypes (the blue arrow in figure 1).
+>    If the datatype is wrong, select the correct one from the drop-down list
+>    and press the `change datatype` button (the green arrow in figure 1).
 >
->Further details may be found here: [UCSC BED format specifications](https://genome.ucsc.edu/FAQ/FAQformat.html#format1)
+>    ---
+>    ![Figure 1]({{site.baseurl}}/images/cov_fig1.png)
+>    **Figure 1**
 >
->Please be aware that in BED files the description of genomic regions follows the “0-start, half-open” coordinate system. Further details may be found here: [the "0-based, half-open" UCSC Genome Browser Coordinate Counting Systems](http://genome.ucsc.edu/blog/the-ucsc-genome-browser-coordinate-counting-systems/). Practically speaking, it means that the starting position is diminished by 1 bp with respect to the actual position. For instance, the region "chr2 50149071 50149399" in a *bed* file corresponds to the genomic interval from position 50149072 (included) to position 50149399 (included) on chromosome 2 (when the first base of the chromosome is defined as position 1). If you want to indicate a single base position in a *bed* file, it should be written like this: "chr2 50149071 50149072".
-
-### 1.Compute per base coverage depth with BEDtools
-Before starting, you have to upload the files you need for the analysis, following standard Galaxy procedure. 
-
-You may use files provided as examples with this tutorial and called `Panel_alignment.bam` and `Panel_Target_regions.bed`. 
-
-Please check that uploaded file datatypes (formats) are properly recognized by selecting `edit attributes` (i.e. the pencil sign in correspondence of each file you can find in your history) (indicated by the red arrow in figure 1) and then the tab datatypes (the blue arrow in figure 1). If the datatype is wrong, select the correct one from the drop-down list and press the `change datatype` button (the green arrow n figure 1).
-
-**Figure 1**
-![Figure 1]({{site.baseurl}}/images/cov_fig1.png)
-
-Once ready, you can select the tool named `bedtools Compute both the depth and breadth of coverage` in the `Operate on Genomic Intervals` section (see the red arrow in figure 2).
-
-1. Select the *bed* file listing the target regions as "file A" (blue arrow in figure 2) and the *bam* file(s) you want to analyze as "file B" (green arrow in figure 2) (they should be listed in the drop-down menu if they have the correct format). You may analyze one or more *bam* files in a single run. 
-2. If you want to analyze two or more .bam files, you can further choose if you want all the results in a single file or one output file per input "file B" by selecting the desired option under the `Combined or separate output files` menu.
-3. Select "Yes" for the option `Report the depth at each position in each A feature` (yellow arrow in figure 2) and check that all the other options are set to "No".
-4. Star (Execute) the analysis.
-
-**Figure 2**
-![Figure 2]({{site.baseurl}}/images/cov_fig2.png)
-
-Output file, which will be called "coverage_depth.bed" from now on, will contain all the fields of the original target_regions.bed file plus two further columns:
-1. the first value indicates a specific base within the reported genomic interval. For instance, if the genomic interval described by the first 3 field is "chr2 50149071 50149072" and the first new field reports the number 1000, it means that the coverage value refers to nucleotide 50150071 (i.e.: 50149071 + 1000) on chromosome 2;
-2. the second value indicates the depth of coverage for the defined base.
-
-### 2.Sort files
-Since entries in the "coverage_depth.bed" may not be in the desired order, you can sort it by genomic positions.
-For this purpose you may want to use the `Sort` tool in the `Text Manipulation` section (check out the blue arrow in figure 3).
-
-You may sequentially sort on different columns:
-1. first you can sort by chromosome by selecting column 1 (green arrow in figure 3) in "ascending order" and selecting the "flavor" `Natural/Version sort (-V)`, which allows for sorting chromosomes in their "natural" order (with alphabetical order chr10 will be right after chr1, chr2 after chr19 and so on);
-2. after inserting a new column section (red arrow in figure 3), you can sort by column 2 in "ascending order" with `Fast numeric sort (-n)`;
-3. after inserting a further column section, you can sort by column 3 in "ascending order" with `Fast numeric sort (-n)`;
-4. after inserting a final column section, you can sort by column 3 in "ascending order" with `Fast numeric sort (-n)`.
-
-**Figure 3**
-![Figure 3]({{site.baseurl}}/images/cov_fig3.png)
-
-The obtained output file, which will be called "sorted_coverage_depth.bed" from now on, will be sorted first by chromosome, then by starting position, by ending position and by the actual position of the specific base in the considered genomic interval.
-
-### 3.Remove duplicate rows
-If your file contains duplicated lines you may want to remove them for further processing.
-For this purpose you can use the `Unique lines assuming sorted input file` tool in the `Text Manipulation` section.
-
-### 4.Some manipulation of the *bed* file 
-You may follow the following steps to manipulate the "sorted_coverage_depth.bed" and to obtain a *bed* file listing the exact base position to which each coverage value is referred.
-For instance instead of having "chr2 50149071 50149399 NRXN1 1 2335" in the first row of your file, you will get "chr2 50149071 50149072 NRXN1 2335".
-
-These steps will add further columns at the end of each line defining the base position with the “0-start, half-open” coordinate system.
-
-1. Select the `Compute an expression on every row` tool in the `Text Manipulation` section (indicated by the blue arrow in figure 4);
-2. add the following expression "c2+c5-1" to obtain the sum of the values in columns 2 and 5 minus 1 (it will be used as the new starting position in the final file);
-3. select the file "sorted_coverage_depth.bed";
-4. select "yes" to `round Results?` (green arrow in figure 4);
-5. execute;
-6. you can rename the output as "temp1_coverage_depth.bed";
-7. select the `Compute an expression on every row` tool in the `Text Manipulation` section;
-8. add the following expression "c2+c5" to obtain the sum of the values in columns 2 and 5 (it will be used as the new ending position in the final file). You can also use the expression ; 
-9. select the file "temp1_coverage_depth.bed";
-10. select "yes" to `round Results?`;
-11. execute;
-12. you can rename the output as "temp2_coverage_depth.bed";
-13. select the `Table Compute` tool in the `Text Manipulation` section (indicated by the blue arrow in figure 5);
-14. select the file "temp2_coverage_depth.bed";
-15. select the option `Drop, keep or duplicate rows and columns` from the drop-down menu `Type of table operation` (indicated by the green arrow in figure 5);
-16. fill the field `List of columns to select` with "1,7,8,4,6" (the red arrow in figure 5);
-17. unselect all the other options;
-18. execute;
-19. set the output file datatype to *bed*;
-20. you can rename the output as "final_coverage_depth.bed".
-
-**Figure 4**
-![Figure 4]({{site.baseurl}}/images/cov_fig4.png)
-
-**Figure 5**
-![Figure 5]({{site.baseurl}}/images/cov_fig5.png)
-
-### 5.Select positions with low coverage depth
-The following procedure can be used to obtain a *bed* file listing base positions with a coverage depth lower than a certain threshold (for instance 20x).
-
-1. Select the `Filter` tool in the `Filter and Sort` section (indicated by the blue arrow in figure 6);
-2. select the file "final_coverage_depth.bed";
-2. add the following expression "c5<20" to filter all positions with a coverage depth lower than (green arrow in figure 6)("c5" stands for the fifth column, in this case reporting the coverage depth);
-4. execute.
-
-**Figure 6**
-![Figure 6]({{site.baseurl}}/images/cov_fig6.png)
-
-The output file, which will be called "low_coverage_depth.bed" from now on, will only list all the positions with a depth lower than 20x.
-
-### 6.Merge low coverage regions
-If you want to merge the positions with low coverage depth in larger genomic intervals to be used for further analyses (i.e.: Sanger sequencing of regions not covered by your NGS experiment), you may want to use the `bedtools MergeBED` tool in the `Operate on Genomic Intervals` section (see the blue arrow in figure 7). 
-
-1. Select the file "low_coverage_depth.bed";
-2. set the maximum distance between features (i.e.: the different positions listed in your file) allowed for features to be merged (green arrow in figure 7): if it is 0 only overlapping and/or book-ended features are merged, while if it is set to 10 (or any other different positive integer of your choice), features at the maximum distance of 10 bases will be merged; 
-3. if you want, you may apply some operations to certain columns to get further information in your output file. For instance you may:
-	1. click on "Insert Applying operations to columns from merged intervals" (red arrow in figure 7), 
-	2. specify the column on which you want to perform the operation (in this case column 5), 
-	3. and select the operation from the drop-down list(in this case "Min", which calculates the minimum value of coverage depth among all the positions that will be merged in a single interval) (yellow arrow in figure 7);
-4. you may add as many operations as you need. In this example we will also calculate the maximum value of coverage depth;
-5. execute.	
-
-**Figure 7**
-![Figure 7]({{site.baseurl}}/images/cov_fig7.png)
-
-The output file will have the following fields (columns): chromosome, starting and ending positions of low coverage regions, the minimum and the maximum coverage depth in each region.
-
-   ----------
-   **Warning**: please be aware that the columns to use for calculations may be different compared to the example here considered, depending on the amount of columns of your *bed* files.
-   
-   **Warning**: please be aware that the Galaxy preview of your file shows a header row that does not properly define columns in your files (it is just a standard header for the UCSC bed format).
-   
-   ----------
-
->#### Final notes
->The procedures listed above are to be taken as examples of the possible operations that can be performed on bed files with bedtools (you may check out their website to get further information: [BEDtools](https://bedtools.readthedocs.io/en/latest/content/bedtools-suite.html)) ad text manipulation tools available on Galaxy.
+>    ---
 >
->Furthermore, please be aware that the tool `bedtools Compute both the depth and breadth of coverage` does not perform any filtering based on read quality: if your are interested in that aspect you may want to rely on different tools. 
+>    Once ready, you can select the tool named `bedtools Compute both the depth and
+>    breadth of coverage` in the `Operate on Genomic Intervals` section
+>    (see the red arrow in figure 2).
+>
+> 1. Select the *bed* file listing the target regions as "file A" (blue arrow in figure 2)
+>    and the *bam* file(s) you want to analyze as "file B" (green arrow in figure 2)
+>    (they should be listed in the drop-down menu if they have the correct format).
+>    You may analyze one or more *bam* files in a single run. 
+> 2. If you want to analyze two or more .bam files, you can further choose if you want
+>    all the results in a single file or one output file per input "file B" by selecting
+>    the desired option under the `Combined or separate output files` menu.
+> 3. Select "Yes" for the option `Report the depth at each position in each A feature`
+>   (yellow arrow in figure 2) and check that all the other options are set to "No".
+> 4. Star (Execute) the analysis.
+>
+>    ![Figure 2]({{site.baseurl}}/images/cov_fig2.png)
+>    **Figure 2**
+>
+>    ---
+>
+>    Output file, which will be called "coverage_depth.bed" from now on, 
+>    will contain all the fields of the original target_regions.bed file plus
+>    two further columns:
+> 1. the first value indicates a specific base within the reported genomic interval.
+>    For instance, if the genomic interval described by the first 3 field is
+>    "chr2 50149071 50149072" and the first new field reports the number 1000,
+>    it means that the coverage value refers to nucleotide 50150071
+>    (i.e.: 50149071 + 1000) on chromosome 2;
+> 2. the second value indicates the depth of coverage for the defined base.
+{: .hands_on}
+
+> ### {% icon hands_on %} Hands-on: Sort files
+>    Since entries in the "coverage_depth.bed" may not be in the desired order, you can sort it by genomic positions.
+>    For this purpose you may want to use the `Sort` tool in the `Text Manipulation` section (check out the blue arrow in figure 3).
+>
+>    You may sequentially sort on different columns:
+> 1. first you can sort by chromosome by selecting column 1 (green arrow in figure 3) in "ascending order" and selecting the "flavor" `Natural/Version sort (-V)`, which allows for sorting chromosomes in their "natural" order (with alphabetical order chr10 will be right after chr1, chr2 after chr19 and so on);
+> 2. after inserting a new column section (red arrow in figure 3), you can sort by column 2 in "ascending order" with `Fast numeric sort (-n)`;
+> 3. after inserting a further column section, you can sort by column 3 in "ascending order" with `Fast numeric sort (-n)`;
+> 4. after inserting a final column section, you can sort by column 3 in "ascending order" with `Fast numeric sort (-n)`.
+>
+>    ---
+>    ![Figure 3]({{site.baseurl}}/images/cov_fig3.png)
+>    **Figure 3**
+>
+>    ---
+>
+>    The obtained output file, which will be called "sorted_coverage_depth.bed"
+>    from now on, will be sorted first by chromosome, then by starting position,
+>    by ending position and by the actual position of the specific base in the
+>    considered genomic interval.
+{: .hands_on}
+
+> ### {% icon hands_on %} Hands-on: Remove duplicate rows
+>    If your file contains duplicated lines you may want to remove them for further processing.
+>    For this purpose you can use the `Unique lines assuming sorted input file` tool in the `Text Manipulation` section.
+{: .hands_on}
+
+> ### {% icon hands_on %} Hands-on: Some manipulation of the *bed* file 
+>    You may follow the following steps to manipulate the "sorted_coverage_depth.bed" and to obtain a *bed* file listing the exact base position to which each coverage value is referred.
+>    For instance instead of having "chr2 50149071 50149399 NRXN1 1 2335" in the first row of your file, you will get "chr2 50149071 50149072 NRXN1 2335".
+>
+>    These steps will add further columns at the end of each line defining the base position with the “0-start, half-open” coordinate system.
+> 
+> 1. Select the `Compute an expression on every row` tool in the `Text Manipulation` section (indicated by the blue arrow in figure 4);
+> 1. add the following expression "c2+c5-1" to obtain the sum of the values in columns 2 and 5 minus 1 (it will be used as the new starting position in the final file);
+> 1. select the file "sorted_coverage_depth.bed";
+> 1. select "yes" to `round Results?` (green arrow in figure 4);
+> 1. execute;
+> 1. you can rename the output as "temp1_coverage_depth.bed";
+> 1. select the `Compute an expression on every row` tool in the `Text Manipulation` section;
+> 1. add the following expression "c2+c5" to obtain the sum of the values in columns 2 and 5 (it will be used as the new ending position in the final file). You can also use the expression ; 
+> 1. select the file "temp1_coverage_depth.bed";
+> 1. select "yes" to `round Results?`;
+> 1. execute;
+> 1. you can rename the output as "temp2_coverage_depth.bed";
+> 1. select the `Table Compute` tool in the `Text Manipulation` section (indicated by the blue arrow in figure 5);
+> 1. select the file "temp2_coverage_depth.bed";
+> 1. select the option `Drop, keep or duplicate rows and columns` from the drop-down menu `Type of table operation` (indicated by the green arrow in figure 5);
+> 1. fill the field `List of columns to select` with "1,7,8,4,6" (the red arrow in figure 5);
+> 1. unselect all the other options;
+> 1. execute;
+> 1. set the output file datatype to *bed*;
+> 2. you can rename the output as "final_coverage_depth.bed".
+>
+>    ---
+>    ![Figure 4]({{site.baseurl}}/images/cov_fig4.png)
+>    **Figure 4**
+>
+>    ![Figure 5]({{site.baseurl}}/images/cov_fig5.png)
+>    **Figure 5**
+>
+>    ---
+{: .hands_on}
+
+> ### {% icon hands_on %} Hands-on: Select positions with low coverage depth
+> The following procedure can be used to obtain a *bed* file listing base positions with a coverage depth lower than a certain threshold (for instance 20x).
+>
+> 1. Select the `Filter` tool in the `Filter and Sort` section (indicated by the blue arrow in figure 6);
+> 1. select the file "final_coverage_depth.bed";
+> 1. add the following expression "c5<20" to filter all positions with a coverage depth lower than (green arrow in figure 6)("c5" stands for the fifth column, in this case reporting the coverage depth);
+> 1. execute.
+>
+>    ---
+>    ![Figure 6]({{site.baseurl}}/images/cov_fig6.png)
+>    **Figure 6**
+> 
+>    ---
+>
+>    The output file, which will be called "low_coverage_depth.bed" from now on, will only list all the positions with a depth lower than 20x.
+{: .hands_on}
+
+> ### {% icon hands_on %} Hands-on: Merge low coverage regions
+>    If you want to merge the positions with low coverage depth in larger genomic intervals to be used for further analyses (i.e.: Sanger sequencing of regions not covered by your NGS experiment), you may want to use the `bedtools MergeBED` tool in the `Operate on Genomic Intervals` section (see the blue arrow in figure 7). 
+>
+> 1. Select the file "low_coverage_depth.bed";
+> 1. set the maximum distance between features (i.e.: the different positions listed in your file) allowed for features to be merged (green arrow in figure 7): if it is 0 only overlapping and/or book-ended features are merged, while if it is set to 10 (or any other different positive integer of your choice), features at the maximum distance of 10 bases will be merged; 
+> 1. if you want, you may apply some operations to certain columns to get further information in your output file. For instance you may:
+>    1. click on "Insert Applying operations to columns from merged intervals" (red arrow in figure 7), 
+>    1. specify the column on which you want to perform the operation (in this case column 5), 
+>    1. and select the operation from the drop-down list(in this case "Min", which calculates the minimum value of coverage depth among all the positions that will be merged in a single interval) (yellow arrow in figure 7);
+> 4. you may add as many operations as you need. In this example we will also calculate the maximum value of coverage depth;
+> 5. execute.	
+>
+>    ---
+>    ![Figure 7]({{site.baseurl}}/images/cov_fig7.png)
+>    **Figure 7**
+>
+>    ---
+>    The output file will have the following fields (columns): chromosome, starting and ending positions of low coverage regions, the minimum and the maximum coverage depth in each region.
+>
+>    > ### {% icon warning %} BED files may have different columns
+>    > Please be aware that the columns to use for calculations may be different
+>    > compared to the example here considered, depending on the amount of columns
+>    > of your *bed* files.
+>    {: .warning}
+>
+>    > ### {% icon warning %} Preview of BED files
+>    > Please be aware that the Galaxy preview of your file shows a header row that
+>    > does not properly define columns in your files
+>    > (it is just a standard header for the UCSC bed format).
+>    {: .warning}
+>
+{: .hands_on}
+
+### Final notes
+The procedures listed above are to be taken as examples of the possible operations that can be performed on bed files with bedtools (you may check out their website to get further information:
+[BEDtools](https://bedtools.readthedocs.io/en/latest/content/bedtools-suite.html)) ad text manipulation tools available on Galaxy.
+
+Furthermore, please be aware that the tool `bedtools Compute both the depth and breadth of coverage` does not perform any filtering based on read quality: if your are interested in that aspect you may want to rely on different tools. 
+
 
 # Variant annotation
 
@@ -499,9 +556,9 @@ We want to know for example if a variant is located in a gene, if it’s in the 
 The choice of gene model is essential for variant downstream variant annotation: it describe genomic positions of genes and each exon-intron exact locations
 
 Different gene models can give different annotations:
-- ![BRCA1]({{site.baseurl}}/images/brca1_var.jpg)
+![BRCA1]({{site.baseurl}}/images/brca1_var.jpg)
 
-**Figure 1.** Variant indicated by the red dashed line can be annotated as *intronic* or *exonic* (on one of the UCSC transcript variants), depending on the adopted gene model
+**Figure 1.** Variant indicated by the red dashed line can be annotated as *intronic* or *exonic* (on one of the UCSC transcript variants), depending on the adopted gene model:
 
 - [RefSeq](https://www.ncbi.nlm.nih.gov/refseq/)
 - [Ensembl](https://www.ensembl.org/Homo_sapiens/Info/Index)
@@ -515,13 +572,11 @@ Variant nomenclature should be described univocally:
 - [HGVS](https://varnomen.hgvs.org/)
 - [HGMC](https://www.genenames.org/)
 
----
 ## Variant class
 
 - [Sequence Ontology](http://www.sequenceontology.org/)
 - ![Sequence Ontology]({{site.baseurl}}/images/seqOnt.png)
 
----
 ## Population sequencing db
 
 - [gnomAD](https://gnomad.broadinstitute.org/)
@@ -530,7 +585,6 @@ Variant nomenclature should be described univocally:
 - [NHLBI-ESP 6500 exomes](https://evs.gs.washington.edu/EVS/)
 - [dbSNP](https://www.ncbi.nlm.nih.gov/snp/)
 
----
 ## Variant-disease/gene-disease db
 
 - [Human Gene Mutation Database](http://www.hgmd.cf.ac.uk/ac/index.php)
@@ -538,15 +592,12 @@ Variant nomenclature should be described univocally:
 - [Simple ClinVar](http://simple-clinvar.broadinstitute.org/)
 - [Online Mendelian Inheritance in Man](https://www.omim.org/)
 
----
-
 - [**dbNSFP**](https://sites.google.com/site/jpopgen/dbNSFP), a big database of curated annotations and precomputed functional predictions for all potential non-synonymous and splice-site single-nucleotide variants in the human genome
 
----
 ## Annotation Software and tools
 
 - [Variant Effect Predictor](https://www.ensembl.org/info/docs/tools/vep/index.html)
-- [ANNOVAR]( http://annovar.openbioinformatics.org/en/latest/)
+- [ANNOVAR](http://annovar.openbioinformatics.org/en/latest/)
 - [Single Nucleotide Polymorphism Effect](http://snpeff.sourceforge.net/)
 - [KGGSeq](http://grass.cgs.hku.hk/limx/kggseq/)
 
@@ -557,39 +608,46 @@ Variant nomenclature should be described univocally:
 ---
 ## Annotation and filtering with wANNOVAR
 
-- The web tool [wANNOVAR](http://wannovar.wglab.org/index.php) allows for rapid annotation of your variants and for some basic filtering steps to find disease genes.
-- It is based on its command line counterpart [ANNOVAR](http://annovar.openbioinformatics.org/), but it is more user-friendly since it does not require any programming skills.
-- The output consist in tabular text files that can be easily manipulated with Excel or other spreadsheet programs.
-- The annotation is performed against some of the most commonly used databases: RefSeq, UCSC Known, ENSEMBL/Genecode, dbSNP, ClinVar, 1000genomes, ExAC, ESP6500, gnomAD (minor allele frequencies in different populations are reported) and various precalculated prediction scores for any possible single nucleotide variant in coding regions (see [dbNSFP](https://sites.google.com/site/jpopgen/dbNSFP)). 
-- The gene-based annotation results in a single row for each input variant: only the most deleterious consequence is reported (i.e.: if a certain variant may result to be missense for one transcript and nonsense for a second transcript, only the latter consequence will be reported).
-- Unfortunately, unlike the command line version, wANNOVAR does neither allow for the use of custom annotation databases, nor for the selection of different pubblicly available databases.
-- To annotate your file with wANNOVAR you need to provide your email address, to be notified when the annotation is complete,  and just upload your input file (or paste a series of variant in the designated field).
-- ![Figure 1]({{site.baseurl}}/images/wann_fig1.png)
-- Results are usually ready within minutes.
-- You will get both *csv* files or *txt* files (which can be saved as they are by clicking on the specific link, right-clicking in any point of the page and selecting `Save as`). They can be both opened with Excel or other spreadsheet programs (concerning *csv* files, please ensure that comma are set as default list separator/delimiter in your version of Excel).
-- You will also get both `exome summary results` (only conding variants are included) and `genome summary results` (all variants included).
-- You can also provide a list of Disease or Phenotype Terms that the program can use for filtering your results (only for single sample `vcf` files).
-- ![Figure 2]({{site.baseurl}}/images/wann_fig2.png)
+The web tool [wANNOVAR](http://wannovar.wglab.org/index.php) allows for rapid annotation of your variants and for some basic filtering steps to find disease genes.
+It is based on its command line counterpart [ANNOVAR](http://annovar.openbioinformatics.org/), but it is more user-friendly since it does not require any programming skills.
+
+The output consist in tabular text files that can be easily manipulated with Excel or other spreadsheet programs.
+
+The annotation is performed against some of the most commonly used databases: RefSeq, UCSC Known, ENSEMBL/Genecode, dbSNP, ClinVar, 1000genomes, ExAC, ESP6500, gnomAD (minor allele frequencies in different populations are reported) and various precalculated prediction scores for any possible single nucleotide variant in coding regions (see [dbNSFP](https://sites.google.com/site/jpopgen/dbNSFP)). 
+
+The gene-based annotation results in a single row for each input variant: only the most deleterious consequence is reported (i.e.: if a certain variant may result to be missense for one transcript and nonsense for a second transcript, only the latter consequence will be reported).
+
+Unfortunately, unlike the command line version, wANNOVAR does neither allow for the use of custom annotation databases, nor for the selection of different pubblicly available databases.
+
+To annotate your file with wANNOVAR you need to provide your email address, to be notified when the annotation is complete, and just upload your input file (or paste a series of variant in the designated field). Results are usually ready within minutes.
+![Figure 1]({{site.baseurl}}/images/wann_fig1.png)
+
+
+You will get both *csv* files or *txt* files (which can be saved as they are by clicking on the specific link, right-clicking in any point of the page and selecting `Save as`). They can be both opened with Excel or other spreadsheet programs (concerning *csv* files, please ensure that comma are set as default list separator/delimiter in your version of Excel).
+
+You will also get both `exome summary results` (only conding variants are included) and `genome summary results` (all variants included).
+
+You can also provide a list of Disease or Phenotype Terms that the program can use for filtering your results (only for single sample `vcf` files).
+![Figure 2]({{site.baseurl}}/images/wann_fig2.png)
 
 Finally, there are some Parameter Settings that can be modified:
-   - Result duration: it can now only be set to "1 day", since your files will be automatically removed after 24 hours.
-   - Reference genome: you can choose between hg19 (GRCh37) and hg38 (GRCh38).
-   - Input Format: you can upload not only *vcf* files, but also other kinds of variant files.
-   - Gene Definition: the database you want to use for gene function annotation. Three oprtions are available: RefSeq, UCSC Known, ENSEMBL/Gencode
-   - Individual analysis: the "Individual analysis" option allows you to perform further filtering steps (based on the Disease/Phenotype terms or the Disease Model) on a single sample (if you upload a multisample *vcf* only the first sample will be considered); the "All Annotaions" option will annotate all variants in your multisample *vcf*, maintaining the original columns of your *vcf* as the last columns of your output file.
-   - Disease Model: this options allows for some basic filtering of your variants based on the expected mechanism of inheritance. In mainly consider frequencies, sample genotypes and consequences at level of genic function. FIltering step are summarized among the results and they are only performed on a single sample: the program does not perform any multisample evaluation (i.e.: variant segregation in a trio) and cannot classify any variant as de novo even if you provide a multisample *vcf* with parental genotypes.
+ - Result duration: it can now only be set to "1 day", since your files will be automatically removed after 24 hours.
+ - Reference genome: you can choose between hg19 (GRCh37) and hg38 (GRCh38).
+ - Input Format: you can upload not only *vcf* files, but also other kinds of variant files.
+ - Gene Definition: the database you want to use for gene function annotation. Three oprtions are available: RefSeq, UCSC Known, ENSEMBL/Gencode
+ - Individual analysis: the "Individual analysis" option allows you to perform further filtering steps (based on the Disease/Phenotype terms or the Disease Model) on a single sample (if you upload a multisample *vcf* only the first sample will be considered); the "All Annotaions" option will annotate all variants in your multisample *vcf*, maintaining the original columns of your *vcf* as the last columns of your output file.
+ - Disease Model: this options allows for some basic filtering of your variants based on the expected mechanism of inheritance. In mainly consider frequencies, sample genotypes and consequences at level of genic function. FIltering step are summarized among the results and they are only performed on a single sample: the program does not perform any multisample evaluation (i.e.: variant segregation in a trio) and cannot classify any variant as de novo even if you provide a multisample *vcf* with parental genotypes.
 
----
 ## Clinical databases for further manual variant annotation
 
-- Once you have obtained a file with the annotation of your variants, you might find useful to annotate also the involved genes, in order to know, for instance, the list of diseases that may be associated with them.
+Once you have obtained a file with the annotation of your variants, you might find useful to annotate also the involved genes, in order to know, for instance, the list of diseases that may be associated with them.
 
-- Some databases that can the jb are the following:
-1. The gene2phenotype dataset ([G2P](https://www.ebi.ac.uk/gene2phenotype/disclaimer)) integrates data on genes, variants and phenotypes for example relating to developmental disorders. In the "Download" section you will find both databases of genes related to cancer and to developmental disorders. Those files report for each gene listed: the OMIM number, the associated disease name, the disease OMIM number, the disease category (you can fing more details in the "Terminology" section), whether the disease is caused by biallelic or monoallelic variants ("allelic requirement"), the expected category of variant to be causative of the disease, and a few other details.
-2. In the "Download" section of the [OMIM database](https://www.omim.org/downloads/), if you register for research and educational use, you may obtain different lists of OMIM genes and their associated phenotypes.
-3. Among the files available for download from the [gnomAD database](https://gnomad.broadinstitute.org/downloads#constraint), you may get per-gene constraint scores (for further details, please check the paper by the Exome Aggregation Consortium on "Nature. 2016 Aug 18; 536(7616):285–291."). Those score may indicate if a specific gene is expected to be intolerant to loss-of-function variants (pLI) (haploinsufficiency), or if it is predicted to be associate to recessive diseases.
-- In the end, you can add these annotations to your wANNOVAR files by using the `VLOOKUP` function in Excel.
+Some databases that can the jb are the following:
+ 1. The gene2phenotype dataset ([G2P](https://www.ebi.ac.uk/gene2phenotype/disclaimer)) integrates data on genes, variants and phenotypes for example relating to developmental disorders. In the "Download" section you will find both databases of genes related to cancer and to developmental disorders. Those files report for each gene listed: the OMIM number, the associated disease name, the disease OMIM number, the disease category (you can fing more details in the "Terminology" section), whether the disease is caused by biallelic or monoallelic variants ("allelic requirement"), the expected category of variant to be causative of the disease, and a few other details.
+ 1. In the "Download" section of the [OMIM database](https://www.omim.org/downloads/), if you register for research and educational use, you may obtain different lists of OMIM genes and their associated phenotypes.
+ 1. Among the files available for download from the [gnomAD database](https://gnomad.broadinstitute.org/downloads#constraint), you may get per-gene constraint scores (for further details, please check the paper by the Exome Aggregation Consortium on "Nature. 2016 Aug 18; 536(7616):285–291."). Those score may indicate if a specific gene is expected to be intolerant to loss-of-function variants (pLI) (haploinsufficiency), or if it is predicted to be associate to recessive diseases.
 
+In the end, you can add these annotations to your wANNOVAR files by using the `VLOOKUP` function in Excel.
 
 # Variant prioritization
 
@@ -600,7 +658,6 @@ Once annotated, variants need to be filtered and prioritized
 
 **No universal filters, they depend on the experimental features**
 
----
 ## Variant impact
 
 First of all you usually want to filter variants by consequence on the encoded protein, keeping those which have an higher impact on protein:
@@ -611,7 +668,6 @@ First of all you usually want to filter variants by consequence on the encoded p
 - Frameshift indels
 - Inframe indels
 
----
 ## Variant frequency
  
 - Common variants are unlikely associated with a clinical condition
@@ -620,7 +676,6 @@ First of all you usually want to filter variants by consequence on the encoded p
 - Typical cut-offs: 1% - 0.1%
 - Allele frequencies may differ a lot between different populations
 
----
 ## Variant effect prediction Tools
 
 - Tools that predict consequences of amino acid substitutions on protein function
@@ -638,30 +693,24 @@ First of all you usually want to filter variants by consequence on the encoded p
   - MutationAssessor
   - REVEL
 
----
 ## ACMG/AMP 2015 guidelines
 
 The *American College of Medical Genetics* and the *Association for Molecular Pathology* published guidelines for the interpretation of sequence variants in May of 2015 [(Richards S. et al, 2015)](https://www.nature.com/articles/gim201530). This report describes updated standards and guidelines for classifying sequence variants by using criteria informed by expert opinion and experience
 
-- 28 evaluation criteria for the clinical interpretation of variants
-  - Criteria falls into 3 sets:
-    - pathogenic/likely pathogenic (P/LP)
-    - benign/likely benign (B/LB)
-    - variant of unknown significance (VUS)
+- 28 evaluation criteria for the clinical interpretation of variants. Criteria falls into 3 sets:
+  - pathogenic/likely pathogenic (P/LP)
+  - benign/likely benign (B/LB)
+  - variant of unknown significance (VUS)
 
-- [**Intervar**](http://wintervar.wglab.org): software for automatically interpretation of the 28 criteria
-  - Two major steps:
-    - automatically interpretation by 28 criteria
-    - manual adjustment to re-interpret the clinical significance
+- [**Intervar**](http://wintervar.wglab.org): software for automatical interpretation of the 28 criteria. Two major steps:
+ - automatical interpretation by 28 criteria
+ - manual adjustment to re-interpret the clinical significance
 
----
 ## Prioritization
 
 Phenotype-based prioritization tools are methods working by comparing the phenotypes of a patient with gene-phenotype known associations.
 
 - [Phenolyzer](http://phenolyzer.wglab.org/): Phenotype Based Gene Analyzer, a tool to prioritize genes based on user-specific disease/phenotype terms
-
----
 
 
 > ### {% icon hands_on %} Hands-on: Variant prioritization
@@ -685,6 +734,7 @@ Phenotype-based prioritization tools are methods working by comparing the phenot
 >    Phenolyzer prioritization results
 {: .hands_on}
 
+# CNV detection from targeted sequencing data
 
 - *Copy Number Variants* (CNVs) are imbalances in the copy number of the genomic material that result in either DNA **deletions** (copy loss) or **duplications**
 - *CNVs* can cause/predispose to human diseases by altering gene structure/dosage or by **position effect**
@@ -692,32 +742,29 @@ Phenotype-based prioritization tools are methods working by comparing the phenot
 - Classical methods to identify *CNVs* use array-based technologies (SNP/CGH)
 - Computational approaches have been developed to identify *CNVs* in targeted sequencing data from **hybrid capture** experiments
 
-
-# CNV detection from targeted sequencing data
-
 ## Computational approaches
 
-- There are four main methods for *CNV* identification from short-read +NGS data (see figure below):
-  - **Read Count** (RC)
-  - **Read Pair** (RP)
-  - **Split Read** (SR)
-  - **De Novo Assembly** (AS)
+There are four main methods for *CNV* identification from short-read +NGS data (see figure below):
+ - **Read Count** (RC)
+ - **Read Pair** (RP)
+ - **Split Read** (SR)
+ - **De Novo Assembly** (AS)
   
   
-- *RP* and *SR* require continuous coverage of the *CNV* region or reads encompassing *CNV* breakpoints, as in whole genome sequencing. The sparse nature and small size of exonic targets hamper the application of these methods to targeted sequencing. 
-- *RC* is the best suited method for *CNV* detection from whole exomes or gene panels where:
+ - *RP* and *SR* require continuous coverage of the *CNV* region or reads encompassing *CNV* breakpoints, as in whole genome sequencing. The sparse nature and small size of exonic targets hamper the application of these methods to targeted sequencing. 
+ - *RC* is the best suited method for *CNV* detection from whole exomes or gene panels where:
   - deletions appear as exonic targets devoid of reads
   - duplications appear as exonic targets characterized by excess of coverage
 
 ---
 
 ![CNV detection methods]({{site.baseurl}}/images/methods_identification_cnv.png)
+
 **Figure 1**. Methods for detection of CNVs in short read NGS data (adapted from [Tattini et al., 2015](https://doi.org/10.3389/fbioe.2015.00092))
 
 ---
 
 ## RC method and data normalization
-
 
 In targeted sequencing, a method to study DNA copy number variation by *RC* (as implemented in *EXCAVATOR* tool, [Magi et al., 2013](http://genomebiology.com/2013/14/10/R120))) is to consider the **exon mean read count** (EMRC):
 
@@ -736,6 +783,7 @@ These biases contribute to non uniform read depth across target regions and, tog
 ---
 
 ![Data Normalization_1]({{site.baseurl}}/images/normalization_EMRC.png)
+
 **Figure 2**. Effect of *EMRC ratio* on DNA copy number prediction (adapted from [Magi et al., 2013](http://genomebiology.com/2013/14/10/R120))
 
 ---
@@ -745,6 +793,7 @@ Similarly FPKM, a normalized measure of read depth implemented in ExomeDepth too
 ---
     
 ![Data Normalization_2]({{site.baseurl}}/images/normalization_FPKM.png)
+
 **Figure 3**. Correlation of the normalized read count data between samples (from [Plagnol et al., 2012](https://doi.org/10.1093/bioinformatics/bts526))
 
 ---    
@@ -756,6 +805,7 @@ Strong correlation is observed between Affymetrix array-SNP and exome-derived da
 ---    
     
 ![Correlation_Exome_Affymetrix]({{site.baseurl}}/images/corr_exome_affymetrix.png)
+
 **Figure 4**. Correlation between array-SNP and exome-derived *CNVs* including all (left panel) or > 1 Mb *CNVs* (adapted from [Magi et al., 2013](http://genomebiology.com/2013/14/10/R120))
 
 ---    
