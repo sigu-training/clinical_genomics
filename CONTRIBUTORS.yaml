@@ -1,0 +1,29 @@
+# List of contributors
+#
+# reference maintainers/contributors by their id in tutorial metadata files
+#
+# Institutional sponsors
+#  * Collaborative Research Centre (CRC) 992 - Medical Epigenetics
+#  * de.NBI - German Network for Bioinformatics Infrastructure
+#  * NHGRI - National Human Genome Research Institute at the National Institutes of Health (USA)
+#  * NSF - National Science Foundation (USA)
+#
+# valid tags: name, email, linkedin, twitter, gitter, orcid
+#
+# collection names should be equal to github username, if not, add github: false tag
+---
+abrusell:
+    name: Alessandro Bruselles
+
+gmauro:
+    name: Gianmauro Cuccuru
+
+m-giuseppe:
+    name: Giuseppe Marangi
+
+puva:
+    name: Paolo Uva
+    orcid: 0000-0002-9524-8492
+
+tommasopippucci:
+    name: Tommaso Pippucci
