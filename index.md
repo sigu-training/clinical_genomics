@@ -1,7 +1,7 @@
 ---
 layout: tutorial_hands_on
 
-title: Data analysis and interpretation for clinical genomics using Galaxy
+title: Data analysis and interpretation for clinical genomics
 zenodo_link: https://doi.org/10.5281/zenodo.3531577
 questions:
 - What are the specific challenges for the interpretation of sequencing data in the clinical setting?

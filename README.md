@@ -9,8 +9,10 @@ Automatic update of GitHub pages through Jekyll is disabled. To update pages you
 
  * Clone this repository.
  * Build the website locally. Have a look at the [tutorial](https://galaxyproject.github.io/training-material/topics/contributing/tutorials/running-jekyll/tutorial.html).
- * Run **make clean**, than **make build**. This will generate the new Pages in *docs* folder.
- * Push the updated *docs* folder. 
+ * Run **make clean**, than **make build**. This will generate the new HTML Pages in the *docs* folder.
+ * Push the updated files and *docs* folder. 
+
+When updating text, please follow the [formatting instructions](https://sigu-training.github.io/clinical_genomics/syntax.html).
 
 ### Contributors
 

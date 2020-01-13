@@ -16,10 +16,10 @@
 ---
 title: "Galaxy Training!"
 email: EMAIL@gmail.com
-description: A collection of tutorials generated and maintained by Galaxy Community Members across the world
+description: A tutorial created by enthusiastic people on behalf of SIGU
 url: "https://sigu-training.github.io/"
 baseurl: "/clinical_genomics"
-repository: puva/clinical_genomics
+repository: sigu-training/clinical_genomics
 repository_branch: "master"
 gitter_url: "https://gitter.im/Galaxy-Training-Network/Lobby"
 logo: "assets/images/GTN.png"
