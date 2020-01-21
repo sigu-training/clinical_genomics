@@ -542,6 +542,58 @@ The procedures listed above are to be taken as examples of the possible operatio
 
 Furthermore, please be aware that the tool `bedtools Compute both the depth and breadth of coverage` does not perform any filtering based on read quality: if your are interested in that aspect you may want to rely on different tools. 
 
+# Variant calling and classification
+
+After the generation of a high-quality set of mapped read pairs, we can proceed to variant calling. The tools **HaplotypeCaller** and **MuTect2** from **GATK** are a dedicated solution for DNA variant identification at germinal- and somatic-level. They can:
+
+- Determine haplotypes by local assembly of the active region.
+- Evaluate the evidence for haplotypes and variant alleles
+- Assigning per-sample genotypes
+
+
+> ### {% icon hands_on %} Hands-on: Variant calling and classification
+>
+> 1. **Hapcaller** {% icon tool %} with the following parameters:
+>    - *"Will you select a reference genome from your history or use a built-in
+>   genome?"*: `Use a built-in genome`
+>      - *"reference genome"*: `Human: hg19` (or a similarly named choice)
+>
+>      > ### {% icon comment %} Using the imported `hg19` sequence
+>      > If you have imported the `hg19` sequence as a fasta dataset into your
+>      > history instead:
+>      >   - *"Will you select a reference genome from your history or use a
+>      >     built-in genome?"*: `Use a genome from the history`
+>      >      - {% icon param-file %} *"reference genome"*: your imported `hg19` fasta dataset.
+>      {: .comment}
+>
+>    - {% icon param-file %} *"aligned reads from normal sample"*: the mapped
+>      and fully post-processed normal tissue dataset; one of the two outputs
+>      of **CalMD** {% icon tool %}
+>    - {% icon param-file %}*"aligned reads from tumor sample"*: the mapped
+>      and fully post-processed tumor tissue dataset; the other output of
+>      **CalMD** {% icon tool %}
+>    - *"Estimated purity (non-tumor content) of normal sample"*: `1`
+>    - *"Estimated purity (tumor content) of tumor sample"*: `0.5`
+>    - *"Generate separate output datasets for SNP and indel calls?"*: `No`
+>    - *"Settings for Variant Calling"*: `Customize settings`
+>      - *"Minimum base quality"*: `28`
+>
+>        We have seen, at the quality control step, that our sequencing data is of
+>        really good quality, and we have chosen not to downgrade base qualities at
+>        the quality scores recalibration step above, so we can increase the base
+>        quality required at any given position without throwing away too much of
+>        our data. 
+>
+>      - *"Minimum mapping quality"*: `1`
+>
+>        During postprocessing, we have filtered our reads for ones with a
+>        mapping quality of at least one, but **CalMD** may have lowered some
+>        mapping qualities to zero afterwards.
+>
+>      Leave all other settings in this section at their default values.
+>    - *"Settings for Posterior Variant Filtering"*: `Use default values`
+{: .hands_on}
+
 
 # Variant annotation
 
@@ -903,6 +955,7 @@ Usually, long ROH (approximately >1.5 Mb) arise as a result of close parental co
 
  * [Tommaso Pippucci](https://www.aosp.bo.it/content/curriculum?E=154659) - Sant’Orsola-Malpighi University Hospital, Bologna, Italy
  * [Alessandro Bruselles](https://www) - Istituto Superiore di Sanità, Rome, Italy
+ * [Andrea Ciolfi](http://www.ospedalebambinogesu.it) - Ospedale Pediatrico Bambino Gesù, IRCCS, Rome, Italy
  * [Gianmauro Cuccuru](https://gmauro.github.io) - Albert Ludwigs University, Freiburg, Germany
  * [Giuseppe Marangi](http://www) - Institute of Genomic Medicine, Fondazione Policlinico Universitario A. Gemelli IRCCS, Università Cattolica del Sacro Cuore, Roma, Italy
  * [Paolo Uva](http://www.crs4.it/peopledetails/183/paolo-uva) - Centro di Ricerca, Sviluppo e Studi Superiori in Sardegna (CRS4), Pula, Cagliari, Italy
