@@ -557,36 +557,21 @@ After the generation of a high-quality set of mapped read pairs, we can proceed 
 > 1. **HaplotypeCaller** {% icon tool %} with the following parameters:
 > In case of analyzing a single sample 
 >
+> `gatk HaplotypeCaller -I Panel_alignment.bam -O Sample1.all_exons.hg19.vcf -L Panel_target_regions.bed -R HSapiensReference_genome_hg19.fasta`
 >
-> In case of analyzing a cohort (e.g. family) of samples, the most efficient way to identify variants is a multi-step process, running HaplotypeCaller per-sample to generate an intermediate gVCF files, merge them, and then calling genotypes on the whole group: 
+> In case of analyzing a cohort (e.g. family) of samples, the most efficient way to identify variants is a multi-step process, running HaplotypeCaller per-sample to generate an intermediate gVCF files, merge them, and then calling genotypes on the whole group, based on the alleles that were observed at the site: 
 >
->   To call variants run:
+>  To call variants run:
 >
->   gatk --java-options "-Xmx4g" HaplotypeCaller  \
->   -R HSapiensReference_genome_hg19.fasta \
->   -I input.bam \
->   -O sample1.g.vcf.gz \
->   -ERC GVCF
+>  `gatk  HaplotypeCaller -I Panel_alignment.bam -O Sample1.all_exons.hg19.vcf -R HSapiensReference_genome_hg19.fasta -L Panel_target_regions.bed -ERC GVCF`
 >   
->  To obtain genotypes for all the cohort provide a combined multi-sample GVCF and use it to calculate likelihoods:
+>  To obtain genotypes for all the cohort provide a combined multi-sample GVCF and then use it to calculate likelihoods:
 >
->   `gatk CombineGVCFs \
->   -R HSapiensReference_genome_hg19.fasta \
->   --variant sample1.g.vcf.gz \
->   --variant sample2.g.vcf.gz \
->   -O cohort.g.vcf.gz`
+>  - `gatk CombineGVCFs --variant Sample1.all_exons.hg19.vcf --variant Sample2.all_exons.hg19.vcf -O cohort.all_exons.hg19.g.vcf -L Panel_target_regions.bed -R HSapiensReference_genome_hg19.fasta`
 >
->   `gatk --java-options "-Xmx4g" GenotypeGVCFs \
->   -R Homo_sapiens_assembly38.fasta \
->   -V output.g.vcf.gz \
->   -O output.vcf.gz`
+>  - `gatk GenotypeGVCFs -V cohort.all_exons.hg19.g.vcf -O cohort_genotypes.all.exons.vcf -L Panel_target_regions.bed -R HSapiensReference_genome_hg19.fasta`
 >
->   
->   The following step is to 
->    - *"Will you select a reference genome from your history or use a built-in
->   genome?"*: `Use a built-in genome`
->      - *"reference genome"*: `Human: hg19` (or a similarly named choice)
->
+> 
 > 2. **Mutect2** {% icon tool %} with the following parameters: 
 >      > ### {% icon comment %} Using the imported `hg19` sequence
 >      > If you have imported the `hg19` sequence as a fasta dataset into your
