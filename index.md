@@ -550,11 +550,11 @@ After the generation of a high-quality set of mapped read pairs, we can proceed 
 - Evaluate the evidence for haplotypes and variant alleles;
 - Assigning per-sample genotypes.
 
-> ### {% icon hands_on %} Hands-on: Variant calling and classification.
+> ### {% icon hands_on %} Hands-on: Variant calling.
 > You may use files provided as examples with this tutorial and called
 >    `Panel_alignment.bam` and `Panel_Target_regions.bed`. 
 >   
-> 1. **HaplotypeCaller** {% icon tool %} with the following parameters:
+> 1. Run **HaplotypeCaller** {% icon tool %} using the following parameters:
 > In case of analyzing a single sample 
 >
 > `gatk HaplotypeCaller -I Panel_alignment.bam -O Sample1.all_exons.hg19.vcf -L Panel_target_regions.bed -R HSapiensReference_genome_hg19.fasta`
@@ -572,43 +572,21 @@ After the generation of a high-quality set of mapped read pairs, we can proceed 
 >  - `gatk GenotypeGVCFs -V cohort.all_exons.hg19.g.vcf -O cohort_genotypes.all.exons.vcf -L Panel_target_regions.bed -R HSapiensReference_genome_hg19.fasta`
 >
 > 
-> 2. **Mutect2** {% icon tool %} with the following parameters: 
->      > ### {% icon comment %} Using the imported `hg19` sequence
->      > If you have imported the `hg19` sequence as a fasta dataset into your
->      > history instead:
->      >   - *"Will you select a reference genome from your history or use a
->      >     built-in genome?"*: `Use a genome from the history`
->      >      - {% icon param-file %} *"reference genome"*: your imported `hg19` fasta dataset.
->      {: .comment}
+> 2. Run **Mutect2** {% icon tool %} using the following parameters: 
+>    This command runs on a single sample at time. To create a **Panel Of Normals** (PoN), call on each unaffected sample in this mode:
 >
->    - {% icon param-file %} *"aligned reads from normal sample"*: the mapped
->      and fully post-processed normal tissue dataset; one of the two outputs
->      of **CalMD** {% icon tool %}
->    - {% icon param-file %}*"aligned reads from tumor sample"*: the mapped
->      and fully post-processed tumor tissue dataset; the other output of
->      **CalMD** {% icon tool %}
->    - *"Estimated purity (non-tumor content) of normal sample"*: `1`
->    - *"Estimated purity (tumor content) of tumor sample"*: `0.5`
->    - *"Generate separate output datasets for SNP and indel calls?"*: `No`
->    - *"Settings for Variant Calling"*: `Customize settings`
->      - *"Minimum base quality"*: `28`
->
->        We have seen, at the quality control step, that our sequencing data is of
->        really good quality, and we have chosen not to downgrade base qualities at
->        the quality scores recalibration step above, so we can increase the base
->        quality required at any given position without throwing away too much of
->        our data. 
->
->      - *"Minimum mapping quality"*: `1`
->
->        During postprocessing, we have filtered our reads for ones with a
->        mapping quality of at least one, but **CalMD** may have lowered some
->        mapping qualities to zero afterwards.
->
->      Leave all other settings in this section at their default values.
->    - *"Settings for Posterior Variant Filtering"*: `Use default values`
-{: .hands_on}
+>  - `gatk Mutect2 -R reference.fasta -I normal1.bam   --max-mnp-distance 0 -O normal1.vcf.gz`
+>  - `gatk Mutect2 -R reference.fasta -I normal2.bam   --max-mnp-distance 0 -O normal2.vcf.gz`
 
+>  Then use CreateSomaticPanelOfNormals command to generate the PoN:
+
+>  - `gatk GenomicsDBImport -R reference.fasta -L intervals.interval_list --genomicsdb-workspace-path pon_db -V normal1.vcf.gz -V normal2.vcf.gz -V normal3.vcf.gz`
+>  - `gatk CreateSomaticPanelOfNormals -R reference.fasta -V gendb://pon_db -O pon.vcf.gz`
+>
+> To effectively call somatic mutations, we need to call them subtracting the PoN and *germline resource* variants (i.e. frequencies of germline variants in the general population). After FilterMutectCalls filtering, consider additional filtering by functional significance with Funcotator.
+>
+> `gatk Mutect2 -R reference.fa -I sample.bam --germline-resource af-only-gnomad.vcf.gz --panel-of-normals pon.vcf.gz -O single_sample.vcf.gz`
+ 
 
 # Variant annotation
 
