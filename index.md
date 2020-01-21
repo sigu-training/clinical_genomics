@@ -544,20 +544,50 @@ Furthermore, please be aware that the tool `bedtools Compute both the depth and 
 
 # Variant calling and classification
 
-After the generation of a high-quality set of mapped read pairs, we can proceed to variant calling. The tools **HaplotypeCaller** and **MuTect2** from **GATK** are a dedicated solution for DNA variant identification at germinal- and somatic-level. They can:
+After the generation of a high-quality set of mapped read pairs, we can proceed to variant calling. The tools **HaplotypeCaller** and **MuTect2** from **GATK tool** are a dedicated solution for DNA variant identification at germinal- and somatic-level. They can:
 
-- Determine haplotypes by local assembly of the active region.
-- Evaluate the evidence for haplotypes and variant alleles
-- Assigning per-sample genotypes
+- Determine haplotypes by local assembly of the genomic regions in which the samples being analyzed show substantial evidence of variation relative to the reference;
+- Evaluate the evidence for haplotypes and variant alleles;
+- Assigning per-sample genotypes.
 
-
-> ### {% icon hands_on %} Hands-on: Variant calling and classification
+> ### {% icon hands_on %} Hands-on: Variant calling and classification.
+> You may use files provided as examples with this tutorial and called
+>    `Panel_alignment.bam` and `Panel_Target_regions.bed`. 
+>   
+> 1. **HaplotypeCaller** {% icon tool %} with the following parameters:
+> In case of analyzing a single sample 
 >
-> 1. **Hapcaller** {% icon tool %} with the following parameters:
+>
+> In case of analyzing a cohort (e.g. family) of samples, the most efficient way to identify variants is a multi-step process, running HaplotypeCaller per-sample to generate an intermediate gVCF files, merge them, and then calling genotypes on the whole group: 
+>
+>   To call variants run:
+>
+>   gatk --java-options "-Xmx4g" HaplotypeCaller  \
+>   -R HSapiensReference_genome_hg19.fasta \
+>   -I input.bam \
+>   -O sample1.g.vcf.gz \
+>   -ERC GVCF
+>   
+>  To obtain genotypes for all the cohort provide a combined multi-sample GVCF and use it to calculate likelihoods:
+>
+>   `gatk CombineGVCFs \
+>   -R HSapiensReference_genome_hg19.fasta \
+>   --variant sample1.g.vcf.gz \
+>   --variant sample2.g.vcf.gz \
+>   -O cohort.g.vcf.gz`
+>
+>   `gatk --java-options "-Xmx4g" GenotypeGVCFs \
+>   -R Homo_sapiens_assembly38.fasta \
+>   -V output.g.vcf.gz \
+>   -O output.vcf.gz`
+>
+>   
+>   The following step is to 
 >    - *"Will you select a reference genome from your history or use a built-in
 >   genome?"*: `Use a built-in genome`
 >      - *"reference genome"*: `Human: hg19` (or a similarly named choice)
 >
+> 2. **Mutect2** {% icon tool %} with the following parameters: 
 >      > ### {% icon comment %} Using the imported `hg19` sequence
 >      > If you have imported the `hg19` sequence as a fasta dataset into your
 >      > history instead:
