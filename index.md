@@ -577,9 +577,9 @@ After the generation of a high-quality set of mapped read pairs, we can proceed 
 >
 >  - `gatk Mutect2 -R HSapiensReference_genome_hg19.fasta -L Panel_target_regions.bed -I Panel_alignment_normal1.bam -O normal_genotyped1.vcf`
 >  - `gatk Mutect2 -R HSapiensReference_genome_hg19.fasta -L Panel_target_regions.bed -I Panel_alignment_normal2.bam -O normal_genotyped2.vcf`
-
->  Then use *CreateSomaticPanelOfNormals* command to generate the PoN:
-
+>
+>  Then use GATK's *CreateSomaticPanelOfNormals* tool to generate the PoN:
+>
 >  - `gatk GenomicsDBImport -L Panel_target_regions.bed -R HSapiensReference_genome_hg19.fasta --genomicsdb-workspace-path PoN_db -V normal_genotyped1.vcf -V normal_genotyped2.vcf`
 >  - `gatk CreateSomaticPanelOfNormals -R HSapiensReference_genome_hg19.fasta -V gendb://pon_db -O panel_of_normals.vcf`
 >
@@ -588,11 +588,11 @@ After the generation of a high-quality set of mapped read pairs, we can proceed 
 >    {: .comment}
 >
 > 
-> Hence, to effectively call somatic mutations, we can use variants contained in the PoN and/or other publice repositories  (e.g. called *germline resource*, containing frequencies of germline variants in the general population). After FilterMutectCalls filtering, consider additional filtering by functional significance with Funcotator.
+> Then, to effectively call somatic mutations, we can use variants contained in the PoN and/or other public repositories  (e.g. called *germline resource*, containing frequencies of germline variants in the general population) to exclude germline variation. Finally, to properly classify somatic variants, we apply *FilterMutectCalls filtering*, which produces the final subset annotated VCF file. To this aim, we can run the following commands:
 >
-> `gatk Mutect2 -R HSapiensReference_genome_hg19.fasta -I Panel_alignment.bam --germline-resource af-only-gnomad.vcf --panel-of-normals panel_of_normals.vcf -O somatic_genotyped.vcf`
+> - `gatk Mutect2 -R HSapiensReference_genome_hg19.fasta -I Panel_alignment.bam --germline-resource af-only-gnomad.vcf --panel-of-normals panel_of_normals.vcf -O somatic_genotyped_unfiltered.vcf`
 > 
-> `gatk FilterMutectCalls -R ref.fasta -V unfiltered.vcf -O filtered.vcf`
+> - `gatk FilterMutectCalls -R HSapiensReference_genome_hg19.fasta -V somatic_genotyped_unfiltered.vcf -O somatic_genotyped_filtered.vcf`
 >
  
 
@@ -602,7 +602,7 @@ Once called, variants (SNPs and InDels) need to be annotated.
 
 We want to know for example if a variant is located in a gene, if it’s in the coding portion of that gene, if it causes an aminoacid substitution, if that substitution is deleterious for the encoded protein function.
 
-**Variant annotation** is the process of attaching biological information from multiple available source (**public databases**) to variants
+**Variant annotation** is the process of attaching technical and/or biological information from multiple available source (e.g. **public databases**) to variants
 
 ---
 ## Gene model
