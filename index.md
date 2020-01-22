@@ -544,7 +544,7 @@ Furthermore, please be aware that the tool `bedtools Compute both the depth and 
 
 # Variant calling and classification
 
-After the generation of a high-quality set of mapped read pairs, we can proceed to variant calling. The tools **HaplotypeCaller** and **MuTect2** from **GATK tool** are a dedicated solution for DNA variant identification at germinal- and somatic-level. They can:
+After the generation of a high-quality set of mapped read pairs, we can proceed to call different classes of DNA variants. To this aim, the tools **HaplotypeCaller** and **MuTect2** from **GATK tool** are a dedicated solution for DNA variant identification at germinal- and somatic-level. They can:
 
 - Determine haplotypes by local assembly of the genomic regions in which the samples being analyzed show substantial evidence of variation relative to the reference;
 - Evaluate the evidence for haplotypes and variant alleles;
@@ -554,14 +554,13 @@ After the generation of a high-quality set of mapped read pairs, we can proceed 
 > You may use files provided as examples with this tutorial and called
 >    `Panel_alignment.bam` and `Panel_Target_regions.bed`. 
 >   
-> 1. Run **HaplotypeCaller** {% icon tool %} using the following parameters:
-> In case of analyzing a single sample 
+> 1. Run **HaplotypeCaller** {% icon tool %} restricting the search space on target regions with "-L" option to reduce computational burden.
+> 
+> In case of analyzing a single sample: 
 >
 > `gatk HaplotypeCaller -I Panel_alignment.bam -O Sample1.all_exons.hg19.vcf -L Panel_target_regions.bed -R HSapiensReference_genome_hg19.fasta`
 >
-> In case of analyzing a cohort (e.g. family) of samples, the most efficient way to identify variants is a multi-step process, running HaplotypeCaller per-sample to generate an intermediate gVCF files, merge them, and then calling genotypes on the whole group, based on the alleles that were observed at the site: 
->
->  To call variants run:
+> In case of analyzing a cohort (e.g. family) of samples, the most efficient way to identify variants is a multi-step process, running HaplotypeCaller per-sample to generate many intermediate gVCF files, merge them, and then calling genotypes on the whole group, based on the alleles that were observed at each site: 
 >
 >  `gatk  HaplotypeCaller -I Panel_alignment.bam -O Sample1.all_exons.hg19.vcf -R HSapiensReference_genome_hg19.fasta -L Panel_target_regions.bed -ERC GVCF`
 >   
@@ -569,19 +568,26 @@ After the generation of a high-quality set of mapped read pairs, we can proceed 
 >
 >  - `gatk CombineGVCFs --variant Sample1.all_exons.hg19.vcf --variant Sample2.all_exons.hg19.vcf -O cohort.all_exons.hg19.g.vcf -L Panel_target_regions.bed -R HSapiensReference_genome_hg19.fasta`
 >
->  - `gatk GenotypeGVCFs -V cohort.all_exons.hg19.g.vcf -O cohort_genotypes.all.exons.vcf -L Panel_target_regions.bed -R HSapiensReference_genome_hg19.fasta`
+>  - `gatk GenotypeGVCFs -V cohort.all_exons.hg19.g.vcf -O cohort_genotyped.all.exons.vcf -L Panel_target_regions.bed -R HSapiensReference_genome_hg19.fasta`
+>
+> The genotyped SNV/INDELs are then stored in a VCF file to be functionally annotated. 
+> 
+> 2. Run **Mutect2** {% icon tool %} restricting the search space on target regions with "-L" option to reduce computational burden.
+>    The first step is needed to create an internal database of controls (i.e. **Panel Of Normals** - PoN) to reduce bias for somatic calls. It runs on a single sample at time:
+>
+>  - `gatk Mutect2 -R HSapiensReference_genome_hg19.fasta -I Panel_alignment_normal1.bam -O normal_genotyped1.vcf`
+>  - `gatk Mutect2 -R HSapiensReference_genome_hg19.fasta -I Panel_alignment_normal2.bam -O normal_genotyped2.vcf`
+
+>  Then use *CreateSomaticPanelOfNormals* command to generate the PoN:
+
+>  - `gatk GenomicsDBImport -L Panel_target_regions.bed -R HSapiensReference_genome_hg19.fasta --genomicsdb-workspace-path PoN_db -V normal_genotyped1.vcf -V normal_genotyped2.vcf`
+>  - `gatk CreateSomaticPanelOfNormals -R reference.fasta -V gendb://pon_db -O pon.vcf.gz`
+>
+>    > ### {% icon comment %} Note
+>    > The --genomicsdb-workspace-path must point to a non-existent or empty directory.
+>    {: .comment}
 >
 > 
-> 2. Run **Mutect2** {% icon tool %} using the following parameters: 
->    This command runs on a single sample at time. To create a **Panel Of Normals** (PoN), call on each unaffected sample in this mode:
->
->  - `gatk Mutect2 -R reference.fasta -I normal1.bam   --max-mnp-distance 0 -O normal1.vcf.gz`
->  - `gatk Mutect2 -R reference.fasta -I normal2.bam   --max-mnp-distance 0 -O normal2.vcf.gz`
-
->  Then use CreateSomaticPanelOfNormals command to generate the PoN:
-
->  - `gatk GenomicsDBImport -R reference.fasta -L intervals.interval_list --genomicsdb-workspace-path pon_db -V normal1.vcf.gz -V normal2.vcf.gz -V normal3.vcf.gz`
->  - `gatk CreateSomaticPanelOfNormals -R reference.fasta -V gendb://pon_db -O pon.vcf.gz`
 >
 > To effectively call somatic mutations, we need to call them subtracting the PoN and *germline resource* variants (i.e. frequencies of germline variants in the general population). After FilterMutectCalls filtering, consider additional filtering by functional significance with Funcotator.
 >
