@@ -575,23 +575,25 @@ After the generation of a high-quality set of mapped read pairs, we can proceed 
 > 2. Run **Mutect2** {% icon tool %} restricting the search space on target regions with "-L" option to reduce computational burden.
 >    The first step is needed to create an internal database of controls (i.e. **Panel Of Normals** - PoN) to reduce bias for somatic calls. It runs on a single sample at time:
 >
->  - `gatk Mutect2 -R HSapiensReference_genome_hg19.fasta -I Panel_alignment_normal1.bam -O normal_genotyped1.vcf`
->  - `gatk Mutect2 -R HSapiensReference_genome_hg19.fasta -I Panel_alignment_normal2.bam -O normal_genotyped2.vcf`
+>  - `gatk Mutect2 -R HSapiensReference_genome_hg19.fasta -L Panel_target_regions.bed -I Panel_alignment_normal1.bam -O normal_genotyped1.vcf`
+>  - `gatk Mutect2 -R HSapiensReference_genome_hg19.fasta -L Panel_target_regions.bed -I Panel_alignment_normal2.bam -O normal_genotyped2.vcf`
 
 >  Then use *CreateSomaticPanelOfNormals* command to generate the PoN:
 
 >  - `gatk GenomicsDBImport -L Panel_target_regions.bed -R HSapiensReference_genome_hg19.fasta --genomicsdb-workspace-path PoN_db -V normal_genotyped1.vcf -V normal_genotyped2.vcf`
->  - `gatk CreateSomaticPanelOfNormals -R reference.fasta -V gendb://pon_db -O pon.vcf.gz`
+>  - `gatk CreateSomaticPanelOfNormals -R HSapiensReference_genome_hg19.fasta -V gendb://pon_db -O panel_of_normals.vcf`
 >
 >    > ### {% icon comment %} Note
 >    > The --genomicsdb-workspace-path must point to a non-existent or empty directory.
 >    {: .comment}
 >
 > 
+> Hence, to effectively call somatic mutations, we can use variants contained in the PoN and/or other publice repositories  (e.g. called *germline resource*, containing frequencies of germline variants in the general population). After FilterMutectCalls filtering, consider additional filtering by functional significance with Funcotator.
 >
-> To effectively call somatic mutations, we need to call them subtracting the PoN and *germline resource* variants (i.e. frequencies of germline variants in the general population). After FilterMutectCalls filtering, consider additional filtering by functional significance with Funcotator.
+> `gatk Mutect2 -R HSapiensReference_genome_hg19.fasta -I Panel_alignment.bam --germline-resource af-only-gnomad.vcf --panel-of-normals panel_of_normals.vcf -O somatic_genotyped.vcf`
+> 
+> `gatk FilterMutectCalls -R ref.fasta -V unfiltered.vcf -O filtered.vcf`
 >
-> `gatk Mutect2 -R reference.fa -I sample.bam --germline-resource af-only-gnomad.vcf.gz --panel-of-normals pon.vcf.gz -O single_sample.vcf.gz`
  
 
 # Variant annotation
