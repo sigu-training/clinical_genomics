@@ -588,7 +588,7 @@ After the generation of a high-quality set of mapped read pairs, we can proceed 
 >    {: .comment}
 >
 > 
-> Then, to effectively call somatic mutations, we can use variants contained in the PoN and/or other public repositories  (e.g. called *germline resource*, containing frequencies of germline variants in the general population) to exclude germline variation. Finally, to properly classify somatic variants, we apply *FilterMutectCalls filtering*, which produces the final subset annotated VCF file. To this aim, we can run the following commands:
+> Then, to effectively call somatic mutations, we can use variants contained in the **PoN** and/or other public repositories  (e.g. by means of the option *--germline-resource*, using a VCF file containing frequencies of germline variants in the general population) to exclude germline variation. Finally, to properly classify somatic variants, we apply *FilterMutectCalls filtering*, which produces the final subset annotated VCF file. To this aim, we can run the following commands:
 >
 > - `gatk Mutect2 -R HSapiensReference_genome_hg19.fasta -I Panel_alignment.bam --germline-resource af-only-gnomad.vcf --panel-of-normals panel_of_normals.vcf -O somatic_genotyped_unfiltered.vcf`
 > 
