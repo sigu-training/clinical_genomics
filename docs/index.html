@@ -55,7 +55,7 @@
 
         <div class="contributors-line">By: 
 
-<a href="/clinical_genomics/hall-of-fame#abrusell" class="contributor-badge"><img src="https://avatars.githubusercontent.com/abrusell" alt="Alessandro Bruselles">Alessandro Bruselles</a>, <a href="/clinical_genomics/hall-of-fame#gmauro" class="contributor-badge"><img src="https://avatars.githubusercontent.com/gmauro" alt="Gianmauro Cuccuru">Gianmauro Cuccuru</a>, <a href="/clinical_genomics/hall-of-fame#m-giuseppe" class="contributor-badge"><img src="https://avatars.githubusercontent.com/m-giuseppe" alt="Giuseppe Marangi">Giuseppe Marangi</a>, <a href="/clinical_genomics/hall-of-fame#puva" class="contributor-badge"><img src="https://avatars.githubusercontent.com/puva" alt="Paolo Uva">Paolo Uva</a>, <a href="/clinical_genomics/hall-of-fame#tommasopippucci" class="contributor-badge"><img src="https://avatars.githubusercontent.com/tommasopippucci" alt="Tommaso Pippucci">Tommaso Pippucci</a>
+<a href="/clinical_genomics/hall-of-fame#abrusell" class="contributor-badge"><img src="https://avatars.githubusercontent.com/abrusell" alt="Alessandro Bruselles">Alessandro Bruselles</a>, <a href="/clinical_genomics/hall-of-fame#aciolfi" class="contributor-badge"><img src="https://avatars.githubusercontent.com/aciolfi" alt="Andrea Ciolfi">Andrea Ciolfi</a>, <a href="/clinical_genomics/hall-of-fame#gmauro" class="contributor-badge"><img src="https://avatars.githubusercontent.com/gmauro" alt="Gianmauro Cuccuru">Gianmauro Cuccuru</a>, <a href="/clinical_genomics/hall-of-fame#m-giuseppe" class="contributor-badge"><img src="https://avatars.githubusercontent.com/m-giuseppe" alt="Giuseppe Marangi">Giuseppe Marangi</a>, <a href="/clinical_genomics/hall-of-fame#puva" class="contributor-badge"><img src="https://avatars.githubusercontent.com/puva" alt="Paolo Uva">Paolo Uva</a>, <a href="/clinical_genomics/hall-of-fame#tommasopippucci" class="contributor-badge"><img src="https://avatars.githubusercontent.com/tommasopippucci" alt="Tommaso Pippucci">Tommaso Pippucci</a>
 
 </div>
 
@@ -78,7 +78,7 @@
             <li><p>Perform in-depth quality control of sequencing data at multiple levels (fastq, bam, vcf)</p>
 </li>
             
-            <li><p>Annotate variants with information extracted from public databases for clinical interpretation</p>
+            <li><p>Call, classify and annotate variants with information extracted from public databases for clinical interpretation</p>
 </li>
             
             <li><p>Analyze CNV and Regions of Homozygosity (ROH)</p>
@@ -99,7 +99,7 @@
 
             
 
-            <p><strong> <i class="fa fa-calendar" aria-hidden="true"></i><span class="visually-hidden">last_modification</span> Last modification:</strong> Jan 10, 2020 </p>
+            <p><strong> <i class="fa fa-calendar" aria-hidden="true"></i><span class="visually-hidden">last_modification</span> Last modification:</strong> Jan 24, 2020 </p>
         </blockquote>
 
         <div class="container">
@@ -162,6 +162,7 @@ members of the society.</p>
       <li><a href="#computation-of-per-base-coverage-depth-at-specific-genomic-intervals" id="markdown-toc-computation-of-per-base-coverage-depth-at-specific-genomic-intervals">Computation of per-base coverage depth at specific genomic intervals</a></li>
     </ol>
   </li>
+  <li><a href="#variant-calling-and-classification" id="markdown-toc-variant-calling-and-classification">Variant calling and classification</a></li>
   <li><a href="#variant-annotation" id="markdown-toc-variant-annotation">Variant annotation</a>    <ol>
       <li><a href="#gene-model" id="markdown-toc-gene-model">Gene model</a></li>
       <li><a href="#sequence-variant-nomenclature" id="markdown-toc-sequence-variant-nomenclature">Sequence variant nomenclature</a></li>
@@ -513,7 +514,7 @@ While GATK BAM processing is beyond doubt important to improve data quality, it 
 
 <h2 id="variant-calling">Variant calling</h2>
 
-<p>The process of variant detection and genotyping is performed by <em>variant callers</em>. These tools use probabilistic approaches to collect evidence that non-reference read bases accumulating over a given locus support the presence of a variant. To be confident that a variant is a true event, its supporting evidence should be significantly stronger than chance; e.g. the C&gt;T on the left of the screenshot in Figure 5 is supported by all its position-overlapping <span class="notranslate">reads</span>, claiming for a variant. In contrast, the C&gt;A change on the right of the screenshot is seen only once over many <span class="notranslate">reads</span>, challenging its interpretation as a real variant.</p>
+<p>The process of variant detection and genotyping is performed by <em>variant callers</em>. These tools use probabilistic approaches to collect evidence that non-reference read bases accumulating over a given locus support the presence of a variant, usually differing in algorithms, filtering strategies, recommendations (<a href="https://doi.org/10.1038/srep43169">Sandmann et al., 2017</a>). To be confident that a variant is a true event, its supporting evidence should be significantly stronger than chance; e.g. the C&gt;T on the left of the screenshot in Figure 5 is supported by all its position-overlapping <span class="notranslate">reads</span>, claiming for a variant. In contrast, the C&gt;A change on the right of the screenshot is seen only once over many <span class="notranslate">reads</span>, challenging its interpretation as a real variant. In fact, <span class="notranslate">DNA</span> variants that occur in germ cells (i.e., <strong>germline/constitutional variants</strong> that can be passed on to offspring) are either diploid/biallelic, so expected alte<span class="notranslate">rna</span>tive allele frequency is 50% for a heterozygous change. On the other hand, if only a smaller subset of aligned <span class="notranslate">reads</span> indicates variation, that could result from technology bias or be a <strong>mosaicism</strong>, i.e. an individual which harbour two or more populations of genetically distinct cells as a result of postzygotic mutation. Postzygotic <em>de novo</em> mutations may result in <strong>somatic mosaicism</strong> (potentially causing a less severe and/or variable phenotype compared with the equivalent constitutive mutation) <strong>and/or germline mosaicism</strong> (hence enabling transmission of a pathogenic variant from an unaffected parent to his affected offspring) (<a href="https://doi.org/10.1038/nrg3424">Biesecker et al., 2013</a>). To identify mosaicism, a probabilistic approach should consider deviation of the proband variant allele fraction (VAF, defined as the number of alte<span class="notranslate">rna</span>tive <span class="notranslate">reads</span> divided by the total read depth) from a binomial distribution centred around 0.5.</p>
 
 <hr />
 
@@ -842,13 +843,90 @@ does not properly define columns in your files
 
 <p>Furthermore, please be aware that the tool <code class="highlighter-rouge"><span class="notranslate">bed</span>tools Compute both the depth and breadth of coverage</code> does not perform any filtering based on read quality: if your are interested in that aspect you may want to rely on different tools.</p>
 
+<h1 id="variant-calling-and-classification">Variant calling and classification</h1>
+
+<p>After the generation of a high-quality set of mapped read pairs, we can proceed to call different classes of <span class="notranslate">DNA</span> variants. To this aim, the tools <strong>HaplotypeCaller</strong> and <strong>MuTect2</strong> from <strong><a href="https://gatk.broadinstitute.org/hc/en-us">GATK toolkit</a></strong> are a dedicated solution for <span class="notranslate">DNA</span> variant identification at germinal- and somatic-level. They can:</p>
+
+<ul>
+  <li>Determine haplotypes by local assembly of the genomic regions in which the samples being analyzed show substantial evidence of variation relative to the reference;</li>
+  <li>Evaluate the evidence for haplotypes and variant alleles;</li>
+  <li>Assigning per-sample genotypes.</li>
+</ul>
+
+<blockquote>
+  <h3 id="hands_on-hands-on-variant-calling"><i class="fa fa-pencil" aria-hidden="true"></i><span class="visually-hidden">hands_on</span> Hands-on: Variant calling.</h3>
+  <p>You may use files provided as examples with this tutorial and called
+   <code class="highlighter-rouge">Panel_alignment.bam</code> and <code class="highlighter-rouge">Panel_Target_regions.<span class="notranslate">bed</span></code>.</p>
+
+  <ol>
+    <li>Run <strong>HaplotypeCaller</strong> <i class="fa fa-wrench" aria-hidden="true"></i><span class="visually-hidden">tool</span> restricting the search space on target regions with “-L” option to reduce computational burden.</li>
+  </ol>
+
+  <p>In case of analyzing a single sample:</p>
+
+  <p><code class="highlighter-rouge">gatk HaplotypeCaller -I Panel_alignment.bam -O Sample1.all_exons.hg19.vcf -L Panel_target_regions.<span class="notranslate">bed</span> -R HSapiensReference_genome_hg19.fasta</code></p>
+
+  <p>In case of analyzing a cohort (e.g. family) of samples, the most efficient way to identify variants is a multi-step process, running HaplotypeCaller per-sample to generate many intermediate gVCF files, merge them, and then calling genotypes on the whole group, based on the alleles that were observed at each site:</p>
+
+  <p><code class="highlighter-rouge">gatk  HaplotypeCaller -I Panel_alignment.bam -O Sample1.all_exons.hg19.vcf -R HSapiensReference_genome_hg19.fasta -L Panel_target_regions.<span class="notranslate">bed</span> -ERC GVCF</code></p>
+
+  <p>To obtain genotypes for all the cohort provide a combined multi-sample GVCF and then use it to calculate likelihoods:</p>
+
+  <ul>
+    <li>
+      <p><code class="highlighter-rouge">gatk CombineGVCFs --variant Sample1.all_exons.hg19.vcf --variant Sample2.all_exons.hg19.vcf -O cohort.all_exons.hg19.g.vcf -L Panel_target_regions.<span class="notranslate">bed</span> -R HSapiensReference_genome_hg19.fasta</code></p>
+    </li>
+    <li>
+      <p><code class="highlighter-rouge">gatk GenotypeGVCFs -V cohort.all_exons.hg19.g.vcf -O cohort_genotyped.all.exons.vcf -L Panel_target_regions.<span class="notranslate">bed</span> -R HSapiensReference_genome_hg19.fasta</code></p>
+    </li>
+  </ul>
+
+  <p>The genotyped SNV/INDELs are then stored in a VCF file to be functionally annotated.</p>
+
+  <ol>
+    <li>Run <strong>Mutect2</strong> <i class="fa fa-wrench" aria-hidden="true"></i><span class="visually-hidden">tool</span> restricting the search space on target regions with “-L” option to reduce computational burden.
+The first step is needed to create an inte<span class="notranslate">rna</span>l database of controls (i.e. <strong>Panel Of Normals</strong> - PoN) to reduce bias for somatic calls. It runs on a single sample at time:</li>
+  </ol>
+
+  <ul>
+    <li><code class="highlighter-rouge">gatk Mutect2 -R HSapiensReference_genome_hg19.fasta -L Panel_target_regions.<span class="notranslate">bed</span> -I Panel_alignment_normal1.bam -O normal_genotyped1.vcf</code></li>
+    <li><code class="highlighter-rouge">gatk Mutect2 -R HSapiensReference_genome_hg19.fasta -L Panel_target_regions.<span class="notranslate">bed</span> -I Panel_alignment_normal2.bam -O normal_genotyped2.vcf</code></li>
+  </ul>
+
+  <p>Then use GATK’s <em>CreateSomaticPanelOfNormals</em> tool to generate the PoN:</p>
+
+  <ul>
+    <li><code class="highlighter-rouge">gatk GenomicsDBImport -L Panel_target_regions.<span class="notranslate">bed</span> -R HSapiensReference_genome_hg19.fasta --genomicsdb-workspace-path PoN_db -V normal_genotyped1.vcf -V normal_genotyped2.vcf</code></li>
+    <li>
+      <p><code class="highlighter-rouge">gatk CreateSomaticPanelOfNormals -R HSapiensReference_genome_hg19.fasta -V gendb://PoN_db -O panel_of_normals.vcf</code></p>
+
+      <blockquote class="comment">
+        <h3 id="comment-note-1"><i class="fa fa-commenting-o" aria-hidden="true"></i><span class="visually-hidden">comment</span> Note</h3>
+        <p>The –genomicsdb-workspace-path must point to a non-existent or empty directory.</p>
+      </blockquote>
+    </li>
+  </ul>
+
+  <p>Then, to effectively call somatic mutations, we can use variants contained in the <strong>PoN</strong> and/or other public repositories  (e.g. by means of the option <em>–germline-resource</em>, using a VCF file containing frequencies of germline variants in the general population) to exclude germline variation. Finally, to properly classify somatic variants, we apply <em>FilterMutectCalls filtering</em>, which produces the final subset annotated VCF file. To this aim, we can run the following commands:</p>
+
+  <ul>
+    <li>
+      <p><code class="highlighter-rouge">gatk Mutect2 -R HSapiensReference_genome_hg19.fasta -I Panel_alignment.bam --germline-resource af-only-gnomad.vcf --panel-of-normals panel_of_normals.vcf -O somatic_genotyped_unfiltered.vcf</code></p>
+    </li>
+    <li>
+      <p><code class="highlighter-rouge">gatk FilterMutectCalls -R HSapiensReference_genome_hg19.fasta -V somatic_genotyped_unfiltered.vcf -O somatic_genotyped_filtered.vcf</code></p>
+    </li>
+  </ul>
+
+</blockquote>
+
 <h1 id="variant-annotation">Variant annotation</h1>
 
 <p>Once called, variants (SNPs and InDels) need to be annotated.</p>
 
 <p>We want to know for example if a variant is located in a gene, if it’s in the coding portion of that gene, if it causes an aminoacid substitution, if that substitution is deleterious for the encoded protein function.</p>
 
-<p><strong>Variant annotation</strong> is the process of attaching biological information from multiple available source (<strong>public databases</strong>) to variants</p>
+<p><strong>Variant annotation</strong> is the process of attaching technical and/or biological information from multiple available source (e.g. <strong>public databases</strong>) to variants</p>
 
 <hr />
 <h2 id="gene-model">Gene model</h2>
@@ -1265,6 +1343,7 @@ Three major bias sources are known to affect <em>EMRC</em> dramatically in targe
 <ul>
   <li><a href="https://www.aosp.bo.it/content/curriculum?E=154659">Tommaso Pippucci</a> - Sant’Orsola-Malpighi University Hospital, Bologna, Italy</li>
   <li><a href="https://www">Alessandro Bruselles</a> - Istituto Superiore di Sanità, Rome, Italy</li>
+  <li><a href="http://www.ospedalebambinogesu.it">Andrea Ciolfi</a> - Ospedale Pediatrico Bambino Gesù, IRCCS, Rome, Italy</li>
   <li><a href="https://gmauro.github.io">Gianmauro Cuccuru</a> - Albert Ludwigs University, Freiburg, Germany</li>
   <li><a href="http://www">Giuseppe Marangi</a> - Institute of Genomic Medicine, Fondazione Policlinico Universitario A. Gemelli IRCCS, Università Cattolica del Sacro Cuore, Roma, Italy</li>
   <li><a href="http://www.crs4.it/peopledetails/183/paolo-uva">Paolo Uva</a> - Centro di Ricerca, Sviluppo e Studi Superiori in Sardegna (CRS4), Pula, Cagliari, Italy</li>
@@ -1297,7 +1376,7 @@ Three major bias sources are known to affect <em>EMRC</em> dramatically in targe
                     <h1>Citing this Tutorial</h1>
                     <p>
                         <ol>
-                            <li id="citation-text">Alessandro Bruselles, Gianmauro Cuccuru, Giuseppe Marangi, Paolo Uva, Tommaso Pippucci, 2020 <b>Data analysis and interpretation for clinical genomics (Galaxy Training Materials)</b>. <a href="/clinical_genomics/">/clinical_genomics/</a> Online; accessed TODAY
+                            <li id="citation-text">Alessandro Bruselles, Andrea Ciolfi, Gianmauro Cuccuru, Giuseppe Marangi, Paolo Uva, Tommaso Pippucci, 2020 <b>Data analysis and interpretation for clinical genomics (Galaxy Training Materials)</b>. <a href="/clinical_genomics/">/clinical_genomics/</a> Online; accessed TODAY
                             </li>
                             <li>
                             Batut et al., 2018 <b>Community-Driven Data Analysis Training for Biology</b> Cell Systems <a href="https://doi.org/10.1016%2Fj.cels.2018.05.012">10.1016/j.cels.2018.05.012</a>
@@ -1312,11 +1391,11 @@ Three major bias sources are known to affect <em>EMRC</em> dramatically in targe
 
                     <div class="highlighter-rouge"><div class="highlight"><pre class="highlight">
 <code id="citation-code">@misc{-,
-    author = "Alessandro Bruselles and Gianmauro Cuccuru and Giuseppe Marangi and Paolo Uva and Tommaso Pippucci",
+    author = "Alessandro Bruselles and Andrea Ciolfi and Gianmauro Cuccuru and Giuseppe Marangi and Paolo Uva and Tommaso Pippucci",
     title = "Data analysis and interpretation for clinical genomics (Galaxy Training Materials)",
     year = "2020",
     month = "01",
-    day = "10"
+    day = "24"
     url = "\url{/clinical_genomics/}",
     note = "[Online; accessed TODAY]"
 }
@@ -1374,7 +1453,7 @@ document.getElementById("citation-text").innerHTML = document.getElementById("ci
         </p>
         <p>
             Found a typo? Something is wrong in this tutorial? Edit it on
-            <a href="https://github.com/sigu-training/clinical_genomics">GitHub</a>.
+            <a href="https://github.com/sigu-training/clinical_genomics/blob/master/index.md">GitHub</a>.
         </p>
     </div>
 </footer>
