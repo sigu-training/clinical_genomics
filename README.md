@@ -18,6 +18,7 @@ When updating text, please follow the [formatting instructions](https://sigu-tra
 
  * [Tommaso Pippucci](https://www.aosp.bo.it/content/curriculum?E=154659) - Sant’Orsola-Malpighi University Hospital, Bologna, Italy
  * [Alessandro Bruselles](https://www) - Istituto Superiore di Sanità, Rome, Italy
+ * [Andrea Ciolfi](http://www.ospedalebambinogesu.it) - Ospedale Pediatrico Bambino Gesù, IRCCS, Rome, Italy
  * [Gianmauro Cuccuru](http://www) - Albert Ludwigs University, Freiburg, Germany
  * [Giuseppe Marangi](http://www) - Institute of Genomic Medicine, Fondazione Policlinico Universitario A. Gemelli IRCCS, Università Cattolica del Sacro Cuore, Roma, Italy
  * [Paolo Uva](http://www.crs4.it/peopledetails/183/paolo-uva) - Centro di Ricerca, Sviluppo e Studi Superiori in Sardegna (CRS4), Pula, Cagliari, Italy

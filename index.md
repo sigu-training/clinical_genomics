@@ -8,7 +8,7 @@ questions:
 - How can you annotate variants in a clinically-oriented perspective?
 objectives:
 - Perform in-depth quality control of sequencing data at multiple levels (fastq, bam, vcf)
-- Annotate variants with information extracted from public databases for clinical interpretation
+- Call, classify and annotate variants with information extracted from public databases for clinical interpretation
 - Analyze CNV and Regions of Homozygosity (ROH)
 
 time_estimation: 6h
@@ -18,6 +18,7 @@ key_points:
 - Use public tools and free annotation servers.
 contributors:
 - abrusell
+- aciolfi
 - gmauro
 - m-giuseppe
 - puva
@@ -249,7 +250,7 @@ While GATK BAM processing is beyond doubt important to improve data quality, it 
 
 ## Variant calling
 
-The process of variant detection and genotyping is performed by *variant callers*. These tools use probabilistic approaches to collect evidence that non-reference read bases accumulating over a given locus support the presence of a variant. To be confident that a variant is a true event, its supporting evidence should be significantly stronger than chance; e.g. the C>T on the left of the screenshot in Figure 5 is supported by all its position-overlapping reads, claiming for a variant. In contrast, the C>A change on the right of the screenshot is seen only once over many reads, challenging its interpretation as a real variant. 
+The process of variant detection and genotyping is performed by *variant callers*. These tools use probabilistic approaches to collect evidence that non-reference read bases accumulating over a given locus support the presence of a variant, usually differing in algorithms, filtering strategies, recommendations ([Sandmann et al., 2017](https://doi.org/10.1038/srep43169)). To be confident that a variant is a true event, its supporting evidence should be significantly stronger than chance; e.g. the C>T on the left of the screenshot in Figure 5 is supported by all its position-overlapping reads, claiming for a variant. In contrast, the C>A change on the right of the screenshot is seen only once over many reads, challenging its interpretation as a real variant. In fact, DNA variants that occur in germ cells (i.e., **germline/constitutional variants** that can be passed on to offspring) are either diploid/biallelic, so expected alternative allele frequency is 50% for a heterozygous change. On the other hand, if only a smaller subset of aligned reads indicates variation, that could result from technology bias or be a **mosaicism**, i.e. an individual which harbour two or more populations of genetically distinct cells as a result of postzygotic mutation. Postzygotic *de novo* mutations may result in **somatic mosaicism** (potentially causing a less severe and/or variable phenotype compared with the equivalent constitutive mutation) **and/or germline mosaicism** (hence enabling transmission of a pathogenic variant from an unaffected parent to his affected offspring) ([Biesecker et al., 2013](https://doi.org/10.1038/nrg3424)). To identify mosaicism, a probabilistic approach should consider deviation of the proband variant allele fraction (VAF, defined as the number of alternative reads divided by the total read depth) from a binomial distribution centred around 0.5.
 
 ---
 
@@ -541,6 +542,59 @@ The procedures listed above are to be taken as examples of the possible operatio
 
 Furthermore, please be aware that the tool `bedtools Compute both the depth and breadth of coverage` does not perform any filtering based on read quality: if your are interested in that aspect you may want to rely on different tools. 
 
+# Variant calling and classification
+
+After the generation of a high-quality set of mapped read pairs, we can proceed to call different classes of DNA variants. To this aim, the tools **HaplotypeCaller** and **MuTect2** from **[GATK toolkit](https://gatk.broadinstitute.org/hc/en-us)** are a dedicated solution for DNA variant identification at germinal- and somatic-level. They can:
+
+- Determine haplotypes by local assembly of the genomic regions in which the samples being analyzed show substantial evidence of variation relative to the reference;
+- Evaluate the evidence for haplotypes and variant alleles;
+- Assigning per-sample genotypes.
+
+> ### {% icon hands_on %} Hands-on: Variant calling.
+> You may use files provided as examples with this tutorial and called
+>    `Panel_alignment.bam` and `Panel_Target_regions.bed`. 
+>   
+> 1. Run **HaplotypeCaller** {% icon tool %} restricting the search space on target regions with "-L" option to reduce computational burden.
+> 
+> In case of analyzing a single sample: 
+>
+> `gatk HaplotypeCaller -I Panel_alignment.bam -O Sample1.all_exons.hg19.vcf -L Panel_target_regions.bed -R HSapiensReference_genome_hg19.fasta`
+>
+> In case of analyzing a cohort (e.g. family) of samples, the most efficient way to identify variants is a multi-step process, running HaplotypeCaller per-sample to generate many intermediate gVCF files, merge them, and then calling genotypes on the whole group, based on the alleles that were observed at each site: 
+>
+>  `gatk  HaplotypeCaller -I Panel_alignment.bam -O Sample1.all_exons.hg19.vcf -R HSapiensReference_genome_hg19.fasta -L Panel_target_regions.bed -ERC GVCF`
+>   
+>  To obtain genotypes for all the cohort provide a combined multi-sample GVCF and then use it to calculate likelihoods:
+>
+>  - `gatk CombineGVCFs --variant Sample1.all_exons.hg19.vcf --variant Sample2.all_exons.hg19.vcf -O cohort.all_exons.hg19.g.vcf -L Panel_target_regions.bed -R HSapiensReference_genome_hg19.fasta`
+>
+>  - `gatk GenotypeGVCFs -V cohort.all_exons.hg19.g.vcf -O cohort_genotyped.all.exons.vcf -L Panel_target_regions.bed -R HSapiensReference_genome_hg19.fasta`
+>
+> The genotyped SNV/INDELs are then stored in a VCF file to be functionally annotated. 
+> 
+> 2. Run **Mutect2** {% icon tool %} restricting the search space on target regions with "-L" option to reduce computational burden.
+>    The first step is needed to create an internal database of controls (i.e. **Panel Of Normals** - PoN) to reduce bias for somatic calls. It runs on a single sample at time:
+>
+>  - `gatk Mutect2 -R HSapiensReference_genome_hg19.fasta -L Panel_target_regions.bed -I Panel_alignment_normal1.bam -O normal_genotyped1.vcf`
+>  - `gatk Mutect2 -R HSapiensReference_genome_hg19.fasta -L Panel_target_regions.bed -I Panel_alignment_normal2.bam -O normal_genotyped2.vcf`
+>
+>  Then use GATK's *CreateSomaticPanelOfNormals* tool to generate the PoN:
+>
+>  - `gatk GenomicsDBImport -L Panel_target_regions.bed -R HSapiensReference_genome_hg19.fasta --genomicsdb-workspace-path PoN_db -V normal_genotyped1.vcf -V normal_genotyped2.vcf`
+>  - `gatk CreateSomaticPanelOfNormals -R HSapiensReference_genome_hg19.fasta -V gendb://PoN_db -O panel_of_normals.vcf`
+>
+>    > ### {% icon comment %} Note
+>    > The --genomicsdb-workspace-path must point to a non-existent or empty directory.
+>    {: .comment}
+>
+> 
+> Then, to effectively call somatic mutations, we can use variants contained in the **PoN** and/or other public repositories  (e.g. by means of the option *--germline-resource*, using a VCF file containing frequencies of germline variants in the general population) to exclude germline variation. Finally, to properly classify somatic variants, we apply *FilterMutectCalls filtering*, which produces the final subset annotated VCF file. To this aim, we can run the following commands:
+>
+> - `gatk Mutect2 -R HSapiensReference_genome_hg19.fasta -I Panel_alignment.bam --germline-resource af-only-gnomad.vcf --panel-of-normals panel_of_normals.vcf -O somatic_genotyped_unfiltered.vcf`
+> 
+> - `gatk FilterMutectCalls -R HSapiensReference_genome_hg19.fasta -V somatic_genotyped_unfiltered.vcf -O somatic_genotyped_filtered.vcf`
+>
+ 
 
 # Variant annotation
 
@@ -548,7 +602,7 @@ Once called, variants (SNPs and InDels) need to be annotated.
 
 We want to know for example if a variant is located in a gene, if it’s in the coding portion of that gene, if it causes an aminoacid substitution, if that substitution is deleterious for the encoded protein function.
 
-**Variant annotation** is the process of attaching biological information from multiple available source (**public databases**) to variants
+**Variant annotation** is the process of attaching technical and/or biological information from multiple available source (e.g. **public databases**) to variants
 
 ---
 ## Gene model
@@ -902,6 +956,7 @@ Usually, long ROH (approximately >1.5 Mb) arise as a result of close parental co
 
  * [Tommaso Pippucci](https://www.aosp.bo.it/content/curriculum?E=154659) - Sant’Orsola-Malpighi University Hospital, Bologna, Italy
  * [Alessandro Bruselles](https://www) - Istituto Superiore di Sanità, Rome, Italy
+ * [Andrea Ciolfi](http://www.ospedalebambinogesu.it) - Ospedale Pediatrico Bambino Gesù, IRCCS, Rome, Italy
  * [Gianmauro Cuccuru](https://gmauro.github.io) - Albert Ludwigs University, Freiburg, Germany
  * [Giuseppe Marangi](http://www) - Institute of Genomic Medicine, Fondazione Policlinico Universitario A. Gemelli IRCCS, Università Cattolica del Sacro Cuore, Roma, Italy
  * [Paolo Uva](http://www.crs4.it/peopledetails/183/paolo-uva) - Centro di Ricerca, Sviluppo e Studi Superiori in Sardegna (CRS4), Pula, Cagliari, Italy
