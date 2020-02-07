@@ -564,35 +564,22 @@ Furthermore, please be aware that the tool `bedtools Compute both the depth and 
 
 # Variant calling and classification
 
-After the generation of a high-quality set of mapped read pairs, we can proceed to call different classes of DNA variants. To this aim, the tools **HaplotypeCaller** and **MuTect2** from **[GATK toolkit](https://gatk.broadinstitute.org/hc/en-us)** are a dedicated solution for DNA variant identification at germinal- and somatic-level. They can:
+After the generation of a high-quality set of mapped read pairs, we can proceed to call different classes of DNA variants.
+Users interested in germline variant calling can refer to related Galaxy's tutorials, e.g. https://galaxyproject.github.io/training-material/topics/variant-analysis/tutorials/exome-seq/tutorial.html .
+To accurately detect mosaic variants in sequencing data without matched controls we will use **MuTect2** tool from **[GATK toolkit](https://gatk.broadinstitute.org/hc/en-us)**. 
+
+In more details, this tool executes different operations:
 
 - Determine haplotypes by local assembly of the genomic regions in which the samples being analyzed show substantial evidence of variation relative to the reference;
 - Evaluate the evidence for haplotypes and variant alleles;
 - Assigning per-sample genotypes.
 
-> ### {% icon hands_on %} Hands-on: Variant calling.
+> ### {% icon hands_on %} Hands-on: Mosaic Variant calling.
+> 
 > You may use files provided as examples with this tutorial and called
 >    `Panel_alignment.bam` and `Panel_Target_regions.bed`. 
->   
-> 1. Run **HaplotypeCaller** {% icon tool %} restricting the search space on target regions with "-L" option to reduce computational burden.
 > 
-> In case of analyzing a single sample: 
->
-> `gatk HaplotypeCaller -I Panel_alignment.bam -O Sample1.all_exons.hg19.vcf -L Panel_target_regions.bed -R HSapiensReference_genome_hg19.fasta`
->
-> In case of analyzing a cohort (e.g. family) of samples, the most efficient way to identify variants is a multi-step process, running HaplotypeCaller per-sample to generate many intermediate gVCF files, merge them, and then calling genotypes on the whole group, based on the alleles that were observed at each site: 
->
->  `gatk  HaplotypeCaller -I Panel_alignment.bam -O Sample1.all_exons.hg19.vcf -R HSapiensReference_genome_hg19.fasta -L Panel_target_regions.bed -ERC GVCF`
->   
->  To obtain genotypes for all the cohort provide a combined multi-sample GVCF and then use it to calculate likelihoods:
->
->  - `gatk CombineGVCFs --variant Sample1.all_exons.hg19.vcf --variant Sample2.all_exons.hg19.vcf -O cohort.all_exons.hg19.g.vcf -L Panel_target_regions.bed -R HSapiensReference_genome_hg19.fasta`
->
->  - `gatk GenotypeGVCFs -V cohort.all_exons.hg19.g.vcf -O cohort_genotyped.all.exons.vcf -L Panel_target_regions.bed -R HSapiensReference_genome_hg19.fasta`
->
-> The genotyped SNV/INDELs are then stored in a VCF file to be functionally annotated. 
-> 
-> 2. Run **Mutect2** {% icon tool %} restricting the search space on target regions with "-L" option to reduce computational burden.
+> Run **Mutect2** {% icon tool %} restricting the search space on target regions with "-L" option to reduce computational burden.
 >    The first step is needed to create an internal database of controls (i.e. **Panel Of Normals** - PoN) to reduce bias for somatic calls. It runs on a single sample at time:
 >
 >  - `gatk Mutect2 -R HSapiensReference_genome_hg19.fasta -L Panel_target_regions.bed -I Panel_alignment_normal1.bam -O normal_genotyped1.vcf`
