@@ -565,7 +565,7 @@ Furthermore, please be aware that the tool `bedtools Compute both the depth and 
 # Variant calling and classification
 
 After the generation of a high-quality set of mapped read pairs, we can proceed to call different classes of DNA variants.
-Users interested in germline variant calling can refer to related Galaxy's tutorials, e.g. https://galaxyproject.github.io/training-material/topics/variant-analysis/tutorials/exome-seq/tutorial.html .
+Users interested in germline variant calling can refer to related Galaxy's tutorials, e.g. [Exome sequencing data analysis for diagnosing a genetic disease](https://galaxyproject.github.io/training-material/topics/variant-analysis/tutorials/exome-seq/tutorial.html).
 To accurately detect mosaic variants in sequencing data without matched controls we will use **MuTect2** tool from **[GATK toolkit](https://gatk.broadinstitute.org/hc/en-us)**. 
 
 In more details, this tool executes different operations:

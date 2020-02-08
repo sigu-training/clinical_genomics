@@ -99,7 +99,7 @@
 
             
 
-            <p><strong> <i class="fa fa-calendar" aria-hidden="true"></i><span class="visually-hidden">last_modification</span> Last modification:</strong> Jan 24, 2020 </p>
+            <p><strong> <i class="fa fa-calendar" aria-hidden="true"></i><span class="visually-hidden">last_modification</span> Last modification:</strong> Feb 7, 2020 </p>
         </blockquote>
 
         <div class="container">
@@ -923,7 +923,11 @@ does not properly define columns in your files
 
 <h1 id="variant-calling-and-classification">Variant calling and classification</h1>
 
-<p>After the generation of a high-quality set of mapped read pairs, we can proceed to call different classes of <span class="notranslate">DNA</span> variants. To this aim, the tools <strong>HaplotypeCaller</strong> and <strong>MuTect2</strong> from <strong><a href="https://gatk.broadinstitute.org/hc/en-us">GATK toolkit</a></strong> are a dedicated solution for <span class="notranslate">DNA</span> variant identification at germinal- and somatic-level. They can:</p>
+<p>After the generation of a high-quality set of mapped read pairs, we can proceed to call different classes of <span class="notranslate">DNA</span> variants.
+Users interested in germline variant calling can refer to related <span class="notranslate">Galaxy</span>’s tutorials, e.g. <a href="https://galaxyproject.github.io/training-material/topics/variant-analysis/tutorials/exome-seq/tutorial.html">Exome sequencing data analysis for diagnosing a genetic disease</a>.
+To accurately detect mosaic variants in sequencing data without matched controls we will use <strong>MuTect2</strong> tool from <strong><a href="https://gatk.broadinstitute.org/hc/en-us">GATK toolkit</a></strong>.</p>
+
+<p>In more details, this tool executes different operations:</p>
 
 <ul>
   <li>Determine haplotypes by local assembly of the genomic regions in which the samples being analyzed show substantial evidence of variation relative to the reference;</li>
@@ -932,39 +936,13 @@ does not properly define columns in your files
 </ul>
 
 <blockquote>
-  <h3 id="hands_on-hands-on-variant-calling"><i class="fa fa-pencil" aria-hidden="true"></i><span class="visually-hidden">hands_on</span> Hands-on: Variant calling.</h3>
+  <h3 id="hands_on-hands-on-mosaic-variant-calling"><i class="fa fa-pencil" aria-hidden="true"></i><span class="visually-hidden">hands_on</span> Hands-on: Mosaic Variant calling.</h3>
+
   <p>You may use files provided as examples with this tutorial and called
    <code class="highlighter-rouge">Panel_alignment.bam</code> and <code class="highlighter-rouge">Panel_Target_regions.<span class="notranslate">bed</span></code>.</p>
 
-  <ol>
-    <li>Run <strong>HaplotypeCaller</strong> <i class="fa fa-wrench" aria-hidden="true"></i><span class="visually-hidden">tool</span> restricting the search space on target regions with “-L” option to reduce computational burden.</li>
-  </ol>
-
-  <p>In case of analyzing a single sample:</p>
-
-  <p><code class="highlighter-rouge">gatk HaplotypeCaller -I Panel_alignment.bam -O Sample1.all_exons.hg19.vcf -L Panel_target_regions.<span class="notranslate">bed</span> -R HSapiensReference_genome_hg19.fasta</code></p>
-
-  <p>In case of analyzing a cohort (e.g. family) of samples, the most efficient way to identify variants is a multi-step process, running HaplotypeCaller per-sample to generate many intermediate gVCF files, merge them, and then calling genotypes on the whole group, based on the alleles that were observed at each site:</p>
-
-  <p><code class="highlighter-rouge">gatk  HaplotypeCaller -I Panel_alignment.bam -O Sample1.all_exons.hg19.vcf -R HSapiensReference_genome_hg19.fasta -L Panel_target_regions.<span class="notranslate">bed</span> -ERC GVCF</code></p>
-
-  <p>To obtain genotypes for all the cohort provide a combined multi-sample GVCF and then use it to calculate likelihoods:</p>
-
-  <ul>
-    <li>
-      <p><code class="highlighter-rouge">gatk CombineGVCFs --variant Sample1.all_exons.hg19.vcf --variant Sample2.all_exons.hg19.vcf -O cohort.all_exons.hg19.g.vcf -L Panel_target_regions.<span class="notranslate">bed</span> -R HSapiensReference_genome_hg19.fasta</code></p>
-    </li>
-    <li>
-      <p><code class="highlighter-rouge">gatk GenotypeGVCFs -V cohort.all_exons.hg19.g.vcf -O cohort_genotyped.all.exons.vcf -L Panel_target_regions.<span class="notranslate">bed</span> -R HSapiensReference_genome_hg19.fasta</code></p>
-    </li>
-  </ul>
-
-  <p>The genotyped SNV/INDELs are then stored in a VCF file to be functionally annotated.</p>
-
-  <ol>
-    <li>Run <strong>Mutect2</strong> <i class="fa fa-wrench" aria-hidden="true"></i><span class="visually-hidden">tool</span> restricting the search space on target regions with “-L” option to reduce computational burden.
-The first step is needed to create an inte<span class="notranslate">rna</span>l database of controls (i.e. <strong>Panel Of Normals</strong> - PoN) to reduce bias for somatic calls. It runs on a single sample at time:</li>
-  </ol>
+  <p>Run <strong>Mutect2</strong> <i class="fa fa-wrench" aria-hidden="true"></i><span class="visually-hidden">tool</span> restricting the search space on target regions with “-L” option to reduce computational burden.
+   The first step is needed to create an inte<span class="notranslate">rna</span>l database of controls (i.e. <strong>Panel Of Normals</strong> - PoN) to reduce bias for somatic calls. It runs on a single sample at time:</p>
 
   <ul>
     <li><code class="highlighter-rouge">gatk Mutect2 -R HSapiensReference_genome_hg19.fasta -L Panel_target_regions.<span class="notranslate">bed</span> -I Panel_alignment_normal1.bam -O normal_genotyped1.vcf</code></li>
@@ -1472,8 +1450,8 @@ Three major bias sources are known to affect <em>EMRC</em> dramatically in targe
     author = "Alessandro Bruselles and Andrea Ciolfi and Gianmauro Cuccuru and Giuseppe Marangi and Paolo Uva and Tommaso Pippucci",
     title = "Data analysis and interpretation for clinical genomics (Galaxy Training Materials)",
     year = "2020",
-    month = "01",
-    day = "24"
+    month = "02",
+    day = "07"
     url = "\url{/clinical_genomics/}",
     note = "[Online; accessed TODAY]"
 }
