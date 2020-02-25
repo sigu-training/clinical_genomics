@@ -5,12 +5,16 @@ In years 2018-2019, on behalf of the Italian Society of Human Genetics ([SIGU](h
 Realizing the constant need for training on NGS analysis and interpretation of sequencing data in the clinical setting, we designed an on-line [Galaxy](https://usegalaxy.eu/)-based training resource articulated in presentations and practical assignments by which students will learn how to approach NGS data quality at the level of fastq, bam and VCF files and clinically-oriented examination of variants emerging from sequencing experiments.
 
 ### Updating GitHub Pages - for Admins only
-Automatic update of GitHub pages through Jekyll is disabled. To update pages you have to:
+Automatic update of GitHub pages through Jekyll is disabled. To update pages you have to build the website locally and push the updated pages:
 
  * Clone this repository.
- * Build the website locally. Have a look at the [tutorial](https://galaxyproject.github.io/training-material/topics/contributing/tutorials/running-jekyll/tutorial.html).
- * Run **make clean**, than **make build**. This will generate the new HTML Pages in the *docs* folder.
- * Push the updated files and *docs* folder. 
+ * (If not done yet) Set up the conda environment - see this [tutorial](https://galaxyproject.github.io/training-material/topics/contributing/tutorials/running-jekyll/tutorial.html) for details:
+   * Cd to the cloned repository
+   * Install conda, if not already installed: **make install conda**
+   * Create the **galaxy_training_material** conda environment: **make create-env**
+   * Install Jekyll and related modules into the conda environment: **make install**
+ * Build the website locally with **make clean**, than **make build**, or **make serve**. This will generate the new HTML Pages in the *docs* folder.
+ * Push the updated files. 
 
 When updating text, please follow the [formatting instructions](https://sigu-training.github.io/clinical_genomics/syntax.html).
 
