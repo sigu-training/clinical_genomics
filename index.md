@@ -335,7 +335,7 @@ The names of the modules are preceded by an icon that reflects the quality of th
 
 ## Quality control of BAM files
 
-### Fast quality check with **bam.iobio.io**
+### Fast quality check with bam.iobio.io
 
 BAM files are binary files containing information on the sequences aligned onto a reference genome. Exploring BAM files you can address several questions, e.g.:
 
@@ -367,7 +367,7 @@ On top of each plot, clicking on the question mark you can open a window with a 
 
 ### Compute statistics with Picard CollectHsMetrics
 
-Collect Hybrid Selection (HS) Metrics tool computes a set of metrics that are specific for sequence datasets generated through hybrid-selection. Hybrid selection is the commonly used protocol to capture specific sequences for targeted experiments such as exome sequencing.
+**Collect Hybrid Selection (HS) Metrics** {% icon tool %} tool computes a set of metrics that are specific for sequence datasets generated through hybrid-selection. Hybrid selection is the commonly used protocol to capture specific sequences for targeted experiments such as exome sequencing.
 
 In order to run this tool you need a file with the aligned sequences in BAM format, and files with the intervals corresponding to bait and target regions. These files can be generally obtained from the website of the kit manufacturer. 
 
@@ -421,6 +421,95 @@ aligned sequences from an exome sequencing experiment.
 >    >
 >    > 1. Which is the average target coverage?
 >    > 1. And the fraction of bases covered at least 10X?
+>    {: .question}
+{: .hands_on}
+
+
+### BAM statistics with samtools
+
+Samtools is a widely used suite of programs for manipulating alignments in the SAM/BAM/CRAM format.
+Among the different tools, we will focus on **samtools flagstat** and **samtools stats** for computing BAM statistics.
+Both programs take as input a file with the aligned sequences, and generate an output in text format that can be
+visualized with **MultiQC**.
+
+Here is an example of simple statistics obtained with **samtools flagstat**:
+
+```
+492739 + 0 in total (QC-passed reads + QC-failed reads)
+0 + 0 secondary
+0 + 0 supplementary
+0 + 0 duplicates
+476344 + 0 mapped (96.67% : N/A)
+492739 + 0 paired in sequencing
+243667 + 0 read1
+249072 + 0 read2
+462914 + 0 properly paired (93.95% : N/A)
+469984 + 0 with itself and mate mapped
+6360 + 0 singletons (1.29% : N/A)
+5061 + 0 with mate mapped to a different chr
+2034 + 0 with mate mapped to a different chr (mapQ>=5)
+```
+
+For more detailed statistics, use **samtools stats**:
+```
+SN	raw total sequences:	492739																																										
+SN	filtered sequences:	0																																										
+SN	sequences:	492739																																										
+SN	is sorted:	1																																										
+SN	1st fragments:	243667																																										
+SN	last fragments:	249072																																										
+SN	reads mapped:	476344																																										
+SN	reads mapped and paired:	469984	# paired-end technology bit set + both mates mapped																																									
+SN	reads unmapped:	16395																																										
+SN	reads properly paired:	462914	# proper-pair bit set																																									
+SN	reads paired:	492739	# paired-end technology bit set																																									
+SN	reads duplicated:	0	# PCR or optical duplicate bit set																																									
+SN	reads MQ0:	111721	# mapped and MQ=0																																									
+SN	reads QC failed:	0																																										
+SN	non-primary alignments:	0																																										
+SN	total length:	49766639	# ignores clipping																																									
+SN	total first fragment length:	24610367	# ignores clipping																																									
+SN	total last fragment length:	25156272	# ignores clipping																																									
+SN	bases mapped:	48110744	# ignores clipping																																									
+SN	bases mapped (cigar):	45368693	# more accurate																																									
+SN	bases trimmed:	0																																										
+SN	bases duplicated:	0																																										
+SN	mismatches:	254006	# from NM fields																																									
+SN	error rate:	5.598707e-03	# mismatches / bases mapped (cigar)																																									
+SN	average length:	101																																										
+SN	average first fragment length:	101																																										
+SN	average last fragment length:	101																																										
+SN	maximum length:	101																																										
+SN	maximum first fragment length:	101																																										
+SN	maximum last fragment length:	101																																										
+SN	average quality:	31.5																																										
+SN	insert size average:	247.9																																										
+SN	insert size standard deviation:	75.8																																										
+SN	inward oriented pairs:	231769																																										
+SN	outward oriented pairs:	452																																										
+SN	pairs with other orientation:	240																																										
+SN	pairs on different chromosomes:	2530																																										
+SN	percentage of properly paired reads (%):	93.9
+```
+
+> ### {% icon hands_on %} Hands-on: Compute alignment statistics with samtools
+> 1. Run **samtools flagstat** {% icon tool %} on your BAM dataset *CNV_case.bam*.
+>
+> 1. Using the **MultiQC** {% icon tool %} software, you can aggregate and visualize results
+> obtained with **samtools flagstat** to identify low quality samples that will be displayed
+> as outliers.  
+>     - *"Which tool was used generate logs?"*: `Samtools`
+>       - In *"Samtools output"*
+>          - *"Type of Samtools output?"*: `flagstat`
+>          - {% icon param-files %} *"Samtools flagstat output"*: the output 
+>            of **Samtools flagstat** {% icon tool %}
+>
+> 1. Inspect **MultiQC** report
+> 
+>    > ### {% icon question %} Questions
+>    >
+>    > 1. Which is the percentage of mapped reads? And
+>    >    the percentage of properly mapped reads?
 >    {: .question}
 {: .hands_on}
 
