@@ -440,7 +440,7 @@ with SnpEff.
 >      uploaded **VCF** file
 >    - *"Input format"*: `VCF`
 >    - *"Output format"*: `VCF (only if input is VCF)`
->    - *"Genome source"*: `Locally installed reference genome`
+>    - *"Genome source"*: `Locally installed snpEff database`
 >       - *"Genome"*: `Homo sapiens: hg19` (or a similarly named option)
 >
 >    - *"Produce Summary Stats"*: `Yes`
