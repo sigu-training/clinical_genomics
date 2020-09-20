@@ -435,7 +435,7 @@ knows how to parse SnpEff-annotated VCFs, while GEMINI output cannot be used
 with SnpEff.
 
 > ### {% icon hands_on %} Hands-on: Adding annotations with SnpEff
-> 1. **SnpEff eff** {% icon tool %}
+> 1. **SnpEff eff** {% icon tool %} (not the one for the SARS-CoV-2 pipeline)
 >    - {% icon param-file %} *"Sequence changes (SNPs, MNPs, InDels)"*: the
 >      output of **bcftools norm** {% icon tool %}
 >    - *"Input format"*: `VCF`
