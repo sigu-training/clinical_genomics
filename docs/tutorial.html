@@ -1093,14 +1093,18 @@ slides may give you additional ideas for variant queries and filters:</p>
 
 <h2 id="displaying-data-in-ucsc-genome-browser">Displaying data in UCSC genome browser</h2>
 
-<p>A good way to further explore candidate variants is to look at their genomic surrounding. This can be done by using genome browsers to display the contents of variants in <code class="language-plaintext highlighter-rouge">vcf</code> files and aligned <span class="notranslate">reads</span> stored in <code class="language-plaintext highlighter-rouge">bam</code> files. <span class="notranslate">Galaxy</span> can display both files - <code class="language-plaintext highlighter-rouge">vcf</code>  and <code class="language-plaintext highlighter-rouge">bam</code>  - launching a genome browser such as IGV on your local machine, and it can connect to online genome browsers as well. An example of such an online genome browser is the UCSC genome browser.</p>
+<p>A good way to proceed with candidate variants is to look at their coverage. 
+This can be done by using genome browsers to display the aligned <span class="notranslate">reads</span> in the position of the candidate variant.
+Aligned <span class="notranslate">reads</span> are stored in <code class="language-plaintext highlighter-rouge">bam</code> files, and <span class="notranslate">Galaxy</span> can display <code class="language-plaintext highlighter-rouge">bam</code> launching a genome browser such as IGV on 
+your local machine, and it can connect to online genome browsers as well.
+An example of such an online genome browser is the UCSC Genome Browser.</p>
 
 <blockquote class="notranslate hands_on">
   <h3 id="hands_on-hands-on-ucsc-genome-browser"><i class="fa fa-pencil" aria-hidden="true"></i><span class="visually-hidden">hands_on</span> Hands-on: UCSC genome browser</h3>
 
   <ol>
     <li>
-      <p>First, check that the <strong>database</strong> of your <code class="language-plaintext highlighter-rouge">vcf</code> and <code class="language-plaintext highlighter-rouge">bam</code> dataset is <code class="language-plaintext highlighter-rouge">hg19</code>. If not, click on the <i class="fa fa-pencil" aria-hidden="true"></i><span class="visually-hidden"><span class="notranslate">galaxy</span>-pencil</span> pencil icon and modify the <strong>Database/Build:</strong> field to <code class="language-plaintext highlighter-rouge">Human Feb. 2009 (GRCh37/hg19) (hg19)</code>.</p>
+      <p>First, check that the <strong>database</strong> of your <code class="language-plaintext highlighter-rouge">bam</code> dataset is <code class="language-plaintext highlighter-rouge">hg19</code>. If not, click on the <i class="fa fa-pencil" aria-hidden="true"></i><span class="visually-hidden"><span class="notranslate">galaxy</span>-pencil</span> pencil icon and modify the <strong>Database/Build:</strong> field to <code class="language-plaintext highlighter-rouge">Human Feb. 2009 (GRCh37/hg19) (hg19)</code>.</p>
 
       <blockquote class="tip">
 
@@ -1124,7 +1128,8 @@ slides may give you additional ideas for variant queries and filters:</p>
 
   <p><img src="/clinical_genomics/images/101_displayucsc.png" alt="`display at UCSC main` link" /></p>
 
-  <p>This will upload the data to UCSC as custom track. To see your data look at the <code class="language-plaintext highlighter-rouge">User Track</code> near the top. You can enter the coordinates of one of your variants at the top to jump to that location.</p>
+  <p>This will upload the data to UCSC as custom track. To see your data look at the <code class="language-plaintext highlighter-rouge">User Track</code> near the top.
+   You can enter the coordinates of one of your variants at the top to jump to that location.</p>
 
   <p><img src="/clinical_genomics/images/101_21.png" alt="`User Track` shown in the UCSC genome browser" /></p>
 </blockquote>

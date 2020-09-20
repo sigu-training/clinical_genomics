@@ -715,11 +715,15 @@ you think could plausibly be causative for the child's disease.
 
 ## Displaying data in UCSC genome browser
 
-A good way to further explore candidate variants is to look at their genomic surrounding. This can be done by using genome browsers to display the contents of variants in `vcf` files and aligned reads stored in `bam` files. Galaxy can display both files - `vcf`  and `bam`  - launching a genome browser such as IGV on your local machine, and it can connect to online genome browsers as well. An example of such an online genome browser is the UCSC genome browser.
+A good way to proceed with candidate variants is to look at their coverage. 
+This can be done by using genome browsers to display the aligned reads in the position of the candidate variant.
+Aligned reads are stored in `bam` files, and Galaxy can display `bam` launching a genome browser such as IGV on 
+your local machine, and it can connect to online genome browsers as well.
+An example of such an online genome browser is the UCSC Genome Browser.
 
 > ### {% icon hands_on %} Hands-on: UCSC genome browser
 >
-> 1. First, check that the **database** of your `vcf` and `bam` dataset is `hg19`. If not, click on the {% icon galaxy-pencil %} pencil icon and modify the **Database/Build:** field to `Human Feb. 2009 (GRCh37/hg19) (hg19)`.
+> 1. First, check that the **database** of your `bam` dataset is `hg19`. If not, click on the {% icon galaxy-pencil %} pencil icon and modify the **Database/Build:** field to `Human Feb. 2009 (GRCh37/hg19) (hg19)`.
 >
 >    {% include snippets/change_dbkey.md dbkey="hg19" %}
 >>
@@ -727,7 +731,8 @@ A good way to further explore candidate variants is to look at their genomic sur
 >
 >    ![`display at UCSC main` link]({{site.baseurl}}/images/101_displayucsc.png)
 >
->    This will upload the data to UCSC as custom track. To see your data look at the `User Track` near the top. You can enter the coordinates of one of your variants at the top to jump to that location.
+>    This will upload the data to UCSC as custom track. To see your data look at the `User Track` near the top.
+>    You can enter the coordinates of one of your variants at the top to jump to that location.
 >
 >    ![`User Track` shown in the UCSC genome browser]({{site.baseurl}}/images/101_21.png)
 {: .hands_on}
