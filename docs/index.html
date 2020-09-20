@@ -99,7 +99,7 @@
 
             
 
-            <p><strong> <i class="fa fa-calendar" aria-hidden="true"></i><span class="visually-hidden">last_modification</span> Last modification:</strong> Feb 26, 2020 </p>
+            <p><strong> <i class="fa fa-calendar" aria-hidden="true"></i><span class="visually-hidden">last_modification</span> Last modification:</strong> Mar 17, 2020 </p>
         </blockquote>
 
         <div class="container">
@@ -275,7 +275,7 @@ we suggest to follow the <a href="https://galaxyproject.github.io/training-mater
     <li>
       <p>Import files from <a href="https://zenodo.org/record/3531578">Zenodo</a> or Shared Data Library:</p>
 
-      <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>https://zenodo.org/record/3531578/files/CNV_case.bam
+      <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>https://zenodo.org/record/3531578/files/CNV_case.bam
 https://zenodo.org/record/3531578/files/CNV_control.bam
 https://zenodo.org/record/3531578/files/CNV_TruSeq_Chr2.<span class="notranslate">bed</span>
 https://zenodo.org/record/3531578/files/HighQuality_<span class="notranslate">Reads</span>.fastq.gz
@@ -334,9 +334,9 @@ You may prefer to import the data directly from there.</p>
 
       <blockquote class="comment">
         <h3 id="comment-note"><i class="fa fa-commenting-o" aria-hidden="true"></i><span class="visually-hidden">comment</span> Note</h3>
-        <p>All the files are based on <code class="highlighter-rouge">hg19</code> reference genome which is
+        <p>All the files are based on <code class="language-plaintext highlighter-rouge">hg19</code> reference genome which is
 available with pre-built indexes for widely used tools such as 
-<em>bwa-mem</em> <strong>and</strong> <em>samtools</em> by selecting <code class="highlighter-rouge">hg19</code> version as an option under
+<em>bwa-mem</em> <strong>and</strong> <em>samtools</em> by selecting <code class="language-plaintext highlighter-rouge">hg19</code> version as an option under
 <em>“(Using) reference genome”</em>).</p>
       </blockquote>
     </li>
@@ -351,7 +351,7 @@ For example, to assign <span class="notranslate">BED</span> datatype do the foll
         <ul>
           <li>Click on the <i class="fa fa-pencil" aria-hidden="true"></i><span class="visually-hidden"><span class="notranslate">galaxy</span>-pencil</span> <strong>pencil icon</strong> for the dataset to edit its attributes</li>
           <li>In the central panel, click on the <i class="fa fa fa-database" aria-hidden="true"></i><span class="visually-hidden"><span class="notranslate">galaxy</span>-chart-select-data</span> <strong>Datatypes</strong> tab on the top</li>
-          <li>Select <code class="highlighter-rouge"><span class="notranslate">bed</span></code></li>
+          <li>Select <code class="language-plaintext highlighter-rouge"><span class="notranslate">bed</span></code></li>
           <li>Click the <strong>Change datatype</strong> button</li>
         </ul>
       </blockquote>
@@ -615,11 +615,11 @@ another with an HTML report with figures.</p>
 the same time in order to quickly identify low quality samples that will be displayed
 as outliers.
       <ul>
-        <li><em>“Which tool was used generate logs?”</em>: <code class="highlighter-rouge">FastQC</code>
+        <li><em>“Which tool was used generate logs?”</em>: <code class="language-plaintext highlighter-rouge">FastQC</code>
           <ul>
             <li>In <em>“FastQC output”</em>
               <ul>
-                <li><em>“Type of FastQC output?”</em>: <code class="highlighter-rouge">Raw data</code></li>
+                <li><em>“Type of FastQC output?”</em>: <code class="language-plaintext highlighter-rouge">Raw data</code></li>
                 <li><i class="fa fa-files-o" aria-hidden="true"></i><span class="visually-hidden">param-files</span> <em>“FastQC output”</em>: the two <em>RawData</em>
 outputs of <strong>FastQC</strong> <i class="fa fa-wrench" aria-hidden="true"></i><span class="visually-hidden">tool</span></li>
               </ul>
@@ -667,9 +667,9 @@ to the <a href="https://training.galaxyproject.org/training-material/topics/sequ
   <ol>
     <li>
       <p>Run <strong>bam.iobio.io</strong> <i class="fa fa-wrench" aria-hidden="true"></i><span class="visually-hidden">tool</span> on a BAM dataset. To start <strong>bam.iobio.io</strong>
-click on the link <code class="highlighter-rouge">diplay at bam.iobio.io</code> in the dataset section. Please note
+click on the link <code class="language-plaintext highlighter-rouge">diplay at bam.iobio.io</code> in the dataset section. Please note
 that the link will be visible only for datasets with the appropriate database 
-field set to <code class="highlighter-rouge">hg19</code></p>
+field set to <code class="language-plaintext highlighter-rouge">hg19</code></p>
 
       <blockquote class="tip">
 
@@ -677,7 +677,7 @@ field set to <code class="highlighter-rouge">hg19</code></p>
         <ul>
           <li>Click on the <i class="fa fa-pencil" aria-hidden="true"></i><span class="visually-hidden"><span class="notranslate">galaxy</span>-pencil</span> <strong>pencil icon</strong> for the dataset to edit its attributes</li>
           <li>In the central panel, change the <strong>Database/Build</strong> field</li>
-          <li>Select your desired database key from the dropdown list: <code class="highlighter-rouge">hg19</code></li>
+          <li>Select your desired database key from the dropdown list: <code class="language-plaintext highlighter-rouge">hg19</code></li>
           <li>Click the <strong>Save</strong> button</li>
         </ul>
       </blockquote>
@@ -743,9 +743,9 @@ with the <strong>Multiple datasets</strong> option.</p>
 
       <p>Run <strong><span class="notranslate">Bed</span>ToIntervalList</strong> <i class="fa fa-wrench" aria-hidden="true"></i><span class="visually-hidden">tool</span> to convert <span class="notranslate">BED</span> files.</p>
       <ul>
-        <li><em>“Load picard dictionary file from?”</em>: <code class="highlighter-rouge">Local cache</code>
+        <li><em>“Load picard dictionary file from?”</em>: <code class="language-plaintext highlighter-rouge">Local cache</code>
           <ul>
-            <li>In <em>“Use dictionary from the list”</em>: <code class="highlighter-rouge">Human (Homo sapiens): hg19</code></li>
+            <li>In <em>“Use dictionary from the list”</em>: <code class="language-plaintext highlighter-rouge">Human (Homo sapiens): hg19</code></li>
           </ul>
         </li>
         <li><em>“Select coordinate dataset or dataset collection?”</em>: your <span class="notranslate">BED</span> file to be converted</li>
@@ -759,11 +759,11 @@ generated in the previous step.</p>
     <li>Use <strong>MultiQC</strong> <i class="fa fa-wrench" aria-hidden="true"></i><span class="visually-hidden">tool</span> to aggregate CollectHsMetrics output in one unique
 report to facilitate the comparison across multiple samples.
       <ul>
-        <li><em>“Which tool was used generate logs?”</em>: <code class="highlighter-rouge">Picard</code>
+        <li><em>“Which tool was used generate logs?”</em>: <code class="language-plaintext highlighter-rouge">Picard</code>
           <ul>
             <li>In <em>“Picard output”</em>
               <ul>
-                <li><em>“Type of Picard output?”</em>: <code class="highlighter-rouge">HS Metrics</code></li>
+                <li><em>“Type of Picard output?”</em>: <code class="language-plaintext highlighter-rouge">HS Metrics</code></li>
                 <li><i class="fa fa-files-o" aria-hidden="true"></i><span class="visually-hidden">param-files</span> <em>“Picard output”</em>: the output of <strong><em>CollectHsMetrics</em></strong>
 <i class="fa fa-wrench" aria-hidden="true"></i><span class="visually-hidden">tool</span></li>
               </ul>
@@ -796,7 +796,7 @@ visualized with <strong>MultiQC</strong>.</p>
 
 <p>Here is an example of simple statistics obtained with <strong>samtools flagstat</strong>:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>492739 + 0 in total (QC-passed <span class="notranslate">reads</span> + QC-failed <span class="notranslate">reads</span>)
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>492739 + 0 in total (QC-passed <span class="notranslate">reads</span> + QC-failed <span class="notranslate">reads</span>)
 0 + 0 secondary
 0 + 0 supplementary
 0 + 0 duplicates
@@ -812,7 +812,7 @@ visualized with <strong>MultiQC</strong>.</p>
 </code></pre></div></div>
 
 <p>For more detailed statistics, use <strong>samtools stats</strong>:</p>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>SN	raw total sequences:	492739																																										
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>SN	raw total sequences:	492739																																										
 SN	filtered sequences:	0																																										
 SN	sequences:	492739																																										
 SN	is sorted:	1																																										
@@ -862,11 +862,11 @@ SN	percentage of properly paired <span class="notranslate">reads</span> (%):	93.
 obtained with <strong>samtools flagstat</strong> to identify low quality samples that will be displayed
 as outliers.
       <ul>
-        <li><em>“Which tool was used generate logs?”</em>: <code class="highlighter-rouge">Samtools</code>
+        <li><em>“Which tool was used generate logs?”</em>: <code class="language-plaintext highlighter-rouge">Samtools</code>
           <ul>
             <li>In <em>“Samtools output”</em>
               <ul>
-                <li><em>“Type of Samtools output?”</em>: <code class="highlighter-rouge">flagstat</code></li>
+                <li><em>“Type of Samtools output?”</em>: <code class="language-plaintext highlighter-rouge">flagstat</code></li>
                 <li><i class="fa fa-files-o" aria-hidden="true"></i><span class="visually-hidden">param-files</span> <em>“Samtools flagstat output”</em>: the output 
 of <strong>Samtools flagstat</strong> <i class="fa fa-wrench" aria-hidden="true"></i><span class="visually-hidden">tool</span></li>
               </ul>
@@ -927,14 +927,14 @@ Additional details may be found here: <a href="https://genome.ucsc.edu/FAQ/FAQfo
    following standard <span class="notranslate">Galaxy</span> procedure.</p>
 
   <p>You may use files provided as examples with this tutorial and called
-   <code class="highlighter-rouge">Panel_alignment.bam</code> and <code class="highlighter-rouge">Panel_Target_regions.<span class="notranslate">bed</span></code>.</p>
+   <code class="language-plaintext highlighter-rouge">Panel_alignment.bam</code> and <code class="language-plaintext highlighter-rouge">Panel_Target_regions.<span class="notranslate">bed</span></code>.</p>
 
   <p>Please check that uploaded file datatypes (formats) are properly recognized by
-   selecting <code class="highlighter-rouge">edit attributes</code> (i.e. the pencil sign in correspondence of each file
+   selecting <code class="language-plaintext highlighter-rouge">edit attributes</code> (i.e. the pencil sign in correspondence of each file
    you can find in your history) (indicated by the red arrow in figure 1)
    and then the tab datatypes (the blue arrow in figure 1).
    If the datatype is wrong, select the correct one from the drop-down list
-   and press the <code class="highlighter-rouge">change datatype</code> button (the green arrow in figure 1).</p>
+   and press the <code class="language-plaintext highlighter-rouge">change datatype</code> button (the green arrow in figure 1).</p>
 
   <hr />
   <p><img src="/clinical_genomics/images/cov_fig1.png" alt="Figure 1" />
@@ -942,8 +942,8 @@ Additional details may be found here: <a href="https://genome.ucsc.edu/FAQ/FAQfo
 
   <hr />
 
-  <p>Once ready, you can select the tool named <code class="highlighter-rouge"><span class="notranslate">bed</span>tools Compute both the depth and
-   breadth of coverage</code> in the <code class="highlighter-rouge">Operate on Genomic Intervals</code> section
+  <p>Once ready, you can select the tool named <code class="language-plaintext highlighter-rouge"><span class="notranslate">bed</span>tools Compute both the depth and
+   breadth of coverage</code> in the <code class="language-plaintext highlighter-rouge">Operate on Genomic Intervals</code> section
    (see the red arrow in figure 2).</p>
 
   <ol>
@@ -953,8 +953,8 @@ and the <em>bam</em> file(s) you want to analyze as “file B” (green arrow in
 You may analyze one or more <em>bam</em> files in a single run.</li>
     <li>If you want to analyze two or more .bam files, you can further choose if you want
 all the results in a single file or one output file per input “file B” by selecting
-the desired option under the <code class="highlighter-rouge">Combined or separate output files</code> menu.</li>
-    <li>Select “Yes” for the option <code class="highlighter-rouge">Report the depth at each position in each A feature</code>
+the desired option under the <code class="language-plaintext highlighter-rouge">Combined or separate output files</code> menu.</li>
+    <li>Select “Yes” for the option <code class="language-plaintext highlighter-rouge">Report the depth at each position in each A feature</code>
   (yellow arrow in figure 2) and check that all the other options are set to “No”.</li>
     <li>
       <p>Star (Execute) the analysis.</p>
@@ -982,14 +982,14 @@ it means that the coverage value refers to nucleotide 50150071
 <blockquote class="notranslate hands_on">
   <h3 id="hands_on-hands-on-sort-files"><i class="fa fa-pencil" aria-hidden="true"></i><span class="visually-hidden">hands_on</span> Hands-on: Sort files</h3>
   <p>Since entries in the “coverage_depth.<span class="notranslate">bed</span>” may not be in the desired order, you can sort it by genomic positions.
-   For this purpose you may want to use the <code class="highlighter-rouge">Sort</code> tool in the <code class="highlighter-rouge">Text Manipulation</code> section (check out the blue arrow in figure 3).</p>
+   For this purpose you may want to use the <code class="language-plaintext highlighter-rouge">Sort</code> tool in the <code class="language-plaintext highlighter-rouge">Text Manipulation</code> section (check out the blue arrow in figure 3).</p>
 
   <p>You may sequentially sort on different columns:</p>
   <ol>
-    <li>first you can sort by chromosome by selecting column 1 (green arrow in figure 3) in “ascending order” and selecting the “flavor” <code class="highlighter-rouge">Natural/Version sort (-V)</code>, which allows for sorting chromosomes in their “natural” order (with alphabetical order chr10 will be right after chr1, chr2 after chr19 and so on);</li>
-    <li>after inserting a new column section (red arrow in figure 3), you can sort by column 2 in “ascending order” with <code class="highlighter-rouge">Fast numeric sort (-n)</code>;</li>
-    <li>after inserting a further column section, you can sort by column 3 in “ascending order” with <code class="highlighter-rouge">Fast numeric sort (-n)</code>;</li>
-    <li>after inserting a final column section, you can sort by column 3 in “ascending order” with <code class="highlighter-rouge">Fast numeric sort (-n)</code>.</li>
+    <li>first you can sort by chromosome by selecting column 1 (green arrow in figure 3) in “ascending order” and selecting the “flavor” <code class="language-plaintext highlighter-rouge">Natural/Version sort (-V)</code>, which allows for sorting chromosomes in their “natural” order (with alphabetical order chr10 will be right after chr1, chr2 after chr19 and so on);</li>
+    <li>after inserting a new column section (red arrow in figure 3), you can sort by column 2 in “ascending order” with <code class="language-plaintext highlighter-rouge">Fast numeric sort (-n)</code>;</li>
+    <li>after inserting a further column section, you can sort by column 3 in “ascending order” with <code class="language-plaintext highlighter-rouge">Fast numeric sort (-n)</code>;</li>
+    <li>after inserting a final column section, you can sort by column 3 in “ascending order” with <code class="language-plaintext highlighter-rouge">Fast numeric sort (-n)</code>.</li>
   </ol>
 
   <hr />
@@ -1007,7 +1007,7 @@ it means that the coverage value refers to nucleotide 50150071
 <blockquote class="notranslate hands_on">
   <h3 id="hands_on-hands-on-remove-duplicate-rows"><i class="fa fa-pencil" aria-hidden="true"></i><span class="visually-hidden">hands_on</span> Hands-on: Remove duplicate rows</h3>
   <p>If your file contains duplicated lines you may want to remove them for further processing.
-   For this purpose you can use the <code class="highlighter-rouge">Unique lines assuming sorted input file</code> tool in the <code class="highlighter-rouge">Text Manipulation</code> section.</p>
+   For this purpose you can use the <code class="language-plaintext highlighter-rouge">Unique lines assuming sorted input file</code> tool in the <code class="language-plaintext highlighter-rouge">Text Manipulation</code> section.</p>
 </blockquote>
 
 <blockquote class="notranslate hands_on">
@@ -1018,22 +1018,22 @@ it means that the coverage value refers to nucleotide 50150071
   <p>These steps will add further columns at the end of each line defining the base position with the “0-start, half-open” coordinate system.</p>
 
   <ol>
-    <li>Select the <code class="highlighter-rouge">Compute an <span class="notranslate">expression</span> on every row</code> tool in the <code class="highlighter-rouge">Text Manipulation</code> section (indicated by the blue arrow in figure 4);</li>
+    <li>Select the <code class="language-plaintext highlighter-rouge">Compute an <span class="notranslate">expression</span> on every row</code> tool in the <code class="language-plaintext highlighter-rouge">Text Manipulation</code> section (indicated by the blue arrow in figure 4);</li>
     <li>add the following <span class="notranslate">expression</span> “c2+c5-1” to obtain the sum of the values in columns 2 and 5 minus 1 (it will be used as the new starting position in the final file);</li>
     <li>select the file “sorted_coverage_depth.<span class="notranslate">bed</span>”;</li>
-    <li>select “yes” to <code class="highlighter-rouge">round Results?</code> (green arrow in figure 4);</li>
+    <li>select “yes” to <code class="language-plaintext highlighter-rouge">round Results?</code> (green arrow in figure 4);</li>
     <li>execute;</li>
     <li>you can rename the output as “temp1_coverage_depth.<span class="notranslate">bed</span>”;</li>
-    <li>select the <code class="highlighter-rouge">Compute an <span class="notranslate">expression</span> on every row</code> tool in the <code class="highlighter-rouge">Text Manipulation</code> section;</li>
+    <li>select the <code class="language-plaintext highlighter-rouge">Compute an <span class="notranslate">expression</span> on every row</code> tool in the <code class="language-plaintext highlighter-rouge">Text Manipulation</code> section;</li>
     <li>add the following <span class="notranslate">expression</span> “c2+c5” to obtain the sum of the values in columns 2 and 5 (it will be used as the new ending position in the final file). You can also use the <span class="notranslate">expression</span> ;</li>
     <li>select the file “temp1_coverage_depth.<span class="notranslate">bed</span>”;</li>
-    <li>select “yes” to <code class="highlighter-rouge">round Results?</code>;</li>
+    <li>select “yes” to <code class="language-plaintext highlighter-rouge">round Results?</code>;</li>
     <li>execute;</li>
     <li>you can rename the output as “temp2_coverage_depth.<span class="notranslate">bed</span>”;</li>
-    <li>select the <code class="highlighter-rouge">Table Compute</code> tool in the <code class="highlighter-rouge">Text Manipulation</code> section (indicated by the blue arrow in figure 5);</li>
+    <li>select the <code class="language-plaintext highlighter-rouge">Table Compute</code> tool in the <code class="language-plaintext highlighter-rouge">Text Manipulation</code> section (indicated by the blue arrow in figure 5);</li>
     <li>select the file “temp2_coverage_depth.<span class="notranslate">bed</span>”;</li>
-    <li>select the option <code class="highlighter-rouge">Drop, keep or duplicate rows and columns</code> from the drop-down menu <code class="highlighter-rouge">Type of table operation</code> (indicated by the green arrow in figure 5);</li>
-    <li>fill the field <code class="highlighter-rouge">List of columns to select</code> with “1,7,8,4,6” (the red arrow in figure 5);</li>
+    <li>select the option <code class="language-plaintext highlighter-rouge">Drop, keep or duplicate rows and columns</code> from the drop-down menu <code class="language-plaintext highlighter-rouge">Type of table operation</code> (indicated by the green arrow in figure 5);</li>
+    <li>fill the field <code class="language-plaintext highlighter-rouge">List of columns to select</code> with “1,7,8,4,6” (the red arrow in figure 5);</li>
     <li>unselect all the other options;</li>
     <li>execute;</li>
     <li>set the output file datatype to <em><span class="notranslate">bed</span></em>;</li>
@@ -1055,7 +1055,7 @@ it means that the coverage value refers to nucleotide 50150071
   <p>The following procedure can be used to obtain a <em><span class="notranslate">bed</span></em> file listing base positions with a coverage depth lower than a certain threshold (for instance 20x).</p>
 
   <ol>
-    <li>Select the <code class="highlighter-rouge">Filter</code> tool in the <code class="highlighter-rouge">Filter and Sort</code> section (indicated by the blue arrow in figure 6);</li>
+    <li>Select the <code class="language-plaintext highlighter-rouge">Filter</code> tool in the <code class="language-plaintext highlighter-rouge">Filter and Sort</code> section (indicated by the blue arrow in figure 6);</li>
     <li>select the file “final_coverage_depth.<span class="notranslate">bed</span>”;</li>
     <li>add the following <span class="notranslate">expression</span> “c5&lt;20” to filter all positions with a coverage depth lower than (green arrow in figure 6)(“c5” stands for the fifth column, in this case reporting the coverage depth);</li>
     <li>execute.</li>
@@ -1072,7 +1072,7 @@ it means that the coverage value refers to nucleotide 50150071
 
 <blockquote class="notranslate hands_on">
   <h3 id="hands_on-hands-on-merge-low-coverage-regions"><i class="fa fa-pencil" aria-hidden="true"></i><span class="visually-hidden">hands_on</span> Hands-on: Merge low coverage regions</h3>
-  <p>If you want to merge the positions with low coverage depth in larger genomic intervals to be used for further analyses (i.e.: Sanger sequencing of regions not covered by your NGS experiment), you may want to use the <code class="highlighter-rouge"><span class="notranslate">bed</span>tools MergeBED</code> tool in the <code class="highlighter-rouge">Operate on Genomic Intervals</code> section (see the blue arrow in figure 7).</p>
+  <p>If you want to merge the positions with low coverage depth in larger genomic intervals to be used for further analyses (i.e.: Sanger sequencing of regions not covered by your NGS experiment), you may want to use the <code class="language-plaintext highlighter-rouge"><span class="notranslate">bed</span>tools MergeBED</code> tool in the <code class="language-plaintext highlighter-rouge">Operate on Genomic Intervals</code> section (see the blue arrow in figure 7).</p>
 
   <ol>
     <li>Select the file “low_coverage_depth.<span class="notranslate">bed</span>”;</li>
@@ -1115,7 +1115,7 @@ does not properly define columns in your files
 <p>The procedures listed above are to be taken as examples of the possible operations that can be performed on <span class="notranslate">bed</span> files with <span class="notranslate">bed</span>tools (you may check out their website to get further information:
 <a href="https://bedtools.readthedocs.io/en/latest/content/bedtools-suite.html"><span class="notranslate">BED</span>tools</a>) ad text manipulation tools available on <span class="notranslate">Galaxy</span>.</p>
 
-<p>Furthermore, please be aware that the tool <code class="highlighter-rouge"><span class="notranslate">bed</span>tools Compute both the depth and breadth of coverage</code> does not perform any filtering based on read quality: if your are interested in that aspect you may want to rely on different tools.</p>
+<p>Furthermore, please be aware that the tool <code class="language-plaintext highlighter-rouge"><span class="notranslate">bed</span>tools Compute both the depth and breadth of coverage</code> does not perform any filtering based on read quality: if your are interested in that aspect you may want to rely on different tools.</p>
 
 <h1 id="variant-calling-and-classification">Variant calling and classification</h1>
 
@@ -1135,22 +1135,22 @@ To accurately detect mosaic variants in sequencing data without matched controls
   <h3 id="hands_on-hands-on-mosaic-variant-calling"><i class="fa fa-pencil" aria-hidden="true"></i><span class="visually-hidden">hands_on</span> Hands-on: Mosaic Variant calling.</h3>
 
   <p>You may use files provided as examples with this tutorial and called
-   <code class="highlighter-rouge">Panel_alignment.bam</code> and <code class="highlighter-rouge">Panel_Target_regions.<span class="notranslate">bed</span></code>.</p>
+   <code class="language-plaintext highlighter-rouge">Panel_alignment.bam</code> and <code class="language-plaintext highlighter-rouge">Panel_Target_regions.<span class="notranslate">bed</span></code>.</p>
 
   <p>Run <strong>Mutect2</strong> <i class="fa fa-wrench" aria-hidden="true"></i><span class="visually-hidden">tool</span> restricting the search space on target regions with “-L” option to reduce computational burden.
    The first step is needed to create an inte<span class="notranslate">rna</span>l database of controls (i.e. <strong>Panel Of Normals</strong> - PoN) to reduce bias for somatic calls. It runs on a single sample at time:</p>
 
   <ul>
-    <li><code class="highlighter-rouge">gatk Mutect2 -R HSapiensReference_genome_hg19.fasta -L Panel_target_regions.<span class="notranslate">bed</span> -I Panel_alignment_normal1.bam -O normal_genotyped1.vcf</code></li>
-    <li><code class="highlighter-rouge">gatk Mutect2 -R HSapiensReference_genome_hg19.fasta -L Panel_target_regions.<span class="notranslate">bed</span> -I Panel_alignment_normal2.bam -O normal_genotyped2.vcf</code></li>
+    <li><code class="language-plaintext highlighter-rouge">gatk Mutect2 -R HSapiensReference_genome_hg19.fasta -L Panel_target_regions.<span class="notranslate">bed</span> -I Panel_alignment_normal1.bam -O normal_genotyped1.vcf</code></li>
+    <li><code class="language-plaintext highlighter-rouge">gatk Mutect2 -R HSapiensReference_genome_hg19.fasta -L Panel_target_regions.<span class="notranslate">bed</span> -I Panel_alignment_normal2.bam -O normal_genotyped2.vcf</code></li>
   </ul>
 
   <p>Then use GATK’s <em>CreateSomaticPanelOfNormals</em> tool to generate the PoN:</p>
 
   <ul>
-    <li><code class="highlighter-rouge">gatk GenomicsDBImport -L Panel_target_regions.<span class="notranslate">bed</span> -R HSapiensReference_genome_hg19.fasta --genomicsdb-workspace-path PoN_db -V normal_genotyped1.vcf -V normal_genotyped2.vcf</code></li>
+    <li><code class="language-plaintext highlighter-rouge">gatk GenomicsDBImport -L Panel_target_regions.<span class="notranslate">bed</span> -R HSapiensReference_genome_hg19.fasta --genomicsdb-workspace-path PoN_db -V normal_genotyped1.vcf -V normal_genotyped2.vcf</code></li>
     <li>
-      <p><code class="highlighter-rouge">gatk CreateSomaticPanelOfNormals -R HSapiensReference_genome_hg19.fasta -V gendb://PoN_db -O panel_of_normals.vcf</code></p>
+      <p><code class="language-plaintext highlighter-rouge">gatk CreateSomaticPanelOfNormals -R HSapiensReference_genome_hg19.fasta -V gendb://PoN_db -O panel_of_normals.vcf</code></p>
 
       <blockquote class="comment">
         <h3 id="comment-note-2"><i class="fa fa-commenting-o" aria-hidden="true"></i><span class="visually-hidden">comment</span> Note</h3>
@@ -1163,10 +1163,10 @@ To accurately detect mosaic variants in sequencing data without matched controls
 
   <ul>
     <li>
-      <p><code class="highlighter-rouge">gatk Mutect2 -R HSapiensReference_genome_hg19.fasta -I Panel_alignment.bam --germline-resource af-only-gnomad.vcf --panel-of-normals panel_of_normals.vcf -O somatic_genotyped_unfiltered.vcf</code></p>
+      <p><code class="language-plaintext highlighter-rouge">gatk Mutect2 -R HSapiensReference_genome_hg19.fasta -I Panel_alignment.bam --germline-resource af-only-gnomad.vcf --panel-of-normals panel_of_normals.vcf -O somatic_genotyped_unfiltered.vcf</code></p>
     </li>
     <li>
-      <p><code class="highlighter-rouge">gatk FilterMutectCalls -R HSapiensReference_genome_hg19.fasta -V somatic_genotyped_unfiltered.vcf -O somatic_genotyped_filtered.vcf</code></p>
+      <p><code class="language-plaintext highlighter-rouge">gatk FilterMutectCalls -R HSapiensReference_genome_hg19.fasta -V somatic_genotyped_unfiltered.vcf -O somatic_genotyped_filtered.vcf</code></p>
     </li>
   </ul>
 
@@ -1269,11 +1269,11 @@ It is based on its command line counterpart <a href="http://annovar.openbioinfor
 <p>To annotate your file with wANNOVAR you need to provide your email address, to be notified when the annotation is complete, and just upload your input file (or paste a series of variant in the designated field). Results are usually ready within minutes.
 <img src="/clinical_genomics/images/wann_fig1.png" alt="Figure 1" /></p>
 
-<p>You will get both <em>csv</em> files or <em>txt</em> files (which can be saved as they are by clicking on the specific link, right-clicking in any point of the page and selecting <code class="highlighter-rouge">Save as</code>). They can be both opened with Excel or other sp<span class="notranslate">reads</span>heet programs (concerning <em>csv</em> files, please ensure that comma are set as default list separator/delimiter in your version of Excel).</p>
+<p>You will get both <em>csv</em> files or <em>txt</em> files (which can be saved as they are by clicking on the specific link, right-clicking in any point of the page and selecting <code class="language-plaintext highlighter-rouge">Save as</code>). They can be both opened with Excel or other sp<span class="notranslate">reads</span>heet programs (concerning <em>csv</em> files, please ensure that comma are set as default list separator/delimiter in your version of Excel).</p>
 
-<p>You will also get both <code class="highlighter-rouge">exome summary results</code> (only conding variants are included) and <code class="highlighter-rouge">genome summary results</code> (all variants included).</p>
+<p>You will also get both <code class="language-plaintext highlighter-rouge">exome summary results</code> (only conding variants are included) and <code class="language-plaintext highlighter-rouge">genome summary results</code> (all variants included).</p>
 
-<p>You can also provide a list of Disease or Phenotype Terms that the program can use for filtering your results (only for single sample <code class="highlighter-rouge">vcf</code> files).
+<p>You can also provide a list of Disease or Phenotype Terms that the program can use for filtering your results (only for single sample <code class="language-plaintext highlighter-rouge">vcf</code> files).
 <img src="/clinical_genomics/images/wann_fig2.png" alt="Figure 2" /></p>
 
 <p>Finally, there are some Parameter Settings that can be modified:</p>
@@ -1297,7 +1297,7 @@ It is based on its command line counterpart <a href="http://annovar.openbioinfor
   <li>Among the files available for download from the <a href="https://gnomad.broadinstitute.org/downloads#constraint">gnomAD database</a>, you may get per-gene constraint scores (for further details, please check the paper by the Exome Aggregation Consortium on “Nature. 2016 Aug 18; 536(7616):285–291.”). Those score may indicate if a specific gene is expected to be intolerant to loss-of-function variants (pLI) (haploinsufficiency), or if it is predicted to be associate to recessive diseases.</li>
 </ol>
 
-<p>In the end, you can add these annotations to your wANNOVAR files by using the <code class="highlighter-rouge">VLOOKUP</code> function in Excel.</p>
+<p>In the end, you can add these annotations to your wANNOVAR files by using the <code class="language-plaintext highlighter-rouge">VLOOKUP</code> function in Excel.</p>
 
 <h1 id="variant-prioritization">Variant prioritization</h1>
 
@@ -1598,7 +1598,7 @@ Three major bias sources are known to affect <em>EMRC</em> dramatically in targe
   <li><a href="http://www.ospedalebambinogesu.it">Andrea Ciolfi</a> - Ospedale Pediatrico Bambino Gesù, IRCCS, Rome, Italy</li>
   <li><a href="https://gmauro.github.io">Gianmauro Cuccuru</a> - Albert Ludwigs University, Freiburg, Germany</li>
   <li><a href="http://www">Giuseppe Marangi</a> - Institute of Genomic Medicine, Fondazione Policlinico Universitario A. Gemelli IRCCS, Università Cattolica del Sacro Cuore, Roma, Italy</li>
-  <li><a href="http://www.crs4.it/peopledetails/183/paolo-uva">Paolo Uva</a> - Centro di Ricerca, Sviluppo e Studi Superiori in Sardegna (CRS4), Pula, Cagliari, Italy</li>
+  <li><a href="https://www.researchgate.net/profile/Paolo_Uva">Paolo Uva</a> - IRCCS G. Gaslini, Genoa, Italy</li>
 </ul>
 
 
@@ -1646,8 +1646,8 @@ Three major bias sources are known to affect <em>EMRC</em> dramatically in targe
     author = "Alessandro Bruselles and Andrea Ciolfi and Gianmauro Cuccuru and Giuseppe Marangi and Paolo Uva and Tommaso Pippucci",
     title = "Data analysis and interpretation for clinical genomics (Galaxy Training Materials)",
     year = "2020",
-    month = "02",
-    day = "26"
+    month = "03",
+    day = "17"
     url = "\url{/clinical_genomics/}",
     note = "[Online; accessed TODAY]"
 }

@@ -1,0 +1,1286 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>NGS analysis using Galaxy</title>
+        
+        <link rel="stylesheet" href="/clinical_genomics/assets/css/bootstrap.min.css?v=3">
+        <link rel="stylesheet" href="/clinical_genomics/assets/css/bootstrap-toc.min.css">
+        <link rel="stylesheet" href="/clinical_genomics/assets/css/main.css?v=2">
+        <link rel="stylesheet" href="/clinical_genomics/assets/css/font-awesome.css">
+        <link rel="stylesheet" href="/clinical_genomics/assets/css/academicons.css">
+        <link rel="stylesheet" href="/clinical_genomics/assets/css/syntax_highlighting.css">
+        <link rel="shortcut icon" href="/clinical_genomics/favicon.ico" type="image/x-icon" />
+
+        
+        
+        
+        
+        
+        <meta name="description" content="Collection of tutorials developed and maintained by the w..." />
+        <meta property="og:title" content="Galaxy Training: NGS analysis using Galaxy" />
+        <meta property="og:description" content="Collection of tutorials developed and maintained by the w..." />
+        <meta property="og:image" content="/clinical_genomics/assets/images/GTNLogo1000.png" />
+    </head>
+    <body data-spy="scroll" data-target="#toc">
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="container main-content">
+    <script type="application/ld+json">
+        
+
+
+{}
+    </script>
+
+    <section class="tutorial">
+        <h1 data-toc-skip>NGS analysis using Galaxy</h1>
+        
+
+        <div class="contributors-line">By: 
+
+<a href="/clinical_genomics/hall-of-fame#puva" class="contributor-badge"><img src="https://avatars.githubusercontent.com/puva" alt="Paolo Uva">Paolo Uva</a>, <a href="/clinical_genomics/hall-of-fame#gmauro" class="contributor-badge"><img src="https://avatars.githubusercontent.com/gmauro" alt="Gianmauro Cuccuru">Gianmauro Cuccuru</a>
+
+</div>
+
+        <blockquote class="overview">
+            <h3>Overview</h3>
+            <strong><i class="fa fa-question-circle" aria-hidden="true"></i><span class="visually-hidden">question</span> Questions</strong>
+            <ul>
+            
+            <li><p>How do you explore NGS data without command line tools?</p>
+</li>
+            
+            <li><p>How do you identify genetic variants in samples based on exome sequencing data?</p>
+</li>
+            
+            <li><p>How do you, among the set of detected variants, identify candidate causative variants for a given phenotype/disease?</p>
+</li>
+            
+            </ul>
+
+            <strong><i class="fa fa-bullseye" aria-hidden="true"></i><span class="visually-hidden">objectives</span> Objectives</strong>
+            <ul>
+            
+            <li><p>Learn how to use Galaxy: load datasets, start an analysis</p>
+</li>
+            
+            <li><p>Use variant annotation and inheritance pattern to identify candidate causative variants and to prioritize them</p>
+</li>
+            
+            </ul>
+
+            
+
+            
+            <p><strong><i class="fa fa-hourglass-end" aria-hidden="true"></i><span class="visually-hidden">time</span> Time estimation:</strong> 2 hours</p>
+            
+
+            
+
+            
+            
+
+            
+
+            <p><strong> <i class="fa fa-calendar" aria-hidden="true"></i><span class="visually-hidden">last_modification</span> Last modification:</strong> Sep 20, 2020 </p>
+        </blockquote>
+
+        <div class="container">
+            <div class="row">
+                <!-- sidebar, which will move to the top on a small screen -->
+                <div class="col-sm-2">
+                    <nav id="toc" data-toggle="toc" class="sticky-top"></nav>
+                </div>
+                <div class="col-sm-10">
+                    <h1 class="no_toc" id="introduction">Introduction</h1>
+
+<p>Exome sequencing is a method that enables the selective sequencing of the
+exonic regions of a genome - that is the transcribed parts of the genome present
+in mature m<span class="notranslate">RNA</span>, including protein-coding sequences, but also untranslated
+regions (UTRs).</p>
+
+<p>In humans, there are about 180,000 exons with a combined length of ~ 30 million
+base pairs (30 Mb). Thus, the exome represents only 1% of the human genome, but
+has been estimated to harbor up to 85% of all disease-causing variants (<a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2768590/">Choi
+et al., 2009</a>).</p>
+
+<p>Exome sequencing, thus, offers an affordable alte<span class="notranslate">rna</span>tive to whole-genome
+sequencing in the diagnosis of genetic disease, while still covering far more
+potential disease-causing variant sites than genotyping arrays. This is of
+special relevance in the case of rare genetic diseases, for which the causative
+variants may occur at too low a frequency in the human population to be
+included on genotyping arrays.</p>
+
+<p>Of note, a recent study focusing on the area of clinical pediatric neurology
+indicates that the costs of exome sequencing may actually not be higher even
+today than the costs of conventional genetic testing (<a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5589982/">Vissers et al., 2017</a>).</p>
+
+<blockquote class="details">
+  <h3 id="details-exome-sequencing-vs-whole-genome-sequencing"><i class="fa fa-info-circle" aria-hidden="true"></i><span class="visually-hidden">details</span> Exome sequencing <em>vs</em> whole-genome sequencing</h3>
+
+  <p>In principle, the steps illustrated in this tutorial are suitable also for
+the analysis of whole-genome sequencing (WGS) data. At comparable mean
+coverage, however, WGS datasets will be much larger than exome sequencing
+ones and their analysis will take correspondingly more time.</p>
+
+  <p>The obvious benefit of WGS compared to exome-sequencing, of course, is that
+it will allow variant detection in even more regions of the genome.
+As a less apparent advantage, the more complete information of WGS data can
+make it easier to detect <em>copy number variation (CNV)</em> and
+<em>structural variants</em> such as translocations and inversions (although such
+detection will require more sophisticated analysis steps, which are not
+covered by this tutorial).</p>
+
+  <p>Very generally, one could argue that exome-sequencing captures most of the
+information that can be analyzed with standard bioinformatical tools today at
+reasonable costs. WGS, on the other hand, captures as much information as
+today’s sequencing technology can provide, and it may be possible to
+reanalyze such data with more powerful bioinformatical software in the
+future to exploit aspects of the information that were not amenable to
+analysis at the time of data acquisition.</p>
+</blockquote>
+
+<p>The identification of causative variants underlying any particular genetic
+disease is, as we will see in this tutorial, not just dependent on the
+successful detection of variants in the genome of the patient, but also on
+variant comparison between the patient and selected relatives. Most often
+family trio data, consisting of the genome sequences of the patient and their
+parents, is used for this purpose. With multisample data like this it becomes
+possible to search for variants following any kind of Mendelian inheritance
+scheme compatible with the observed inheritance pattern of the disease,
+e.g. recessive, <em>de-novo</em>.</p>
+
+<blockquote class="details">
+  <h3 id="details-related-tutorials"><i class="fa fa-info-circle" aria-hidden="true"></i><span class="visually-hidden">details</span> Related tutorials</h3>
+
+  <p>This tutorial focuses on the practical aspects of analyzing real-world
+patient data, and is a reduced version of the tutorial
+<a href="https://training.galaxyproject.org/training-material/topics/variant-analysis/tutorials/exome-seq/tutorial.html">Exome sequencing data analysis for diagnosing a genetic disease</a>. 
+If you are more interested in the theoretical aspects of
+variant calling, you may want to have a look at the related tutorial on
+<a href="https://training.galaxyproject.org/training-material/topics/variant-analysis/tutorials/dip/tutorial.html">Calling variants in diploid systems</a>.</p>
+
+  <p>The tutorial on <a href="https://training.galaxyproject.org/training-material/topics/variant-analysis/tutorials/somatic-variants/tutorial.html">Somatic variant calling</a>
+follows an analysis <span class="notranslate">workflow</span> that is rather similar to the one here, but
+tries to identify tumor variants by comparing a tumor sample to healthy
+tissue from the same patient. Together, the two tutorials are intended to get
+you started with genomics medicine using <span class="notranslate">Galaxy</span>.</p>
+
+</blockquote>
+
+<blockquote class="agenda">
+  <h3 id="agenda">Agenda</h3>
+
+  <p>In this tutorial, we will cover:</p>
+
+<ol id="markdown-toc">
+  <li><a href="#log-in-into-galaxy" id="markdown-toc-log-in-into-galaxy">Log in into <span class="notranslate">Galaxy</span></a></li>
+  <li><a href="#data-preparation" id="markdown-toc-data-preparation">Data Preparation</a>    <ol>
+      <li><a href="#get-data" id="markdown-toc-get-data">Get data</a></li>
+    </ol>
+  </li>
+  <li><a href="#quality-control" id="markdown-toc-quality-control">Quality control</a></li>
+  <li><a href="#variant-annotation-and-reporting" id="markdown-toc-variant-annotation-and-reporting">Variant annotation and reporting</a>    <ol>
+      <li><a href="#get-data-1" id="markdown-toc-get-data-1">Get data</a></li>
+      <li><a href="#variant-annotation-with-functional-genomic-effects" id="markdown-toc-variant-annotation-with-functional-genomic-effects">Variant annotation with functional genomic effects</a></li>
+      <li><a href="#generating-a-gemini-database-of-variants-for-further-annotation-and-efficient-variant-queries" id="markdown-toc-generating-a-gemini-database-of-variants-for-further-annotation-and-efficient-variant-queries">Generating a GEMINI database of variants for further annotation and efficient variant queries</a></li>
+      <li><a href="#candidate-variant-detection" id="markdown-toc-candidate-variant-detection">Candidate variant detection</a></li>
+      <li><a href="#displaying-data-in-ucsc-genome-browser" id="markdown-toc-displaying-data-in-ucsc-genome-browser">Displaying data in UCSC genome browser</a></li>
+    </ol>
+  </li>
+</ol>
+
+</blockquote>
+
+<h1 id="log-in-into-galaxy">Log in into <span class="notranslate">Galaxy</span></h1>
+
+<p>Several <span class="notranslate">Galaxy</span> servers are available worldwide, with differ in the set of tools available. 
+In this tutorial we’ll use the European <span class="notranslate">Galaxy</span> server <a href="https://usegalaxy.eu">use<span class="notranslate">galaxy</span>.eu</a>.</p>
+
+<blockquote class="notranslate hands_on">
+  <h3 id="hands_on-hands-on-log-in-or-register"><i class="fa fa-pencil" aria-hidden="true"></i><span class="visually-hidden">hands_on</span> Hands-on: Log in or register</h3>
+  <ol>
+    <li>Open your favorite browser (Chrome/Chromium, Safari or Firefox, but not Internet Explorer/Edge!)</li>
+    <li>Browse to <a href="https://usegalaxy.eu">use<span class="notranslate">galaxy</span>.eu</a></li>
+    <li>Choose <em>Login or Register</em> from the navigation bar at the top of the page</li>
+    <li>
+      <p>If you have previously registered an account with this particular instance of <span class="notranslate">Galaxy</span> (user accounts are <em>not</em> shared between public servers!), proceed by logging in with your registered <em>public name</em>, or email address, and your password.</p>
+
+      <p>If you need to create a new account, click on <em>Register here</em> instead.</p>
+      <blockquote>
+
+      </blockquote>
+    </li>
+  </ol>
+</blockquote>
+
+<h1 id="data-preparation">Data Preparation</h1>
+
+<p>In this tutorial, we are going to analyze exome sequencing data from a family
+trio, in which the boy child is affected by the disease
+<a href="https://ghr.nlm.nih.gov/condition/osteopetrosis/">osteopetrosis</a>, while both
+parents, who happen to be consanguineous, are unaffected. Our goal is to
+identify the genetic variation that is responsible for the disease.</p>
+
+<h2 id="get-data">Get data</h2>
+
+<p>This tutorial allows you to:</p>
+
+<ul>
+  <li>perform a qualty control of the original sequenced <span class="notranslate">reads</span> in <code class="language-plaintext highlighter-rouge">fastq</code>
+format</li>
+  <li>work with the final files of a typical exome analysis <span class="notranslate">workflow</span>: <code class="language-plaintext highlighter-rouge">bam</code> (mapped <span class="notranslate">reads</span>),
+and <code class="language-plaintext highlighter-rouge">vcf</code> (list of variants)</li>
+</ul>
+
+<p>Therefore we assume that the complete analysis, from raw <code class="language-plaintext highlighter-rouge">fastq</code> to <code class="language-plaintext highlighter-rouge">bam</code> and <code class="language-plaintext highlighter-rouge">vcf</code>
+has been already performed. This shortened analysis may suit your time frame
+better, and is probably closer to how you would analyze your own
+data.</p>
+
+<p>The following hands-on section will guide you through obtaining the right
+data for the tutorial.</p>
+
+<blockquote class="notranslate hands_on">
+  <h3 id="hands_on-hands-on-data-upload"><i class="fa fa-pencil" aria-hidden="true"></i><span class="visually-hidden">hands_on</span> Hands-on: Data upload</h3>
+
+  <ol>
+    <li>
+      <p>Create a new history for this tutorial and give it a meaningful name</p>
+
+      <blockquote class="tip">
+
+        <h3 id="tip-tip-creating-a-new-history"><i class="fa fa-lightbulb-o" aria-hidden="true"></i><span class="visually-hidden">tip</span> Tip: Creating a new history</h3>
+
+        <p>Click the <i class="fa fa-plus" aria-hidden="true"></i><span class="visually-hidden">new-history</span> icon at the top of the history panel</p>
+
+        <p>If the <i class="fa fa-plus" aria-hidden="true"></i><span class="visually-hidden">new-history</span> is missing:</p>
+        <ol>
+          <li>Click on the <i class="fa fa-cog" aria-hidden="true"></i><span class="visually-hidden"><span class="notranslate">galaxy</span>-gear</span> icon (<strong>History options</strong>) on the top of the history panel</li>
+          <li>Select the option <strong>Create New</strong> from the menu</li>
+        </ol>
+      </blockquote>
+
+      <blockquote class="tip">
+
+        <h3 id="tip-tip-renaming-a-history"><i class="fa fa-lightbulb-o" aria-hidden="true"></i><span class="visually-hidden">tip</span> Tip: Renaming a history</h3>
+
+        <ol>
+          <li>Click on <strong>Unnamed history</strong> (or the current name of the history) (<strong>Click to rename history</strong>) at the top of your history panel</li>
+          <li>Type the new name</li>
+          <li>Press <kbd>Enter</kbd></li>
+        </ol>
+      </blockquote>
+    </li>
+    <li>
+      <p>Obtain the raw <code class="language-plaintext highlighter-rouge">fastq</code> sequencing data</p>
+
+      <p>The whole set of raw sequence data for the family trio is available at
+<a href="https://zenodo.org/record/3054169">Zenodo</a>.
+To reduce the time of the analysis, we’ll only use the raw sequence <span class="notranslate">reads</span>
+of the proband</p>
+      <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>https://zenodo.org/record/3243160/files/proband_R1.fq.gz
+https://zenodo.org/record/3243160/files/proband_R2.fq.gz
+</code></pre></div>      </div>
+
+      <blockquote class="tip">
+
+        <h3 id="tip-tip-importing-data-via-links"><i class="fa fa-lightbulb-o" aria-hidden="true"></i><span class="visually-hidden">tip</span> Tip: Importing data via links</h3>
+
+        <ul>
+          <li>Copy the link location</li>
+          <li>
+            <p>Open the <span class="notranslate">Galaxy</span> Upload Manager (<i class="fa fa fa-upload" aria-hidden="true"></i><span class="visually-hidden"><span class="notranslate">galaxy</span>-upload</span> on the top-right of the tool panel)</p>
+          </li>
+          <li>Select <strong>Paste/Fetch Data</strong></li>
+          <li>
+            <p>Paste the link into the text field</p>
+          </li>
+          <li>
+            <p>Change <strong>Type</strong> from “Auto-detect” to <code class="language-plaintext highlighter-rouge">fastqsanger.gz</code></p>
+          </li>
+          <li>
+            <p>Press <strong>Start</strong></p>
+          </li>
+          <li><strong>Close</strong> the window</li>
+        </ul>
+
+        <p>By default, <span class="notranslate">Galaxy</span> uses the URL as the name, so rename the files with a more useful name.</p>
+
+      </blockquote>
+    </li>
+    <li>
+      <p>Check that the newly created datasets in your history have their
+datatypes assigned correctly to <code class="language-plaintext highlighter-rouge">fastqsanger.gz</code>, and fix any missing or
+wrong datatype assignment</p>
+
+      <blockquote class="tip">
+
+        <h3 id="tip-tip-changing-the-datatype"><i class="fa fa-lightbulb-o" aria-hidden="true"></i><span class="visually-hidden">tip</span> Tip: Changing the datatype</h3>
+        <ul>
+          <li>Click on the <i class="fa fa-pencil" aria-hidden="true"></i><span class="visually-hidden"><span class="notranslate">galaxy</span>-pencil</span> <strong>pencil icon</strong> for the dataset to edit its attributes</li>
+          <li>In the central panel, click on the <i class="fa fa fa-database" aria-hidden="true"></i><span class="visually-hidden"><span class="notranslate">galaxy</span>-chart-select-data</span> <strong>Datatypes</strong> tab on the top</li>
+          <li>Select <code class="language-plaintext highlighter-rouge">fastqsanger.gz</code></li>
+          <li>Click the <strong>Change datatype</strong> button</li>
+        </ul>
+      </blockquote>
+    </li>
+    <li>
+      <p>Obtain the mapped sequencing data in <code class="language-plaintext highlighter-rouge">bam</code> format</p>
+
+      <p>As in the previous step, the whole dataset is avalable from
+<a href="https://zenodo.org/record/3054169">Zenodo</a>. Here we will only use the proband’s data:</p>
+      <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>https://zenodo.org/record/3243160/files/mapped_<span class="notranslate">reads</span>_proband.bam
+</code></pre></div>      </div>
+
+      <blockquote class="tip">
+
+        <h3 id="tip-tip-importing-data-via-links-1"><i class="fa fa-lightbulb-o" aria-hidden="true"></i><span class="visually-hidden">tip</span> Tip: Importing data via links</h3>
+
+        <ul>
+          <li>Copy the link location</li>
+          <li>
+            <p>Open the <span class="notranslate">Galaxy</span> Upload Manager (<i class="fa fa fa-upload" aria-hidden="true"></i><span class="visually-hidden"><span class="notranslate">galaxy</span>-upload</span> on the top-right of the tool panel)</p>
+          </li>
+          <li>Select <strong>Paste/Fetch Data</strong></li>
+          <li>
+            <p>Paste the link into the text field</p>
+          </li>
+          <li>
+            <p>Change <strong>Type</strong> from “Auto-detect” to <code class="language-plaintext highlighter-rouge">bam</code></p>
+          </li>
+          <li>
+            <p>Press <strong>Start</strong></p>
+          </li>
+          <li><strong>Close</strong> the window</li>
+        </ul>
+
+        <p>By default, <span class="notranslate">Galaxy</span> uses the URL as the name, so rename the files with a more useful name.</p>
+
+      </blockquote>
+    </li>
+    <li>
+      <p>Check that the newly created dataset in your history has its 
+datatype assigned correctly to <code class="language-plaintext highlighter-rouge">bam</code>, and fix any missing or wrong
+datatype assignment</p>
+
+      <blockquote class="tip">
+
+        <h3 id="tip-tip-changing-the-datatype-1"><i class="fa fa-lightbulb-o" aria-hidden="true"></i><span class="visually-hidden">tip</span> Tip: Changing the datatype</h3>
+        <ul>
+          <li>Click on the <i class="fa fa-pencil" aria-hidden="true"></i><span class="visually-hidden"><span class="notranslate">galaxy</span>-pencil</span> <strong>pencil icon</strong> for the dataset to edit its attributes</li>
+          <li>In the central panel, click on the <i class="fa fa fa-database" aria-hidden="true"></i><span class="visually-hidden"><span class="notranslate">galaxy</span>-chart-select-data</span> <strong>Datatypes</strong> tab on the top</li>
+          <li>Select <code class="language-plaintext highlighter-rouge">bam</code></li>
+          <li>Click the <strong>Change datatype</strong> button</li>
+        </ul>
+      </blockquote>
+    </li>
+    <li>
+      <p>Obtain the variants in vcf format</p>
+
+      <p>Now you’ll get the list of variants for the whole trio - father,
+mother and proband:</p>
+      <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>https://zenodo.org/record/4030079/files/Post-processed_FreeBayes_calls.vcf
+</code></pre></div>      </div>
+
+      <blockquote class="tip">
+
+        <h3 id="tip-tip-importing-data-via-links-2"><i class="fa fa-lightbulb-o" aria-hidden="true"></i><span class="visually-hidden">tip</span> Tip: Importing data via links</h3>
+
+        <ul>
+          <li>Copy the link location</li>
+          <li>
+            <p>Open the <span class="notranslate">Galaxy</span> Upload Manager (<i class="fa fa fa-upload" aria-hidden="true"></i><span class="visually-hidden"><span class="notranslate">galaxy</span>-upload</span> on the top-right of the tool panel)</p>
+          </li>
+          <li>Select <strong>Paste/Fetch Data</strong></li>
+          <li>
+            <p>Paste the link into the text field</p>
+          </li>
+          <li>
+            <p>Change <strong>Type</strong> from “Auto-detect” to <code class="language-plaintext highlighter-rouge">vcf</code></p>
+          </li>
+          <li>
+            <p>Press <strong>Start</strong></p>
+          </li>
+          <li><strong>Close</strong> the window</li>
+        </ul>
+
+        <p>By default, <span class="notranslate">Galaxy</span> uses the URL as the name, so rename the files with a more useful name.</p>
+
+      </blockquote>
+    </li>
+    <li>
+      <p>Check that the newly created datasets in your history has its 
+datatype assigned correctly to <code class="language-plaintext highlighter-rouge">vcf</code>, and fix any missing or wrong
+datatype assignment</p>
+
+      <blockquote class="tip">
+
+        <h3 id="tip-tip-changing-the-datatype-2"><i class="fa fa-lightbulb-o" aria-hidden="true"></i><span class="visually-hidden">tip</span> Tip: Changing the datatype</h3>
+        <ul>
+          <li>Click on the <i class="fa fa-pencil" aria-hidden="true"></i><span class="visually-hidden"><span class="notranslate">galaxy</span>-pencil</span> <strong>pencil icon</strong> for the dataset to edit its attributes</li>
+          <li>In the central panel, click on the <i class="fa fa fa-database" aria-hidden="true"></i><span class="visually-hidden"><span class="notranslate">galaxy</span>-chart-select-data</span> <strong>Datatypes</strong> tab on the top</li>
+          <li>Select <code class="language-plaintext highlighter-rouge">vcf</code></li>
+          <li>Click the <strong>Change datatype</strong> button</li>
+        </ul>
+      </blockquote>
+    </li>
+    <li>
+      <p>Specify the genome version that was used for <span class="notranslate">mapping</span> and variant calling</p>
+
+      <p>Change the database/build (dbkey) for your <code class="language-plaintext highlighter-rouge">bam</code> and <code class="language-plaintext highlighter-rouge">vcf</code> datasets
+to <code class="language-plaintext highlighter-rouge">hg19</code>.</p>
+
+      <blockquote class="tip">
+
+        <h3 id="tip-tip-changing-databasebuild-dbkey"><i class="fa fa-lightbulb-o" aria-hidden="true"></i><span class="visually-hidden">tip</span> Tip: Changing Database/Build (dbkey)</h3>
+        <ul>
+          <li>Click on the <i class="fa fa-pencil" aria-hidden="true"></i><span class="visually-hidden"><span class="notranslate">galaxy</span>-pencil</span> <strong>pencil icon</strong> for the dataset to edit its attributes</li>
+          <li>In the central panel, change the <strong>Database/Build</strong> field</li>
+          <li>Select your desired database key from the dropdown list: <code class="language-plaintext highlighter-rouge">Human Feb. 2009 (GRCh37/hg19) (hg19)</code></li>
+          <li>Click the <strong>Save</strong> button</li>
+        </ul>
+      </blockquote>
+
+      <blockquote class="details">
+        <h3 id="details-why-specify-genome-versions"><i class="fa fa-info-circle" aria-hidden="true"></i><span class="visually-hidden">details</span> Why specify genome versions</h3>
+        <p>When you are starting with sequencing data that has already been mapped
+to a particular genome version (human hg19 in this case), it is good
+practice to attach this information as metadata to the datasets.</p>
+
+        <p>Doing so helps prevent accidental use of a different version of the
+reference genome in later steps like variant calling, which would
+typically lead to nonsensical results because of base position changes
+between the different versions.</p>
+      </blockquote>
+    </li>
+    <li>
+      <p>Rename the datasets</p>
+
+      <p>For datasets that you upload via a link, <span class="notranslate">Galaxy</span> will pick the link
+address as the dataset name, which you will likely want to shorten to
+just the file names.</p>
+
+      <blockquote class="tip">
+
+        <h3 id="tip-tip-renaming-a-dataset"><i class="fa fa-lightbulb-o" aria-hidden="true"></i><span class="visually-hidden">tip</span> Tip: Renaming a dataset</h3>
+        <ul>
+          <li>Click on the <i class="fa fa-pencil" aria-hidden="true"></i><span class="visually-hidden"><span class="notranslate">galaxy</span>-pencil</span> <strong>pencil icon</strong> for the dataset to edit its attributes</li>
+          <li>In the central panel, change the <strong>Name</strong> field</li>
+          <li>Click the <strong>Save</strong> button</li>
+        </ul>
+      </blockquote>
+    </li>
+  </ol>
+
+</blockquote>
+
+<blockquote class="question">
+  <h3 id="question-break"><i class="fa fa-question-circle" aria-hidden="true"></i><span class="visually-hidden">question</span> Break</h3>
+  <p><i class="fa fa-trophy" aria-hidden="true"></i><span class="visually-hidden">trophy</span> <strong>Congratulations!</strong> You successfully loaded all the datasets we’ll use in this tutorial.</p>
+
+  <p>Please stop here and move to the main room for discussion.</p>
+</blockquote>
+
+<h1 id="quality-control">Quality control</h1>
+
+<p>This step serves the purpose of identifying possible issues with the raw
+sequenced <span class="notranslate">reads</span> input data before embarking on any “real” analysis steps.</p>
+
+<p>Some of the typical problems with NGS data can be mitigated by preprocessing
+affected sequencing <span class="notranslate">reads</span> before trying to map them to the reference genome.
+Detecting some other, more severe problems early on may at least save you a lot
+of time spent on analyzing low-quality data that is not worth the effort.</p>
+
+<p>Here, we will perform a standard quality check on our input data and only point
+out a few interesting aspects about that data. For a more thorough explanation
+of NGS data quality control, you may want to have a look at the dedicated
+tutorial on <a href="https://training.galaxyproject.org/training-material/topics/sequence-analysis/tutorials/quality-control/tutorial.html">Quality control</a>.</p>
+
+<blockquote class="notranslate hands_on">
+  <h3 id="hands_on-hands-on-quality-control-of-the-input-datasets"><i class="fa fa-pencil" aria-hidden="true"></i><span class="visually-hidden">hands_on</span> Hands-on: Quality control of the input datasets</h3>
+  <ol>
+    <li>Run <strong>FastQC</strong> <i class="fa fa-wrench" aria-hidden="true"></i><span class="visually-hidden">tool</span> on each of your two <code class="language-plaintext highlighter-rouge">fastq</code> datasets
+      <ul>
+        <li><i class="fa fa-files-o" aria-hidden="true"></i><span class="visually-hidden">param-files</span> <em>“Short read data from your current history”</em>: all 2 FASTQ datasets selected with <strong>Multiple datasets</strong></li>
+      </ul>
+
+      <blockquote class="tip">
+
+        <h3 id="tip-tip-select-multiple-datasets"><i class="fa fa-lightbulb-o" aria-hidden="true"></i><span class="visually-hidden">tip</span> Tip: Select multiple datasets</h3>
+
+        <ol>
+          <li>Click on <i class="fa fa-files-o" aria-hidden="true"></i><span class="visually-hidden">param-files</span> <strong>Multiple datasets</strong></li>
+          <li>Select several files by keeping the <kbd>Ctrl</kbd> (or
+<kbd>COMMAND</kbd>) key pressed and clicking on the files of interest</li>
+        </ol>
+      </blockquote>
+
+      <p>When you start this job, four new datasets (one with the calculated raw
+data, another one with an html report of the findings for each input
+dataset) will get added to your history.</p>
+    </li>
+    <li>Use <strong>MultiQC</strong> <i class="fa fa-wrench" aria-hidden="true"></i><span class="visually-hidden">tool</span> to aggregate the raw <strong>FastQC</strong> data of all input datasets into one report
+      <ul>
+        <li>In <em>“Results”</em>
+          <ul>
+            <li><em>“Which tool was used generate logs?”</em>: <code class="language-plaintext highlighter-rouge">FastQC</code></li>
+            <li>In <em>“FastQC output”</em>
+              <ul>
+                <li><em>“Type of FastQC output?”</em>: <code class="language-plaintext highlighter-rouge">Raw data</code></li>
+                <li><i class="fa fa-files-o" aria-hidden="true"></i><span class="visually-hidden">param-files</span> <em>“FastQC output”</em>: all two <em>RawData</em>
+outputs of <strong>FastQC</strong> <i class="fa fa-wrench" aria-hidden="true"></i><span class="visually-hidden">tool</span>)</li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li>
+      <p>Inspect the <em>Webpage</em> output produced by the tool</p>
+
+      <blockquote class="question">
+        <h3 id="question-questions"><i class="fa fa-question-circle" aria-hidden="true"></i><span class="visually-hidden">question</span> Questions</h3>
+
+        <ol>
+          <li>Based on the report, do you think preprocessing of the <span class="notranslate">reads</span>
+(trimming and/or filtering) will be necessary before <span class="notranslate">mapping</span>?</li>
+          <li>Why do all samples show a non-normal GC content distribution, and
+should you be worried?</li>
+        </ol>
+
+        <blockquote class="solution">
+          <h3 id="solution-solution"><i class="fa fa-eye" aria-hidden="true"></i><span class="visually-hidden">solution</span> Solution</h3>
+
+          <ol>
+            <li>Sequence quality is quite good overall. If anything you might
+consider trimming the 3’ ends of <span class="notranslate">reads</span> (base qualities decline
+slightly towards the 3’ ends) or to filter out the small fraction
+of <span class="notranslate">reads</span> with a mean base quality &lt; 5.
+Feel free to run, <em>e.g.</em>, <strong>Trimmomatic</strong> <i class="fa fa-wrench" aria-hidden="true"></i><span class="visually-hidden">tool</span> on the
+fastq datasets if you want to, but don’t expect this to have a big
+effect on the analysis given the high overall quality of the data
+of all samples.</li>
+            <li>
+              <p>In whole-genome sequencing, a non-normal distribution of the GC
+content of the <span class="notranslate">reads</span> from a sample is typically considered to hint
+at possible contamination.
+Here, however, we are dealing with sequencing data from captured
+exomes, <em>i.e</em>, the <span class="notranslate">reads</span> are not representing random sequences from
+a genome, but rather a biased selection.</p>
+
+              <p>A bimodal GC content distribution, like for the samples at hand, is
+a characteristic feature of many exome capture methods and has also
+been observed with an Illumina Nextera Rapid Capture exome kit
+before (compare Fig. 3D in
+<a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4522667/">Shigemizu et al., 2015</a>
+).</p>
+            </li>
+          </ol>
+
+        </blockquote>
+      </blockquote>
+    </li>
+  </ol>
+</blockquote>
+
+<blockquote class="question">
+  <h3 id="question-break-1"><i class="fa fa-question-circle" aria-hidden="true"></i><span class="visually-hidden">question</span> Break</h3>
+  <p><i class="fa fa-trophy" aria-hidden="true"></i><span class="visually-hidden">trophy</span> <strong>Congratulations!</strong> You successfully performed the quality 
+control of your raw sequence <span class="notranslate">reads</span>.</p>
+
+  <p>Please stop here and move to the main room for discussion.</p>
+</blockquote>
+
+<h1 id="variant-annotation-and-reporting">Variant annotation and reporting</h1>
+
+<p>A list of variants detected in a set of samples is a start, but to discover
+biologically or clinically relevant information in it is almost impossible
+without some additional tools and data. In particular, the
+variants in the list need to be:</p>
+
+<ul>
+  <li>
+    <p><strong>prioritized</strong> with respect to their potential relevance for the biological
+/ clinical phenotype that is studied</p>
+
+    <p>Even with exome sequencing, only a fraction of the detected variants will
+have a clear impact on the function of a protein (many variants will
+introduce silent mutations, or reside in intronic regions still covered by
+the exome-enriched sequencing data). Of these, many will have been observed
+before in healthy individuals arguing against them playing an important role
+in an adverse phenotype.</p>
+  </li>
+  <li>
+    <p><strong>filtered</strong> based on the inheritance pattern expected for a causative
+variant</p>
+
+    <p>A multisample VCF file records the most likely genotypes of all samples at
+every variant site. Knowing which individuals (samples) are affected by a
+phenotype we can exclude variants with inheritance patterns that are
+incompatible with the observed inheritance of the phenotype.</p>
+  </li>
+  <li>
+    <p><strong>reported</strong> in a more human-friendly form</p>
+
+    <p>While the VCF format can be used to encode all relevant information about any
+variant, it is hard for humans to parse that information.</p>
+
+    <p>Ideally, one would like to generate simpler reports for any set of filtered
+and prioritized variants.</p>
+  </li>
+</ul>
+
+<h2 id="get-data-1">Get data</h2>
+
+<p>Our workhorse for annotating and reporting variants and the genes affected by
+them will be the <strong>GEMINI</strong> framework. GEMINI comes bundled with a wealth of
+annotation data for human variants from many different sources. These can be
+used to annotate any list of human variants conveniently, without the need for
+separate downloads and conversion between different annotation data formats.</p>
+
+<blockquote class="details">
+  <h3 id="details-custom-annotations-and-gemini"><i class="fa fa-info-circle" aria-hidden="true"></i><span class="visually-hidden">details</span> Custom annotations and GEMINI</h3>
+  <p>Beyond its bundled annotation data, GEMINI also provides (limited) support
+for using custom annotations.
+The <a href="../somatic-variants/tutorial.html">Somatic variant calling tutorial</a>
+demonstrates the use of <strong>GEMINI annotate</strong> <i class="fa fa-wrench" aria-hidden="true"></i><span class="visually-hidden">tool</span> for this purpose.</p>
+</blockquote>
+
+<p>The only additional annotation tool we need, for the purpose of this
+tutorial, is the tool <strong>SnpEff</strong>, which can annotate variants with their
+calculated effects on known genomic features. Because SnpEff is a generic tool
+that can be used on variants found in the genome of any organism we need to
+provide it with a so-called <strong>SnpEff genome file</strong> that holds the annotated
+features (genes, transcripts, translated regions, <em>etc.</em>) for our genome of
+interest.</p>
+
+<p>While annotated variants are all we need to <em>prioritize</em> them as described
+above, <em>filtering based on inheritance patterns</em> requires a way to inform
+GEMINI about the relationship between our samples and their observed
+phenotypes. This is done through a so-called <strong>pedigree file</strong> in PED format,
+which is rather simple to generate manually.</p>
+
+<blockquote class="notranslate hands_on">
+  <h3 id="hands_on-hands-on-obtain-snpeff-genome-and-gemini-pedigree-files"><i class="fa fa-pencil" aria-hidden="true"></i><span class="visually-hidden">hands_on</span> Hands-on: Obtain SnpEff genome and GEMINI pedigree files</h3>
+  <ol>
+    <li>
+      <p>Create a PED-formatted pedigree dataset describing our single-family sample trio:</p>
+
+      <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#family_id    name     pate<span class="notranslate">rna</span>l_id    mate<span class="notranslate">rna</span>l_id    sex    phenotype
+FAM           father   0              0              1      1
+FAM           mother   0              0              2      1
+FAM           proband  father         mother         1      2
+</code></pre></div>      </div>
+
+      <p>and set its datatype to <code class="language-plaintext highlighter-rouge">tabular</code>.</p>
+
+      <blockquote class="tip">
+
+        <h3 id="tip-tip-creating-a-new-file"><i class="fa fa-lightbulb-o" aria-hidden="true"></i><span class="visually-hidden">tip</span> Tip: Creating a new file</h3>
+
+        <ul>
+          <li>Open the <span class="notranslate">Galaxy</span> Upload Manager</li>
+          <li>Select <strong>Paste/Fetch Data</strong></li>
+          <li>
+            <p>Paste the file contents into the text field</p>
+          </li>
+          <li>
+            <p>Change <strong>Type</strong> from “Auto-detect” to <code class="language-plaintext highlighter-rouge">tabular</code></p>
+          </li>
+          <li>Press <strong>Start</strong> and <strong>Close</strong> the window</li>
+        </ul>
+      </blockquote>
+
+      <blockquote class="warning">
+        <h3 id="warning-remember-those-sample-names"><i class="fa fa-warning" aria-hidden="true"></i><span class="visually-hidden">warning</span> Remember those sample names</h3>
+
+        <p>Names in the above pedigree file should be exactly <code class="language-plaintext highlighter-rouge">father</code>, <code class="language-plaintext highlighter-rouge">mother</code>,
+<code class="language-plaintext highlighter-rouge">proband</code> as those names were used as sample names at the read <span class="notranslate">mapping</span> step,
+and have been propagated to the VCF dataset of variants.
+It is <strong>important</strong> that
+you use matching sample names in the pedigree and in the VCF dataset, or
+GEMINI will not be able to connect the information in them.</p>
+
+      </blockquote>
+
+      <blockquote class="details">
+        <h3 id="details-more-on-ped-files"><i class="fa fa-info-circle" aria-hidden="true"></i><span class="visually-hidden">details</span> More on PED files</h3>
+
+        <p>The PED format is explained in the help section of <strong>GEMINI load</strong>
+<i class="fa fa-wrench" aria-hidden="true"></i><span class="visually-hidden">tool</span>.</p>
+
+        <p>Take a moment and try to understand the information that is encoded in
+the PED dataset we are using here.</p>
+      </blockquote>
+    </li>
+  </ol>
+</blockquote>
+
+<h2 id="variant-annotation-with-functional-genomic-effects">Variant annotation with functional genomic effects</h2>
+
+<p>We need to start annotating our variants with SnpEff simply because Gemini
+knows how to parse SnpEff-annotated VCFs, while GEMINI output cannot be used
+with SnpEff.</p>
+
+<blockquote class="notranslate hands_on">
+  <h3 id="hands_on-hands-on-adding-annotations-with-snpeff"><i class="fa fa-pencil" aria-hidden="true"></i><span class="visually-hidden">hands_on</span> Hands-on: Adding annotations with SnpEff</h3>
+  <ol>
+    <li><strong>SnpEff eff</strong> <i class="fa fa-wrench" aria-hidden="true"></i><span class="visually-hidden">tool</span>
+      <ul>
+        <li><i class="fa fa-file-o" aria-hidden="true"></i><span class="visually-hidden">param-file</span> <em>“Sequence changes (SNPs, MNPs, InDels)”</em>: the
+output of <strong>bcftools norm</strong> <i class="fa fa-wrench" aria-hidden="true"></i><span class="visually-hidden">tool</span></li>
+        <li><em>“Input format”</em>: <code class="language-plaintext highlighter-rouge">VCF</code></li>
+        <li><em>“Output format”</em>: <code class="language-plaintext highlighter-rouge">VCF (only if input is VCF)</code></li>
+        <li><em>“Genome source”</em>: <code class="language-plaintext highlighter-rouge">Locally installed reference genome</code>
+          <ul>
+            <li><em>“Genome”</em>: <code class="language-plaintext highlighter-rouge">Homo sapiens: hg19</code> (or a similarly named option)</li>
+          </ul>
+        </li>
+        <li><em>“Produce Summary Stats”</em>: <code class="language-plaintext highlighter-rouge">Yes</code></li>
+      </ul>
+    </li>
+  </ol>
+
+</blockquote>
+
+<p>Running the above job will produce two datasets. One is a <em>Summary Stats</em> HTML
+report, which contains some interesting general metrics such as a distribution
+of variants across gene features. The other one is the main annotation result -
+a VCF like the input, but with annotations of variant effects added to the INFO
+column.</p>
+
+<blockquote class="notranslate hands_on">
+  <h3 id="hands_on-optional-hands-on-inspect-the-summary-stats-output-produced-by-snpeff"><i class="fa fa-pencil" aria-hidden="true"></i><span class="visually-hidden">hands_on</span> Optional hands-on: Inspect the Summary Stats output produced by SnpEff</h3>
+
+  <ol>
+    <li>Display the dataset:
+      <ul>
+        <li>Click the <i class="fa fa-eye" aria-hidden="true"></i><span class="visually-hidden"><span class="notranslate">galaxy</span>-eye</span> icon next to the HTML dataset generated
+by SnpEff to display its contents.</li>
+      </ul>
+
+      <blockquote class="question">
+        <h3 id="question-question"><i class="fa fa-question-circle" aria-hidden="true"></i><span class="visually-hidden">question</span> Question</h3>
+
+        <p>One section in the report is <strong>Number of effects by type and region</strong>.
+Given that you are analyzing exome data, what is the most surprising
+aspect in this section? Do you have an idea how to explain it?</p>
+
+        <blockquote class="solution">
+          <h3 id="solution-solution-1"><i class="fa fa-eye" aria-hidden="true"></i><span class="visually-hidden">solution</span> Solution</h3>
+
+          <p>According to the report, intronic variants make up 50% of all
+variants detected!</p>
+
+          <p>Exome capture kits are designed to capture exons plus a bit of
+surrounding sequence to ensure proper coverage of the exon ends
+including splice junction sites.</p>
+
+          <p>Thus, even though intronic sequences are underrepresented in exome
+sequencing data, not all of them are eliminated. Since mutations
+in most intron bases are neutral, they can accumulate at higher
+frequency than most mutations in exons and, thus, still represent a
+relevant fraction of all detected variants.</p>
+
+        </blockquote>
+      </blockquote>
+    </li>
+  </ol>
+</blockquote>
+
+<blockquote class="question">
+  <h3 id="question-break-2"><i class="fa fa-question-circle" aria-hidden="true"></i><span class="visually-hidden">question</span> Break</h3>
+  <p><i class="fa fa-trophy" aria-hidden="true"></i><span class="visually-hidden">trophy</span> <strong>Congratulations!</strong> You successfully annotated your variants.</p>
+
+  <p>Please stop here and move to the main room for discussion.</p>
+</blockquote>
+
+<h2 id="generating-a-gemini-database-of-variants-for-further-annotation-and-efficient-variant-queries">Generating a GEMINI database of variants for further annotation and efficient variant queries</h2>
+
+<p>Next, we are going to use the SnpEff-annotated VCF as the basis for more
+exhaustive annotation with GEMINI. Unlike SnpEff, GEMINI does not just add
+annotations to a list of variants in VCF format. Instead the framework
+extracts the variants from the VCF input and stores them, together with newly
+added annotations, in an SQL database. It then lets you formulate queries for
+retrieving and reporting subsets of variants. The combined variant
+extraction/annotation/storage step is performed by the <strong>GEMINI load</strong> tool. In
+addition, that same tool can be used to incorporate sample pedigree info into
+the database.</p>
+
+<blockquote class="notranslate hands_on">
+  <h3 id="hands_on-hands-on-creating-a-gemini-database-from-a-variants-dataset"><i class="fa fa-pencil" aria-hidden="true"></i><span class="visually-hidden">hands_on</span> Hands-on: Creating a GEMINI database from a variants dataset</h3>
+
+  <ol>
+    <li><strong>GEMINI load</strong> <i class="fa fa-wrench" aria-hidden="true"></i><span class="visually-hidden">tool</span> with
+      <ul>
+        <li><i class="fa fa-file-o" aria-hidden="true"></i><span class="visually-hidden">param-file</span> <em>“VCF dataset to be loaded in the GEMINI database”</em>:
+the output of <strong>SnpEff eff</strong> <i class="fa fa-wrench" aria-hidden="true"></i><span class="visually-hidden">tool</span></li>
+        <li><em>“The variants in this input are”</em>: <code class="language-plaintext highlighter-rouge">annotated with snpEff</code></li>
+        <li>
+          <p><em>“This input comes with genotype calls for its samples”</em>: <code class="language-plaintext highlighter-rouge">Yes</code></p>
+
+          <p>Sample genotypes were called by Freebayes for us.</p>
+        </li>
+        <li><em>“Choose a gemini annotation source”</em>: select the latest available annotations snapshot (most likely, there will be only one)</li>
+        <li><em>“Sample and family information in PED format”</em>: the pedigree file
+prepared above</li>
+        <li><em>“Load the following optional content into the database”</em>
+          <ul>
+            <li><i class="fa fa-check-square-o" aria-hidden="true"></i><span class="visually-hidden">param-check</span> <em>“GERP scores”</em></li>
+            <li><i class="fa fa-check-square-o" aria-hidden="true"></i><span class="visually-hidden">param-check</span> <em>“CADD scores”</em></li>
+            <li><i class="fa fa-check-square-o" aria-hidden="true"></i><span class="visually-hidden">param-check</span> <em>“Gene tables”</em></li>
+            <li><i class="fa fa-check-square-o" aria-hidden="true"></i><span class="visually-hidden">param-check</span> <em>“Sample genotypes”</em></li>
+            <li><i class="fa fa-check-square-o" aria-hidden="true"></i><span class="visually-hidden">param-check</span> <em>“variant INFO field”</em></li>
+          </ul>
+
+          <p>Leave <strong>unchecked</strong> the following:</p>
+          <ul>
+            <li>
+              <p><em>“Genotype likelihoods (sample PLs)”</em></p>
+
+              <p>Variants have been generated by Freebayes which does not generate these values</p>
+            </li>
+            <li>
+              <p><em>“only variants that passed all filters”</em></p>
+
+              <p>This setting is irrelevant for our input because Freebayes did not
+apply any variant filters.</p>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ol>
+</blockquote>
+
+<p>Running this job generates a GEMINI-specific database dataset, which can only
+be processed with other GEMINI tools. The benefit, however, is that we now have
+variants, rich annotations and pedigree info stored in a format that enables
+flexible and highly efficient queries, which will greatly simplify our actual
+task to identify the variant responsible for the child’s disease!</p>
+
+<blockquote class="details">
+  <h3 id="details-the-gemini-suite-of-tools"><i class="fa fa-info-circle" aria-hidden="true"></i><span class="visually-hidden">details</span> The GEMINI suite of tools</h3>
+
+  <p>For a beginner, the sheer number of GEMINI tools may be a bit daunting and
+give the impression that this framework adds a lot of complexity.
+In practice, however, you will likely only need a very limited number of
+these tools for any given analysis. To help you get an overview, here is a
+list of the most general-purpose tools and their function:</p>
+
+  <ul>
+    <li>Every analysis will always start with <strong>GEMINI load</strong> <i class="fa fa-wrench" aria-hidden="true"></i><span class="visually-hidden">tool</span> to
+build the GEMINI database from a variant list in VCF format and the
+default annotations bundled with GEMINI.</li>
+    <li><strong>GEMINI amend</strong> <i class="fa fa-wrench" aria-hidden="true"></i><span class="visually-hidden">tool</span> and <strong>GEMINI annotate</strong> <i class="fa fa-wrench" aria-hidden="true"></i><span class="visually-hidden">tool</span>
+let you add additional information to a GEMINI database after it has been
+created. Use <strong>GEMINI amend</strong> to overwrite the pedigree info in a database
+with the one found in a given PED input, and <strong>GEMINI annotate</strong> to add
+custom annotations based on a VCF or <span class="notranslate">BED</span> dataset.</li>
+    <li><strong>GEMINI database info</strong> <i class="fa fa-wrench" aria-hidden="true"></i><span class="visually-hidden">tool</span> lets you peek into the content of
+a GEMINI database to explore, <em>e.g</em>, what annotations are stored in it.</li>
+    <li><strong>GEMINI query</strong> <i class="fa fa-wrench" aria-hidden="true"></i><span class="visually-hidden">tool</span> and <strong>GEMINI gene-wise</strong> <i class="fa fa-wrench" aria-hidden="true"></i><span class="visually-hidden">tool</span>
+are the two generic and most flexible tools for querying, filtering and
+reporting variants in a database. There is hardly anything you cannot do
+with these tools, but you need to know or learn at least some SQL-like
+syntax to use them.</li>
+    <li><strong>GEMINI inheritance pattern</strong> <i class="fa fa-wrench" aria-hidden="true"></i><span class="visually-hidden">tool</span> simplifies variant queries
+based on their inheritance pattern. While you could use the <em>query</em> and
+<em>gene-wise</em> tools for the same purpose, this tool allows you to perform a
+range of standard queries without typing any SQL. <strong>This tool is what we
+are going to use here to identify the causative variant.</strong></li>
+    <li>The remaining tools serve more specialized purposes, which are beyond the
+scope of this tutorial.</li>
+  </ul>
+
+  <p>The <a href="https://training.galaxyproject.org/training-material/topics/variant-analysis/tutorials/somatic-variants/tutorial.html">Somatic variant calling tutorial</a>
+demonstrates the use of the <strong>GEMINI annotate</strong> and <strong>GEMINI query</strong> tools,
+and tries to introduce some essential bits of GEMINI’s SQL-like syntax.</p>
+
+  <p>For a thorough explanation of all tools and functionality you should consult
+the <a href="https://gemini.readthedocs.io">GEMINI documentation</a>.</p>
+</blockquote>
+
+<h2 id="candidate-variant-detection">Candidate variant detection</h2>
+
+<p>Let us now try to identify variants that have the potential to explain the
+boy child’s osteopetrosis phenotype. Remember that the parents are
+consanguineous, but both of them do not suffer from the disease. This
+information allows us to make some assumptions about the inheritance pattern of the causative variant.</p>
+
+<blockquote class="question">
+  <h3 id="question-question-1"><i class="fa fa-question-circle" aria-hidden="true"></i><span class="visually-hidden">question</span> Question</h3>
+
+  <p>Which inheritance patterns are in line with the phenotypic observations
+for the family trio?</p>
+
+  <p>Hint: GEMINI easily lets you search for variants fitting any of the following
+inheritance patterns:</p>
+  <ul>
+    <li>Autosomal recessive</li>
+    <li>Autosomal dominant</li>
+    <li>X-linked recessive</li>
+    <li>X-linked dominant</li>
+    <li>Autosomal de-novo</li>
+    <li>X-linked de-novo</li>
+    <li>Compound heterozygous</li>
+    <li>Loss of heterozygosity (LOH) events</li>
+  </ul>
+
+  <p>Think about which of these might apply to the causative variant.</p>
+
+  <blockquote class="solution">
+    <h3 id="solution-solution-2"><i class="fa fa-eye" aria-hidden="true"></i><span class="visually-hidden">solution</span> Solution</h3>
+    <ul>
+      <li>Since both parents are unaffected the variant cannot be dominant and
+inherited.</li>
+      <li>A de-novo acquisition of a dominant (or an X-linked recessive) mutation
+is, of course, possible.</li>
+      <li>A recessive variant is a possibility, and a more likely one given
+the parents’ consanguinity.</li>
+      <li>For both the de-novo and the inherited recessive case, the variant could
+reside on an autosome or on the X chromosome. Given that we provided you
+with only the subset of sequencing <span class="notranslate">reads</span> <span class="notranslate">mapping</span> to chr8, an X-linked
+variant would not be exactly instructive though ;)</li>
+      <li>A compound heterozygous combination of variant alleles affecting the
+same gene is possible, but less likely given the consanguinity of the
+parents (as this would require two deleterious variant alleles in the
+gene circulating in the same family).</li>
+      <li>A loss of heterozygosity (LOH) turning a heterozygous recessive variant
+into a homozygous one could be caused by uniparental disomy or by an LOH
+event early in embryonic development, but both these possibilities have
+an exceedingly small probability.</li>
+    </ul>
+
+    <p>Based on these considerations it makes sense to start looking for
+inherited autosomal recessive variants first. Then, if there is no
+convincing candidate mutation among them, you could extend the search to
+de-novo variants, compund heterozygous variant pairs and LOH events -
+probably in that order.</p>
+  </blockquote>
+</blockquote>
+
+<p>Since our GEMINI database holds the variant and genotype calls for the
+family trio and the relationship between the family members, we can make use
+of <strong>GEMINI inheritance pattern</strong> <i class="fa fa-wrench" aria-hidden="true"></i><span class="visually-hidden">tool</span> to report all variants
+fitting any specific inheritance model with ease.</p>
+
+<p>Below is how you can perform the query for inherited autosomal recessive
+variants. Feel free to run analogous queries for other types of variants that
+you think could plausibly be causative for the child’s disease.</p>
+
+<blockquote class="notranslate hands_on">
+  <h3 id="hands_on-hands-on-finding-and-reporting-plausible-causative-variants"><i class="fa fa-pencil" aria-hidden="true"></i><span class="visually-hidden">hands_on</span> Hands-on: Finding and reporting plausible causative variants</h3>
+  <ol>
+    <li><strong>GEMINI inheritance pattern</strong> <i class="fa fa-wrench" aria-hidden="true"></i><span class="visually-hidden">tool</span>
+      <ul>
+        <li><em>“GEMINI database”</em>: the GEMINI database of annotated variants; output
+of <strong>GEMINI load</strong> <i class="fa fa-wrench" aria-hidden="true"></i><span class="visually-hidden">tool</span></li>
+        <li><em>“Your assumption about the inheritance pattern of the phenotype of interest”</em>:
+<code class="language-plaintext highlighter-rouge">Autosomal recessive</code>
+          <ul>
+            <li><i class="fa fa-plus-square-o" aria-hidden="true"></i><span class="visually-hidden">param-repeat</span> <em>“Additional constraints on variants”</em>
+              <ul>
+                <li>
+                  <p><em>“Additional constraints expressed in SQL syntax”</em>:
+<code class="language-plaintext highlighter-rouge">impact_severity != 'LOW'</code></p>
+
+                  <p>This is a simple way to prioritize variants based on their
+functional genomic impact. Variants with <em>low impact severity</em> would
+be those with no obvious impact on protein function (<em>i.e.</em>, silent
+mutations and variants outside coding regions)</p>
+                </li>
+              </ul>
+            </li>
+            <li>
+              <p><em>“Include hits with less convincing inheritance patterns”</em>: <code class="language-plaintext highlighter-rouge">No</code></p>
+
+              <p>This option is only meaningful with larger family trees to account
+for errors in phenotype assessment.</p>
+            </li>
+            <li>
+              <p><em>“Report candidates shared by unaffected samples”</em>: <code class="language-plaintext highlighter-rouge">No</code></p>
+
+              <p>This option is only meaningful with larger family trees to account
+for alleles with partial phenotypic penetrance.</p>
+            </li>
+          </ul>
+        </li>
+        <li>
+          <p><em>“Family-wise criteria for variant selection”</em>: keep default settings</p>
+
+          <p>This section is not useful when you have data from just one family.</p>
+        </li>
+        <li>In <em>“Output - included information”</em>
+          <ul>
+            <li><em>“Set of columns to include in the variant report table”</em>:
+<code class="language-plaintext highlighter-rouge">Custom (report user-specified columns)</code>
+              <ul>
+                <li><em>“Choose columns to include in the report”</em>:
+                  <ul>
+                    <li><i class="fa fa-check-square-o" aria-hidden="true"></i><span class="visually-hidden">param-check</span> <em>“alte<span class="notranslate">rna</span>tive allele frequency (max_aaf_all)”</em></li>
+                  </ul>
+                </li>
+                <li><em>“Additional columns (comma-separated)”</em>:
+<code class="language-plaintext highlighter-rouge">chrom, start, ref, alt, impact, gene, clinvar_sig,
+clinvar_disease_name, clinvar_gene_phenotype, rs_ids</code></li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+      </ul>
+
+      <blockquote class="comment">
+        <h3 id="comment-variant--vs-gene-centric-clinvar-information"><i class="fa fa-commenting-o" aria-hidden="true"></i><span class="visually-hidden">comment</span> Variant- <em>vs</em> gene-centric ClinVar information</h3>
+        <p>Most annotation data offered by GEMINI is variant-centric, <em>i.e.</em>,
+annotations reported for a variant are specific to this exact variant.
+A few annotation sources, however, also provide gene-centric
+information, which applies to the gene affected by a variant, not
+necessarily the variant itself.</p>
+
+        <p>In the case of <a href="https://www.ncbi.nlm.nih.gov/clinvar/">ClinVar</a>, the
+annotation fields/columns <code class="language-plaintext highlighter-rouge">clinvar_sig</code> and <code class="language-plaintext highlighter-rouge">clinvar_disease_name</code> refer
+to the particular variant, but <code class="language-plaintext highlighter-rouge">clinvar_gene_phenotype</code> provides
+information about the affected gene.</p>
+
+        <p>Including the gene phenotype in the report can be crucial because a
+gene may be well known to be disease-relevant, while a particular
+variant may not have been clinically observed or been reported before.</p>
+      </blockquote>
+    </li>
+  </ol>
+
+</blockquote>
+
+<blockquote class="question">
+  <h3 id="question-question-2"><i class="fa fa-question-circle" aria-hidden="true"></i><span class="visually-hidden">question</span> Question</h3>
+
+  <p>From the GEMINI reports you generated, can you identify the most likely
+candidate variant responsible for the child’s disease?</p>
+</blockquote>
+
+<blockquote class="details">
+  <h3 id="details-more-gemini-usage-examples"><i class="fa fa-info-circle" aria-hidden="true"></i><span class="visually-hidden">details</span> More GEMINI usage examples</h3>
+
+  <p>While only demonstrating command line use of GEMINI, the following tutorial
+slides may give you additional ideas for variant queries and filters:</p>
+
+  <ul>
+    <li><a href="https://s3.amazonaws.com/gemini-tutorials/Intro-To-Gemini.pdf">Introduction to GEMINI</a></li>
+    <li><a href="https://s3.amazonaws.com/gemini-tutorials/Gemini-DeNovo-Tutorial.pdf">Identifying <em>de novo</em> mutations with GEMINI</a></li>
+    <li><a href="https://s3.amazonaws.com/gemini-tutorials/Gemini-Recessive-Tutorial.pdf">Identifying recessive gene candidates with GEMINI</a></li>
+    <li><a href="https://s3.amazonaws.com/gemini-tutorials/Gemini-Dominant-Tutorial.pdf">Identifying dominant gene candidates with GEMINI</a></li>
+  </ul>
+</blockquote>
+
+<h2 id="displaying-data-in-ucsc-genome-browser">Displaying data in UCSC genome browser</h2>
+
+<p>A good way to further explore candidate variants is to look at their genomic surrounding. This can be done by using genome browsers to display the contents of variants in <code class="language-plaintext highlighter-rouge">vcf</code> files and aligned <span class="notranslate">reads</span> stored in <code class="language-plaintext highlighter-rouge">bam</code> files. <span class="notranslate">Galaxy</span> can display both files - <code class="language-plaintext highlighter-rouge">vcf</code>  and <code class="language-plaintext highlighter-rouge">bam</code>  - launching a genome browser such as IGV on your local machine, and it can connect to online genome browsers as well. An example of such an online genome browser is the UCSC genome browser.</p>
+
+<blockquote class="notranslate hands_on">
+  <h3 id="hands_on-hands-on-ucsc-genome-browser"><i class="fa fa-pencil" aria-hidden="true"></i><span class="visually-hidden">hands_on</span> Hands-on: UCSC genome browser</h3>
+
+  <ol>
+    <li>
+      <p>First, check that the <strong>database</strong> of your <code class="language-plaintext highlighter-rouge">vcf</code> and <code class="language-plaintext highlighter-rouge">bam</code> dataset is <code class="language-plaintext highlighter-rouge">hg19</code>. If not, click on the <i class="fa fa-pencil" aria-hidden="true"></i><span class="visually-hidden"><span class="notranslate">galaxy</span>-pencil</span> pencil icon and modify the <strong>Database/Build:</strong> field to <code class="language-plaintext highlighter-rouge">Human Feb. 2009 (GRCh37/hg19) (hg19)</code>.</p>
+
+      <blockquote class="tip">
+
+        <h3 id="tip-tip-changing-databasebuild-dbkey-1"><i class="fa fa-lightbulb-o" aria-hidden="true"></i><span class="visually-hidden">tip</span> Tip: Changing Database/Build (dbkey)</h3>
+        <ul>
+          <li>Click on the <i class="fa fa-pencil" aria-hidden="true"></i><span class="visually-hidden"><span class="notranslate">galaxy</span>-pencil</span> <strong>pencil icon</strong> for the dataset to edit its attributes</li>
+          <li>In the central panel, change the <strong>Database/Build</strong> field</li>
+          <li>Select your desired database key from the dropdown list: <code class="language-plaintext highlighter-rouge">hg19</code></li>
+          <li>Click the <strong>Save</strong> button</li>
+        </ul>
+      </blockquote>
+    </li>
+  </ol>
+
+  <blockquote>
+
+    <ol>
+      <li>To <strong>visualize the data in UCSC genome browser</strong>, click on <code class="language-plaintext highlighter-rouge">display at UCSC main</code> option visible when you expand the history item.</li>
+    </ol>
+  </blockquote>
+
+  <p><img src="/clinical_genomics/images/101_displayucsc.png" alt="`display at UCSC main` link" /></p>
+
+  <p>This will upload the data to UCSC as custom track. To see your data look at the <code class="language-plaintext highlighter-rouge">User Track</code> near the top. You can enter the coordinates of one of your variants at the top to jump to that location.</p>
+
+  <p><img src="/clinical_genomics/images/101_21.png" alt="`User Track` shown in the UCSC genome browser" /></p>
+</blockquote>
+
+<p>UCSC provides a large number of tracks that can help you get a sense of your genomic area, it contains common SNPs, repeats, genes, and much more (scroll down to find all possible tracks).</p>
+
+<h1 class="no_toc" id="conclusion">Conclusion</h1>
+
+<p>It was not hard to find the most likely causative mutation for the child’s
+disease (you did find it, right?).</p>
+
+<p>Even though it will not always provide as strong support for just one specific
+causative variant, analysis of whole-exome sequencing data of family trios (or
+other related samples) can often narrow down the search for the cause of a
+genetic disease to just a very small, manageable set of candidate variants, the
+relevance of which can then be addressed through standard methods.</p>
+
+<blockquote class="question">
+  <h3 id="question-break-3"><i class="fa fa-question-circle" aria-hidden="true"></i><span class="visually-hidden">question</span> Break</h3>
+  <p><i class="fa fa-trophy" aria-hidden="true"></i><span class="visually-hidden">trophy</span> <strong>Congratulations!</strong> You successfully completed the tutorial.</p>
+
+  <p>Please move to the main room for discussion.</p>
+</blockquote>
+
+<h1 class="no_toc" id="credits">Credits</h1>
+
+<p>This tutorial is a short version of the <span class="notranslate">Galaxy</span> tutorial <a href="https://training.galaxyproject.org/training-material/topics/variant-analysis/tutorials/exome-seq/tutorial.html">Exome sequencing data analysis for diagnosing a genetic disease</a>.</p>
+
+
+
+                    
+                    <blockquote class="key_points">
+                        <h3><i class="fa fa-key" aria-hidden="true"></i><span class="visually-hidden">keypoints</span> Key points</h3>
+                        <ul>
+                            
+                            <li><p>Galaxy is on line free platform for NGS analysis</p>
+</li>
+                            
+                            <li><p>Exome sequencing is an efficient way to identify disease-relevant genetic variants.</p>
+</li>
+                            
+                            <li><p>Variant annotation and being able to exploit genotype information across family members is key to identifying candidate disease variants. SnpEff and GEMINI are powerful tools for variant annotation and filtering</p>
+</li>
+                            
+                        </ul>
+                    </blockquote>
+                    
+
+                    
+
+                    
+
+                    <h1>Citing this Tutorial</h1>
+                    <p>
+                        <ol>
+                            <li id="citation-text">Paolo Uva, Gianmauro Cuccuru, 2020 <b>NGS analysis using Galaxy (Galaxy Training Materials)</b>. <a href="/clinical_genomics/tutorial.html">/clinical_genomics/tutorial.html</a> Online; accessed TODAY
+                            </li>
+                            <li>
+                            Batut et al., 2018 <b>Community-Driven Data Analysis Training for Biology</b> Cell Systems <a href="https://doi.org/10.1016%2Fj.cels.2018.05.012">10.1016/j.cels.2018.05.012</a>
+                            </li>
+                        </ol>
+                    </p>
+
+
+                    <blockquote class="details">
+                      <h3><i class="fa fa-info-circle" aria-hidden="true"></i><span class="visually-hidden">details</span> BibTeX</h3>
+                      <p style="display: none;">
+
+                    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight">
+<code id="citation-code">@misc{-,
+    author = "Paolo Uva and Gianmauro Cuccuru",
+    title = "NGS analysis using Galaxy (Galaxy Training Materials)",
+    year = "2020",
+    month = "09",
+    day = "20"
+    url = "\url{/clinical_genomics/tutorial.html}",
+    note = "[Online; accessed TODAY]"
+}
+@article{Batut_2018,
+        doi = {10.1016/j.cels.2018.05.012},
+        url = {https://doi.org/10.1016%2Fj.cels.2018.05.012},
+        year = 2018,
+        month = {jun},
+        publisher = {Elsevier {BV}},
+        volume = {6},
+        number = {6},
+        pages = {752--758.e1},
+        author = {B{\'{e}}r{\'{e}}nice Batut and Saskia Hiltemann and Andrea Bagnacani and Dannon Baker and Vivek Bhardwaj and Clemens Blank and Anthony Bretaudeau and Loraine Brillet-Gu{\'{e}}guen and Martin {\v{C}}ech and John Chilton and Dave Clements and Olivia Doppelt-Azeroual and Anika Erxleben and Mallory Ann Freeberg and Simon Gladman and Youri Hoogstrate and Hans-Rudolf Hotz and Torsten Houwaart and Pratik Jagtap and Delphine Larivi{\`{e}}re and Gildas Le Corguill{\'{e}} and Thomas Manke and Fabien Mareuil and Fidel Ram{\'{\i}}rez and Devon Ryan and Florian Christoph Sigloch and Nicola Soranzo and Joachim Wolff and Pavankumar Videm and Markus Wolfien and Aisanjiang Wubuli and Dilmurat Yusuf and James Taylor and Rolf Backofen and Anton Nekrutenko and Björn Grüning},
+        title = {Community-Driven Data Analysis Training for Biology},
+        journal = {Cell Systems}
+}</code>
+                    </pre></div></div>
+                    </p>
+                    </blockquote>
+
+
+<script type="text/javascript">
+// update the date on load, or leave fallback of 'today'
+d = new Date();
+document.getElementById("citation-code").innerHTML = document.getElementById("citation-code").innerHTML.replace("TODAY", d.toDateString());
+document.getElementById("citation-text").innerHTML = document.getElementById("citation-text").innerHTML.replace("TODAY", d.toDateString());
+</script>
+
+                </div>
+            </div>
+        </div>
+
+        <h3><i class="fa fa-thumbs-up" aria-hidden="true"></i><span class="visually-hidden">congratulations</span> Congratulations on successfully completing this tutorial!</h3>
+
+        
+
+        
+
+        <hr>
+        <br>
+
+        <blockquote class="feedback">
+            <h3><i class="fa fa-comments-o" aria-hidden="true"></i><span class="visually-hidden">feedback</span> Give us feedback on this content!</h3>
+            <p>To give us feedback about these materials, or to get in touch with us, post a message in
+               the forum <a href="https://groups.google.com/d/forum/sigu-training">https://groups.google.com/d/forum/sigu-training</a>.</p>
+        </blockquote>
+    </section>
+</div>
+
+
+<footer>
+    <div class="container">
+        <p>
+            The layout of this page is based on the <a href="https://training.galaxyproject.org/">Galaxy Training Resources</a> collection.
+        </p>
+        <p>
+            Found a typo? Something is wrong in this tutorial? Edit it on
+            <a href="https://github.com/sigu-training/clinical_genomics/blob/master/index.md">GitHub</a>.
+        </p>
+    </div>
+</footer>
+
+    </body>
+    <script type="text/javascript" src="/clinical_genomics/assets/js/jquery.slim.min.js"></script>
+    <script type="text/javascript" src="/clinical_genomics/assets/js/popper.min.js"></script>
+    <script type="text/javascript" src="/clinical_genomics/assets/js/bootstrap.min.js?v=3"></script>
+    <script type="text/javascript" src="/clinical_genomics/assets/js/details-element-polyfill.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="/clinical_genomics/assets/js/bootstrap-toc.min.js"></script>
+    <script type="text/javascript" src="/clinical_genomics/assets/js/main.js"></script>
+
+    <script type="text/javascript" src="/clinical_genomics/assets/js/clipboard.min.js"></script>
+    <script type="text/javascript">
+    var snippets=document.querySelectorAll('div.highlight');
+    [].forEach.call(snippets,function(snippet){
+        snippet.firstChild.insertAdjacentHTML('beforebegin','<button class="btn btn-light" data-clipboard-snippet><i class="fa fa-copy"></i>&nbsp;Copy</button>');
+    });
+
+    var clipboardSnippets=new ClipboardJS('[data-clipboard-snippet]',{
+        target:function(trigger){return trigger.nextElementSibling;
+    }});
+    </script>
+    
+</html>
