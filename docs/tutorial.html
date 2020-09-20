@@ -220,10 +220,10 @@ In this tutorial we’ll use the European <span class="notranslate">Galaxy</span
     <li>Open your favorite browser (Chrome/Chromium, Safari or Firefox, but not Internet Explorer/Edge!)</li>
     <li>Browse to <a href="https://usegalaxy.eu">use<span class="notranslate">galaxy</span>.eu</a></li>
     <li>Choose <em>Login or Register</em> from the navigation bar at the top of the page</li>
-    <li>
-      <p>If you have previously registered an account with this particular instance of <span class="notranslate">Galaxy</span> (user accounts are <em>not</em> shared between public servers!), proceed by logging in with your registered <em>public name</em>, or email address, and your password.</p>
-
-      <p>If you need to create a new account, click on <em>Register here</em> instead.</p>
+    <li>If you have previously registered an account with this particular instance of <span class="notranslate">Galaxy</span> (user accounts are <em>not</em> shared between public servers!), proceed by logging in with your registered <em>public name</em>, or email address, and your password.<br />
+If you need to create a new account, click on <em>Register here</em> instead.</li>
+    <li>After you logged in, click on the following URL: <a href="https://usegalaxy.eu/join-training/obicourse">https://use<span class="notranslate">galaxy</span>.eu/join-training/obicourse</a><br />
+For the training time, your user will be added to a dedicated training group and put into a private queue, which should be a bit faster than the regular queue.
       <blockquote>
 
       </blockquote>
@@ -743,13 +743,13 @@ with SnpEff.</p>
 <blockquote class="notranslate hands_on">
   <h3 id="hands_on-hands-on-adding-annotations-with-snpeff"><i class="fa fa-pencil" aria-hidden="true"></i><span class="visually-hidden">hands_on</span> Hands-on: Adding annotations with SnpEff</h3>
   <ol>
-    <li><strong>SnpEff eff</strong> <i class="fa fa-wrench" aria-hidden="true"></i><span class="visually-hidden">tool</span>
+    <li><strong>SnpEff eff</strong> <i class="fa fa-wrench" aria-hidden="true"></i><span class="visually-hidden">tool</span> (not the one for the SARS-CoV-2 pipeline)
       <ul>
         <li><i class="fa fa-file-o" aria-hidden="true"></i><span class="visually-hidden">param-file</span> <em>“Sequence changes (SNPs, MNPs, InDels)”</em>: the
-output of <strong>bcftools norm</strong> <i class="fa fa-wrench" aria-hidden="true"></i><span class="visually-hidden">tool</span></li>
+uploaded <strong>VCF</strong> file</li>
         <li><em>“Input format”</em>: <code class="language-plaintext highlighter-rouge">VCF</code></li>
         <li><em>“Output format”</em>: <code class="language-plaintext highlighter-rouge">VCF (only if input is VCF)</code></li>
-        <li><em>“Genome source”</em>: <code class="language-plaintext highlighter-rouge">Locally installed reference genome</code>
+        <li><em>“Genome source”</em>: <code class="language-plaintext highlighter-rouge">Locally installed snpEff database</code>
           <ul>
             <li><em>“Genome”</em>: <code class="language-plaintext highlighter-rouge">Homo sapiens: hg19</code> (or a similarly named option)</li>
           </ul>
