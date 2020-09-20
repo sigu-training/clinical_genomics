@@ -437,7 +437,7 @@ with SnpEff.
 > ### {% icon hands_on %} Hands-on: Adding annotations with SnpEff
 > 1. **SnpEff eff** {% icon tool %} (not the one for the SARS-CoV-2 pipeline)
 >    - {% icon param-file %} *"Sequence changes (SNPs, MNPs, InDels)"*: the
->      output of **bcftools norm** {% icon tool %}
+>      uploaded **VCF** file
 >    - *"Input format"*: `VCF`
 >    - *"Output format"*: `VCF (only if input is VCF)`
 >    - *"Genome source"*: `Locally installed reference genome`
