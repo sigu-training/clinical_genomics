@@ -122,9 +122,10 @@ In this tutorial we'll use the European Galaxy server [usegalaxy.eu](https://use
 > 1. Open your favorite browser (Chrome/Chromium, Safari or Firefox, but not Internet Explorer/Edge!)
 > 2. Browse to [usegalaxy.eu](https://usegalaxy.eu)
 > 3. Choose *Login or Register* from the navigation bar at the top of the page
-> 4. If you have previously registered an account with this particular instance of Galaxy (user accounts are *not* shared between public servers!), proceed by logging in with your registered *public name*, or email address, and your password.
->
->    If you need to create a new account, click on *Register here* instead.
+> 4. If you have previously registered an account with this particular instance of Galaxy (user accounts are *not* shared between public servers!), proceed by logging in with your registered *public name*, or email address, and your password.  
+If you need to create a new account, click on *Register here* instead.
+> 5. After you logged in, click on the following URL: [https://usegalaxy.eu/join-training/obicourse](https://usegalaxy.eu/join-training/obicourse)  
+For the training time, your user will be added to a dedicated training group and put into a private queue, which should be a bit faster than the regular queue. 
 >>
 {: .hands_on}
 
