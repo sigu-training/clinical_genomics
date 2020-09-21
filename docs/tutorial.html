@@ -191,15 +191,18 @@ you started with genomics medicine using <span class="notranslate">Galaxy</span>
   <p>In this tutorial, we will cover:</p>
 
 <ol id="markdown-toc">
-  <li><a href="#log-in-into-galaxy" id="markdown-toc-log-in-into-galaxy">Log in into <span class="notranslate">Galaxy</span></a></li>
-  <li><a href="#data-preparation" id="markdown-toc-data-preparation">Data Preparation</a>    <ol>
-      <li><a href="#get-data" id="markdown-toc-get-data">Get data</a></li>
+  <li><a href="#log-in-and-data-preparation" id="markdown-toc-log-in-and-data-preparation">Log in and data preparation</a>    <ol>
+      <li><a href="#log-in-into-galaxy" id="markdown-toc-log-in-into-galaxy">Log in into <span class="notranslate">Galaxy</span></a></li>
+      <li><a href="#data-preparation" id="markdown-toc-data-preparation">Data Preparation</a></li>
     </ol>
   </li>
   <li><a href="#quality-control" id="markdown-toc-quality-control">Quality control</a></li>
-  <li><a href="#variant-annotation-and-reporting" id="markdown-toc-variant-annotation-and-reporting">Variant annotation and reporting</a>    <ol>
-      <li><a href="#get-data-1" id="markdown-toc-get-data-1">Get data</a></li>
+  <li><a href="#variant-annotation" id="markdown-toc-variant-annotation">Variant annotation</a>    <ol>
+      <li><a href="#get-data" id="markdown-toc-get-data">Get data</a></li>
       <li><a href="#variant-annotation-with-functional-genomic-effects" id="markdown-toc-variant-annotation-with-functional-genomic-effects">Variant annotation with functional genomic effects</a></li>
+    </ol>
+  </li>
+  <li><a href="#variant-filtering" id="markdown-toc-variant-filtering">Variant filtering</a>    <ol>
       <li><a href="#generating-a-gemini-database-of-variants-for-further-annotation-and-efficient-variant-queries" id="markdown-toc-generating-a-gemini-database-of-variants-for-further-annotation-and-efficient-variant-queries">Generating a GEMINI database of variants for further annotation and efficient variant queries</a></li>
       <li><a href="#candidate-variant-detection" id="markdown-toc-candidate-variant-detection">Candidate variant detection</a></li>
       <li><a href="#displaying-data-in-ucsc-genome-browser" id="markdown-toc-displaying-data-in-ucsc-genome-browser">Displaying data in UCSC genome browser</a></li>
@@ -209,7 +212,9 @@ you started with genomics medicine using <span class="notranslate">Galaxy</span>
 
 </blockquote>
 
-<h1 id="log-in-into-galaxy">Log in into <span class="notranslate">Galaxy</span></h1>
+<h1 id="log-in-and-data-preparation">Log in and data preparation</h1>
+
+<h2 id="log-in-into-galaxy">Log in into <span class="notranslate">Galaxy</span></h2>
 
 <p>Several <span class="notranslate">Galaxy</span> servers are available worldwide, with differ in the set of tools available. 
 In this tutorial we’ll use the European <span class="notranslate">Galaxy</span> server <a href="https://usegalaxy.eu">use<span class="notranslate">galaxy</span>.eu</a>.</p>
@@ -231,7 +236,7 @@ For the training time, your user will be added to a dedicated training group and
   </ol>
 </blockquote>
 
-<h1 id="data-preparation">Data Preparation</h1>
+<h2 id="data-preparation">Data Preparation</h2>
 
 <p>In this tutorial, we are going to analyze exome sequencing data from a family
 trio, in which the boy child is affected by the disease
@@ -239,9 +244,7 @@ trio, in which the boy child is affected by the disease
 parents, who happen to be consanguineous, are unaffected. Our goal is to
 identify the genetic variation that is responsible for the disease.</p>
 
-<h2 id="get-data">Get data</h2>
-
-<p>This tutorial allows you to:</p>
+<p>At the end of this tutorial you’ll learn how to:</p>
 
 <ul>
   <li>perform a qualty control of the original sequenced <span class="notranslate">reads</span> in <code class="language-plaintext highlighter-rouge">fastq</code>
@@ -609,7 +612,7 @@ control of your raw sequence <span class="notranslate">reads</span>.</p>
   <p>Please stop here and move to the main room for discussion.</p>
 </blockquote>
 
-<h1 id="variant-annotation-and-reporting">Variant annotation and reporting</h1>
+<h1 id="variant-annotation">Variant annotation</h1>
 
 <p>A list of variants detected in a set of samples is a start, but to discover
 biologically or clinically relevant information in it is almost impossible
@@ -618,7 +621,7 @@ variants in the list need to be:</p>
 
 <ul>
   <li>
-    <p><strong>prioritized</strong> with respect to their potential relevance for the biological
+    <p><strong>annotated</strong> with respect to their potential relevance for the biological
 / clinical phenotype that is studied</p>
 
     <p>Even with exome sequencing, only a fraction of the detected variants will
@@ -637,18 +640,9 @@ every variant site. Knowing which individuals (samples) are affected by a
 phenotype we can exclude variants with inheritance patterns that are
 incompatible with the observed inheritance of the phenotype.</p>
   </li>
-  <li>
-    <p><strong>reported</strong> in a more human-friendly form</p>
-
-    <p>While the VCF format can be used to encode all relevant information about any
-variant, it is hard for humans to parse that information.</p>
-
-    <p>Ideally, one would like to generate simpler reports for any set of filtered
-and prioritized variants.</p>
-  </li>
 </ul>
 
-<h2 id="get-data-1">Get data</h2>
+<h2 id="get-data">Get data</h2>
 
 <p>Our workhorse for annotating and reporting variants and the genes affected by
 them will be the <strong>GEMINI</strong> framework. GEMINI comes bundled with a wealth of
@@ -812,6 +806,8 @@ relevant fraction of all detected variants.</p>
 
   <p>Please stop here and move to the main room for discussion.</p>
 </blockquote>
+
+<h1 id="variant-filtering">Variant filtering</h1>
 
 <h2 id="generating-a-gemini-database-of-variants-for-further-annotation-and-efficient-variant-queries">Generating a GEMINI database of variants for further annotation and efficient variant queries</h2>
 

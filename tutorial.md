@@ -112,7 +112,9 @@ e.g. recessive, *de-novo*.
 {: .agenda}
 
 
-# Log in into Galaxy
+# Log in and data preparation
+
+## Log in into Galaxy
 
 Several Galaxy servers are available worldwide, with differ in the set of tools available. 
 In this tutorial we'll use the European Galaxy server [usegalaxy.eu](https://usegalaxy.eu).
@@ -130,7 +132,7 @@ For the training time, your user will be added to a dedicated training group and
 {: .hands_on}
 
 
-# Data Preparation
+## Data Preparation
 
 In this tutorial, we are going to analyze exome sequencing data from a family
 trio, in which the boy child is affected by the disease
@@ -138,9 +140,7 @@ trio, in which the boy child is affected by the disease
 parents, who happen to be consanguineous, are unaffected. Our goal is to
 identify the genetic variation that is responsible for the disease.
 
-## Get data
-
-This tutorial allows you to:
+At the end of this tutorial you'll learn how to:
 
 - perform a qualty control of the original sequenced reads in `fastq`
   format
@@ -330,14 +330,14 @@ tutorial on [Quality control](https://training.galaxyproject.org/training-materi
 {: .question}
 
 
-# Variant annotation and reporting
+# Variant annotation
 
 A list of variants detected in a set of samples is a start, but to discover
 biologically or clinically relevant information in it is almost impossible
 without some additional tools and data. In particular, the
 variants in the list need to be:
 
-- **prioritized** with respect to their potential relevance for the biological
+- **annotated** with respect to their potential relevance for the biological
   / clinical phenotype that is studied
 
   Even with exome sequencing, only a fraction of the detected variants will
@@ -354,15 +354,6 @@ variants in the list need to be:
   every variant site. Knowing which individuals (samples) are affected by a
   phenotype we can exclude variants with inheritance patterns that are
   incompatible with the observed inheritance of the phenotype.
-
-- **reported** in a more human-friendly form
-
-  While the VCF format can be used to encode all relevant information about any
-  variant, it is hard for humans to parse that information.
-
-  Ideally, one would like to generate simpler reports for any set of filtered
-  and prioritized variants.
-
 
 ## Get data
 
@@ -491,6 +482,7 @@ column.
 {: .question}
 
 
+# Variant filtering
 
 ## Generating a GEMINI database of variants for further annotation and efficient variant queries
 
