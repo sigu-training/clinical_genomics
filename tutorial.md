@@ -15,12 +15,12 @@ objectives:
      causative variants and to prioritize them"
 time_estimation: "2h"
 key_points:
-  - "Galaxy is on line free platform for NGS analysis" 
+  - "Galaxy is an on line free platform for NGS analysis" 
   - "Exome sequencing is an efficient way to identify disease-relevant genetic
     variants."
   - "Variant annotation and being able to exploit genotype information across
-    family members is key to identifying candidate disease variants. SnpEff and
-    GEMINI are powerful tools for variant annotation and filtering"
+    family members is key to identifying candidate disease variants"
+  - "SnpEff and GEMINI are powerful tools for variant annotation and filtering"
 contributors:
   - puva
   - gmauro

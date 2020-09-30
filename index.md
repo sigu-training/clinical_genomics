@@ -425,291 +425,6 @@ aligned sequences from an exome sequencing experiment.
 {: .hands_on}
 
 
-### BAM statistics with samtools
-
-Samtools is a widely used suite of programs for manipulating alignments in the SAM/BAM/CRAM format.
-Among the different tools, we will focus on **samtools flagstat** and **samtools stats** for computing BAM statistics.
-Both programs take as input a file with the aligned sequences, and generate an output in text format that can be
-visualized with **MultiQC**.
-
-Here is an example of simple statistics obtained with **samtools flagstat**:
-
-```
-492739 + 0 in total (QC-passed reads + QC-failed reads)
-0 + 0 secondary
-0 + 0 supplementary
-0 + 0 duplicates
-476344 + 0 mapped (96.67% : N/A)
-492739 + 0 paired in sequencing
-243667 + 0 read1
-249072 + 0 read2
-462914 + 0 properly paired (93.95% : N/A)
-469984 + 0 with itself and mate mapped
-6360 + 0 singletons (1.29% : N/A)
-5061 + 0 with mate mapped to a different chr
-2034 + 0 with mate mapped to a different chr (mapQ>=5)
-```
-
-For more detailed statistics, use **samtools stats**:
-```
-SN	raw total sequences:	492739																																										
-SN	filtered sequences:	0																																										
-SN	sequences:	492739																																										
-SN	is sorted:	1																																										
-SN	1st fragments:	243667																																										
-SN	last fragments:	249072																																										
-SN	reads mapped:	476344																																										
-SN	reads mapped and paired:	469984	# paired-end technology bit set + both mates mapped																																									
-SN	reads unmapped:	16395																																										
-SN	reads properly paired:	462914	# proper-pair bit set																																									
-SN	reads paired:	492739	# paired-end technology bit set																																									
-SN	reads duplicated:	0	# PCR or optical duplicate bit set																																									
-SN	reads MQ0:	111721	# mapped and MQ=0																																									
-SN	reads QC failed:	0																																										
-SN	non-primary alignments:	0																																										
-SN	total length:	49766639	# ignores clipping																																									
-SN	total first fragment length:	24610367	# ignores clipping																																									
-SN	total last fragment length:	25156272	# ignores clipping																																									
-SN	bases mapped:	48110744	# ignores clipping																																									
-SN	bases mapped (cigar):	45368693	# more accurate																																									
-SN	bases trimmed:	0																																										
-SN	bases duplicated:	0																																										
-SN	mismatches:	254006	# from NM fields																																									
-SN	error rate:	5.598707e-03	# mismatches / bases mapped (cigar)																																									
-SN	average length:	101																																										
-SN	average first fragment length:	101																																										
-SN	average last fragment length:	101																																										
-SN	maximum length:	101																																										
-SN	maximum first fragment length:	101																																										
-SN	maximum last fragment length:	101																																										
-SN	average quality:	31.5																																										
-SN	insert size average:	247.9																																										
-SN	insert size standard deviation:	75.8																																										
-SN	inward oriented pairs:	231769																																										
-SN	outward oriented pairs:	452																																										
-SN	pairs with other orientation:	240																																										
-SN	pairs on different chromosomes:	2530																																										
-SN	percentage of properly paired reads (%):	93.9
-```
-
-> ### {% icon hands_on %} Hands-on: Compute alignment statistics with samtools
-> 1. Run **samtools flagstat** {% icon tool %} on your BAM dataset *CNV_case.bam*.
->
-> 1. Using the **MultiQC** {% icon tool %} software, you can aggregate and visualize results
-> obtained with **samtools flagstat** to identify low quality samples that will be displayed
-> as outliers.  
->     - *"Which tool was used generate logs?"*: `Samtools`
->       - In *"Samtools output"*
->          - *"Type of Samtools output?"*: `flagstat`
->          - {% icon param-files %} *"Samtools flagstat output"*: the output 
->            of **Samtools flagstat** {% icon tool %}
->
-> 1. Inspect **MultiQC** report
-> 
->    > ### {% icon question %} Questions
->    >
->    > 1. Which is the percentage of mapped reads? And
->    >    the percentage of properly mapped reads?
->    {: .question}
-{: .hands_on}
-
-
-### Computation of per-base coverage depth at specific genomic intervals
-
-Commercial next-generation sequencing platform usually provide users with analysis programs that include tools for the identification of low coverage regions (for instance, target regions that have a coverage depth lower than 20x).
-
-The present tutorial is aimed to show how to perform a custom coverage analysis
-of NGS experiment(s) by using tools that are available in Galaxy.
-
-Starting material:
-* Alignment (*bam*) file(s) on which you want to perform the coverage evaluation.
-* A reference *bed* file listing the genomic regions for which you want to obtain coverage data. If you performed a targeted sequencing experiment by using commercial kits (either custom or from the catalogue), you should already have obtained a *bed* file listing the target regions: it should be the file you want to use.
-
->    > ### {% icon comment %} BED format specifications
->    > **BED files** are tab-delimited files with one line for each genomic region.
->    > The first 3 fields (columns) are required: 
->    > 1. chromosome
->    > 2. the starting position
->    > 2. the ending position
->    >
->    > Further columns may be present but are optional.
->    > Additional details may be found here: [UCSC BED format specifications](https://genome.ucsc.edu/FAQ/FAQformat.html#format1)
->    >
->    > Please be aware that in BED files the description of genomic regions follows the “0-start, half-open” coordinate system. Further details may be found here: [the "0-based, half-open" UCSC Genome Browser Coordinate Counting Systems](http://genome.ucsc.edu/blog/the-ucsc-genome-browser-coordinate-counting-systems/). Practically speaking, it means that the starting position is diminished by 1 bp with respect to the actual position. For instance, the region "chr2 50149071 50149399" in a *bed* file corresponds to the genomic interval from position 50149072 (included) to position 50149399 (included) on chromosome 2 (when the first base of the chromosome is defined as position 1). If you want to indicate a single base position in a *bed* file, it should be written like this: "chr2 50149071 50149072" .
->    {: .comment}
-
- 
-> ### {% icon hands_on %} Hands-on: Compute per base coverage depth with BEDtools
->    Before starting, you have to upload the files you need for the analysis,
->    following standard Galaxy procedure. 
->
->    You may use files provided as examples with this tutorial and called
->    `Panel_alignment.bam` and `Panel_Target_regions.bed`. 
->
->    Please check that uploaded file datatypes (formats) are properly recognized by
->    selecting `edit attributes` (i.e. the pencil sign in correspondence of each file
->    you can find in your history) (indicated by the red arrow in figure 1)
->    and then the tab datatypes (the blue arrow in figure 1).
->    If the datatype is wrong, select the correct one from the drop-down list
->    and press the `change datatype` button (the green arrow in figure 1).
->
->    ---
->    ![Figure 1]({{site.baseurl}}/images/cov_fig1.png)
->    **Figure 1**
->
->    ---
->
->    Once ready, you can select the tool named `bedtools Compute both the depth and
->    breadth of coverage` in the `Operate on Genomic Intervals` section
->    (see the red arrow in figure 2).
->
-> 1. Select the *bed* file listing the target regions as "file A" (blue arrow in figure 2)
->    and the *bam* file(s) you want to analyze as "file B" (green arrow in figure 2)
->    (they should be listed in the drop-down menu if they have the correct format).
->    You may analyze one or more *bam* files in a single run. 
-> 2. If you want to analyze two or more .bam files, you can further choose if you want
->    all the results in a single file or one output file per input "file B" by selecting
->    the desired option under the `Combined or separate output files` menu.
-> 3. Select "Yes" for the option `Report the depth at each position in each A feature`
->   (yellow arrow in figure 2) and check that all the other options are set to "No".
-> 4. Star (Execute) the analysis.
->
->    ![Figure 2]({{site.baseurl}}/images/cov_fig2.png)
->    **Figure 2**
->
->    ---
->
->    Output file, which will be called "coverage_depth.bed" from now on, 
->    will contain all the fields of the original target_regions.bed file plus
->    two further columns:
-> 1. the first value indicates a specific base within the reported genomic interval.
->    For instance, if the genomic interval described by the first 3 field is
->    "chr2 50149071 50149072" and the first new field reports the number 1000,
->    it means that the coverage value refers to nucleotide 50150071
->    (i.e.: 50149071 + 1000) on chromosome 2;
-> 2. the second value indicates the depth of coverage for the defined base.
-{: .hands_on}
-
-> ### {% icon hands_on %} Hands-on: Sort files
->    Since entries in the "coverage_depth.bed" may not be in the desired order, you can sort it by genomic positions.
->    For this purpose you may want to use the `Sort` tool in the `Text Manipulation` section (check out the blue arrow in figure 3).
->
->    You may sequentially sort on different columns:
-> 1. first you can sort by chromosome by selecting column 1 (green arrow in figure 3) in "ascending order" and selecting the "flavor" `Natural/Version sort (-V)`, which allows for sorting chromosomes in their "natural" order (with alphabetical order chr10 will be right after chr1, chr2 after chr19 and so on);
-> 2. after inserting a new column section (red arrow in figure 3), you can sort by column 2 in "ascending order" with `Fast numeric sort (-n)`;
-> 3. after inserting a further column section, you can sort by column 3 in "ascending order" with `Fast numeric sort (-n)`;
-> 4. after inserting a final column section, you can sort by column 3 in "ascending order" with `Fast numeric sort (-n)`.
->
->    ---
->    ![Figure 3]({{site.baseurl}}/images/cov_fig3.png)
->    **Figure 3**
->
->    ---
->
->    The obtained output file, which will be called "sorted_coverage_depth.bed"
->    from now on, will be sorted first by chromosome, then by starting position,
->    by ending position and by the actual position of the specific base in the
->    considered genomic interval.
-{: .hands_on}
-
-> ### {% icon hands_on %} Hands-on: Remove duplicate rows
->    If your file contains duplicated lines you may want to remove them for further processing.
->    For this purpose you can use the `Unique lines assuming sorted input file` tool in the `Text Manipulation` section.
-{: .hands_on}
-
-> ### {% icon hands_on %} Hands-on: Some manipulation of the *bed* file 
->    You may follow the following steps to manipulate the "sorted_coverage_depth.bed" and to obtain a *bed* file listing the exact base position to which each coverage value is referred.
->    For instance instead of having "chr2 50149071 50149399 NRXN1 1 2335" in the first row of your file, you will get "chr2 50149071 50149072 NRXN1 2335".
->
->    These steps will add further columns at the end of each line defining the base position with the “0-start, half-open” coordinate system.
-> 
-> 1. Select the `Compute an expression on every row` tool in the `Text Manipulation` section (indicated by the blue arrow in figure 4);
-> 1. add the following expression "c2+c5-1" to obtain the sum of the values in columns 2 and 5 minus 1 (it will be used as the new starting position in the final file);
-> 1. select the file "sorted_coverage_depth.bed";
-> 1. select "yes" to `round Results?` (green arrow in figure 4);
-> 1. execute;
-> 1. you can rename the output as "temp1_coverage_depth.bed";
-> 1. select the `Compute an expression on every row` tool in the `Text Manipulation` section;
-> 1. add the following expression "c2+c5" to obtain the sum of the values in columns 2 and 5 (it will be used as the new ending position in the final file). You can also use the expression ; 
-> 1. select the file "temp1_coverage_depth.bed";
-> 1. select "yes" to `round Results?`;
-> 1. execute;
-> 1. you can rename the output as "temp2_coverage_depth.bed";
-> 1. select the `Table Compute` tool in the `Text Manipulation` section (indicated by the blue arrow in figure 5);
-> 1. select the file "temp2_coverage_depth.bed";
-> 1. select the option `Drop, keep or duplicate rows and columns` from the drop-down menu `Type of table operation` (indicated by the green arrow in figure 5);
-> 1. fill the field `List of columns to select` with "1,7,8,4,6" (the red arrow in figure 5);
-> 1. unselect all the other options;
-> 1. execute;
-> 1. set the output file datatype to *bed*;
-> 2. you can rename the output as "final_coverage_depth.bed".
->
->    ---
->    ![Figure 4]({{site.baseurl}}/images/cov_fig4.png)
->    **Figure 4**
->
->    ![Figure 5]({{site.baseurl}}/images/cov_fig5.png)
->    **Figure 5**
->
->    ---
-{: .hands_on}
-
-> ### {% icon hands_on %} Hands-on: Select positions with low coverage depth
-> The following procedure can be used to obtain a *bed* file listing base positions with a coverage depth lower than a certain threshold (for instance 20x).
->
-> 1. Select the `Filter` tool in the `Filter and Sort` section (indicated by the blue arrow in figure 6);
-> 1. select the file "final_coverage_depth.bed";
-> 1. add the following expression "c5<20" to filter all positions with a coverage depth lower than (green arrow in figure 6)("c5" stands for the fifth column, in this case reporting the coverage depth);
-> 1. execute.
->
->    ---
->    ![Figure 6]({{site.baseurl}}/images/cov_fig6.png)
->    **Figure 6**
-> 
->    ---
->
->    The output file, which will be called "low_coverage_depth.bed" from now on, will only list all the positions with a depth lower than 20x.
-{: .hands_on}
-
-> ### {% icon hands_on %} Hands-on: Merge low coverage regions
->    If you want to merge the positions with low coverage depth in larger genomic intervals to be used for further analyses (i.e.: Sanger sequencing of regions not covered by your NGS experiment), you may want to use the `bedtools MergeBED` tool in the `Operate on Genomic Intervals` section (see the blue arrow in figure 7). 
->
-> 1. Select the file "low_coverage_depth.bed";
-> 1. set the maximum distance between features (i.e.: the different positions listed in your file) allowed for features to be merged (green arrow in figure 7): if it is 0 only overlapping and/or book-ended features are merged, while if it is set to 10 (or any other different positive integer of your choice), features at the maximum distance of 10 bases will be merged; 
-> 1. if you want, you may apply some operations to certain columns to get further information in your output file. For instance you may:
->    1. click on "Insert Applying operations to columns from merged intervals" (red arrow in figure 7), 
->    1. specify the column on which you want to perform the operation (in this case column 5), 
->    1. and select the operation from the drop-down list(in this case "Min", which calculates the minimum value of coverage depth among all the positions that will be merged in a single interval) (yellow arrow in figure 7);
-> 4. you may add as many operations as you need. In this example we will also calculate the maximum value of coverage depth;
-> 5. execute.	
->
->    ---
->    ![Figure 7]({{site.baseurl}}/images/cov_fig7.png)
->    **Figure 7**
->
->    ---
->    The output file will have the following fields (columns): chromosome, starting and ending positions of low coverage regions, the minimum and the maximum coverage depth in each region.
->
->    > ### {% icon warning %} BED files may have different columns
->    > Please be aware that the columns to use for calculations may be different
->    > compared to the example here considered, depending on the amount of columns
->    > of your *bed* files.
->    {: .warning}
->
->    > ### {% icon warning %} Preview of BED files
->    > Please be aware that the Galaxy preview of your file shows a header row that
->    > does not properly define columns in your files
->    > (it is just a standard header for the UCSC bed format).
->    {: .warning}
->
-{: .hands_on}
-
-#### Final notes
-The procedures listed above are to be taken as examples of the possible operations that can be performed on bed files with bedtools (you may check out their website to get further information:
-[BEDtools](https://bedtools.readthedocs.io/en/latest/content/bedtools-suite.html)) ad text manipulation tools available on Galaxy.
-
-Furthermore, please be aware that the tool `bedtools Compute both the depth and breadth of coverage` does not perform any filtering based on read quality: if your are interested in that aspect you may want to rely on different tools. 
-
 # Variant calling and classification
 
 After the generation of a high-quality set of mapped read pairs, we can proceed to call different classes of DNA variants.
@@ -815,48 +530,31 @@ Variant nomenclature should be described univocally:
    - [VEP](http://grch37.ensembl.org/Homo_sapiens/Tools/VEP)
 
 ---
-## Annotation and filtering with wANNOVAR
 
-The web tool [wANNOVAR](http://wannovar.wglab.org/index.php) allows for rapid annotation of your variants and for some basic filtering steps to find disease genes.
-It is based on its command line counterpart [ANNOVAR](http://annovar.openbioinformatics.org/), but it is more user-friendly since it does not require any programming skills.
+## Annotation and filtering with SnpEFF
 
-The output consist in tabular text files that can be easily manipulated with Excel or other spreadsheet programs.
+For variant annotations we'll use SnpEff, a software for genomic variant annotation and functional effect prediction. 
 
-The annotation is performed against some of the most commonly used databases: RefSeq, UCSC Known, ENSEMBL/Genecode, dbSNP, ClinVar, 1000genomes, ExAC, ESP6500, gnomAD (minor allele frequencies in different populations are reported) and various precalculated prediction scores for any possible single nucleotide variant in coding regions (see [dbNSFP](https://sites.google.com/site/jpopgen/dbNSFP)). 
+> ### {% icon hands_on %} Hands-on: Variant annotations with SnpEff
+> 1. **SnpEff eff** {% icon tool %} (not the one for the SARS-CoV-2 pipeline)
+>    - {% icon param-file %} *"Sequence changes (SNPs, MNPs, InDels)"*: the
+>      uploaded **VCF** file
+>    - *"Input format"*: `VCF`
+>    - *"Output format"*: `VCF (only if input is VCF)`
+>    - *"Genome source"*: `Locally installed snpEff database`
+>       - *"Genome"*: `Homo sapiens: hg19` (or a similarly named option)
+>
+>    - *"Produce Summary Stats"*: `Yes`
+>
+{: .hands_on}
 
-The gene-based annotation results in a single row for each input variant: only the most deleterious consequence is reported (i.e.: if a certain variant may result to be missense for one transcript and nonsense for a second transcript, only the latter consequence will be reported).
+Two output file will be created: 
+ 1. a *Summary Stats* HTML report, with general metrics
+such as the distribution of variants across gene features;
+ 2. a VCF file with annotations of variant effects added to the INFO
+column.
+{: .hands_on}
 
-Unfortunately, unlike the command line version, wANNOVAR does neither allow for the use of custom annotation databases, nor for the selection of different pubblicly available databases.
-
-To annotate your file with wANNOVAR you need to provide your email address, to be notified when the annotation is complete, and just upload your input file (or paste a series of variant in the designated field). Results are usually ready within minutes.
-![Figure 1]({{site.baseurl}}/images/wann_fig1.png)
-
-
-You will get both *csv* files or *txt* files (which can be saved as they are by clicking on the specific link, right-clicking in any point of the page and selecting `Save as`). They can be both opened with Excel or other spreadsheet programs (concerning *csv* files, please ensure that comma are set as default list separator/delimiter in your version of Excel).
-
-You will also get both `exome summary results` (only conding variants are included) and `genome summary results` (all variants included).
-
-You can also provide a list of Disease or Phenotype Terms that the program can use for filtering your results (only for single sample `vcf` files).
-![Figure 2]({{site.baseurl}}/images/wann_fig2.png)
-
-Finally, there are some Parameter Settings that can be modified:
- - Result duration: it can now only be set to "1 day", since your files will be automatically removed after 24 hours.
- - Reference genome: you can choose between hg19 (GRCh37) and hg38 (GRCh38).
- - Input Format: you can upload not only *vcf* files, but also other kinds of variant files.
- - Gene Definition: the database you want to use for gene function annotation. Three oprtions are available: RefSeq, UCSC Known, ENSEMBL/Gencode
- - Individual analysis: the "Individual analysis" option allows you to perform further filtering steps (based on the Disease/Phenotype terms or the Disease Model) on a single sample (if you upload a multisample *vcf* only the first sample will be considered); the "All Annotaions" option will annotate all variants in your multisample *vcf*, maintaining the original columns of your *vcf* as the last columns of your output file.
- - Disease Model: this options allows for some basic filtering of your variants based on the expected mechanism of inheritance. In mainly consider frequencies, sample genotypes and consequences at level of genic function. FIltering step are summarized among the results and they are only performed on a single sample: the program does not perform any multisample evaluation (i.e.: variant segregation in a trio) and cannot classify any variant as de novo even if you provide a multisample *vcf* with parental genotypes.
-
-## Clinical databases for further manual variant annotation
-
-Once you have obtained a file with the annotation of your variants, you might find useful to annotate also the involved genes, in order to know, for instance, the list of diseases that may be associated with them.
-
-Some databases that can the jb are the following:
- 1. The gene2phenotype dataset ([G2P](https://www.ebi.ac.uk/gene2phenotype/disclaimer)) integrates data on genes, variants and phenotypes for example relating to developmental disorders. In the "Download" section you will find both databases of genes related to cancer and to developmental disorders. Those files report for each gene listed: the OMIM number, the associated disease name, the disease OMIM number, the disease category (you can fing more details in the "Terminology" section), whether the disease is caused by biallelic or monoallelic variants ("allelic requirement"), the expected category of variant to be causative of the disease, and a few other details.
- 1. In the "Download" section of the [OMIM database](https://www.omim.org/downloads/), if you register for research and educational use, you may obtain different lists of OMIM genes and their associated phenotypes.
- 1. Among the files available for download from the [gnomAD database](https://gnomad.broadinstitute.org/downloads#constraint), you may get per-gene constraint scores (for further details, please check the paper by the Exome Aggregation Consortium on "Nature. 2016 Aug 18; 536(7616):285–291."). Those score may indicate if a specific gene is expected to be intolerant to loss-of-function variants (pLI) (haploinsufficiency), or if it is predicted to be associate to recessive diseases.
-
-In the end, you can add these annotations to your wANNOVAR files by using the `VLOOKUP` function in Excel.
 
 # Variant prioritization
 
@@ -915,6 +613,7 @@ The *American College of Medical Genetics* and the *Association for Molecular Pa
  - automatical interpretation by 28 criteria
  - manual adjustment to re-interpret the clinical significance
 
+
 ## Prioritization
 
 Phenotype-based prioritization tools are methods working by comparing the phenotypes of a patient with gene-phenotype known associations.
@@ -942,6 +641,208 @@ Phenotype-based prioritization tools are methods working by comparing the phenot
 >    Click ***Show*** in the *Network Visualization* section to see
 >    Phenolyzer prioritization results
 {: .hands_on}
+
+## Generating a GEMINI database of variants for further annotation and efficient variant queries
+
+Now, we'll use the VCF file annotated with SnpEff to filter variants considering
+the relationship between family members.
+For this purpose we'll use GEMINI, a framework including different modules for analysis of human variants.
+First, we need to inform GEMINI about the relationship between the samples and their phenotypes (affected vs not affected).
+This information is stored in a **pedigree file** in PED format.
+In next Hands-on you'll learn how to manually generate a pedigree file.
+
+> ### {% icon hands_on %} Hands-on: Create a GEMINI pedigree files
+> 1. Create an example PED-formatted pedigree file for a trio:
+>
+>    ```
+>    #family_id    name        paternal_id    maternal_id    sex    phenotype
+>    Fam_A         father_ID   0              0              1      1
+>    Fam_A         mother_ID   0              0              2      1
+>    Fam_A         proband_ID  father_ID      mother_ID      1      2
+>    ```
+>
+>    and set its datatype to `tabular`.
+>
+>    {% include snippets/create_new_file.md format="tabular" %}
+>
+>    > ### {% icon warning %} Remember those sample names
+>    >
+>    > Names in the pedigree file should match the sample names in 
+>    > your VCF file in order to be recongnized by GEMINI. If names are different,
+>    > samples will not be recognized and therefore you will not be able to filter
+>    > variants by patterns of genetic inheritance.
+>    >
+>    {: .warning}
+>
+>    > ### {% icon details %} More on PED files
+>    >
+>    > The PED format is explained in the help section of **GEMINI load**
+>    > {% icon tool %} and [here](https://gatk.broadinstitute.org/hc/en-us/articles/360035531972-PED-Pedigree-format)
+>    >
+>    > Take a moment and try to understand the information that is encoded in
+>    > the PED dataset we are using here.
+>    {: .details}
+{: .hands_on}
+
+Next, in order to formulate queries to extract variants matching your selection criteria, 
+variants and their annotations need to be stored in a format accepted by GEMINI.
+This task is accomplished by the **GEMINI load** tool, which accepts as input your SnpEFF
+SnpEff annotated VCF file together with the pedigree file.
+
+> ### {% icon hands_on %} Hands-on: Creating a GEMINI database from a variants dataset
+>
+> 1. **GEMINI load** {% icon tool %} with
+>    - {% icon param-file %} *"VCF dataset to be loaded in the GEMINI database"*:
+>      the output of **SnpEff eff** {% icon tool %}
+>    - *"The variants in this input are"*: `annotated with snpEff`
+>    - *"This input comes with genotype calls for its samples"*: `Yes`
+>
+>      Our examples VCf include genotype calls.
+>
+>    - *"Choose a gemini annotation source"*: select the latest available annotations snapshot (most likely, there will be only one)
+>    - *"Sample and family information in PED format"*: the pedigree file
+>      prepared above
+>    - *"Load the following optional content into the database"*
+>      - {% icon param-check %} *"GERP scores"*
+>      - {% icon param-check %} *"CADD scores"*
+>      - {% icon param-check %} *"Gene tables"*
+>      - {% icon param-check %} *"Sample genotypes"*
+>      - {% icon param-check %} *"variant INFO field"*
+>
+>      **Checked** the following:
+>      - *"only variants that passed all filters"*
+>
+>        This retains only high quality variants, e.g variants with the value in the FILTER column equals to PASS
+
+>
+>      Leave **unchecked** the following:
+>      - *"Genotype likelihoods (sample PLs)"*
+>
+>         Our VCFs does not contain these values
+>
+{: .hands_on}
+
+This generates a GEMINI-specific dataset, which can only
+be processed with other GEMINI tools. In fact, every analysis with a GEMINI tool
+starts with the GEMINI database obtained by **GEMINI load** {% icon tool %}.
+
+
+> ### {% icon details %} The GEMINI suite of tools
+>
+> The GEMINI framework is composed by a large number of utilities.
+>
+> The [Somatic variant calling tutorial](https://training.galaxyproject.org/training-material/topics/variant-analysis/tutorials/somatic-variants/tutorial.html)
+> demonstrates the use of the **GEMINI annotate** and **GEMINI query** tools,
+> and tries to introduce some essential bits of GEMINI's SQL-like syntax.
+>
+> For a thorough explanation of all GEMINI tools and functionality visit 
+> the [GEMINI documentation](https://gemini.readthedocs.io).
+{: .details}
+
+## Candidate variant detection
+
+Here you'll learn how to use **GEMINI inheritance pattern** {% icon tool %} to report all variants
+fitting any specific inheritance model. You'll be able to select any of the following inheritance patterns:
+    - Autosomal recessive
+    - Autosomal dominant
+    - X-linked recessive
+    - X-linked dominant
+    - Autosomal de-novo
+    - X-linked de-novo
+    - Compound heterozygous
+    - Loss of heterozygosity (LOH) events
+
+
+
+Below is how you can perform the query for inherited autosomal recessive
+variants. Feel free to run analogous queries for other types of variants that
+you think could plausibly be causative for the child's disease.
+
+> ### {% icon hands_on %} Hands-on: Filtering variants by inheritance pattern
+> 1. **GEMINI inheritance pattern** {% icon tool %}
+>    - *"GEMINI database"*: the GEMINI database of annotated variants; output
+>      of **GEMINI load** {% icon tool %}
+>    - *"Your assumption about the inheritance pattern of the phenotype of interest"*:
+>      e.g. `Autosomal recessive`
+>      - {% icon param-repeat %} *"Additional constraints on variants"*
+>        - *"Additional constraints expressed in SQL syntax"*:
+>          `impact_severity != 'LOW'`
+>
+>          This will remove variants with *low impact severity* (*i.e.*, silent
+>          mutations and variants outside coding regions).
+>          Leave this box empty to report all variants independently of their impact.
+>
+>      - *"Include hits with less convincing inheritance patterns"*: `No`
+>
+>        Account for errors in phenotype assignment - meaningful for large families
+>      - *"Report candidates shared by unaffected samples"*: `No`
+>
+>        Account for incomplete penetrance - meaningful for large families
+>    - *"Family-wise criteria for variant selection"*: keep default settings
+>
+>      This section is not useful when you have data from just one family.
+>    - In *"Output - included information"*
+>      - *"Set of columns to include in the variant report table"*:
+>        `Custom (report user-specified columns)`
+>        - *"Choose columns to include in the report"*:
+>          - {% icon param-check %} *"alternative allele frequency (max_aaf_all)"*
+>        - *"Additional columns (comma-separated)"*:
+>          `chrom, start, ref, alt, impact, gene, clinvar_sig,
+>          clinvar_disease_name, clinvar_gene_phenotype, rs_ids`
+>
+>     > ### {% icon details %} ClinVar annotations
+>     >
+>     > **clinvar_sig** and **clinvar_disease_name** annotations refer to the particular variant,
+>     > **clinvar_gene_phenotype** provides information about the gene harbouring the variant.
+>     {: .details}
+>
+{: .hands_on}
+
+> ### {% icon question %} Question
+>
+> From the output of **GEMINI inheritance pattern**, can you identify the most likely
+> candidate variant?
+{: .question}
+
+> ### {% icon details %} More GEMINI usage examples
+>
+> While only demonstrating command line use of GEMINI, the following tutorial
+> slides may give you additional ideas for variant queries and filters:
+>
+> - [Introduction to GEMINI](https://s3.amazonaws.com/gemini-tutorials/Intro-To-Gemini.pdf)
+> - [Identifying *de novo* mutations with GEMINI](https://s3.amazonaws.com/gemini-tutorials/Gemini-DeNovo-Tutorial.pdf)
+> - [Identifying recessive gene candidates with GEMINI](https://s3.amazonaws.com/gemini-tutorials/Gemini-Recessive-Tutorial.pdf)
+> - [Identifying dominant gene candidates with GEMINI](https://s3.amazonaws.com/gemini-tutorials/Gemini-Dominant-Tutorial.pdf)
+{: .details}
+
+
+## Displaying data in UCSC genome browser
+
+A good way to proceed with candidate variants is to look at their coverage. 
+This can be done by using genome browsers to display the aligned reads in the position of the candidate variant.
+Aligned reads are stored in `bam` files, and Galaxy can display `bam` launching a genome browser such as IGV on 
+your local machine, and it can connect to online genome browsers as well.
+An example of such an online genome browser is the UCSC Genome Browser.
+
+> ### {% icon hands_on %} Hands-on: UCSC genome browser
+>
+> 1. First, check that the **database** of your `bam` dataset is `hg19`. If not, click on the {% icon galaxy-pencil %} pencil icon and modify the **Database/Build:** field to `Human Feb. 2009 (GRCh37/hg19) (hg19)`.
+>
+>    {% include snippets/change_dbkey.md dbkey="hg19" %}
+>>
+> 2. To **visualize the data in UCSC genome browser**, click on `display at UCSC main` option visible when you expand the history item.
+>
+>    ![`display at UCSC main` link]({{site.baseurl}}/images/101_displayucsc.png)
+>
+>    This will upload the data to UCSC as custom track. To see your data look at the `User Track` near the top.
+>    You can enter the coordinates of one of your variants at the top to jump to that location.
+>
+>    ![`User Track` shown in the UCSC genome browser]({{site.baseurl}}/images/101_21.png)
+{: .hands_on}
+
+UCSC provides a large number of tracks that can help you get a sense of your genomic area, it contains common SNPs, repeats, genes, and much more (scroll down to find all possible tracks).
+
+
 
 # CNV detection from targeted sequencing data
 
@@ -1046,64 +947,6 @@ In addition to the above-mentioned methods, many tools have been developed that 
 >    Your aim is to identify a large polymorphic deletion in case.
 {: .hands_on}
 
-# Regions of Homozygosity
-
-- *Runs of Homozygosity* (ROHs) are sizeable stretches of consecutive homozygous markers encompassing genomic regions where the two haplotypes are identical
-- Haplotypes in *ROHs* can underlie identity either by **state** (IBS) or by **descent** (IBD). IBD occurs when two haplotypes originate from a common ancestor (Figure 1), a condition whcih we refer to as **autozygosity**
-- *Autozygosity* in an individual is the hallmark of high levels of genomic inbreeding (g*F*), often occurring in the offspring from consanguineous unions where parents are related as second-degree cousins or closer
-- The most well-known medical impact of parental consanguinity is the increased risk of rare autosomal recessive diseases in the progeny, with excess risk inversely proportional to the disease-allele frequency ([Bittles, 2001](https://onlinelibrary.wiley.com/doi/full/10.1034/j.1399-0004.2001.600201.x?sid=nlm%3Apubmed))
-
----
-
-![homozygosity_mapping]({{site.baseurl}}/images/homozygosity_mapping.png)
-**Figure 1**. Schematic of haplotype flow along a consanguineous pedigrees to form autozygous *ROHs* in the progeny (from [McQuillan et al., 2008](https://www.sciencedirect.com/science/article/pii/S000292970800445X?via%3Dihub))
-
----
-
-## Homozygosity mapping
-
-- We refer to *homozygosity mapping* ([Lander and Botstein, 1987](https://science.sciencemag.org/content/236/4808/1567.long)) as an approach that infers *autozygosity* from the detection of long ROHs to map genes associated with recessive diseases
-- A classical strategy to identify *ROHs* is based on SNP-array data and analysis with [PLINK](http://zzz.bwh.harvard.edu/plink/)
-- The combination of *homozygosity mapping* with exome sequencing has boosted genomic research and diagnosis of recessive diseases in recent years ([Alazami et al., 2015](https://www.sciencedirect.com/science/article/pii/S2211124714010444?via%3Dihub); [Monies et al., 2017](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5502059/))
-- *ROHs* may be of clinical interest also since they can unmask **uniparental isodisomy**
-- Computational approaches have been developed to identify *ROHs* directly in exome data, allowing **simultaneous detection of variants and surrounding ROHs** from the same datasets.
-
-
-## Computational approaches
-
-As for CNVs, the sparse nature and small size of exonic targets are a challenge for the identification of continuous strethces of homozygous markers throughout the genome. This may affect the performance of tools originally tailored to SNPs when applied to exome data. 
-
-In Figure 2 a synthetic overview is given of algorithms, input data and output file types in bioinformatic tools for exome-based *ROH* detection. *ROHs* are divided in three size classes reflecting different mechanisms that have shaped them (according to [Pemberton et al., 2012](https://www.sciencedirect.com/science/article/pii/S0002929712003230?via%3Dihub)). 
-
-Usually, long ROH (approximately >1.5 Mb) arise as a result of close parental consanguinity, but also short-medium *ROHs* can be of medical interest in populations as involved in disease susceptibility, natural selection and founder effects ([Ceballos et al., 2018](https://www.nature.com/articles/nrg.2017.109)).
-
----
-
-![roh_exome_methods]({{site.baseurl}}/images/roh_exome_methods.png)
-**Figure 2**. Summary of the tools for *ROH* detection from exome data (from [Pippucci et al., 2014](https://www.karger.com/Article/Pdf/362412))
-
----
-
-### H<sup>3</sup>M<sup>2</sup>
-
-*H<sup>3</sup>M<sup>2</sup>* ([Magi et al., 2014](https://academic.oup.com/bioinformatics/article/30/20/2852/2422169)) is based on an heterogeneous [*Hidden Markov Model*](https://en.wikipedia.org/wiki/Hidden_Markov_model) (HMM) that incorporates inter-marker distances to detect *ROHs* from exome data.
-
-*H<sup>3</sup>M<sup>2</sup>* calculates B-allele frequencies of a set of polymorphic sites throughout the exome as the ratio between allele *B* counts and the total read count at site *i*:
-
-*BAF*<sub>i</sub> = *N<sub>b</sub>/N*
-
-*H<sup>3</sup>M<sup>2</sup>* retrieves *BAF*<sub>i</sub> **directly from BAM files** to predict the heterozygous/homozygous genotype state at each polymorphic position *i*:
-
-- when *BAF*<sub>i</sub> \~ 0 the predicted genotype is **homozygous reference**
-- when *BAF*<sub>i</sub> \~ 0.5 the predicted genotype is **heterozygous**
-- when *BAF*<sub>i</sub> \~ 1 the predicted genotype is **homozygous alternative**
-
-*H<sup>3</sup>M<sup>2</sup>* models *BAF* data by means of the *HMM* algorithm to discriminate between regions of homozygosity and non-homozygosity according to the *BAF* distribution along the genome (Figure 3).
-
----
-  
-![h3m2_baf]({{site.baseurl}}/images/h3m2_baf.png)
-**Figure 3**. ***BAF* data distribution** Panels a, b and c show the distributions of BAF values against the genotype calls generated by the HapMap consortium on SNP-array data ( a ), the genotype calls made by SAMtools ( b ) and the genotype calls made by GATK ( c ). For each genotype caller, the distribution of BAF values is reported for homozygous reference calls (HMr), heterozygous calls (HT) and homozygous alternative calls (HMa). R is the Pearson correlation coefficient. Panels d–g show the distribution of BAF values in all the regions of the genome ( d ), in heterozygous regions ( e ), in homozygous regions ( f ) and in the X chromosome of male individuals ( g ). For each panel, the main plot reports the zoomed histogram, the left subplot shows the BAF values against genomic positions, whereas the right subplot shows the entire histogram of BAF values. (from [Magi et al., 2014](https://academic.oup.com/bioinformatics/article/30/20/2852/2422169))
 
 
 # Contributors
