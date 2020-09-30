@@ -94,6 +94,9 @@ Input datasets used in this course are available:
  - at [Zenodo](https://zenodo.org/record/3531578), an open-access repository developed under the European OpenAIRE program and operated by CERN
  - as *Shared Data Libraries* in [Galaxy](https://usegalaxy.eu/library/list): *[Galaxy courses / Sigu](https://usegalaxy.eu/library/list#folders/F3d08bb711e4e3b26)*
    
+## Use cases
+FIXME
+   
 ## Get data
 
 > ### {% icon hands_on %} Hands-on: Data upload
@@ -365,7 +368,7 @@ On top of each plot, clicking on the question mark you can open a window with a 
 >    {: .question}
 {: .hands_on}
 
-### Compute statistics with Picard CollectHsMetrics
+### Coverage metrics with Picard
 
 **Collect Hybrid Selection (HS) Metrics** {% icon tool %} tool computes a set of metrics that are specific for sequence datasets generated through hybrid-selection. Hybrid selection is the commonly used protocol to capture specific sequences for targeted experiments such as exome sequencing.
 
@@ -425,49 +428,9 @@ aligned sequences from an exome sequencing experiment.
 {: .hands_on}
 
 
-# Variant calling and classification
-
+# Variant annotation
 After the generation of a high-quality set of mapped read pairs, we can proceed to call different classes of DNA variants.
 Users interested in germline variant calling can refer to related Galaxy's tutorials, e.g. [Exome sequencing data analysis for diagnosing a genetic disease](https://galaxyproject.github.io/training-material/topics/variant-analysis/tutorials/exome-seq/tutorial.html).
-To accurately detect mosaic variants in sequencing data without matched controls we will use **MuTect2** tool from **[GATK toolkit](https://gatk.broadinstitute.org/hc/en-us)**. 
-
-In more details, this tool executes different operations:
-
-- Determine haplotypes by local assembly of the genomic regions in which the samples being analyzed show substantial evidence of variation relative to the reference;
-- Evaluate the evidence for haplotypes and variant alleles;
-- Assigning per-sample genotypes.
-
-> ### {% icon hands_on %} Hands-on: Mosaic Variant calling.
-> 
-> You may use files provided as examples with this tutorial and called
->    `Panel_alignment.bam` and `Panel_Target_regions.bed`. 
-> 
-> Run **Mutect2** {% icon tool %} restricting the search space on target regions with "-L" option to reduce computational burden.
->    The first step is needed to create an internal database of controls (i.e. **Panel Of Normals** - PoN) to reduce bias for somatic calls. It runs on a single sample at time:
->
->  - `gatk Mutect2 -R HSapiensReference_genome_hg19.fasta -L Panel_target_regions.bed -I Panel_alignment_normal1.bam -O normal_genotyped1.vcf`
->  - `gatk Mutect2 -R HSapiensReference_genome_hg19.fasta -L Panel_target_regions.bed -I Panel_alignment_normal2.bam -O normal_genotyped2.vcf`
->
->  Then use GATK's *CreateSomaticPanelOfNormals* tool to generate the PoN:
->
->  - `gatk GenomicsDBImport -L Panel_target_regions.bed -R HSapiensReference_genome_hg19.fasta --genomicsdb-workspace-path PoN_db -V normal_genotyped1.vcf -V normal_genotyped2.vcf`
->  - `gatk CreateSomaticPanelOfNormals -R HSapiensReference_genome_hg19.fasta -V gendb://PoN_db -O panel_of_normals.vcf`
->
->    > ### {% icon comment %} Note
->    > The --genomicsdb-workspace-path must point to a non-existent or empty directory.
->    {: .comment}
->
-> 
-> Then, to effectively call somatic mutations, we can use variants contained in the **PoN** and/or other public repositories  (e.g. by means of the option *--germline-resource*, using a VCF file containing frequencies of germline variants in the general population) to exclude germline variation. Finally, to properly classify somatic variants, we apply *FilterMutectCalls filtering*, which produces the final subset annotated VCF file. To this aim, we can run the following commands:
->
-> - `gatk Mutect2 -R HSapiensReference_genome_hg19.fasta -I Panel_alignment.bam --germline-resource af-only-gnomad.vcf --panel-of-normals panel_of_normals.vcf -O somatic_genotyped_unfiltered.vcf`
-> 
-> - `gatk FilterMutectCalls -R HSapiensReference_genome_hg19.fasta -V somatic_genotyped_unfiltered.vcf -O somatic_genotyped_filtered.vcf`
->
- 
-
-# Variant annotation
-
 Once called, variants (SNPs and InDels) need to be annotated.
 
 We want to know for example if a variant is located in a gene, if it’s in the coding portion of that gene, if it causes an aminoacid substitution, if that substitution is deleterious for the encoded protein function.
@@ -642,7 +605,7 @@ Phenotype-based prioritization tools are methods working by comparing the phenot
 >    Phenolyzer prioritization results
 {: .hands_on}
 
-## Generating a GEMINI database of variants for further annotation and efficient variant queries
+## GEMINI for variant filtering
 
 Now, we'll use the VCF file annotated with SnpEff to filter variants considering
 the relationship between family members.
@@ -816,138 +779,11 @@ you think could plausibly be causative for the child's disease.
 {: .details}
 
 
-## Displaying data in UCSC genome browser
+# Use cases - solutions
+FIXME
 
-A good way to proceed with candidate variants is to look at their coverage. 
-This can be done by using genome browsers to display the aligned reads in the position of the candidate variant.
-Aligned reads are stored in `bam` files, and Galaxy can display `bam` launching a genome browser such as IGV on 
-your local machine, and it can connect to online genome browsers as well.
-An example of such an online genome browser is the UCSC Genome Browser.
-
-> ### {% icon hands_on %} Hands-on: UCSC genome browser
->
-> 1. First, check that the **database** of your `bam` dataset is `hg19`. If not, click on the {% icon galaxy-pencil %} pencil icon and modify the **Database/Build:** field to `Human Feb. 2009 (GRCh37/hg19) (hg19)`.
->
->    {% include snippets/change_dbkey.md dbkey="hg19" %}
->>
-> 2. To **visualize the data in UCSC genome browser**, click on `display at UCSC main` option visible when you expand the history item.
->
->    ![`display at UCSC main` link]({{site.baseurl}}/images/101_displayucsc.png)
->
->    This will upload the data to UCSC as custom track. To see your data look at the `User Track` near the top.
->    You can enter the coordinates of one of your variants at the top to jump to that location.
->
->    ![`User Track` shown in the UCSC genome browser]({{site.baseurl}}/images/101_21.png)
-{: .hands_on}
-
-UCSC provides a large number of tracks that can help you get a sense of your genomic area, it contains common SNPs, repeats, genes, and much more (scroll down to find all possible tracks).
-
-
-
-# CNV detection from targeted sequencing data
-
-- *Copy Number Variants* (CNVs) are imbalances in the copy number of the genomic material that result in either DNA **deletions** (copy loss) or **duplications**
-- *CNVs* can cause/predispose to human diseases by altering gene structure/dosage or by **position effect**
-- *CNV* size ranges from 50 bp to megabases
-- Classical methods to identify *CNVs* use array-based technologies (SNP/CGH)
-- Computational approaches have been developed to identify *CNVs* in targeted sequencing data from **hybrid capture** experiments
-
-## Computational approaches
-
-There are four main methods for *CNV* identification from short-read +NGS data (see figure below):
- - **Read Count** (RC)
- - **Read Pair** (RP)
- - **Split Read** (SR)
- - **De Novo Assembly** (AS)
-  
-  
- - *RP* and *SR* require continuous coverage of the *CNV* region or reads encompassing *CNV* breakpoints, as in whole genome sequencing. The sparse nature and small size of exonic targets hamper the application of these methods to targeted sequencing. 
- - *RC* is the best suited method for *CNV* detection from whole exomes or gene panels where:
-  - deletions appear as exonic targets devoid of reads
-  - duplications appear as exonic targets characterized by excess of coverage
-
----
-
-![CNV detection methods]({{site.baseurl}}/images/methods_identification_cnv.png)
-
-**Figure 1**. Methods for detection of CNVs in short read NGS data (adapted from [Tattini et al., 2015](https://doi.org/10.3389/fbioe.2015.00092))
-
----
-
-## RC method and data normalization
-
-In targeted sequencing, a method to study DNA copy number variation by *RC* (as implemented in *EXCAVATOR* tool, [Magi et al., 2013](http://genomebiology.com/2013/14/10/R120))) is to consider the **exon mean read count** (EMRC):
-
-*EMRC* = *RC*<sub>e</sub>/*L*<sub>e</sub>
-
-where *RC*<sub>e</sub> is the number of reads aligned to a target genomic region e and *L*<sub>e</sub> is the size of that same genomic region in base pairs ([Magi et al., 2013](http://genomebiology.com/2013/14/10/R120))).
-Three major bias sources are known to affect *EMRC* dramatically in targeted sequencing data:
-- local **GC content** percentage
-- genomic **mappability**
-- target region **size**
-
-These biases contribute to non uniform read depth across target regions and, together with the sparse target nature, challenge the applicability of *RC* methods to targeted data. As shown in Figure 2 (left panel), in single-sample data the *EMRC* distributions of genomic regions characterized by different copy numbers largely overlap, revealing poor *CNV* prediction capability. 
-
-*EMRC ratio* between two samples can be used as a normalization procedure. The effect of *EMRC ratio*-based normalization is clear in Figure 2 (right panel) as a markedly improved correspondece between the predicted and the real copy number states.
-
----
-
-![Data Normalization_1]({{site.baseurl}}/images/normalization_EMRC.png)
-
-**Figure 2**. Effect of *EMRC ratio* on DNA copy number prediction (adapted from [Magi et al., 2013](http://genomebiology.com/2013/14/10/R120))
-
----
-    
-Similarly FPKM, a normalized measure of read depth implemented in ExomeDepth tool ([Plagnol et al., 2012](https://doi.org/10.1093/bioinformatics/bts526)), is affected by extensive exon–exon variability but comparison between pairs of exome datasets demonstrates high correlation level of the normalized read count data across samples making it possibile to use one or more combined exomes as reference set to base the CNV inference on ([Plagnol et al., 2012](https://doi.org/10.1093/bioinformatics/bts526)).
-
----
-    
-![Data Normalization_2]({{site.baseurl}}/images/normalization_FPKM.png)
-
-**Figure 3**. Correlation of the normalized read count data between samples (from [Plagnol et al., 2012](https://doi.org/10.1093/bioinformatics/bts526))
-
----    
-    
-## *CNV* detection accuracy
-
-Strong correlation is observed between Affymetrix array-SNP and exome-derived data for *CNVs* >1 Mb (Figure 4, right panel), while including CNVs of any size dramatically decreases the correlation level (Figure 4, left panel). This can be explained by the different distribution of exons and SNP probes throughout the genome. Candidate *CNV* regions as identified by *EXCAVATOR* contain a comparable number of exons and SNP probes when they are > 1 Mb (*R*=0.8), while regions <100 Kb do not (*R*=-0.02). Accordingly, [Krumm et al., 2012](https://genome.cshlp.org/content/22/8/1525.full) report 94% precision in detecting *CNVs* across three or more exons.
-
----    
-    
-![Correlation_Exome_Affymetrix]({{site.baseurl}}/images/corr_exome_affymetrix.png)
-
-**Figure 4**. Correlation between array-SNP and exome-derived *CNVs* including all (left panel) or > 1 Mb *CNVs* (adapted from [Magi et al., 2013](http://genomebiology.com/2013/14/10/R120))
-
----    
-    
-To increase chances to detect *CNVs* encompassing few exons or in non-coding regions from exome data, [D'Aurizio et al., 2016](https://academic.oup.com/nar/article/44/20/e154/2607979) have proposed an extension to *EXCAVATOR* to exploit off-target read count (*EXCAVATOR2*). Similar approaches taking advantage of off-target reads have been described by [Bellos et al., 2014](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4147927/) or [Talevich et al., 2016](https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1004873).
-
-## Tools for *CNV* detection from gene panels or exome data
-
-A number of tools or pipelines implementing modified versions of previously published tools have been reported to detect single-exon *CNVs* in clinical gene panels:
-- [CoNVaDING](https://onlinelibrary.wiley.com/doi/full/10.1002/humu.22969)
-- [DeCON](https://wellcomeopenresearch.org/articles/1-20/v1)
-- [ExomeDepth v1.1.6](https://www.nature.com/articles/ejhg201742)
-- [Atlas-CNV](https://www.nature.com/articles/s41436-019-0475-4)
-- [DeviCNV](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6192323/)
-
-In addition to the above-mentioned methods, many tools have been developed that detect *CNVs* from exomes. Evaluation of these tools is not straightforward as there is lack of a gold standard for comparison. As a consequence, there is no consensus level on pipelines as high as for single nucleotide variants. [Zare et al., 2017](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5452530/pdf/12859_2017_Article_1705.pdf) have reviewed this topic with focus on cancer, reporting poor overlap of different tools and added challenges for somatic variant calling.
-
- 
----    
-  
-> ### {% icon hands_on %} Hands-on: CNV calling with ExomeDepth
->    ExomeDepth uses pairs of case and control exomes to identify copy number imbalances in case(s) compared to control(s).
->    Here we provide a small data set including a pair of case/control BAM files and an exome target BED file restricted to a specific polymorphic region on chromosome 2q.
->    
-> - CNV_case.bam.
-> - CNV_control.bam.
-> - CNV_TruSeq_Chr2.bam
->
->    Your aim is to identify a large polymorphic deletion in case.
-{: .hands_on}
-
-
+# Advanced analysis
+FIXME
 
 # Contributors
 {:.no_toc}
