@@ -78,10 +78,10 @@
             <li><p>Perform in-depth quality control of sequencing data at multiple levels (fastq, bam, vcf)</p>
 </li>
             
-            <li><p>Call, classify and annotate variants with information extracted from public databases for clinical interpretation</p>
+            <li><p>Classify and annotate variants with information extracted from public databases for clinical interpretation</p>
 </li>
             
-            <li><p>Analyze CNV and Regions of Homozygosity (ROH)</p>
+            <li><p>Filter variants based on inheritance patterns</p>
 </li>
             
             </ul>
@@ -89,7 +89,7 @@
             
 
             
-            <p><strong><i class="fa fa-hourglass-end" aria-hidden="true"></i><span class="visually-hidden">time</span> Time estimation:</strong> 6 hours</p>
+            <p><strong><i class="fa fa-hourglass-end" aria-hidden="true"></i><span class="visually-hidden">time</span> Time estimation:</strong> 4 hours</p>
             
 
             
@@ -144,18 +144,18 @@ members of the society.</p>
   <p>In this tutorial, we will cover:</p>
 
 <ol id="markdown-toc">
-  <li><a href="#requirements" id="markdown-toc-requirements">Requirements</a></li>
-  <li><a href="#datasets" id="markdown-toc-datasets">Datasets</a>    <ol>
-      <li><a href="#use-cases" id="markdown-toc-use-cases">Use cases</a></li>
-      <li><a href="#get-data" id="markdown-toc-get-data">Get data</a></li>
-    </ol>
-  </li>
   <li><a href="#next-generation-sequencing" id="markdown-toc-next-generation-sequencing">Next Generation Sequencing</a>    <ol>
       <li><a href="#ngs-in-the-clinic" id="markdown-toc-ngs-in-the-clinic">NGS in the clinic</a></li>
       <li><a href="#basics-of-ngs-bioinformatic-analysis" id="markdown-toc-basics-of-ngs-bioinformatic-analysis">Basics of NGS bioinformatic analysis</a></li>
       <li><a href="#alignment" id="markdown-toc-alignment">Alignment</a></li>
       <li><a href="#post-alignment-bam-processing" id="markdown-toc-post-alignment-bam-processing">Post-alignment BAM processing</a></li>
       <li><a href="#variant-calling" id="markdown-toc-variant-calling">Variant calling</a></li>
+    </ol>
+  </li>
+  <li><a href="#requirements" id="markdown-toc-requirements">Requirements</a></li>
+  <li><a href="#datasets" id="markdown-toc-datasets">Datasets</a>    <ol>
+      <li><a href="#use-cases" id="markdown-toc-use-cases">Use cases</a></li>
+      <li><a href="#get-data" id="markdown-toc-get-data">Get data</a></li>
     </ol>
   </li>
   <li><a href="#quality-control" id="markdown-toc-quality-control">Quality control</a>    <ol>
@@ -186,187 +186,6 @@ members of the society.</p>
   <li><a href="#use-cases---solutions" id="markdown-toc-use-cases---solutions">Use cases - solutions</a></li>
   <li><a href="#advanced-analysis" id="markdown-toc-advanced-analysis">Advanced analysis</a></li>
 </ol>
-
-</blockquote>
-
-<h1 id="requirements">Requirements</h1>
-
-<p>This tutorial is based on the <a href="https://galaxyproject.org/"><span class="notranslate">Galaxy</span></a> platform,
-therefore a basic knowledge of <span class="notranslate">Galaxy</span> is required to get most out of the course.
-In particular, we’ll use European <span class="notranslate">Galaxy</span> server running at <a href="https://usegalaxy.eu">https://use<span class="notranslate">galaxy</span>.eu</a>.</p>
-
-<p>Registration is <strong>free</strong>, and you get access to <strong>250GB</strong> of disk space for your analysis.</p>
-
-<ol>
-  <li>Open your browser. We recommend Chrome or Firefox (please don’t use Internet Explorer or Safari).</li>
-  <li>Go to <a href="https://usegalaxy.eu">https://use<span class="notranslate">galaxy</span>.eu</a>
-    <ul>
-      <li>If you have previously registered on this server just log in:
-        <ul>
-          <li>On the top menu select: User -&gt; Login</li>
-          <li>Enter your user/password</li>
-          <li>Click Submit</li>
-        </ul>
-      </li>
-      <li>If you haven’t registered on this server, you’ll need to do now.
-        <ul>
-          <li>On the top menu select: User -&gt; Register</li>
-          <li>Enter your email, choose a password, repeat it and add a one word name (lower case)</li>
-          <li>Click Submit</li>
-        </ul>
-      </li>
-    </ul>
-  </li>
-</ol>
-
-<p>To familiarize with the <span class="notranslate">Galaxy</span> interface (e.g. working with histories, importing dataset),
-we suggest to follow the <a href="https://galaxyproject.github.io/training-material/topics/introduction/tutorials/galaxy-intro-101/tutorial.html"><span class="notranslate">Galaxy</span> 101</a> tutorial.</p>
-
-<h1 id="datasets">Datasets</h1>
-
-<p>Input datasets used in this course are available:</p>
-<ul>
-  <li>at <a href="https://zenodo.org/record/3531578">Zenodo</a>, an open-access repository developed under the European OpenAIRE program and operated by CERN</li>
-  <li>as <em>Shared Data Libraries</em> in <a href="https://usegalaxy.eu/library/list"><span class="notranslate">Galaxy</span></a>: <em><a href="https://usegalaxy.eu/library/list#folders/F3d08bb711e4e3b26"><span class="notranslate">Galaxy</span> courses / Sigu</a></em></li>
-</ul>
-
-<h2 id="use-cases">Use cases</h2>
-<p>FIXME</p>
-
-<h2 id="get-data">Get data</h2>
-
-<blockquote class="notranslate hands_on">
-  <h3 id="hands_on-hands-on-data-upload"><i class="fa fa-pencil" aria-hidden="true"></i><span class="visually-hidden">hands_on</span> Hands-on: Data upload</h3>
-
-  <ol>
-    <li>
-      <p>Create a new history for this tutorial and give it a meaningful name (e.g. Clinical genomics)</p>
-
-      <blockquote class="tip">
-
-        <h3 id="tip-tip-creating-a-new-history"><i class="fa fa-lightbulb-o" aria-hidden="true"></i><span class="visually-hidden">tip</span> Tip: Creating a new history</h3>
-
-        <p>Click the <i class="fa fa-plus" aria-hidden="true"></i><span class="visually-hidden">new-history</span> icon at the top of the history panel</p>
-
-        <p>If the <i class="fa fa-plus" aria-hidden="true"></i><span class="visually-hidden">new-history</span> is missing:</p>
-        <ol>
-          <li>Click on the <i class="fa fa-cog" aria-hidden="true"></i><span class="visually-hidden"><span class="notranslate">galaxy</span>-gear</span> icon (<strong>History options</strong>) on the top of the history panel</li>
-          <li>Select the option <strong>Create New</strong> from the menu</li>
-        </ol>
-      </blockquote>
-
-      <blockquote class="tip">
-
-        <h3 id="tip-tip-renaming-a-history"><i class="fa fa-lightbulb-o" aria-hidden="true"></i><span class="visually-hidden">tip</span> Tip: Renaming a history</h3>
-
-        <ol>
-          <li>Click on <strong>Unnamed history</strong> (or the current name of the history) (<strong>Click to rename history</strong>) at the top of your history panel</li>
-          <li>Type the new name</li>
-          <li>Press <kbd>Enter</kbd></li>
-        </ol>
-      </blockquote>
-    </li>
-    <li>
-      <p>Import files from <a href="https://zenodo.org/record/3531578">Zenodo</a> or Shared Data Library:</p>
-
-      <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>https://zenodo.org/record/3531578/files/CNV_case.bam
-https://zenodo.org/record/3531578/files/CNV_control.bam
-https://zenodo.org/record/3531578/files/CNV_TruSeq_Chr2.<span class="notranslate">bed</span>
-https://zenodo.org/record/3531578/files/HighQuality_<span class="notranslate">Reads</span>.fastq.gz
-https://zenodo.org/record/3531578/files/LowQuality_<span class="notranslate">Reads</span>.fastq.gz
-https://zenodo.org/record/3531578/files/Panel_alignment.bam
-https://zenodo.org/record/3531578/files/Panel_target_regions.<span class="notranslate">bed</span>
-https://zenodo.org/record/3531578/files/Sample1.all_exons.hg19.vcf
-</code></pre></div>      </div>
-      <blockquote class="tip">
-
-        <h3 id="tip-tip-importing-data-via-links"><i class="fa fa-lightbulb-o" aria-hidden="true"></i><span class="visually-hidden">tip</span> Tip: Importing data via links</h3>
-
-        <ul>
-          <li>Copy the link location</li>
-          <li>
-            <p>Open the <span class="notranslate">Galaxy</span> Upload Manager (<i class="fa fa fa-upload" aria-hidden="true"></i><span class="visually-hidden"><span class="notranslate">galaxy</span>-upload</span> on the top-right of the tool panel)</p>
-          </li>
-          <li>Select <strong>Paste/Fetch Data</strong></li>
-          <li>
-            <p>Paste the link into the text field</p>
-          </li>
-          <li>
-            <p>Press <strong>Start</strong></p>
-          </li>
-          <li><strong>Close</strong> the window</li>
-        </ul>
-
-        <p>By default, <span class="notranslate">Galaxy</span> uses the URL as the name, so rename the files with a more useful name.</p>
-
-      </blockquote>
-
-      <p>The same files may be available on the <span class="notranslate">Galaxy</span> server
-through a <em>Shared Data Libraries</em> in 
-<em><a href="https://usegalaxy.eu/library/list#folders/F3d08bb711e4e3b26"><span class="notranslate">Galaxy</span> courses/Sigu</a></em>.
-You may prefer to import the data directly from there.</p>
-
-      <blockquote class="tip">
-
-        <h3 id="tip-tip-importing-data-from-a-data-library"><i class="fa fa-lightbulb-o" aria-hidden="true"></i><span class="visually-hidden">tip</span> Tip: Importing data from a data library</h3>
-
-        <p>As an alte<span class="notranslate">rna</span>tive to uploading the data from a URL or your computer, the files may also have been made available from a <em>shared data library</em>:</p>
-
-        <ul>
-          <li>
-            <p>Go into <strong>Shared data</strong> (top panel) then <strong>Data libraries</strong></p>
-          </li>
-          <li>
-            <p>Find the correct folder (ask your instructor)</p>
-          </li>
-          <li>Select the desired files</li>
-          <li>Click on the <strong>To History</strong> button near the top and select <strong>as Datasets</strong> from the dropdown menu</li>
-          <li>In the pop-up window, select the history you want to import the files to (or create a new one)</li>
-          <li>Click on <strong>Import</strong></li>
-        </ul>
-      </blockquote>
-
-      <blockquote class="comment">
-        <h3 id="comment-note"><i class="fa fa-commenting-o" aria-hidden="true"></i><span class="visually-hidden">comment</span> Note</h3>
-        <p>All the files are based on <code class="language-plaintext highlighter-rouge">hg19</code> reference genome which is
-available with pre-built indexes for widely used tools such as 
-<em>bwa-mem</em> <strong>and</strong> <em>samtools</em> by selecting <code class="language-plaintext highlighter-rouge">hg19</code> version as an option under
-<em>“(Using) reference genome”</em>).</p>
-      </blockquote>
-    </li>
-    <li>
-      <p>In case you import datasets from Zenodo, check that all datasets in your history
-have their datatypes assigned correctly, and fix it when necessary.
-For example, to assign <span class="notranslate">BED</span> datatype do the following:</p>
-
-      <blockquote class="tip">
-
-        <h3 id="tip-tip-changing-the-datatype"><i class="fa fa-lightbulb-o" aria-hidden="true"></i><span class="visually-hidden">tip</span> Tip: Changing the datatype</h3>
-        <ul>
-          <li>Click on the <i class="fa fa-pencil" aria-hidden="true"></i><span class="visually-hidden"><span class="notranslate">galaxy</span>-pencil</span> <strong>pencil icon</strong> for the dataset to edit its attributes</li>
-          <li>In the central panel, click on the <i class="fa fa fa-database" aria-hidden="true"></i><span class="visually-hidden"><span class="notranslate">galaxy</span>-chart-select-data</span> <strong>Datatypes</strong> tab on the top</li>
-          <li>Select <code class="language-plaintext highlighter-rouge"><span class="notranslate">bed</span></code></li>
-          <li>Click the <strong>Change datatype</strong> button</li>
-        </ul>
-      </blockquote>
-    </li>
-    <li>
-      <p>Rename the datasets</p>
-
-      <p>For datasets uploaded via a link, <span class="notranslate">Galaxy</span> will use the link
-as the dataset name. In this case you may rename datasets.</p>
-
-      <blockquote class="tip">
-
-        <h3 id="tip-tip-renaming-a-dataset"><i class="fa fa-lightbulb-o" aria-hidden="true"></i><span class="visually-hidden">tip</span> Tip: Renaming a dataset</h3>
-        <ul>
-          <li>Click on the <i class="fa fa-pencil" aria-hidden="true"></i><span class="visually-hidden"><span class="notranslate">galaxy</span>-pencil</span> <strong>pencil icon</strong> for the dataset to edit its attributes</li>
-          <li>In the central panel, change the <strong>Name</strong> field</li>
-          <li>Click the <strong>Save</strong> button</li>
-        </ul>
-      </blockquote>
-    </li>
-  </ol>
 
 </blockquote>
 
@@ -522,6 +341,229 @@ While GATK BAM processing is beyond doubt important to improve data quality, it 
 
 <p>In <span class="notranslate">downstream</span> analyses, annotations can be added to <em>VCF</em> files themselves or information in <em>VCF</em> files can be either annotated in TAB- or comma- deimited files to be visually inspected for <em>clinical</em> variant searching or used as input to <strong>prioritization</strong> programs.</p>
 
+<h1 id="requirements">Requirements</h1>
+
+<p>This tutorial is based on the <a href="https://galaxyproject.org/"><span class="notranslate">Galaxy</span></a> platform,
+therefore a basic knowledge of <span class="notranslate">Galaxy</span> is required to get most out of the course.
+In particular, we’ll use the European <span class="notranslate">Galaxy</span> server running at <a href="https://usegalaxy.eu">https://use<span class="notranslate">galaxy</span>.eu</a>.</p>
+
+<p>Registration is <strong>free</strong>, and you get access to <strong>250GB</strong> of disk space for your analysis.</p>
+
+<ol>
+  <li>Open your browser. We recommend Chrome or Firefox (please don’t use Internet Explorer or Safari).</li>
+  <li>Go to <a href="https://usegalaxy.eu">https://use<span class="notranslate">galaxy</span>.eu</a>
+    <ul>
+      <li>If you have previously registered on this server just log in:
+        <ul>
+          <li>On the top menu select: User -&gt; Login</li>
+          <li>Enter your user/password</li>
+          <li>Click Submit</li>
+        </ul>
+      </li>
+      <li>If you haven’t registered on this server, you’ll need to do now.
+        <ul>
+          <li>On the top menu select: User -&gt; Register</li>
+          <li>Enter your email, choose a password, repeat it and add a one word name (lower case)</li>
+          <li>Click Submit</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ol>
+
+<p>To familiarize with the <span class="notranslate">Galaxy</span> interface (e.g. working with histories, importing dataset),
+we suggest to follow the <a href="https://galaxyproject.github.io/training-material/topics/introduction/tutorials/galaxy-intro-101/tutorial.html"><span class="notranslate">Galaxy</span> 101</a> tutorial.</p>
+
+<h1 id="datasets">Datasets</h1>
+
+<p>Input datasets used in this course are available:</p>
+<ul>
+  <li>at <a href="https://zenodo.org/record/3531578">Zenodo</a>, an open-access repository developed under the European OpenAIRE program and operated by CERN</li>
+  <li>as <em>Shared Data Libraries</em> in <a href="https://usegalaxy.eu/library/list"><span class="notranslate">Galaxy</span></a>: <em><a href="https://usegalaxy.eu/library/list#folders/F3d08bb711e4e3b26"><span class="notranslate">Galaxy</span> courses / Sigu</a></em></li>
+</ul>
+
+<h2 id="use-cases">Use cases</h2>
+
+<p>We selected some case studies for this tutorial.
+We suggest you to start with a simple case (e.g. XXX) for the first run of the tutorial,
+and repeat it with the more complex ones.
+At the end of the page you will be able to compare your candidate variants
+with the list of true pathogenic variants.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Case</th>
+      <th>Number of individuals</th>
+      <th>Description FIXME</th>
+      <th>…</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Trio 1</td>
+      <td>3</td>
+      <td>…</td>
+      <td>…</td>
+    </tr>
+    <tr>
+      <td>Trio 2</td>
+      <td>3</td>
+      <td>…</td>
+      <td>…</td>
+    </tr>
+    <tr>
+      <td>Trio 3</td>
+      <td>3</td>
+      <td>…</td>
+      <td>…</td>
+    </tr>
+    <tr>
+      <td>Trio 4</td>
+      <td>3</td>
+      <td>…</td>
+      <td>…</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="get-data">Get data</h2>
+
+<blockquote class="notranslate hands_on">
+  <h3 id="hands_on-hands-on-data-upload"><i class="fa fa-pencil" aria-hidden="true"></i><span class="visually-hidden">hands_on</span> Hands-on: Data upload</h3>
+
+  <ol>
+    <li>
+      <p>Create a new history for this tutorial and give it a meaningful name (e.g. Clinical genomics)</p>
+
+      <blockquote class="tip">
+
+        <h3 id="tip-tip-creating-a-new-history"><i class="fa fa-lightbulb-o" aria-hidden="true"></i><span class="visually-hidden">tip</span> Tip: Creating a new history</h3>
+
+        <p>Click the <i class="fa fa-plus" aria-hidden="true"></i><span class="visually-hidden">new-history</span> icon at the top of the history panel</p>
+
+        <p>If the <i class="fa fa-plus" aria-hidden="true"></i><span class="visually-hidden">new-history</span> is missing:</p>
+        <ol>
+          <li>Click on the <i class="fa fa-cog" aria-hidden="true"></i><span class="visually-hidden"><span class="notranslate">galaxy</span>-gear</span> icon (<strong>History options</strong>) on the top of the history panel</li>
+          <li>Select the option <strong>Create New</strong> from the menu</li>
+        </ol>
+      </blockquote>
+
+      <blockquote class="tip">
+
+        <h3 id="tip-tip-renaming-a-history"><i class="fa fa-lightbulb-o" aria-hidden="true"></i><span class="visually-hidden">tip</span> Tip: Renaming a history</h3>
+
+        <ol>
+          <li>Click on <strong>Unnamed history</strong> (or the current name of the history) (<strong>Click to rename history</strong>) at the top of your history panel</li>
+          <li>Type the new name</li>
+          <li>Press <kbd>Enter</kbd></li>
+        </ol>
+      </blockquote>
+    </li>
+    <li>
+      <p>Import files from <a href="https://zenodo.org/record/3531578">Zenodo</a> or Shared Data Library:</p>
+
+      <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>https://zenodo.org/record/3531578/files/CNV_case.bam
+https://zenodo.org/record/3531578/files/CNV_control.bam
+https://zenodo.org/record/3531578/files/CNV_TruSeq_Chr2.<span class="notranslate">bed</span>
+https://zenodo.org/record/3531578/files/HighQuality_<span class="notranslate">Reads</span>.fastq.gz
+https://zenodo.org/record/3531578/files/LowQuality_<span class="notranslate">Reads</span>.fastq.gz
+https://zenodo.org/record/3531578/files/Panel_alignment.bam
+https://zenodo.org/record/3531578/files/Panel_target_regions.<span class="notranslate">bed</span>
+https://zenodo.org/record/3531578/files/Sample1.all_exons.hg19.vcf
+</code></pre></div>      </div>
+      <blockquote class="tip">
+
+        <h3 id="tip-tip-importing-data-via-links"><i class="fa fa-lightbulb-o" aria-hidden="true"></i><span class="visually-hidden">tip</span> Tip: Importing data via links</h3>
+
+        <ul>
+          <li>Copy the link location</li>
+          <li>
+            <p>Open the <span class="notranslate">Galaxy</span> Upload Manager (<i class="fa fa fa-upload" aria-hidden="true"></i><span class="visually-hidden"><span class="notranslate">galaxy</span>-upload</span> on the top-right of the tool panel)</p>
+          </li>
+          <li>Select <strong>Paste/Fetch Data</strong></li>
+          <li>
+            <p>Paste the link into the text field</p>
+          </li>
+          <li>
+            <p>Press <strong>Start</strong></p>
+          </li>
+          <li><strong>Close</strong> the window</li>
+        </ul>
+
+        <p>By default, <span class="notranslate">Galaxy</span> uses the URL as the name, so rename the files with a more useful name.</p>
+
+      </blockquote>
+
+      <p>The same files may be available on the <span class="notranslate">Galaxy</span> server
+through a <em>Shared Data Libraries</em> in 
+<em><a href="https://usegalaxy.eu/library/list#folders/F3d08bb711e4e3b26"><span class="notranslate">Galaxy</span> courses/Sigu</a></em>.
+You may prefer to import the data directly from there.</p>
+
+      <blockquote class="tip">
+
+        <h3 id="tip-tip-importing-data-from-a-data-library"><i class="fa fa-lightbulb-o" aria-hidden="true"></i><span class="visually-hidden">tip</span> Tip: Importing data from a data library</h3>
+
+        <p>As an alte<span class="notranslate">rna</span>tive to uploading the data from a URL or your computer, the files may also have been made available from a <em>shared data library</em>:</p>
+
+        <ul>
+          <li>
+            <p>Go into <strong>Shared data</strong> (top panel) then <strong>Data libraries</strong></p>
+          </li>
+          <li>
+            <p>Find the correct folder (ask your instructor)</p>
+          </li>
+          <li>Select the desired files</li>
+          <li>Click on the <strong>To History</strong> button near the top and select <strong>as Datasets</strong> from the dropdown menu</li>
+          <li>In the pop-up window, select the history you want to import the files to (or create a new one)</li>
+          <li>Click on <strong>Import</strong></li>
+        </ul>
+      </blockquote>
+
+      <blockquote class="comment">
+        <h3 id="comment-note"><i class="fa fa-commenting-o" aria-hidden="true"></i><span class="visually-hidden">comment</span> Note</h3>
+        <p>All the files are based on <code class="language-plaintext highlighter-rouge">hg19</code> reference genome which is
+available with pre-built indexes for widely used tools such as 
+<em>bwa-mem</em> <strong>and</strong> <em>samtools</em> by selecting <code class="language-plaintext highlighter-rouge">hg19</code> version as an option under
+<em>“(Using) reference genome”</em>).</p>
+      </blockquote>
+    </li>
+    <li>
+      <p>In case you import datasets from Zenodo, check that all datasets in your history
+have their datatypes assigned correctly, and fix it when necessary.
+For example, to assign <span class="notranslate">BED</span> datatype do the following:</p>
+
+      <blockquote class="tip">
+
+        <h3 id="tip-tip-changing-the-datatype"><i class="fa fa-lightbulb-o" aria-hidden="true"></i><span class="visually-hidden">tip</span> Tip: Changing the datatype</h3>
+        <ul>
+          <li>Click on the <i class="fa fa-pencil" aria-hidden="true"></i><span class="visually-hidden"><span class="notranslate">galaxy</span>-pencil</span> <strong>pencil icon</strong> for the dataset to edit its attributes</li>
+          <li>In the central panel, click on the <i class="fa fa fa-database" aria-hidden="true"></i><span class="visually-hidden"><span class="notranslate">galaxy</span>-chart-select-data</span> <strong>Datatypes</strong> tab on the top</li>
+          <li>Select <code class="language-plaintext highlighter-rouge"><span class="notranslate">bed</span></code></li>
+          <li>Click the <strong>Change datatype</strong> button</li>
+        </ul>
+      </blockquote>
+    </li>
+    <li>
+      <p>Rename the datasets</p>
+
+      <p>For datasets uploaded via a link, <span class="notranslate">Galaxy</span> will use the link
+as the dataset name. In this case you may rename datasets.</p>
+
+      <blockquote class="tip">
+
+        <h3 id="tip-tip-renaming-a-dataset"><i class="fa fa-lightbulb-o" aria-hidden="true"></i><span class="visually-hidden">tip</span> Tip: Renaming a dataset</h3>
+        <ul>
+          <li>Click on the <i class="fa fa-pencil" aria-hidden="true"></i><span class="visually-hidden"><span class="notranslate">galaxy</span>-pencil</span> <strong>pencil icon</strong> for the dataset to edit its attributes</li>
+          <li>In the central panel, change the <strong>Name</strong> field</li>
+          <li>Click the <strong>Save</strong> button</li>
+        </ul>
+      </blockquote>
+    </li>
+  </ol>
+
+</blockquote>
+
 <h1 id="quality-control">Quality control</h1>
 
 <p>In-depth quality control (QC) of data generated during an NGS experiment is crucial for an accurate interpretation of the results. For example an accurate QC could help in identifying poor quality experiments, sequence contamination or genomic regions with low sequence coverage, and all these factors have a large impact on the <span class="notranslate">downstream</span> processing.</p>
@@ -583,7 +625,7 @@ this behaviour.</p>
 </blockquote>
 
 <blockquote class="notranslate hands_on">
-  <h3 id="hands_on-hands-on-compute-sequence-quality-with-fastqc"><i class="fa fa-pencil" aria-hidden="true"></i><span class="visually-hidden">hands_on</span> Hands-on: Compute sequence quality with FastQC</h3>
+  <h3 id="hands_on-hands-on-computing-sequence-quality-with-fastqc"><i class="fa fa-pencil" aria-hidden="true"></i><span class="visually-hidden">hands_on</span> Hands-on: Computing sequence quality with FastQC</h3>
   <ol>
     <li>
       <p>Run <strong>FastQC</strong> <i class="fa fa-wrench" aria-hidden="true"></i><span class="visually-hidden">tool</span> on your fastq datasets <em>HighQuality_<span class="notranslate">Reads</span>.fastq</em> and
@@ -657,7 +699,7 @@ to the <a href="https://training.galaxyproject.org/training-material/topics/sequ
 <p><strong>Figure 6</strong>. BAM quality control using <em>bam.iobio.io</em></p>
 
 <blockquote class="notranslate hands_on">
-  <h3 id="hands_on-hands-on-compute-bam-quality-with-bamiobioio"><i class="fa fa-pencil" aria-hidden="true"></i><span class="visually-hidden">hands_on</span> Hands-on: Compute BAM quality with bam.iobio.io</h3>
+  <h3 id="hands_on-hands-on-computing-bam-quality-with-bamiobioio"><i class="fa fa-pencil" aria-hidden="true"></i><span class="visually-hidden">hands_on</span> Hands-on: Computing BAM quality with bam.iobio.io</h3>
   <ol>
     <li>
       <p>Run <strong>bam.iobio.io</strong> <i class="fa fa-wrench" aria-hidden="true"></i><span class="visually-hidden">tool</span> on a BAM dataset. To start <strong>bam.iobio.io</strong>
@@ -690,7 +732,7 @@ field set to <code class="language-plaintext highlighter-rouge">hg19</code></p>
 
 <h3 id="coverage-metrics-with-picard">Coverage metrics with Picard</h3>
 
-<p><strong>Collect Hybrid Selection (HS) Metrics</strong> <i class="fa fa-wrench" aria-hidden="true"></i><span class="visually-hidden">tool</span> tool computes a set of metrics that are specific for sequence datasets generated through hybrid-selection. Hybrid selection is the commonly used protocol to capture specific sequences for targeted experiments such as exome sequencing.</p>
+<p><strong>Collect Hybrid Selection (HS) Metrics</strong> <i class="fa fa-wrench" aria-hidden="true"></i><span class="visually-hidden">tool</span> tool computes a set of metrics that are specific for sequence datasets generated through hybrid-selection, a commonly used protocol to capture specific sequences for targeted experiments such as panels and exome sequencing.</p>
 
 <p>In order to run this tool you need a file with the aligned sequences in BAM format, and files with the intervals corresponding to bait and target regions. These files can be generally obtained from the website of the kit manufacturer.</p>
 
@@ -715,7 +757,7 @@ the hands on below for details.</p>
 aligned sequences from an exome sequencing experiment.</p>
 
 <blockquote class="notranslate hands_on">
-  <h3 id="hands_on-hands-on-compute-bam-statistics-with-picard-collecthsmetrics"><i class="fa fa-pencil" aria-hidden="true"></i><span class="visually-hidden">hands_on</span> Hands-on: Compute BAM statistics with Picard CollectHsMetrics</h3>
+  <h3 id="hands_on-hands-on-computing-bam-statistics-with-picard-collecthsmetrics"><i class="fa fa-pencil" aria-hidden="true"></i><span class="visually-hidden">hands_on</span> Hands-on: Computing BAM statistics with Picard CollectHsMetrics</h3>
 
   <ol>
     <li>
@@ -800,28 +842,58 @@ Once called, variants (SNPs and InDels) need to be annotated.</p>
 
 <p><strong>Figure 1.</strong> Variant indicated by the red dashed line can be annotated as <em>intronic</em> or <em>exonic</em> (on one of the UCSC transcript variants), depending on the adopted gene model:</p>
 
-<ul>
-  <li><a href="https://www.ncbi.nlm.nih.gov/refseq/">RefSeq</a></li>
-  <li><a href="https://www.ensembl.org/Homo_sapiens/Info/Index">Ensembl</a></li>
-  <li><a href="https://www.gencodegenes.org/human/">Gencode</a></li>
-</ul>
+<table>
+  <thead>
+    <tr>
+      <th>Source</th>
+      <th>Description FIXME</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><a href="https://www.ncbi.nlm.nih.gov/refseq/">RefSeq</a></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><a href="https://www.ensembl.org/Homo_sapiens/Info/Index">Ensembl</a></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><a href="https://www.gencodegenes.org/human/">Gencode</a></td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
 
 <hr />
 <h2 id="sequence-variant-nomenclature">Sequence variant nomenclature</h2>
 
 <p>Variant nomenclature should be described univocally:</p>
 
-<ul>
-  <li><a href="https://varnomen.hgvs.org/">HGVS</a></li>
-  <li><a href="https://www.genenames.org/">HGMC</a></li>
-</ul>
+<table>
+  <thead>
+    <tr>
+      <th>Source</th>
+      <th>Description FIXME</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><a href="https://varnomen.hgvs.org/">HGVS</a></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><a href="https://www.genenames.org/">HGMC</a></td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
 
 <h2 id="variant-class">Variant class</h2>
 
-<ul>
-  <li><a href="http://www.sequenceontology.org/">Sequence Ontology</a></li>
-  <li><img src="/clinical_genomics/images/seqOnt.png" alt="Sequence Ontology" /></li>
-</ul>
+<p>Sequence features used in biological sequence annotation should be defined 
+ using the <a href="http://www.sequenceontology.org/">Sequence Ontology</a>
+ <img src="/clinical_genomics/images/seqOnt.png" alt="Sequence Ontology" /></p>
 
 <h2 id="population-sequencing-db">Population sequencing db</h2>
 
@@ -839,27 +911,23 @@ Once called, variants (SNPs and InDels) need to be annotated.</p>
   <li><a href="http://www.hgmd.cf.ac.uk/ac/index.php">Human Gene Mutation Database</a></li>
   <li><a href="https://www.ncbi.nlm.nih.gov/clinvar/">clinically relevant variants known in a gene</a></li>
   <li><a href="http://simple-clinvar.broadinstitute.org/">Simple ClinVar</a></li>
-  <li>
-    <p><a href="https://www.omim.org/">Online Mendelian Inheritance in Man</a></p>
-  </li>
+  <li><a href="https://www.omim.org/">Online Mendelian Inheritance in Man</a></li>
   <li><a href="https://sites.google.com/site/jpopgen/dbNSFP"><strong>dbNSFP</strong></a>, a big database of curated annotations and precomputed functional predictions for all potential non-synonymous and splice-site single-nucleotide variants in the human genome</li>
 </ul>
 
 <h2 id="annotation-software-and-tools">Annotation Software and tools</h2>
-
+<p><strong>Local installation</strong>:</p>
 <ul>
   <li><a href="https://www.ensembl.org/info/docs/tools/vep/index.html">Variant Effect Predictor</a></li>
   <li><a href="http://annovar.openbioinformatics.org/en/latest/">ANNOVAR</a></li>
   <li><a href="http://snpeff.sourceforge.net/">Single Nucleotide Polymorphism Effect</a></li>
-  <li>
-    <p><a href="http://grass.cgs.hku.hk/limx/kggseq/">KGGSeq</a></p>
-  </li>
-  <li>Web Interface:
-    <ul>
-      <li><a href="http://wannovar.wglab.org">wAnnovar</a></li>
-      <li><a href="http://grch37.ensembl.org/Homo_sapiens/Tools/VEP">VEP</a></li>
-    </ul>
-  </li>
+  <li><a href="http://grass.cgs.hku.hk/limx/kggseq/">KGGSeq</a></li>
+</ul>
+
+<p><strong>Web interface</strong>:</p>
+<ul>
+  <li><a href="http://wannovar.wglab.org">wAnnovar</a></li>
+  <li><a href="http://grch37.ensembl.org/Homo_sapiens/Tools/VEP">VEP</a></li>
 </ul>
 
 <hr />
@@ -899,14 +967,10 @@ column.</li>
 
 <h1 id="variant-prioritization">Variant prioritization</h1>
 
-<p>Once annotated, variants need to be filtered and prioritized</p>
+<p>Once annotated, variants need to be filtered and prioritized. The number of variants
+returned by genomic sequencing varies from tens of thousands (WES) to millions (WGS).</p>
 
-<ul>
-  <li>WES: Tens of thousands</li>
-  <li>WGS: Millions</li>
-</ul>
-
-<p><strong>No universal filters, they depend on the experimental features</strong></p>
+<p><strong>No universal filters are available, they depend on the experimental features</strong></p>
 
 <h2 id="variant-impact">Variant impact</h2>
 
@@ -1019,7 +1083,7 @@ This information is stored in a <strong>pedigree file</strong> in PED format.
 In next Hands-on you’ll learn how to manually generate a pedigree file.</p>
 
 <blockquote class="notranslate hands_on">
-  <h3 id="hands_on-hands-on-create-a-gemini-pedigree-files"><i class="fa fa-pencil" aria-hidden="true"></i><span class="visually-hidden">hands_on</span> Hands-on: Create a GEMINI pedigree files</h3>
+  <h3 id="hands_on-hands-on-creating-a-gemini-pedigree-file"><i class="fa fa-pencil" aria-hidden="true"></i><span class="visually-hidden">hands_on</span> Hands-on: Creating a GEMINI pedigree file</h3>
   <ol>
     <li>
       <p>Create an example PED-formatted pedigree file for a trio:</p>
@@ -1077,8 +1141,8 @@ variants and their annotations need to be stored in a format accepted by GEMINI.
 This task is accomplished by the <strong>GEMINI load</strong> tool, which accepts as input your SnpEFF
 SnpEff annotated VCF file together with the pedigree file.</p>
 
-<blockquote>
-  <h3 id="hands_on-hands-on-creating-a-gemini-database-from-a-variants-dataset"><i class="fa fa-pencil" aria-hidden="true"></i><span class="visually-hidden">hands_on</span> Hands-on: Creating a GEMINI database from a variants dataset</h3>
+<blockquote class="notranslate hands_on">
+  <h3 id="hands_on-hands-on-creating-a-gemini-database"><i class="fa fa-pencil" aria-hidden="true"></i><span class="visually-hidden">hands_on</span> Hands-on: Creating a GEMINI database</h3>
 
   <ol>
     <li><strong>GEMINI load</strong> <i class="fa fa-wrench" aria-hidden="true"></i><span class="visually-hidden">tool</span> with
@@ -1108,22 +1172,23 @@ prepared above</li>
             <li>
               <p><em>“only variants that passed all filters”</em></p>
 
-              <p>This retains only high quality variants, e.g variants with the value in the FILTER column equals to PASS</p>
+              <p>This retains only high quality variants, e.g variants with the value in the 
+FILTER column equals to PASS</p>
+            </li>
+          </ul>
+
+          <p>Leave <strong>unchecked</strong> the following:</p>
+          <ul>
+            <li>
+              <p><em>“Genotype likelihoods (sample PLs)”</em></p>
+
+              <p>Our VCFs does not contain these values</p>
             </li>
           </ul>
         </li>
       </ul>
     </li>
   </ol>
-</blockquote>
-
-<blockquote class="notranslate hands_on">
-
-  <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> Leave **unchecked** the following:
- - *"Genotype likelihoods (sample PLs)"*
-
-    Our VCFs does not contain these values
-</code></pre></div>  </div>
 
 </blockquote>
 
@@ -1147,19 +1212,22 @@ the <a href="https://gemini.readthedocs.io">GEMINI documentation</a>.</p>
 <h2 id="candidate-variant-detection">Candidate variant detection</h2>
 
 <p>Here you’ll learn how to use <strong>GEMINI inheritance pattern</strong> <i class="fa fa-wrench" aria-hidden="true"></i><span class="visually-hidden">tool</span> to report all variants
-fitting any specific inheritance model. You’ll be able to select any of the following inheritance patterns:
-    - Autosomal recessive
-    - Autosomal dominant
-    - X-linked recessive
-    - X-linked dominant
-    - Autosomal de-novo
-    - X-linked de-novo
-    - Compound heterozygous
-    - Loss of heterozygosity (LOH) events</p>
+fitting any specific inheritance model. You’ll be able to select any of the following inheritance patterns:</p>
+
+<ul>
+  <li>Autosomal recessive</li>
+  <li>Autosomal dominant</li>
+  <li>X-linked recessive</li>
+  <li>X-linked dominant</li>
+  <li>Autosomal de-novo</li>
+  <li>X-linked de-novo</li>
+  <li>Compound heterozygous</li>
+  <li>Loss of heterozygosity (LOH) events</li>
+</ul>
 
 <p>Below is how you can perform the query for inherited autosomal recessive
 variants. Feel free to run analogous queries for other types of variants that
-you think could plausibly be causative for the child’s disease.</p>
+you think could plausibly be causative for your case study.</p>
 
 <blockquote class="notranslate hands_on">
   <h3 id="hands_on-hands-on-filtering-variants-by-inheritance-pattern"><i class="fa fa-pencil" aria-hidden="true"></i><span class="visually-hidden">hands_on</span> Hands-on: Filtering variants by inheritance pattern</h3>
@@ -1251,11 +1319,19 @@ slides may give you additional ideas for variant queries and filters:</p>
   </ul>
 </blockquote>
 
+<blockquote class="comment">
+  <h3 id="trophy-congratulations"><i class="fa fa-trophy" aria-hidden="true"></i><span class="visually-hidden">trophy</span> <strong>Congratulations!</strong></h3>
+  <p>You successfully completed the tutorial.
+Below you will find the true patogenic variants for the cases 
+presented in this tutorial.</p>
+</blockquote>
+
 <h1 id="use-cases---solutions">Use cases - solutions</h1>
 <p>FIXME</p>
 
 <h1 id="advanced-analysis">Advanced analysis</h1>
-<p>FIXME</p>
+<p>If you are interested in CNV analysis, identification of RoH…FIXME you can move to the 
+<a href="https://sigu-training.github.io/clinical_genomics/advanced.html">Advanced tutorial</a></p>
 
 <h1 class="no_toc" id="contributors">Contributors</h1>
 

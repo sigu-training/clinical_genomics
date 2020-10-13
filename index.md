@@ -8,10 +8,10 @@ questions:
 - How can you annotate variants in a clinically-oriented perspective?
 objectives:
 - Perform in-depth quality control of sequencing data at multiple levels (fastq, bam, vcf)
-- Call, classify and annotate variants with information extracted from public databases for clinical interpretation
-- Analyze CNV and Regions of Homozygosity (ROH)
+- Classify and annotate variants with information extracted from public databases for clinical interpretation
+- Filter variants based on inheritance patterns
 
-time_estimation: 6h
+time_estimation: 4h
 key_points:
 - Focus on clinical interpretation of variants.
 - Provides real uses cases.
@@ -63,93 +63,6 @@ This training course is not to be intended as a tutorial on NGS pipelines and va
 > {:toc}
 >
 {: .agenda}
-
-
-# Requirements
-
-This tutorial is based on the [Galaxy](https://galaxyproject.org/) platform,
-therefore a basic knowledge of Galaxy is required to get most out of the course.
-In particular, we'll use European Galaxy server running at [https://usegalaxy.eu](https://usegalaxy.eu).
-
-Registration is **free**, and you get access to **250GB** of disk space for your analysis.
-
-1. Open your browser. We recommend Chrome or Firefox (please don't use Internet Explorer or Safari).
-1. Go to [https://usegalaxy.eu](https://usegalaxy.eu)
-   - If you have previously registered on this server just log in:
-     - On the top menu select: User -> Login
-     - Enter your user/password
-     - Click Submit
-   - If you haven’t registered on this server, you’ll need to do now.
-     - On the top menu select: User -> Register
-     - Enter your email, choose a password, repeat it and add a one word name (lower case)
-     - Click Submit
-
-To familiarize with the Galaxy interface (e.g. working with histories, importing dataset),
-we suggest to follow the [Galaxy 101](https://galaxyproject.github.io/training-material/topics/introduction/tutorials/galaxy-intro-101/tutorial.html) tutorial.
-
-
-# Datasets 
-
-Input datasets used in this course are available:
- - at [Zenodo](https://zenodo.org/record/3531578), an open-access repository developed under the European OpenAIRE program and operated by CERN
- - as *Shared Data Libraries* in [Galaxy](https://usegalaxy.eu/library/list): *[Galaxy courses / Sigu](https://usegalaxy.eu/library/list#folders/F3d08bb711e4e3b26)*
-   
-## Use cases
-FIXME
-   
-## Get data
-
-> ### {% icon hands_on %} Hands-on: Data upload
->
-> 1. Create a new history for this tutorial and give it a meaningful name (e.g. Clinical genomics)
->
->    {% include snippets/create_new_history.md %}
->    {% include snippets/rename_history.md %}
->
-> 2. Import files from [Zenodo](https://zenodo.org/record/3531578) or Shared Data Library:
->
->    ```
->    https://zenodo.org/record/3531578/files/CNV_case.bam
->    https://zenodo.org/record/3531578/files/CNV_control.bam
->    https://zenodo.org/record/3531578/files/CNV_TruSeq_Chr2.bed
->    https://zenodo.org/record/3531578/files/HighQuality_Reads.fastq.gz
->    https://zenodo.org/record/3531578/files/LowQuality_Reads.fastq.gz
->    https://zenodo.org/record/3531578/files/Panel_alignment.bam
->    https://zenodo.org/record/3531578/files/Panel_target_regions.bed
->    https://zenodo.org/record/3531578/files/Sample1.all_exons.hg19.vcf
->    ```
->    {% include snippets/import_via_link.md %} 
->
->    The same files may be available on the Galaxy server
->    through a *Shared Data Libraries* in 
->    *[Galaxy courses/Sigu](https://usegalaxy.eu/library/list#folders/F3d08bb711e4e3b26)*.
->    You may prefer to import the data directly from there.
->
->    {% include snippets/import_from_data_library.md %}
->
->    > ### {% icon comment %} Note
->    > All the files are based on `hg19` reference genome which is
->    > available with pre-built indexes for widely used tools such as 
->    > *bwa-mem* **and** *samtools* by selecting `hg19` version as an option under
->    > *"(Using) reference genome"*).
->    {: .comment}
->
-> 3. In case you import datasets from Zenodo, check that all datasets in your history
->    have their datatypes assigned correctly, and fix it when necessary.
->    For example, to assign BED datatype do the following:
->     
->    {% include snippets/change_datatype.md datatype="bed" %}
->
-> 4. Rename the datasets
->
->    For datasets uploaded via a link, Galaxy will use the link
->    as the dataset name. In this case you may rename datasets.
->
->    {% include snippets/rename_dataset.md %}
->
->
-{: .hands_on}
-
 
 # Next Generation Sequencing
 
@@ -268,6 +181,104 @@ The GATK variant calling pipeline first produces a **genomic VCF ([gVCF](https:/
 In downstream analyses, annotations can be added to *VCF* files themselves or information in *VCF* files can be either annotated in TAB- or comma- deimited files to be visually inspected for *clinical* variant searching or used as input to **prioritization** programs.
 
 
+# Requirements
+
+This tutorial is based on the [Galaxy](https://galaxyproject.org/) platform,
+therefore a basic knowledge of Galaxy is required to get most out of the course.
+In particular, we'll use the European Galaxy server running at [https://usegalaxy.eu](https://usegalaxy.eu).
+
+Registration is **free**, and you get access to **250GB** of disk space for your analysis.
+
+1. Open your browser. We recommend Chrome or Firefox (please don't use Internet Explorer or Safari).
+1. Go to [https://usegalaxy.eu](https://usegalaxy.eu)
+   - If you have previously registered on this server just log in:
+     - On the top menu select: User -> Login
+     - Enter your user/password
+     - Click Submit
+   - If you haven’t registered on this server, you’ll need to do now.
+     - On the top menu select: User -> Register
+     - Enter your email, choose a password, repeat it and add a one word name (lower case)
+     - Click Submit
+
+To familiarize with the Galaxy interface (e.g. working with histories, importing dataset),
+we suggest to follow the [Galaxy 101](https://galaxyproject.github.io/training-material/topics/introduction/tutorials/galaxy-intro-101/tutorial.html) tutorial.
+
+# Datasets 
+
+Input datasets used in this course are available:
+ - at [Zenodo](https://zenodo.org/record/3531578), an open-access repository developed under the European OpenAIRE program and operated by CERN
+ - as *Shared Data Libraries* in [Galaxy](https://usegalaxy.eu/library/list): *[Galaxy courses / Sigu](https://usegalaxy.eu/library/list#folders/F3d08bb711e4e3b26)*
+   
+## Use cases
+
+We selected some case studies for this tutorial.
+We suggest you to start with a simple case (e.g. XXX) for the first run of the tutorial,
+and repeat it with the more complex ones.
+At the end of the page you will be able to compare your candidate variants
+with the list of true pathogenic variants.
+
+| Case | Number of individuals | Description FIXME | ... |
+| ---- | ---- | ---- | ---- |
+| Trio 1 | 3 | ... | ... |
+| Trio 2 | 3 | ... | ... |
+| Trio 3 | 3 | ... | ... |
+| Trio 4 | 3 | ... | ... |
+   
+## Get data
+
+> ### {% icon hands_on %} Hands-on: Data upload
+>
+> 1. Create a new history for this tutorial and give it a meaningful name (e.g. Clinical genomics)
+>
+>    {% include snippets/create_new_history.md %}
+>    {% include snippets/rename_history.md %}
+>
+> 2. Import files from [Zenodo](https://zenodo.org/record/3531578) or Shared Data Library:
+>
+>    ```
+>    https://zenodo.org/record/3531578/files/CNV_case.bam
+>    https://zenodo.org/record/3531578/files/CNV_control.bam
+>    https://zenodo.org/record/3531578/files/CNV_TruSeq_Chr2.bed
+>    https://zenodo.org/record/3531578/files/HighQuality_Reads.fastq.gz
+>    https://zenodo.org/record/3531578/files/LowQuality_Reads.fastq.gz
+>    https://zenodo.org/record/3531578/files/Panel_alignment.bam
+>    https://zenodo.org/record/3531578/files/Panel_target_regions.bed
+>    https://zenodo.org/record/3531578/files/Sample1.all_exons.hg19.vcf
+>    ```
+>    {% include snippets/import_via_link.md %} 
+>
+>    The same files may be available on the Galaxy server
+>    through a *Shared Data Libraries* in 
+>    *[Galaxy courses/Sigu](https://usegalaxy.eu/library/list#folders/F3d08bb711e4e3b26)*.
+>    You may prefer to import the data directly from there.
+>
+>    {% include snippets/import_from_data_library.md %}
+>
+>    > ### {% icon comment %} Note
+>    > All the files are based on `hg19` reference genome which is
+>    > available with pre-built indexes for widely used tools such as 
+>    > *bwa-mem* **and** *samtools* by selecting `hg19` version as an option under
+>    > *"(Using) reference genome"*).
+>    {: .comment}
+>
+> 3. In case you import datasets from Zenodo, check that all datasets in your history
+>    have their datatypes assigned correctly, and fix it when necessary.
+>    For example, to assign BED datatype do the following:
+>
+>    {% include snippets/change_datatype.md datatype="bed" %}
+>
+> 4. Rename the datasets
+>
+>    For datasets uploaded via a link, Galaxy will use the link
+>    as the dataset name. In this case you may rename datasets.
+>
+>    {% include snippets/rename_dataset.md %}
+>
+>
+{: .hands_on}
+
+
+
 # Quality control
 
 In-depth quality control (QC) of data generated during an NGS experiment is crucial for an accurate interpretation of the results. For example an accurate QC could help in identifying poor quality experiments, sequence contamination or genomic regions with low sequence coverage, and all these factors have a large impact on the downstream processing. 
@@ -305,7 +316,7 @@ The names of the modules are preceded by an icon that reflects the quality of th
 {: .comment}
 
 
-> ### {% icon hands_on %} Hands-on: Compute sequence quality with FastQC
+> ### {% icon hands_on %} Hands-on: Computing sequence quality with FastQC
 > 1. Run **FastQC** {% icon tool %} on your fastq datasets *HighQuality_Reads.fastq* and
 > *LowQuality_Reads.fastq*. You can select both datasets with the  **Multiple datasets**
 > option.
@@ -353,7 +364,7 @@ On top of each plot, clicking on the question mark you can open a window with a 
 
 **Figure 6**. BAM quality control using *bam.iobio.io*
 
-> ### {% icon hands_on %} Hands-on: Compute BAM quality with bam.iobio.io
+> ### {% icon hands_on %} Hands-on: Computing BAM quality with bam.iobio.io
 > 1. Run **bam.iobio.io** {% icon tool %} on a BAM dataset. To start **bam.iobio.io**
 >    click on the link `diplay at bam.iobio.io` in the dataset section. Please note
 >    that the link will be visible only for datasets with the appropriate database 
@@ -370,7 +381,7 @@ On top of each plot, clicking on the question mark you can open a window with a 
 
 ### Coverage metrics with Picard
 
-**Collect Hybrid Selection (HS) Metrics** {% icon tool %} tool computes a set of metrics that are specific for sequence datasets generated through hybrid-selection. Hybrid selection is the commonly used protocol to capture specific sequences for targeted experiments such as exome sequencing.
+**Collect Hybrid Selection (HS) Metrics** {% icon tool %} tool computes a set of metrics that are specific for sequence datasets generated through hybrid-selection, a commonly used protocol to capture specific sequences for targeted experiments such as panels and exome sequencing.
 
 In order to run this tool you need a file with the aligned sequences in BAM format, and files with the intervals corresponding to bait and target regions. These files can be generally obtained from the website of the kit manufacturer. 
 
@@ -392,13 +403,13 @@ In the next tutorial we will compute hybrid-selection metrics for BAM files cont
 aligned sequences from an exome sequencing experiment.
 
 
-> ### {% icon hands_on %} Hands-on: Compute BAM statistics with Picard CollectHsMetrics
+> ### {% icon hands_on %} Hands-on: Computing BAM statistics with Picard CollectHsMetrics
 >
 > 1. Before computing the statistics, we first need to convert the BED files
 >    with bait and target regions, in Picard interval_list format.
 >    Remember that you can select multiple datasets
 >    with the **Multiple datasets** option.
->    
+>
 >    {% include snippets/select_multiple_datasets.md %}
 >
 >    Run **BedToIntervalList** {% icon tool %} to convert BED files.
@@ -411,7 +422,7 @@ aligned sequences from an exome sequencing experiment.
 >    generated in the previous step.
 >
 > 1. Use **MultiQC** {% icon tool %} to aggregate CollectHsMetrics output in one unique
->    report to facilitate the comparison across multiple samples.  
+>    report to facilitate the comparison across multiple samples.
 >     - *"Which tool was used generate logs?"*: `Picard`
 >       - In *"Picard output"*
 >          - *"Type of Picard output?"*: `HS Metrics`
@@ -447,22 +458,27 @@ Different gene models can give different annotations:
 
 **Figure 1.** Variant indicated by the red dashed line can be annotated as *intronic* or *exonic* (on one of the UCSC transcript variants), depending on the adopted gene model:
 
-- [RefSeq](https://www.ncbi.nlm.nih.gov/refseq/)
-- [Ensembl](https://www.ensembl.org/Homo_sapiens/Info/Index)
-- [Gencode](https://www.gencodegenes.org/human/)
+| Source | Description FIXME |
+| --- | --- |
+| [RefSeq](https://www.ncbi.nlm.nih.gov/refseq/) | |
+| [Ensembl](https://www.ensembl.org/Homo_sapiens/Info/Index) | |
+| [Gencode](https://www.gencodegenes.org/human/) | |
 
 ---
 ## Sequence variant nomenclature
 
 Variant nomenclature should be described univocally:
 
-- [HGVS](https://varnomen.hgvs.org/)
-- [HGMC](https://www.genenames.org/)
+| Source | Description FIXME |
+| --- | --- |
+| [HGVS](https://varnomen.hgvs.org/) | |
+| [HGMC](https://www.genenames.org/) | |
 
 ## Variant class
 
-- [Sequence Ontology](http://www.sequenceontology.org/)
-- ![Sequence Ontology]({{site.baseurl}}/images/seqOnt.png)
+ Sequence features used in biological sequence annotation should be defined 
+ using the [Sequence Ontology](http://www.sequenceontology.org/)
+ ![Sequence Ontology]({{site.baseurl}}/images/seqOnt.png)
 
 ## Population sequencing db
 
@@ -478,17 +494,16 @@ Variant nomenclature should be described univocally:
 - [clinically relevant variants known in a gene](https://www.ncbi.nlm.nih.gov/clinvar/)
 - [Simple ClinVar](http://simple-clinvar.broadinstitute.org/)
 - [Online Mendelian Inheritance in Man](https://www.omim.org/)
-
 - [**dbNSFP**](https://sites.google.com/site/jpopgen/dbNSFP), a big database of curated annotations and precomputed functional predictions for all potential non-synonymous and splice-site single-nucleotide variants in the human genome
 
 ## Annotation Software and tools
-
+**Local installation**:
 - [Variant Effect Predictor](https://www.ensembl.org/info/docs/tools/vep/index.html)
 - [ANNOVAR](http://annovar.openbioinformatics.org/en/latest/)
 - [Single Nucleotide Polymorphism Effect](http://snpeff.sourceforge.net/)
 - [KGGSeq](http://grass.cgs.hku.hk/limx/kggseq/)
 
-- Web Interface:
+**Web interface**:
    - [wAnnovar](http://wannovar.wglab.org)
    - [VEP](http://grch37.ensembl.org/Homo_sapiens/Tools/VEP)
 
@@ -521,12 +536,10 @@ column.
 
 # Variant prioritization
 
-Once annotated, variants need to be filtered and prioritized
+Once annotated, variants need to be filtered and prioritized. The number of variants
+returned by genomic sequencing varies from tens of thousands (WES) to millions (WGS).
 
- - WES: Tens of thousands
- - WGS: Millions
-
-**No universal filters, they depend on the experimental features**
+**No universal filters are available, they depend on the experimental features**
 
 ## Variant impact
 
@@ -614,7 +627,7 @@ First, we need to inform GEMINI about the relationship between the samples and t
 This information is stored in a **pedigree file** in PED format.
 In next Hands-on you'll learn how to manually generate a pedigree file.
 
-> ### {% icon hands_on %} Hands-on: Create a GEMINI pedigree files
+> ### {% icon hands_on %} Hands-on: Creating a GEMINI pedigree file
 > 1. Create an example PED-formatted pedigree file for a trio:
 >
 >    ```
@@ -652,7 +665,7 @@ variants and their annotations need to be stored in a format accepted by GEMINI.
 This task is accomplished by the **GEMINI load** tool, which accepts as input your SnpEFF
 SnpEff annotated VCF file together with the pedigree file.
 
-> ### {% icon hands_on %} Hands-on: Creating a GEMINI database from a variants dataset
+> ### {% icon hands_on %} Hands-on: Creating a GEMINI database
 >
 > 1. **GEMINI load** {% icon tool %} with
 >    - {% icon param-file %} *"VCF dataset to be loaded in the GEMINI database"*:
@@ -675,8 +688,8 @@ SnpEff annotated VCF file together with the pedigree file.
 >      **Checked** the following:
 >      - *"only variants that passed all filters"*
 >
->        This retains only high quality variants, e.g variants with the value in the FILTER column equals to PASS
-
+>        This retains only high quality variants, e.g variants with the value in the 
+>        FILTER column equals to PASS
 >
 >      Leave **unchecked** the following:
 >      - *"Genotype likelihoods (sample PLs)"*
@@ -706,20 +719,20 @@ starts with the GEMINI database obtained by **GEMINI load** {% icon tool %}.
 
 Here you'll learn how to use **GEMINI inheritance pattern** {% icon tool %} to report all variants
 fitting any specific inheritance model. You'll be able to select any of the following inheritance patterns:
-    - Autosomal recessive
-    - Autosomal dominant
-    - X-linked recessive
-    - X-linked dominant
-    - Autosomal de-novo
-    - X-linked de-novo
-    - Compound heterozygous
-    - Loss of heterozygosity (LOH) events
 
+  - Autosomal recessive
+  - Autosomal dominant
+  - X-linked recessive
+  - X-linked dominant
+  - Autosomal de-novo
+  - X-linked de-novo
+  - Compound heterozygous
+  - Loss of heterozygosity (LOH) events
 
 
 Below is how you can perform the query for inherited autosomal recessive
 variants. Feel free to run analogous queries for other types of variants that
-you think could plausibly be causative for the child's disease.
+you think could plausibly be causative for your case study.
 
 > ### {% icon hands_on %} Hands-on: Filtering variants by inheritance pattern
 > 1. **GEMINI inheritance pattern** {% icon tool %}
@@ -779,11 +792,18 @@ you think could plausibly be causative for the child's disease.
 {: .details}
 
 
+> ### {% icon trophy %} **Congratulations!**
+> You successfully completed the tutorial.
+> Below you will find the true patogenic variants for the cases 
+> presented in this tutorial.
+{: .comment}
+
 # Use cases - solutions
 FIXME
 
 # Advanced analysis
-FIXME
+If you are interested in CNV analysis, identification of RoH...FIXME you can move to the 
+[Advanced tutorial](https://sigu-training.github.io/clinical_genomics/advanced.html)
 
 # Contributors
 {:.no_toc}

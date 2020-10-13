@@ -384,7 +384,7 @@ GEMINI about the relationship between our samples and their observed
 phenotypes. This is done through a so-called **pedigree file** in PED format,
 which is rather simple to generate manually.
 
-> ### {% icon hands_on %} Hands-on: Obtain SnpEff genome and GEMINI pedigree files
+> ### {% icon hands_on %} Hands-on: Obtain GEMINI pedigree files
 > 1. Create a PED-formatted pedigree dataset describing our single-family sample trio:
 >
 >    ```
