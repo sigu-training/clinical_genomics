@@ -5,13 +5,13 @@ title: Advanced data analysis of genomic data
 zenodo_link: https://doi.org/10.5281/zenodo.3531577
 questions:
 - FIXME
+
 objectives:
 - FIXME
 - Analyze CNV and Regions of Homozygosity (ROH)
 
 time_estimation: 4h
-key_points:
-- FIXME
+
 contributors:
 - abrusell
 - aciolfi

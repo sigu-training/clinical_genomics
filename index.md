@@ -12,10 +12,7 @@ objectives:
 - Filter variants based on inheritance patterns
 
 time_estimation: 4h
-key_points:
-- Focus on clinical interpretation of variants.
-- Provides real uses cases.
-- Use public tools and free annotation servers.
+
 contributors:
 - abrusell
 - aciolfi
@@ -729,7 +726,6 @@ fitting any specific inheritance model. You'll be able to select any of the foll
   - Compound heterozygous
   - Loss of heterozygosity (LOH) events
 
-
 Below is how you can perform the query for inherited autosomal recessive
 variants. Feel free to run analogous queries for other types of variants that
 you think could plausibly be causative for your case study.
@@ -794,8 +790,7 @@ you think could plausibly be causative for your case study.
 
 > ### {% icon trophy %} **Congratulations!**
 > You successfully completed the tutorial.
-> Below you will find the true patogenic variants for the cases 
-> presented in this tutorial.
+> Below you will find the true patogenic variants for all the case studies.
 {: .comment}
 
 # Use cases - solutions
@@ -803,7 +798,7 @@ FIXME
 
 # Advanced analysis
 If you are interested in CNV analysis, identification of RoH...FIXME you can move to the 
-[Advanced tutorial](https://sigu-training.github.io/clinical_genomics/advanced.html)
+[Advanced tutorial](https://sigu-training.github.io/clinical_genomics/advanced.html).
 
 # Contributors
 {:.no_toc}
