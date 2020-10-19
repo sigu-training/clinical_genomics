@@ -7,8 +7,11 @@ questions:
 - FIXME
 
 objectives:
-- FIXME
-- Analyze CNV and Regions of Homozygosity (ROH)
+- To calculate sequencing statistics
+- To manipulate genomic regions files
+- To identify genomic mosaic variants
+- To use webtools for genomic variants annotation
+- To analyze CNV and Regions of Homozygosity (ROH)
 
 time_estimation: 4h
 
@@ -26,7 +29,7 @@ contributors:
 # Introduction
 {:.no_toc}
 
-FIXME
+This section of the tutorial will cover in more details many different aspects of data analysis and interpretation for clinical genomics. It will delve into quality control procedures, and into specific strategies to be used to identify different variations of individuals' genetic architecture, as mosaic variants, copy number variants, and regions of homozygosisty.
 
 > ### Agenda
 >
@@ -81,6 +84,7 @@ Here is an example of simple statistics obtained with **samtools flagstat**:
 ```
 
 For more detailed statistics, use **samtools stats**:
+
 ```
 SN	raw total sequences:	492739																																										
 SN	filtered sequences:	0																																										
@@ -146,10 +150,9 @@ SN	percentage of properly paired reads (%):	93.9
 
 ### Computation of per-base coverage depth at specific genomic intervals
 
-Commercial next-generation sequencing platform usually provide users with analysis programs that include tools for the identification of low coverage regions (for instance, target regions that have a coverage depth lower than 20x).
+Commercial next-generation sequencing platforms usually provide users with analysis programs, which include tools for the identification of low coverage regions (for instance, target regions that have a coverage depth lower than 20x).
 
-The present tutorial is aimed to show how to perform a custom coverage analysis
-of NGS experiment(s) by using tools that are available in Galaxy.
+The present tutorial is aimed to show how to perform a custom coverage analysis of NGS experiments by using tools that are available in Galaxy.
 
 Starting material:
 * Alignment (*bam*) file(s) on which you want to perform the coverage evaluation.
