@@ -289,7 +289,7 @@ Then, to effectively call somatic mutations, users can use variants contained in
  
  - `gatk FilterMutectCalls -R HSapiensReference_genome_hg19.fasta -V somatic_genotyped_unfiltered.vcf -O somatic_genotyped_filtered.vcf`
 
-The VCF file obtained with this analysis can then be annotated by means of any annotation tools, as descibed below.
+The VCF file obtained with this analysis can then be annotated by means of any annotation tools, as described below.
 
 ---
 ## Annotation and filtering with wANNOVAR
