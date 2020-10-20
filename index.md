@@ -797,7 +797,7 @@ you think could plausibly be causative for your case study.
 FIXME
 
 # Advanced analysis
-If you are interested in CNV analysis, identification of RoH...FIXME you can move to the 
+To address in more details quality control strategies, structural variants analysis (i.e. CNVs), or identification of RoHs you can move forward to the 
 [Advanced tutorial](https://sigu-training.github.io/clinical_genomics/advanced.html).
 
 # Contributors
