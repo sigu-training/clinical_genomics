@@ -183,7 +183,7 @@ members of the society.</p>
       <li><a href="#candidate-variant-detection" id="markdown-toc-candidate-variant-detection">Candidate variant detection</a></li>
     </ol>
   </li>
-  <li><a href="#use-cases---solutions" id="markdown-toc-use-cases---solutions">Use cases - solutions</a></li>
+  <li><a href="#solutions" id="markdown-toc-solutions">Solutions</a></li>
   <li><a href="#advanced-analysis" id="markdown-toc-advanced-analysis">Advanced analysis</a></li>
 </ol>
 
@@ -393,36 +393,48 @@ with the list of true pathogenic variants.</p>
 <table>
   <thead>
     <tr>
-      <th>Case</th>
+      <th>Family</th>
       <th>Number of individuals</th>
-      <th>Description FIXME</th>
-      <th>…</th>
+      <th>Description</th>
+      <th>HPO</th>
+      <th>Reference</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td>Trio 1</td>
+      <td>A</td>
       <td>3</td>
       <td>…</td>
       <td>…</td>
+      <td>hg38</td>
     </tr>
     <tr>
-      <td>Trio 2</td>
+      <td>B</td>
       <td>3</td>
       <td>…</td>
       <td>…</td>
+      <td>hg38</td>
     </tr>
     <tr>
-      <td>Trio 3</td>
+      <td>C</td>
       <td>3</td>
       <td>…</td>
       <td>…</td>
+      <td>hg38</td>
     </tr>
     <tr>
-      <td>Trio 4</td>
+      <td>D</td>
       <td>3</td>
       <td>…</td>
       <td>…</td>
+      <td>hg38</td>
+    </tr>
+    <tr>
+      <td>E</td>
+      <td>3</td>
+      <td>…</td>
+      <td>…</td>
+      <td>hg38</td>
     </tr>
   </tbody>
 </table>
@@ -825,12 +837,10 @@ report to facilitate the comparison across multiple samples.
 
 <h1 id="variant-annotation">Variant annotation</h1>
 <p>After the generation of a high-quality set of mapped read pairs, we can proceed to call different classes of <span class="notranslate">DNA</span> variants.
-Users interested in germline variant calling can refer to related <span class="notranslate">Galaxy</span>’s tutorials, e.g. <a href="https://galaxyproject.github.io/training-material/topics/variant-analysis/tutorials/exome-seq/tutorial.html">Exome sequencing data analysis for diagnosing a genetic disease</a>.
-Once called, variants (SNPs and InDels) need to be annotated.</p>
+Users interested in germline variant calling can refer to related <span class="notranslate">Galaxy</span>’s tutorials, e.g. <a href="https://galaxyproject.github.io/training-material/topics/variant-analysis/tutorials/exome-seq/tutorial.html">Exome sequencing data analysis for diagnosing a genetic disease</a>.</p>
 
-<p>We want to know for example if a variant is located in a gene, if it’s in the coding portion of that gene, if it causes an aminoacid substitution, if that substitution is deleterious for the encoded protein function.</p>
-
-<p><strong>Variant annotation</strong> is the process of attaching technical and/or biological information from multiple available source (e.g. <strong>public databases</strong>) to variants</p>
+<p>Variant callers usually provide us with a simple list of sequence variants (genomic coordinates + reference and variant alleles) plus genotypes and genotype-likelihoods.
+<strong>Variant annotation</strong> is the process of adding informations to these variants using multiple sources (e.g. <strong>public databases</strong>). We are usually interested in knowing for example if a specific variant overlaps with a gene, if it falls into an exon of that gene, if it’s a coding exon, what type of change the variant causes to the encoded amino acid (missense, nonsense, frameshift), etc.</p>
 
 <hr />
 <h2 id="gene-model">Gene model</h2>
@@ -846,21 +856,21 @@ Once called, variants (SNPs and InDels) need to be annotated.</p>
   <thead>
     <tr>
       <th>Source</th>
-      <th>Description FIXME</th>
+      <th>Description</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <td><a href="https://www.ncbi.nlm.nih.gov/refseq/">RefSeq</a></td>
-      <td> </td>
+      <td>A comprehensive, integrated, non-redundant, well-annotated set of reference sequences including genomic, transcript, and protein</td>
     </tr>
     <tr>
       <td><a href="https://www.ensembl.org/Homo_sapiens/Info/Index">Ensembl</a></td>
-      <td> </td>
+      <td>Integrates and distributes reference datasets and analysis tools. Based at EMBL-EBI</td>
     </tr>
     <tr>
       <td><a href="https://www.gencodegenes.org/human/">Gencode</a></td>
-      <td> </td>
+      <td>A project to identify and classify all gene features in the human and mouse genomes with high accuracy based on biological evidence. Based on the <a href="https://www.genome.gov/Funded-Programs-Projects/ENCODE-Project-ENCyclopedia-Of-DNA-Elements">ENCODE</a> consortium</td>
     </tr>
   </tbody>
 </table>
@@ -874,17 +884,17 @@ Once called, variants (SNPs and InDels) need to be annotated.</p>
   <thead>
     <tr>
       <th>Source</th>
-      <th>Description FIXME</th>
+      <th>Description</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <td><a href="https://varnomen.hgvs.org/">HGVS</a></td>
-      <td> </td>
+      <td>HGVS-nomenclature serves as an inte<span class="notranslate">rna</span>tional standard for the description of <span class="notranslate">DNA</span>, <span class="notranslate">RNA</span> and protein sequence variants</td>
     </tr>
     <tr>
       <td><a href="https://www.genenames.org/">HGMC</a></td>
-      <td> </td>
+      <td>HUGO Gene Nomenclature Committee is responsible for approving unique symbols and names for human loci, including protein coding genes, nc<span class="notranslate">RNA</span> genes and pseudogenes, to allow unambiguous scientific communication</td>
     </tr>
   </tbody>
 </table>
@@ -892,9 +902,10 @@ Once called, variants (SNPs and InDels) need to be annotated.</p>
 <h2 id="variant-class">Variant class</h2>
 
 <p>Sequence features used in biological sequence annotation should be defined 
- using the <a href="http://www.sequenceontology.org/">Sequence Ontology</a>
+ using the <a href="http://www.sequenceontology.org/">Sequence Ontology</a>, a collaborative project for the definition of sequence features used in biological sequence annotation.
  <img src="/clinical_genomics/images/seqOnt.png" alt="Sequence Ontology" /></p>
 
+<p>Among the main sources of variant annotation are:</p>
 <h2 id="population-sequencing-db">Population sequencing db</h2>
 
 <ul>
@@ -915,6 +926,7 @@ Once called, variants (SNPs and InDels) need to be annotated.</p>
   <li><a href="https://sites.google.com/site/jpopgen/dbNSFP"><strong>dbNSFP</strong></a>, a big database of curated annotations and precomputed functional predictions for all potential non-synonymous and splice-site single-nucleotide variants in the human genome</li>
 </ul>
 
+<p>Several tools and softwares are available for variant annotation, here is a list of the most used ones:</p>
 <h2 id="annotation-software-and-tools">Annotation Software and tools</h2>
 <p><strong>Local installation</strong>:</p>
 <ul>
@@ -939,7 +951,7 @@ Once called, variants (SNPs and InDels) need to be annotated.</p>
 <blockquote class="notranslate hands_on">
   <h3 id="hands_on-hands-on-variant-annotations-with-snpeff"><i class="fa fa-pencil" aria-hidden="true"></i><span class="visually-hidden">hands_on</span> Hands-on: Variant annotations with SnpEff</h3>
   <ol>
-    <li><strong>SnpEff eff</strong> <i class="fa fa-wrench" aria-hidden="true"></i><span class="visually-hidden">tool</span> (not the one for the SARS-CoV-2 pipeline)
+    <li>Choose <strong>SnpEff eff</strong> <i class="fa fa-wrench" aria-hidden="true"></i><span class="visually-hidden">tool</span> (<em>“annotate variants”</em>, <strong>not</strong> <em>“annotate variants for SARS-CoV-2”</em>)
       <ul>
         <li><i class="fa fa-file-o" aria-hidden="true"></i><span class="visually-hidden">param-file</span> <em>“Sequence changes (SNPs, MNPs, InDels)”</em>: the
 uploaded <strong>VCF</strong> file</li>
@@ -952,6 +964,20 @@ uploaded <strong>VCF</strong> file</li>
         </li>
         <li><em>“Produce Summary Stats”</em>: <code class="language-plaintext highlighter-rouge">Yes</code></li>
       </ul>
+
+      <blockquote class="tip">
+        <h3 id="tip-tip-annotation-options"><i class="fa fa-lightbulb-o" aria-hidden="true"></i><span class="visually-hidden">tip</span> Tip: Annotation options</h3>
+        <p>You can Select/Unselect many <strong>Annotation options</strong> checking from the list
+(i.e <em>“Use gene ID instead of gene name (VCF output)”</em> or <em>“Only use canonical transcripts”</em>)</p>
+      </blockquote>
+
+      <blockquote class="tip">
+        <h3 id="tip-tip-filter-output"><i class="fa fa-lightbulb-o" aria-hidden="true"></i><span class="visually-hidden">tip</span> Tip: Filter output</h3>
+        <p>You can narrow down the output list of annotated variants, filtering out specific types of changes,
+choosing from the five choices shown in the <strong>Filter output</strong> menu
+(i.e <em>“Do not show <span class="notranslate">DOWNSTREAM</span> changes”</em> or <em>“Do not show INTERGENIC changes”</em>)or selecting
+<em>“Yes”</em> from <strong>Filter out specific Effects</strong> and selecting from all the type of possible categories</p>
+      </blockquote>
     </li>
   </ol>
 
@@ -1045,11 +1071,11 @@ returned by genomic sequencing varies from tens of thousands (WES) to millions (
 <blockquote class="notranslate hands_on">
   <h3 id="hands_on-hands-on-variant-prioritization"><i class="fa fa-pencil" aria-hidden="true"></i><span class="visually-hidden">hands_on</span> Hands-on: Variant prioritization</h3>
 
-  <p>Using knowledge gained on <a href="https://sigu-training.github.io//clinical_genomics/lectures/04.db.html">Genomic databases and variant annotation</a> section, try to <strong><em>annotate</em></strong>, <strong><em>filter</em></strong> and <strong><em>prioritize</em></strong> an example exome variant data, using two disease terms</p>
+  <p>Using knowledge gained on <a href="http://0.0.0.0:4000/clinical_genomics/lectures/04.db.html">Genomic databases and variant annotation</a> section, try to <strong><em>annotate</em></strong>, <strong><em>filter</em></strong> and <strong><em>prioritize</em></strong> an example exome variant data, using two disease terms</p>
 
   <ul>
     <li>
-      <p>Download file Sample1.all_exons.hg19.vcf from the <em>dataset</em>, as learned in the <a href="https://sigu-training.github.io//clinical_genomics/lectures/01.home.html">Home</a> section</p>
+      <p>Download file Sample1.all_exons.hg19.vcf from the <em>dataset</em>, as learned in the <a href="http://0.0.0.0:4000/clinical_genomics/lectures/01.home.html">Home</a> section</p>
     </li>
     <li>
       <p>Go to <a href="http://wannovar.wglab.org/">wANNOVAR</a></p>
@@ -1319,14 +1345,20 @@ slides may give you additional ideas for variant queries and filters:</p>
   </ul>
 </blockquote>
 
-<blockquote class="comment">
-  <h3 id="trophy-congratulations"><i class="fa fa-trophy" aria-hidden="true"></i><span class="visually-hidden">trophy</span> <strong>Congratulations!</strong></h3>
-  <p>You successfully completed the tutorial.
-Below you will find the true patogenic variants for all the case studies.</p>
-</blockquote>
+<h1 id="solutions">Solutions</h1>
+<p>Below you will find the true patogenic variants for all the case studies.</p>
 
-<h1 id="use-cases---solutions">Use cases - solutions</h1>
-<p>FIXME</p>
+<blockquote class="solution">
+  <h3 id="solution-solutions"><i class="fa fa-eye" aria-hidden="true"></i><span class="visually-hidden">solution</span> Solutions</h3>
+  <ul>
+    <li>Family A: WDR37, FIXME-VARIANT, de novo</li>
+    <li>Family B: GNAPTB, FIXME-VARIANT, compound heterozigosity</li>
+    <li>Family C: ECEL1, FIXME-VARIANT, compound heterozigosity</li>
+    <li>Family D: TCF4, FIXME-VARIANT, parental mosaicism</li>
+    <li>Family E: GPC3, FIXME-VARIANT, X-linked</li>
+  </ul>
+
+</blockquote>
 
 <h1 id="advanced-analysis">Advanced analysis</h1>
 <p>To address in more details quality control strategies, structural variants analysis (i.e. CNVs), or identification of RoHs you can move forward to the 

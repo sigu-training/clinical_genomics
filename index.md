@@ -214,13 +214,14 @@ and repeat it with the more complex ones.
 At the end of the page you will be able to compare your candidate variants
 with the list of true pathogenic variants.
 
-| Case | Number of individuals | Description FIXME | ... |
-| ---- | ---- | ---- | ---- |
-| Trio 1 | 3 | ... | ... |
-| Trio 2 | 3 | ... | ... |
-| Trio 3 | 3 | ... | ... |
-| Trio 4 | 3 | ... | ... |
-   
+| Family | Number of individuals | Description | HPO | Reference |
+| ---- | ---- | ---- | ---- | ---- |
+| A | 3 | ... | ... | hg38 |
+| B | 3 | ... | ... | hg38 |
+| C | 3 | ... | ... | hg38 |
+| D | 3 | ... | ... | hg38 |
+| E | 3 | ... | ... | hg38 |
+
 ## Get data
 
 > ### {% icon hands_on %} Hands-on: Data upload
@@ -439,11 +440,9 @@ aligned sequences from an exome sequencing experiment.
 # Variant annotation
 After the generation of a high-quality set of mapped read pairs, we can proceed to call different classes of DNA variants.
 Users interested in germline variant calling can refer to related Galaxy's tutorials, e.g. [Exome sequencing data analysis for diagnosing a genetic disease](https://galaxyproject.github.io/training-material/topics/variant-analysis/tutorials/exome-seq/tutorial.html).
-Once called, variants (SNPs and InDels) need to be annotated.
 
-We want to know for example if a variant is located in a gene, if it’s in the coding portion of that gene, if it causes an aminoacid substitution, if that substitution is deleterious for the encoded protein function.
-
-**Variant annotation** is the process of attaching technical and/or biological information from multiple available source (e.g. **public databases**) to variants
+Variant callers usually provide us with a simple list of sequence variants (genomic coordinates + reference and variant alleles) plus genotypes and genotype-likelihoods.
+**Variant annotation** is the process of adding informations to these variants using multiple sources (e.g. **public databases**). We are usually interested in knowing for example if a specific variant overlaps with a gene, if it falls into an exon of that gene, if it’s a coding exon, what type of change the variant causes to the encoded amino acid (missense, nonsense, frameshift), etc.
 
 ---
 ## Gene model
@@ -455,28 +454,29 @@ Different gene models can give different annotations:
 
 **Figure 1.** Variant indicated by the red dashed line can be annotated as *intronic* or *exonic* (on one of the UCSC transcript variants), depending on the adopted gene model:
 
-| Source | Description FIXME |
+| Source | Description |
 | --- | --- |
-| [RefSeq](https://www.ncbi.nlm.nih.gov/refseq/) | |
-| [Ensembl](https://www.ensembl.org/Homo_sapiens/Info/Index) | |
-| [Gencode](https://www.gencodegenes.org/human/) | |
+| [RefSeq](https://www.ncbi.nlm.nih.gov/refseq/) | A comprehensive, integrated, non-redundant, well-annotated set of reference sequences including genomic, transcript, and protein |
+| [Ensembl](https://www.ensembl.org/Homo_sapiens/Info/Index) | Integrates and distributes reference datasets and analysis tools. Based at EMBL-EBI |
+| [Gencode](https://www.gencodegenes.org/human/) | A project to identify and classify all gene features in the human and mouse genomes with high accuracy based on biological evidence. Based on the [ENCODE](https://www.genome.gov/Funded-Programs-Projects/ENCODE-Project-ENCyclopedia-Of-DNA-Elements) consortium |
 
 ---
 ## Sequence variant nomenclature
 
 Variant nomenclature should be described univocally:
 
-| Source | Description FIXME |
+| Source | Description |
 | --- | --- |
-| [HGVS](https://varnomen.hgvs.org/) | |
-| [HGMC](https://www.genenames.org/) | |
+| [HGVS](https://varnomen.hgvs.org/) | HGVS-nomenclature serves as an international standard for the description of DNA, RNA and protein sequence variants |
+| [HGMC](https://www.genenames.org/) | HUGO Gene Nomenclature Committee is responsible for approving unique symbols and names for human loci, including protein coding genes, ncRNA genes and pseudogenes, to allow unambiguous scientific communication |
 
 ## Variant class
 
  Sequence features used in biological sequence annotation should be defined 
- using the [Sequence Ontology](http://www.sequenceontology.org/)
+ using the [Sequence Ontology](http://www.sequenceontology.org/), a collaborative project for the definition of sequence features used in biological sequence annotation.
  ![Sequence Ontology]({{site.baseurl}}/images/seqOnt.png)
 
+Among the main sources of variant annotation are:
 ## Population sequencing db
 
 - [gnomAD](https://gnomad.broadinstitute.org/)
@@ -493,6 +493,7 @@ Variant nomenclature should be described univocally:
 - [Online Mendelian Inheritance in Man](https://www.omim.org/)
 - [**dbNSFP**](https://sites.google.com/site/jpopgen/dbNSFP), a big database of curated annotations and precomputed functional predictions for all potential non-synonymous and splice-site single-nucleotide variants in the human genome
 
+Several tools and softwares are available for variant annotation, here is a list of the most used ones:
 ## Annotation Software and tools
 **Local installation**:
 - [Variant Effect Predictor](https://www.ensembl.org/info/docs/tools/vep/index.html)
@@ -511,7 +512,7 @@ Variant nomenclature should be described univocally:
 For variant annotations we'll use SnpEff, a software for genomic variant annotation and functional effect prediction. 
 
 > ### {% icon hands_on %} Hands-on: Variant annotations with SnpEff
-> 1. **SnpEff eff** {% icon tool %} (not the one for the SARS-CoV-2 pipeline)
+> 1. Choose **SnpEff eff** {% icon tool %} (*"annotate variants"*, **not** *"annotate variants for SARS-CoV-2"*)
 >    - {% icon param-file %} *"Sequence changes (SNPs, MNPs, InDels)"*: the
 >      uploaded **VCF** file
 >    - *"Input format"*: `VCF`
@@ -520,6 +521,18 @@ For variant annotations we'll use SnpEff, a software for genomic variant annotat
 >       - *"Genome"*: `Homo sapiens: hg19` (or a similarly named option)
 >
 >    - *"Produce Summary Stats"*: `Yes`
+>
+>    > ### {% icon tip %} Tip: Annotation options
+>    > You can Select/Unselect many **Annotation options** checking from the list
+>    > (i.e *"Use gene ID instead of gene name (VCF output)"* or *"Only use canonical transcripts"*)
+>    {: .tip}
+>
+>    > ### {% icon tip %} Tip: Filter output
+>    > You can narrow down the output list of annotated variants, filtering out specific types of changes,
+>    > choosing from the five choices shown in the **Filter output** menu
+>    > (i.e *"Do not show DOWNSTREAM changes"* or *"Do not show INTERGENIC changes"*)or selecting
+>    > *"Yes"* from **Filter out specific Effects** and selecting from all the type of possible categories
+>    {: .tip}
 >
 {: .hands_on}
 
@@ -788,13 +801,18 @@ you think could plausibly be causative for your case study.
 {: .details}
 
 
-> ### {% icon trophy %} **Congratulations!**
-> You successfully completed the tutorial.
-> Below you will find the true patogenic variants for all the case studies.
-{: .comment}
+# Solutions
+Below you will find the true patogenic variants for all the case studies.
 
-# Use cases - solutions
-FIXME
+> ### {% icon solution %} Solutions
+> - Family A: WDR37, FIXME-VARIANT, de novo
+> - Family B: GNAPTB, FIXME-VARIANT, compound heterozigosity
+> - Family C: ECEL1, FIXME-VARIANT, compound heterozigosity
+> - Family D: TCF4, FIXME-VARIANT, parental mosaicism
+> - Family E: GPC3, FIXME-VARIANT, X-linked
+>
+{: .solution}
+
 
 # Advanced analysis
 To address in more details quality control strategies, structural variants analysis (i.e. CNVs), or identification of RoHs you can move forward to the 
