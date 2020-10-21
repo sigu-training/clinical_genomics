@@ -64,7 +64,10 @@
             <strong><i class="fa fa-question-circle" aria-hidden="true"></i><span class="visually-hidden">question</span> Questions</strong>
             <ul>
             
-            <li><p>FIXME</p>
+            <li><p>What is the minimal depth of coverage of target regions in a typical clinical genomics setting?</p>
+</li>
+            
+            <li><p>Which are the most common computational strategies to identify copy-number alterations in NGS experiments?</p>
 </li>
             
             </ul>
@@ -72,10 +75,19 @@
             <strong><i class="fa fa-bullseye" aria-hidden="true"></i><span class="visually-hidden">objectives</span> Objectives</strong>
             <ul>
             
-            <li><p>FIXME</p>
+            <li><p>To calculate sequencing statistics</p>
 </li>
             
-            <li><p>Analyze CNV and Regions of Homozygosity (ROH)</p>
+            <li><p>To manipulate genomic regions files</p>
+</li>
+            
+            <li><p>To identify genomic mosaic variants</p>
+</li>
+            
+            <li><p>To use webtools for genomic variants annotation</p>
+</li>
+            
+            <li><p>To analyze CNV and Regions of Homozygosity (ROH)</p>
 </li>
             
             </ul>
@@ -83,7 +95,7 @@
             
 
             
-            <p><strong><i class="fa fa-hourglass-end" aria-hidden="true"></i><span class="visually-hidden">time</span> Time estimation:</strong> 4 hours</p>
+            <p><strong><i class="fa fa-hourglass-end" aria-hidden="true"></i><span class="visually-hidden">time</span> Time estimation:</strong> 2 hours</p>
             
 
             
@@ -93,7 +105,7 @@
 
             
 
-            <p><strong> <i class="fa fa-calendar" aria-hidden="true"></i><span class="visually-hidden">last_modification</span> Last modification:</strong> Oct 14, 2020 </p>
+            <p><strong> <i class="fa fa-calendar" aria-hidden="true"></i><span class="visually-hidden">last_modification</span> Last modification:</strong> Oct 19, 2020 </p>
         </blockquote>
 
         <div class="container">
@@ -105,7 +117,7 @@
                 <div class="col-sm-10">
                     <h1 class="no_toc" id="introduction">Introduction</h1>
 
-<p>FIXME</p>
+<p>This section of the tutorial will cover in more details many different aspects of data analysis and interpretation for clinical genomics. It will delve into quality control procedures, and into specific strategies to be used to identify different variations of individuals’ genetic architecture, as mosaic variants, copy number variants, and regions of homozygosisty.</p>
 
 <blockquote class="agenda">
   <h3 id="agenda">Agenda</h3>
@@ -157,115 +169,11 @@ In particular, we’ll use the European <span class="notranslate">Galaxy</span> 
 
 <h2 id="quality-control">Quality control</h2>
 
-<h3 id="bam-statistics-with-samtools">BAM statistics with samtools</h3>
-
-<p>Samtools is a widely used suite of programs for manipulating alignments in the SAM/BAM/CRAM format.
-Among the different tools, we will focus on <strong>samtools flagstat</strong> and <strong>samtools stats</strong> for computing BAM statistics.
-Both programs take as input a file with the aligned sequences, and generate an output in text format that can be
-visualized with <strong>MultiQC</strong>.</p>
-
-<p>Here is an example of simple statistics obtained with <strong>samtools flagstat</strong>:</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>492739 + 0 in total (QC-passed <span class="notranslate">reads</span> + QC-failed <span class="notranslate">reads</span>)
-0 + 0 secondary
-0 + 0 supplementary
-0 + 0 duplicates
-476344 + 0 mapped (96.67% : N/A)
-492739 + 0 paired in sequencing
-243667 + 0 read1
-249072 + 0 read2
-462914 + 0 properly paired (93.95% : N/A)
-469984 + 0 with itself and mate mapped
-6360 + 0 singletons (1.29% : N/A)
-5061 + 0 with mate mapped to a different chr
-2034 + 0 with mate mapped to a different chr (mapQ&gt;=5)
-</code></pre></div></div>
-
-<p>For more detailed statistics, use <strong>samtools stats</strong>:</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>SN	raw total sequences:	492739																																										
-SN	filtered sequences:	0																																										
-SN	sequences:	492739																																										
-SN	is sorted:	1																																										
-SN	1st fragments:	243667																																										
-SN	last fragments:	249072																																										
-SN	<span class="notranslate">reads</span> mapped:	476344																																										
-SN	<span class="notranslate">reads</span> mapped and paired:	469984	# paired-end technology bit set + both mates mapped																																									
-SN	<span class="notranslate">reads</span> unmapped:	16395																																										
-SN	<span class="notranslate">reads</span> properly paired:	462914	# proper-pair bit set																																									
-SN	<span class="notranslate">reads</span> paired:	492739	# paired-end technology bit set																																									
-SN	<span class="notranslate">reads</span> duplicated:	0	# PCR or optical duplicate bit set																																									
-SN	<span class="notranslate">reads</span> MQ0:	111721	# mapped and MQ=0																																									
-SN	<span class="notranslate">reads</span> QC failed:	0																																										
-SN	non-primary alignments:	0																																										
-SN	total length:	49766639	# ignores clipping																																									
-SN	total first fragment length:	24610367	# ignores clipping																																									
-SN	total last fragment length:	25156272	# ignores clipping																																									
-SN	bases mapped:	48110744	# ignores clipping																																									
-SN	bases mapped (cigar):	45368693	# more accurate																																									
-SN	bases trimmed:	0																																										
-SN	bases duplicated:	0																																										
-SN	mismatches:	254006	# from NM fields																																									
-SN	error rate:	5.598707e-03	# mismatches / bases mapped (cigar)																																									
-SN	average length:	101																																										
-SN	average first fragment length:	101																																										
-SN	average last fragment length:	101																																										
-SN	maximum length:	101																																										
-SN	maximum first fragment length:	101																																										
-SN	maximum last fragment length:	101																																										
-SN	average quality:	31.5																																										
-SN	insert size average:	247.9																																										
-SN	insert size standard deviation:	75.8																																										
-SN	inward oriented pairs:	231769																																										
-SN	outward oriented pairs:	452																																										
-SN	pairs with other orientation:	240																																										
-SN	pairs on different chromosomes:	2530																																										
-SN	percentage of properly paired <span class="notranslate">reads</span> (%):	93.9
-</code></pre></div></div>
-
-<blockquote class="notranslate hands_on">
-  <h3 id="hands_on-hands-on-computing-alignment-statistics-with-samtools"><i class="fa fa-pencil" aria-hidden="true"></i><span class="visually-hidden">hands_on</span> Hands-on: Computing alignment statistics with samtools</h3>
-  <ol>
-    <li>
-      <p>Run <strong>samtools flagstat</strong> <i class="fa fa-wrench" aria-hidden="true"></i><span class="visually-hidden">tool</span> on your BAM dataset.</p>
-    </li>
-    <li>Using the <strong>MultiQC</strong> <i class="fa fa-wrench" aria-hidden="true"></i><span class="visually-hidden">tool</span> software, you can aggregate and visualize results
-obtained with <strong>samtools flagstat</strong> to identify low quality samples that will be displayed
-as outliers.
-      <ul>
-        <li><em>“Which tool was used generate logs?”</em>: <code class="language-plaintext highlighter-rouge">Samtools</code>
-          <ul>
-            <li>In <em>“Samtools output”</em>
-              <ul>
-                <li><em>“Type of Samtools output?”</em>: <code class="language-plaintext highlighter-rouge">flagstat</code></li>
-                <li><i class="fa fa-files-o" aria-hidden="true"></i><span class="visually-hidden">param-files</span> <em>“Samtools flagstat output”</em>: the output 
-of <strong>Samtools flagstat</strong> <i class="fa fa-wrench" aria-hidden="true"></i><span class="visually-hidden">tool</span></li>
-              </ul>
-            </li>
-          </ul>
-        </li>
-      </ul>
-    </li>
-    <li>
-      <p>Inspect <strong>MultiQC</strong> report</p>
-
-      <blockquote class="question">
-        <h3 id="question-questions"><i class="fa fa-question-circle" aria-hidden="true"></i><span class="visually-hidden">question</span> Questions</h3>
-
-        <ol>
-          <li>Which is the percentage of mapped <span class="notranslate">reads</span>? And
-the percentage of properly mapped <span class="notranslate">reads</span>?</li>
-        </ol>
-      </blockquote>
-    </li>
-  </ol>
-</blockquote>
-
 <h3 id="computation-of-per-base-coverage-depth-at-specific-genomic-intervals">Computation of per-base coverage depth at specific genomic intervals</h3>
 
-<p>Commercial next-generation sequencing platform usually provide users with analysis programs that include tools for the identification of low coverage regions (for instance, target regions that have a coverage depth lower than 20x).</p>
+<p>Commercial next-generation sequencing platforms usually provide users with analysis programs, which include tools for the identification of low coverage regions (for instance, target regions that have a coverage depth lower than 20x).</p>
 
-<p>The present tutorial is aimed to show how to perform a custom coverage analysis
-of NGS experiment(s) by using tools that are available in <span class="notranslate">Galaxy</span>.</p>
+<p>The present tutorial is aimed to show how to perform a custom coverage analysis of NGS experiments by using tools that are available in <span class="notranslate">Galaxy</span>.</p>
 
 <p>Starting material:</p>
 <ul>
@@ -489,61 +397,53 @@ does not properly define columns in your files
 
 <h1 id="mosaic-variants">Mosaic variants</h1>
 
-<p>After the generation of a high-quality set of mapped read pairs, we can proceed to call different classes of <span class="notranslate">DNA</span> variants.
-Users interested in germline variant calling can refer to related <span class="notranslate">Galaxy</span>’s tutorials, e.g. <a href="https://galaxyproject.github.io/training-material/topics/variant-analysis/tutorials/exome-seq/tutorial.html">Exome sequencing data analysis for diagnosing a genetic disease</a>.
-To accurately detect mosaic variants in sequencing data without matched controls we will use <strong>MuTect2</strong> tool from <strong><a href="https://gatk.broadinstitute.org/hc/en-us">GATK toolkit</a></strong>.</p>
+<p>After the generation of a high-quality set of mapped read pairs, it could be useful to identify different classes of <span class="notranslate">DNA</span> variants in the analyzed sample.
+Users interested in germline variant calling can refer to related <span class="notranslate">Galaxy</span>’s tutorials, e.g. <a href="https://galaxyproject.github.io/training-material/topics/variant-analysis/tutorials/exome-seq/tutorial.html">Exome sequencing data analysis for diagnosing a genetic disease</a>. On the other hand, it is also possible to accurately detect mosaic variants in sequenced samples, without the need of matched controls, using <strong>MuTect2</strong> tool from <strong><a href="https://gatk.broadinstitute.org/hc/en-us">GATK toolkit</a></strong>.</p>
 
 <p>In more details, this tool executes different operations:</p>
 
 <ul>
-  <li>Determine haplotypes by local assembly of the genomic regions in which the samples being analyzed show substantial evidence of variation relative to the reference;</li>
-  <li>Evaluate the evidence for haplotypes and variant alleles;</li>
-  <li>Assigning per-sample genotypes.</li>
+  <li>Determine haplotypes by local assembly of the genomic regions in which the samples being analyzed show substantial evidence of variation relative to the reference</li>
+  <li>Evaluate the evidence for haplotypes and variant alleles</li>
+  <li>Assigning per-sample genotypes</li>
 </ul>
 
-<blockquote class="notranslate hands_on">
-  <h3 id="hands_on-hands-on-mosaic-variant-calling"><i class="fa fa-pencil" aria-hidden="true"></i><span class="visually-hidden">hands_on</span> Hands-on: Mosaic Variant calling.</h3>
+<p>Users could use files provided as examples with this tutorial and called <code class="language-plaintext highlighter-rouge">Panel_alignment.bam</code> and <code class="language-plaintext highlighter-rouge">Panel_Target_regions.<span class="notranslate">bed</span></code>, and run <strong>Mutect2</strong> restricting the search space on target regions with “-L” option to reduce computational burden.</p>
 
-  <p>You may use files provided as examples with this tutorial and called
-   <code class="language-plaintext highlighter-rouge">Panel_alignment.bam</code> and <code class="language-plaintext highlighter-rouge">Panel_Target_regions.<span class="notranslate">bed</span></code>.</p>
-
-  <p>Run <strong>Mutect2</strong> <i class="fa fa-wrench" aria-hidden="true"></i><span class="visually-hidden">tool</span> restricting the search space on target
-regions with “-L” option to reduce computational burden.
-The first step is needed to create an inte<span class="notranslate">rna</span>l database of controls
-(i.e. <strong>Panel Of Normals</strong> - PoN) to reduce bias for somatic calls.
+<p>The first step of this procedure is needed to create an inte<span class="notranslate">rna</span>l database of controls (i.e. <strong>Panel Of Normals</strong> - PoN) to reduce the bias for somatic calls.
 It runs on a single sample at time:</p>
 
-  <ul>
-    <li><code class="language-plaintext highlighter-rouge">gatk Mutect2 -R HSapiensReference_genome_hg19.fasta -L Panel_target_regions.<span class="notranslate">bed</span> -I Panel_alignment_normal1.bam -O normal_genotyped1.vcf</code></li>
-    <li><code class="language-plaintext highlighter-rouge">gatk Mutect2 -R HSapiensReference_genome_hg19.fasta -L Panel_target_regions.<span class="notranslate">bed</span> -I Panel_alignment_normal2.bam -O normal_genotyped2.vcf</code></li>
-  </ul>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">gatk Mutect2 -R HSapiensReference_genome_hg19.fasta -L Panel_target_regions.<span class="notranslate">bed</span> -I Panel_alignment_normal1.bam -O normal_genotyped1.vcf</code></li>
+  <li><code class="language-plaintext highlighter-rouge">gatk Mutect2 -R HSapiensReference_genome_hg19.fasta -L Panel_target_regions.<span class="notranslate">bed</span> -I Panel_alignment_normal2.bam -O normal_genotyped2.vcf</code></li>
+</ul>
 
-  <p>Then use GATK’s <em>CreateSomaticPanelOfNormals</em> tool to generate the PoN:</p>
+<p>Then users can take advantage of GATK’s <em>CreateSomaticPanelOfNormals</em> tool to generate the PoN with the following commands:</p>
 
-  <ul>
-    <li><code class="language-plaintext highlighter-rouge">gatk GenomicsDBImport -L Panel_target_regions.<span class="notranslate">bed</span> -R HSapiensReference_genome_hg19.fasta --genomicsdb-workspace-path PoN_db -V normal_genotyped1.vcf -V normal_genotyped2.vcf</code></li>
-    <li>
-      <p><code class="language-plaintext highlighter-rouge">gatk CreateSomaticPanelOfNormals -R HSapiensReference_genome_hg19.fasta -V gendb://PoN_db -O panel_of_normals.vcf</code></p>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">gatk GenomicsDBImport -L Panel_target_regions.<span class="notranslate">bed</span> -R HSapiensReference_genome_hg19.fasta --genomicsdb-workspace-path PoN_db -V normal_genotyped1.vcf -V normal_genotyped2.vcf</code></li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">gatk CreateSomaticPanelOfNormals -R HSapiensReference_genome_hg19.fasta -V gendb://PoN_db -O panel_of_normals.vcf</code></p>
 
-      <blockquote class="comment">
-        <h3 id="comment-note"><i class="fa fa-commenting-o" aria-hidden="true"></i><span class="visually-hidden">comment</span> Note</h3>
-        <p>The –genomicsdb-workspace-path must point to a non-existent or empty directory.</p>
-      </blockquote>
-    </li>
-  </ul>
+    <blockquote class="comment">
+      <h3 id="comment-note"><i class="fa fa-commenting-o" aria-hidden="true"></i><span class="visually-hidden">comment</span> Note</h3>
+      <p>The –genomicsdb-workspace-path must point to a non-existent or empty directory.</p>
+    </blockquote>
+  </li>
+</ul>
 
-  <p>Then, to effectively call somatic mutations, we can use variants contained in the <strong>PoN</strong> and/or other public repositories  (e.g. by means of the option <em>–germline-resource</em>, using a VCF file containing frequencies of germline variants in the general population) to exclude germline variation. Finally, to properly classify somatic variants, we apply <em>FilterMutectCalls filtering</em>, which produces the final subset annotated VCF file. To this aim, we can run the following commands:</p>
+<p>Then, to effectively call somatic mutations, users can use variants contained in the <strong>PoN</strong> and/or other public repositories  (e.g. by means of the option <em>–germline-resource</em>, using a VCF file containing frequencies of germline variants in the general population) to exclude germline variation. Finally, to properly classify somatic variants, <em>FilterMutectCalls filtering</em> could be applied to produce the final subset annotated VCF file, as described by the following commands:</p>
 
-  <ul>
-    <li>
-      <p><code class="language-plaintext highlighter-rouge">gatk Mutect2 -R HSapiensReference_genome_hg19.fasta -I Panel_alignment.bam --germline-resource af-only-gnomad.vcf --panel-of-normals panel_of_normals.vcf -O somatic_genotyped_unfiltered.vcf</code></p>
-    </li>
-    <li>
-      <p><code class="language-plaintext highlighter-rouge">gatk FilterMutectCalls -R HSapiensReference_genome_hg19.fasta -V somatic_genotyped_unfiltered.vcf -O somatic_genotyped_filtered.vcf</code></p>
-    </li>
-  </ul>
+<ul>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">gatk Mutect2 -R HSapiensReference_genome_hg19.fasta -I Panel_alignment.bam --germline-resource af-only-gnomad.vcf --panel-of-normals panel_of_normals.vcf -O somatic_genotyped_unfiltered.vcf</code></p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">gatk FilterMutectCalls -R HSapiensReference_genome_hg19.fasta -V somatic_genotyped_unfiltered.vcf -O somatic_genotyped_filtered.vcf</code></p>
+  </li>
+</ul>
 
-</blockquote>
+<p>The VCF file obtained with this analysis can then be annotated by means of any annotation tools, as described below.</p>
 
 <hr />
 <h2 id="annotation-and-filtering-with-wannovar">Annotation and filtering with wANNOVAR</h2>
@@ -817,7 +717,7 @@ Three major bias sources are known to affect <em>EMRC</em> dramatically in targe
     title = "Advanced data analysis of genomic data (Galaxy Training Materials)",
     year = "2020",
     month = "10",
-    day = "14"
+    day = "19"
     url = "\url{/clinical_genomics/advanced.html}",
     note = "[Online; accessed TODAY]"
 }
