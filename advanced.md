@@ -30,7 +30,7 @@ contributors:
 # Introduction
 {:.no_toc}
 
-This section of the tutorial will cover in more details many different aspects of data analysis and interpretation for clinical genomics. It will delve into quality control procedures, and into specific strategies to be used to identify different variations of individuals' genetic architecture, as mosaic variants, copy number variants, and regions of homozygosisty.
+This section of the tutorial will cover in more details many different aspects of data analysis and interpretation for clinical genomics. It will delve into quality control procedures, and into specific strategies to be used to identify different variations of individuals' genetic architecture, as mosaic variants, copy number variants, and regions of homozygosity.
 
 > ### Agenda
 >
@@ -57,10 +57,10 @@ Input datasets are available:
 
 ---
 
-## Quality control
+# Quality control
 
 
-### Computation of per-base coverage depth at specific genomic intervals
+## Computation of per-base coverage depth at specific genomic intervals
 
 Commercial next-generation sequencing platforms usually provide users with analysis programs, which include tools for the identification of low coverage regions (for instance, target regions that have a coverage depth lower than 20x).
 
@@ -249,12 +249,13 @@ Starting material:
 >
 {: .hands_on}
 
-#### Final notes
+### Final notes
 The procedures listed above are to be taken as examples of the possible operations that can be performed on bed files with bedtools (you may check out their website to get further information:
 [BEDtools](https://bedtools.readthedocs.io/en/latest/content/bedtools-suite.html)) ad text manipulation tools available on Galaxy.
 
 Furthermore, please be aware that the tool `bedtools Compute both the depth and breadth of coverage` does not perform any filtering based on read quality: if your are interested in that aspect you may want to rely on different tools. 
 
+---
 # Mosaic variants
 
 After the generation of a high-quality set of mapped read pairs, it could be useful to identify different classes of DNA variants in the analyzed sample.
@@ -292,7 +293,7 @@ Then, to effectively call somatic mutations, users can use variants contained in
 The VCF file obtained with this analysis can then be annotated by means of any annotation tools, as described below.
 
 ---
-## Annotation and filtering with wANNOVAR
+# Annotation and filtering with wANNOVAR
 
 The web tool [wANNOVAR](http://wannovar.wglab.org/index.php) allows for rapid annotation of your variants and for some basic filtering steps to find disease genes.
 It is based on its command line counterpart [ANNOVAR](http://annovar.openbioinformatics.org/), but it is more user-friendly since it does not require any programming skills.
