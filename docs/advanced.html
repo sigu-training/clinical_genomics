@@ -105,7 +105,7 @@
 
             
 
-            <p><strong> <i class="fa fa-calendar" aria-hidden="true"></i><span class="visually-hidden">last_modification</span> Last modification:</strong> Oct 19, 2020 </p>
+            <p><strong> <i class="fa fa-calendar" aria-hidden="true"></i><span class="visually-hidden">last_modification</span> Last modification:</strong> Oct 23, 2020 </p>
         </blockquote>
 
         <div class="container">
@@ -117,7 +117,7 @@
                 <div class="col-sm-10">
                     <h1 class="no_toc" id="introduction">Introduction</h1>
 
-<p>This section of the tutorial will cover in more details many different aspects of data analysis and interpretation for clinical genomics. It will delve into quality control procedures, and into specific strategies to be used to identify different variations of individuals’ genetic architecture, as mosaic variants, copy number variants, and regions of homozygosisty.</p>
+<p>This section of the tutorial will cover in more details many different aspects of data analysis and interpretation for clinical genomics. It will delve into quality control procedures, and into specific strategies to be used to identify different variations of individuals’ genetic architecture, as mosaic variants, copy number variants, and regions of homozygosity.</p>
 
 <blockquote class="agenda">
   <h3 id="agenda">Agenda</h3>
@@ -126,12 +126,13 @@
 
 <ol id="markdown-toc">
   <li><a href="#requirements" id="markdown-toc-requirements">Requirements</a></li>
-  <li><a href="#datasets" id="markdown-toc-datasets">Datasets</a>    <ol>
-      <li><a href="#quality-control" id="markdown-toc-quality-control">Quality control</a></li>
+  <li><a href="#datasets" id="markdown-toc-datasets">Datasets</a></li>
+  <li><a href="#quality-control" id="markdown-toc-quality-control">Quality control</a>    <ol>
+      <li><a href="#computation-of-per-base-coverage-depth-at-specific-genomic-intervals" id="markdown-toc-computation-of-per-base-coverage-depth-at-specific-genomic-intervals">Computation of per-base coverage depth at specific genomic intervals</a></li>
     </ol>
   </li>
-  <li><a href="#mosaic-variants" id="markdown-toc-mosaic-variants">Mosaic variants</a>    <ol>
-      <li><a href="#annotation-and-filtering-with-wannovar" id="markdown-toc-annotation-and-filtering-with-wannovar">Annotation and filtering with wANNOVAR</a></li>
+  <li><a href="#mosaic-variants" id="markdown-toc-mosaic-variants">Mosaic variants</a></li>
+  <li><a href="#annotation-and-filtering-with-wannovar" id="markdown-toc-annotation-and-filtering-with-wannovar">Annotation and filtering with wANNOVAR</a>    <ol>
       <li><a href="#clinical-databases-for-further-manual-variant-annotation" id="markdown-toc-clinical-databases-for-further-manual-variant-annotation">Clinical databases for further manual variant annotation</a></li>
     </ol>
   </li>
@@ -167,9 +168,9 @@ In particular, we’ll use the European <span class="notranslate">Galaxy</span> 
 
 <hr />
 
-<h2 id="quality-control">Quality control</h2>
+<h1 id="quality-control">Quality control</h1>
 
-<h3 id="computation-of-per-base-coverage-depth-at-specific-genomic-intervals">Computation of per-base coverage depth at specific genomic intervals</h3>
+<h2 id="computation-of-per-base-coverage-depth-at-specific-genomic-intervals">Computation of per-base coverage depth at specific genomic intervals</h2>
 
 <p>Commercial next-generation sequencing platforms usually provide users with analysis programs, which include tools for the identification of low coverage regions (for instance, target regions that have a coverage depth lower than 20x).</p>
 
@@ -389,12 +390,13 @@ does not properly define columns in your files
 
 </blockquote>
 
-<h4 id="final-notes">Final notes</h4>
+<h3 id="final-notes">Final notes</h3>
 <p>The procedures listed above are to be taken as examples of the possible operations that can be performed on <span class="notranslate">bed</span> files with <span class="notranslate">bed</span>tools (you may check out their website to get further information:
 <a href="https://bedtools.readthedocs.io/en/latest/content/bedtools-suite.html"><span class="notranslate">BED</span>tools</a>) ad text manipulation tools available on <span class="notranslate">Galaxy</span>.</p>
 
 <p>Furthermore, please be aware that the tool <code class="language-plaintext highlighter-rouge"><span class="notranslate">bed</span>tools Compute both the depth and breadth of coverage</code> does not perform any filtering based on read quality: if your are interested in that aspect you may want to rely on different tools.</p>
 
+<hr />
 <h1 id="mosaic-variants">Mosaic variants</h1>
 
 <p>After the generation of a high-quality set of mapped read pairs, it could be useful to identify different classes of <span class="notranslate">DNA</span> variants in the analyzed sample.
@@ -446,7 +448,7 @@ It runs on a single sample at time:</p>
 <p>The VCF file obtained with this analysis can then be annotated by means of any annotation tools, as described below.</p>
 
 <hr />
-<h2 id="annotation-and-filtering-with-wannovar">Annotation and filtering with wANNOVAR</h2>
+<h1 id="annotation-and-filtering-with-wannovar">Annotation and filtering with wANNOVAR</h1>
 
 <p>The web tool <a href="http://wannovar.wglab.org/index.php">wANNOVAR</a> allows for rapid annotation of your variants and for some basic filtering steps to find disease genes.
 It is based on its command line counterpart <a href="http://annovar.openbioinformatics.org/">ANNOVAR</a>, but it is more user-friendly since it does not require any programming skills.</p>
@@ -717,7 +719,7 @@ Three major bias sources are known to affect <em>EMRC</em> dramatically in targe
     title = "Advanced data analysis of genomic data (Galaxy Training Materials)",
     year = "2020",
     month = "10",
-    day = "19"
+    day = "23"
     url = "\url{/clinical_genomics/advanced.html}",
     note = "[Online; accessed TODAY]"
 }
