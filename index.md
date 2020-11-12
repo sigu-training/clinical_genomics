@@ -209,18 +209,18 @@ Input datasets used in this course are available:
 ## Use cases
 
 We selected some case studies for this tutorial.
-We suggest you to start with a simple case (e.g. XXX) for the first run of the tutorial,
+We suggest you to start with a simple case (e.g. Fam A) for the first run of the tutorial,
 and repeat it with the more complex ones.
 At the end of the page you will be able to compare your candidate variants
 with the list of true pathogenic variants.
 
-| Family | Number of individuals | Description | HPO | Reference |
-| ---- | ---- | ---- | ---- | ---- |
-| A | 3 | ... | ... | hg38 |
-| B | 3 | ... | ... | hg38 |
-| C | 3 | ... | ... | hg38 |
-| D | 3 | ... | ... | hg38 |
-| E | 3 | ... | ... | hg38 |
+| Family | Proband | Father | Mother | Description | HPO | Reference |
+| ------ | ------- | ------ | ------ | ----------- | --- | --------- |
+| Fam A  | FamilyA\_P | FamilyX\_F | FamilyX\_M | Five-year-old female patiant; Short stature; Severe intellectual disability; Seizures; Polymicrogyria; Cerebellar hemisphere hypoplasia; Postnatal microcephaly; Microphthalmia; Optic nerve coloboma; Malformation of the heart and great vessels; Intestinal malrotation; Hydronephrosis; Cryptorchidism | HP:0004322, HP:0010864, HP:0001250, HP:0002126, HP:0100307, HP:0005484, HP:0000568, HP:0000588,  HP:0001627, HP:0030962, HP:0002566, HP:0000126, HP:0000028 | hg38      |
+| Fam B | FamilyB\_P | FamilyB\_F | FamilyB\_M | Four-year-old male patient; Intellectual disability; Malformation of the heart and great vessels; Abnormality of blood and blood-forming tissues; Short Stature; Velopharyngeal insufficiency; Coarse facial features with high, narrow forehead, shallow orbits, depressed nasal bridge, anteverted nares, long philtrum, flat face, and macroglossia | HP:0001249, HP:0001627, HP:0030962, HP:0001871, HP:0004322, HP:0000220, HP:0000280, HP:0000341, HP:0000348, HP:0000586, HP:0005280, HP:0000463, HP:0000343, HP:0012368, HP:0000158 | hg38      |
+| Fam C | FamilyC\_P | FamilyC\_F | FamilyC\_M | Eighteen-year-old female patient; Non-consanguineous Caucasian parents; Unremarkable family history; Normal intellectual development; Born at term by normal delivery; Oligohydramnios; Decreased fetal movements; Distal arthrogryposis; Cutaneous finger syndactyly; Scoliosis; Popliteal pterygium; Recurrent pneumonia; Restrictive ventilatory defect; Skeletal muscle atrophy | HP:0001562, HP:0001558, HP:0005684, HP:0010554, HP:0002650, HP:0009756, HP:0006532, HP:0002091, HP:0003202 | hg38      |
+| Fam D | FamilyD\_P | FamilyD\_F | FamilyX\_M | Ten-year-old male patient; Non-consanguineous Caucasian parents; Unremarkable family history; Severe intellectual disability; Absent speech; Seizure; Ataxia; Stereotypy; Sudden episodic apnea; Postnatal microcephaly; Hypoplasia of the corpus callosum; Strabismus; Myopia; Constipation; Single transverse palmar crease; Narrow forehead; Wide nasal bridge; Short philtrum; Full cheeks; Wide mouth; Thickened helices | HP:0010864, HP:0001344, HP:0001250, HP:0001251, HP:0000733, HP:0002882, HP:0005484, HP:0002079, HP:0000486, HP:0000545, HP:0002019, HP:0000954, HP:0000341, HP:0000431, HP:0000322, HP:0000293, HP:0000154, HP:0000391 | hg38      |
+| Fam E | FamilyE\_P | FamilyX\_F | FamilyE\_M | Thirty-year-old woman. Three consecutive pregnancy terminations due to fetal malformations, Woman phenotype included: High forehead, Hypertelorism, Mandibular prognathia. Fetal malformations observed: Cystic hygroma, Cerebellar agenesis, Hypoplastic nasal bone, Cleft lip , Bilateral hydronephrosis, Renal hypertrophy, Hypoplasia of external genitalia, Hypertrophic cardiomyopathy, Ventricular septal defect, Omphalocele | HP:0000348,  HP:0000316,  HP:0000303,  HP:0000476,  HP:0012642,  HP:0011430,  HP:0410030,  HP:0000126,  HP:0000811,  HP:0001639,  HP:0001629,  HP:0001539 | hg38      |
 
 ## Get data
 
@@ -231,31 +231,58 @@ with the list of true pathogenic variants.
 >    {% include snippets/create_new_history.md %}
 >    {% include snippets/rename_history.md %}
 >
-> 2. Import files from [Zenodo](https://zenodo.org/record/3531578) or Shared Data Library:
->
->    ```
->    https://zenodo.org/record/3531578/files/CNV_case.bam
->    https://zenodo.org/record/3531578/files/CNV_control.bam
->    https://zenodo.org/record/3531578/files/CNV_TruSeq_Chr2.bed
->    https://zenodo.org/record/3531578/files/HighQuality_Reads.fastq.gz
->    https://zenodo.org/record/3531578/files/LowQuality_Reads.fastq.gz
->    https://zenodo.org/record/3531578/files/Panel_alignment.bam
->    https://zenodo.org/record/3531578/files/Panel_target_regions.bed
->    https://zenodo.org/record/3531578/files/Sample1.all_exons.hg19.vcf
->    ```
->    {% include snippets/import_via_link.md %} 
->
->    The same files may be available on the Galaxy server
+> 2. Files are available on the Galaxy server
 >    through a *Shared Data Libraries* in 
 >    *[Galaxy courses/Sigu](https://usegalaxy.eu/library/list#folders/F3d08bb711e4e3b26)*.
->    You may prefer to import the data directly from there.
+>    ***This is the preferred solution as you will save time and disk space.***
 >
 >    {% include snippets/import_from_data_library.md %}
 >
+>    The same files are available at Zenodo ([1](https://zenodo.org/record/3531578), [2](https://zenodo.org/record/4197066), [3](https://zenodo.org/record/4264088)):
+>
+>    **FASTQ reads**:
+>    ```
+>    https://zenodo.org/record/3531578/files/HighQuality_Reads.fastq.gz
+>    https://zenodo.org/record/3531578/files/LowQuality_Reads.fastq.gz
+>    ```
+>    **Family A**:
+>    ```
+>    https://zenodo.org/record/3531578/files/FamilyA_P.bam
+>    ```
+>    **Family B**:
+>    ```
+>    https://zenodo.org/record/nnnnnnn/files/FamilyB_P.bam
+>    https://zenodo.org/record/3531578/files/FamilyB_F.bam
+>    https://zenodo.org/record/3531578/files/FamilyB_M.bam
+>    ```
+>    **Family C**:
+>    ```
+>    https://zenodo.org/record/nnnnnnn/files/FamilyC_P.bam
+>    https://zenodo.org/record/4264088/files/FamilyC_F.bam
+>    https://zenodo.org/record/4264088/files/FamilyC_M.bam
+>    ```
+>    **Family D**:
+>    ```
+>    https://zenodo.org/record/4197066/files/FamilyD_P.bam
+>    https://zenodo.org/record/4197066/files/FamilyD_F.bam
+>    ```
+>    **Family E**:
+>    ```
+>    https://zenodo.org/record/nnnnnnn/files/FamilyE_P.bam
+>    https://zenodo.org/record/3531578/files/FamilyE_M.bam
+>    ```
+>    **Files shared across families**:
+>    ```
+>    https://zenodo.org/record/4197066/files/FamilyX_M.bam
+>    https://zenodo.org/record/4264088/files/FamilyX_F.bam
+>    ```
+>    {% include snippets/import_via_link.md %} 
+>
+>
 >    > ### {% icon comment %} Note
->    > All the files are based on `hg19` reference genome which is
+>    > All the files are based on `hg38` reference genome which is
 >    > available with pre-built indexes for widely used tools such as 
->    > *bwa-mem* **and** *samtools* by selecting `hg19` version as an option under
+>    > *bwa-mem* **and** *samtools* by selecting `hg38` version as an option under
 >    > *"(Using) reference genome"*).
 >    {: .comment}
 >
@@ -366,9 +393,9 @@ On top of each plot, clicking on the question mark you can open a window with a 
 > 1. Run **bam.iobio.io** {% icon tool %} on a BAM dataset. To start **bam.iobio.io**
 >    click on the link `diplay at bam.iobio.io` in the dataset section. Please note
 >    that the link will be visible only for datasets with the appropriate database 
->    field set to `hg19`
+>    field set to `hg38`
 > 
->    {% include snippets/change_dbkey.md dbkey="hg19" %}
+>    {% include snippets/change_dbkey.md dbkey="hg38" %}
 >
 >    > ### {% icon question %} Questions
 >    >
@@ -412,7 +439,7 @@ aligned sequences from an exome sequencing experiment.
 >
 >    Run **BedToIntervalList** {% icon tool %} to convert BED files.
 >     - *"Load picard dictionary file from?"*: `Local cache`
->       - In *"Use dictionary from the list"*: `Human (Homo sapiens): hg19`
+>       - In *"Use dictionary from the list"*: `Human (Homo sapiens): hg38`
 >     - *"Select coordinate dataset or dataset collection?"*: your BED file to be converted
 >
 > 1. Run **CollectHsMetrics** {% icon tool %} using as input the BAM files and the intervals
@@ -518,7 +545,7 @@ For variant annotations we'll use SnpEff, a software for genomic variant annotat
 >    - *"Input format"*: `VCF`
 >    - *"Output format"*: `VCF (only if input is VCF)`
 >    - *"Genome source"*: `Locally installed snpEff database`
->       - *"Genome"*: `Homo sapiens: hg19` (or a similarly named option)
+>       - *"Genome"*: `Homo sapiens: hg38` (or a similarly named option)
 >
 >    - *"Produce Summary Stats"*: `Yes`
 >
@@ -611,7 +638,7 @@ Phenotype-based prioritization tools are methods working by comparing the phenot
 >
 >    Using knowledge gained on [Genomic databases and variant annotation]({{site.url}}{{site.baseurl}}/lectures/04.db.html) section, try to ***annotate***, ***filter*** and ***prioritize*** an example exome variant data, using two disease terms
 >
-> - Download file Sample1.all_exons.hg19.vcf from the *dataset*, as learned in the [Home]({{site.url}}{{site.baseurl}}/lectures/01.home.html) section
+> - Download a VCF file from the *dataset*, as learned in the [Home]({{site.url}}{{site.baseurl}}/lectures/01.home.html) section
 >
 > - Go to [wANNOVAR](http://wannovar.wglab.org/)
 >

@@ -385,7 +385,7 @@ we suggest to follow the <a href="https://galaxyproject.github.io/training-mater
 <h2 id="use-cases">Use cases</h2>
 
 <p>We selected some case studies for this tutorial.
-We suggest you to start with a simple case (e.g. XXX) for the first run of the tutorial,
+We suggest you to start with a simple case (e.g. Fam A) for the first run of the tutorial,
 and repeat it with the more complex ones.
 At the end of the page you will be able to compare your candidate variants
 with the list of true pathogenic variants.</p>
@@ -394,7 +394,9 @@ with the list of true pathogenic variants.</p>
   <thead>
     <tr>
       <th>Family</th>
-      <th>Number of individuals</th>
+      <th>Proband</th>
+      <th>Father</th>
+      <th>Mother</th>
       <th>Description</th>
       <th>HPO</th>
       <th>Reference</th>
@@ -402,38 +404,48 @@ with the list of true pathogenic variants.</p>
   </thead>
   <tbody>
     <tr>
-      <td>A</td>
-      <td>3</td>
-      <td>…</td>
-      <td>…</td>
+      <td>Fam A</td>
+      <td>FamilyA_P</td>
+      <td>FamilyX_F</td>
+      <td>FamilyX_M</td>
+      <td>Five-year-old female patiant; Short stature; Severe intellectual disability; Seizures; Polymicrogyria; Cerebellar hemisphere hypoplasia; Postnatal microcephaly; Microphthalmia; Optic nerve coloboma; Malformation of the heart and great vessels; Intestinal malrotation; Hydronephrosis; Cryptorchidism</td>
+      <td>HP:0004322, HP:0010864, HP:0001250, HP:0002126, HP:0100307, HP:0005484, HP:0000568, HP:0000588,  HP:0001627, HP:0030962, HP:0002566, HP:0000126, HP:0000028</td>
       <td>hg38</td>
     </tr>
     <tr>
-      <td>B</td>
-      <td>3</td>
-      <td>…</td>
-      <td>…</td>
+      <td>Fam B</td>
+      <td>FamilyB_P</td>
+      <td>FamilyB_F</td>
+      <td>FamilyB_M</td>
+      <td>Four-year-old male patient; Intellectual disability; Malformation of the heart and great vessels; Abnormality of blood and blood-forming tissues; Short Stature; Velopharyngeal insufficiency; Coarse facial features with high, narrow forehead, shallow orbits, depressed nasal bridge, anteverted nares, long philtrum, flat face, and macroglossia</td>
+      <td>HP:0001249, HP:0001627, HP:0030962, HP:0001871, HP:0004322, HP:0000220, HP:0000280, HP:0000341, HP:0000348, HP:0000586, HP:0005280, HP:0000463, HP:0000343, HP:0012368, HP:0000158</td>
       <td>hg38</td>
     </tr>
     <tr>
-      <td>C</td>
-      <td>3</td>
-      <td>…</td>
-      <td>…</td>
+      <td>Fam C</td>
+      <td>FamilyC_P</td>
+      <td>FamilyC_F</td>
+      <td>FamilyC_M</td>
+      <td>Eighteen-year-old female patient; Non-consanguineous Caucasian parents; Unremarkable family history; Normal intellectual development; Born at term by normal delivery; Oligohydramnios; Decreased fetal movements; Distal arthrogryposis; Cutaneous finger syndactyly; Scoliosis; Popliteal pterygium; Recurrent pneumonia; Restrictive ventilatory defect; Skeletal muscle atrophy</td>
+      <td>HP:0001562, HP:0001558, HP:0005684, HP:0010554, HP:0002650, HP:0009756, HP:0006532, HP:0002091, HP:0003202</td>
       <td>hg38</td>
     </tr>
     <tr>
-      <td>D</td>
-      <td>3</td>
-      <td>…</td>
-      <td>…</td>
+      <td>Fam D</td>
+      <td>FamilyD_P</td>
+      <td>FamilyD_F</td>
+      <td>FamilyX_M</td>
+      <td>Ten-year-old male patient; Non-consanguineous Caucasian parents; Unremarkable family history; Severe intellectual disability; Absent speech; Seizure; Ataxia; Stereotypy; Sudden episodic apnea; Postnatal microcephaly; Hypoplasia of the corpus callosum; Strabismus; Myopia; Constipation; Single transverse palmar crease; Narrow forehead; Wide nasal bridge; Short philtrum; Full cheeks; Wide mouth; Thickened helices</td>
+      <td>HP:0010864, HP:0001344, HP:0001250, HP:0001251, HP:0000733, HP:0002882, HP:0005484, HP:0002079, HP:0000486, HP:0000545, HP:0002019, HP:0000954, HP:0000341, HP:0000431, HP:0000322, HP:0000293, HP:0000154, HP:0000391</td>
       <td>hg38</td>
     </tr>
     <tr>
-      <td>E</td>
-      <td>3</td>
-      <td>…</td>
-      <td>…</td>
+      <td>Fam E</td>
+      <td>FamilyE_P</td>
+      <td>FamilyX_F</td>
+      <td>FamilyE_M</td>
+      <td>Thirty-year-old woman. Three consecutive pregnancy terminations due to fetal malformations, Woman phenotype included: High forehead, Hypertelorism, Mandibular prognathia. Fetal malformations observed: Cystic hygroma, Cerebellar agenesis, Hypoplastic nasal bone, Cleft lip , Bilateral hydronephrosis, Renal hypertrophy, Hypoplasia of exte<span class="notranslate">rna</span>l genitalia, Hypertrophic cardiomyopathy, Ventricular septal defect, Omphalocele</td>
+      <td>HP:0000348,  HP:0000316,  HP:0000303,  HP:0000476,  HP:0012642,  HP:0011430,  HP:0410030,  HP:0000126,  HP:0000811,  HP:0001639,  HP:0001629,  HP:0001539</td>
       <td>hg38</td>
     </tr>
   </tbody>
@@ -473,16 +485,61 @@ with the list of true pathogenic variants.</p>
       </blockquote>
     </li>
     <li>
-      <p>Import files from <a href="https://zenodo.org/record/3531578">Zenodo</a> or Shared Data Library:</p>
+      <p>Files are available on the <span class="notranslate">Galaxy</span> server
+through a <em>Shared Data Libraries</em> in 
+<em><a href="https://usegalaxy.eu/library/list#folders/F3d08bb711e4e3b26"><span class="notranslate">Galaxy</span> courses/Sigu</a></em>.
+<strong><em>This is the preferred solution as you will save time and disk space.</em></strong></p>
 
-      <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>https://zenodo.org/record/3531578/files/CNV_case.bam
-https://zenodo.org/record/3531578/files/CNV_control.bam
-https://zenodo.org/record/3531578/files/CNV_TruSeq_Chr2.<span class="notranslate">bed</span>
-https://zenodo.org/record/3531578/files/HighQuality_<span class="notranslate">Reads</span>.fastq.gz
+      <blockquote class="tip">
+
+        <h3 id="tip-tip-importing-data-from-a-data-library"><i class="fa fa-lightbulb-o" aria-hidden="true"></i><span class="visually-hidden">tip</span> Tip: Importing data from a data library</h3>
+
+        <p>As an alte<span class="notranslate">rna</span>tive to uploading the data from a URL or your computer, the files may also have been made available from a <em>shared data library</em>:</p>
+
+        <ul>
+          <li>
+            <p>Go into <strong>Shared data</strong> (top panel) then <strong>Data libraries</strong></p>
+          </li>
+          <li>
+            <p>Find the correct folder (ask your instructor)</p>
+          </li>
+          <li>Select the desired files</li>
+          <li>Click on the <strong>To History</strong> button near the top and select <strong>as Datasets</strong> from the dropdown menu</li>
+          <li>In the pop-up window, select the history you want to import the files to (or create a new one)</li>
+          <li>Click on <strong>Import</strong></li>
+        </ul>
+      </blockquote>
+
+      <p>The same files are available at Zenodo (<a href="https://zenodo.org/record/3531578">1</a>, <a href="https://zenodo.org/record/4197066">2</a>, <a href="https://zenodo.org/record/4264088">3</a>):</p>
+
+      <p><strong>FASTQ <span class="notranslate">reads</span></strong>:</p>
+      <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>https://zenodo.org/record/3531578/files/HighQuality_<span class="notranslate">Reads</span>.fastq.gz
 https://zenodo.org/record/3531578/files/LowQuality_<span class="notranslate">Reads</span>.fastq.gz
-https://zenodo.org/record/3531578/files/Panel_alignment.bam
-https://zenodo.org/record/3531578/files/Panel_target_regions.<span class="notranslate">bed</span>
-https://zenodo.org/record/3531578/files/Sample1.all_exons.hg19.vcf
+</code></pre></div>      </div>
+      <p><strong>Family A</strong>:</p>
+      <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>https://zenodo.org/record/3531578/files/FamilyA_P.bam
+</code></pre></div>      </div>
+      <p><strong>Family B</strong>:</p>
+      <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>https://zenodo.org/record/nnnnnnn/files/FamilyB_P.bam
+https://zenodo.org/record/3531578/files/FamilyB_F.bam
+https://zenodo.org/record/3531578/files/FamilyB_M.bam
+</code></pre></div>      </div>
+      <p><strong>Family C</strong>:</p>
+      <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>https://zenodo.org/record/nnnnnnn/files/FamilyC_P.bam
+https://zenodo.org/record/4264088/files/FamilyC_F.bam
+https://zenodo.org/record/4264088/files/FamilyC_M.bam
+</code></pre></div>      </div>
+      <p><strong>Family D</strong>:</p>
+      <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>https://zenodo.org/record/4197066/files/FamilyD_P.bam
+https://zenodo.org/record/4197066/files/FamilyD_F.bam
+</code></pre></div>      </div>
+      <p><strong>Family E</strong>:</p>
+      <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>https://zenodo.org/record/nnnnnnn/files/FamilyE_P.bam
+https://zenodo.org/record/3531578/files/FamilyE_M.bam
+</code></pre></div>      </div>
+      <p><strong>Files shared across families</strong>:</p>
+      <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>https://zenodo.org/record/4197066/files/FamilyX_M.bam
+https://zenodo.org/record/4264088/files/FamilyX_F.bam
 </code></pre></div>      </div>
       <blockquote class="tip">
 
@@ -507,36 +564,11 @@ https://zenodo.org/record/3531578/files/Sample1.all_exons.hg19.vcf
 
       </blockquote>
 
-      <p>The same files may be available on the <span class="notranslate">Galaxy</span> server
-through a <em>Shared Data Libraries</em> in 
-<em><a href="https://usegalaxy.eu/library/list#folders/F3d08bb711e4e3b26"><span class="notranslate">Galaxy</span> courses/Sigu</a></em>.
-You may prefer to import the data directly from there.</p>
-
-      <blockquote class="tip">
-
-        <h3 id="tip-tip-importing-data-from-a-data-library"><i class="fa fa-lightbulb-o" aria-hidden="true"></i><span class="visually-hidden">tip</span> Tip: Importing data from a data library</h3>
-
-        <p>As an alte<span class="notranslate">rna</span>tive to uploading the data from a URL or your computer, the files may also have been made available from a <em>shared data library</em>:</p>
-
-        <ul>
-          <li>
-            <p>Go into <strong>Shared data</strong> (top panel) then <strong>Data libraries</strong></p>
-          </li>
-          <li>
-            <p>Find the correct folder (ask your instructor)</p>
-          </li>
-          <li>Select the desired files</li>
-          <li>Click on the <strong>To History</strong> button near the top and select <strong>as Datasets</strong> from the dropdown menu</li>
-          <li>In the pop-up window, select the history you want to import the files to (or create a new one)</li>
-          <li>Click on <strong>Import</strong></li>
-        </ul>
-      </blockquote>
-
       <blockquote class="comment">
         <h3 id="comment-note"><i class="fa fa-commenting-o" aria-hidden="true"></i><span class="visually-hidden">comment</span> Note</h3>
-        <p>All the files are based on <code class="language-plaintext highlighter-rouge">hg19</code> reference genome which is
+        <p>All the files are based on <code class="language-plaintext highlighter-rouge">hg38</code> reference genome which is
 available with pre-built indexes for widely used tools such as 
-<em>bwa-mem</em> <strong>and</strong> <em>samtools</em> by selecting <code class="language-plaintext highlighter-rouge">hg19</code> version as an option under
+<em>bwa-mem</em> <strong>and</strong> <em>samtools</em> by selecting <code class="language-plaintext highlighter-rouge">hg38</code> version as an option under
 <em>“(Using) reference genome”</em>).</p>
       </blockquote>
     </li>
@@ -717,7 +749,7 @@ to the <a href="https://training.galaxyproject.org/training-material/topics/sequ
       <p>Run <strong>bam.iobio.io</strong> <i class="fa fa-wrench" aria-hidden="true"></i><span class="visually-hidden">tool</span> on a BAM dataset. To start <strong>bam.iobio.io</strong>
 click on the link <code class="language-plaintext highlighter-rouge">diplay at bam.iobio.io</code> in the dataset section. Please note
 that the link will be visible only for datasets with the appropriate database 
-field set to <code class="language-plaintext highlighter-rouge">hg19</code></p>
+field set to <code class="language-plaintext highlighter-rouge">hg38</code></p>
 
       <blockquote class="tip">
 
@@ -725,7 +757,7 @@ field set to <code class="language-plaintext highlighter-rouge">hg19</code></p>
         <ul>
           <li>Click on the <i class="fa fa-pencil" aria-hidden="true"></i><span class="visually-hidden"><span class="notranslate">galaxy</span>-pencil</span> <strong>pencil icon</strong> for the dataset to edit its attributes</li>
           <li>In the central panel, change the <strong>Database/Build</strong> field</li>
-          <li>Select your desired database key from the dropdown list: <code class="language-plaintext highlighter-rouge">hg19</code></li>
+          <li>Select your desired database key from the dropdown list: <code class="language-plaintext highlighter-rouge">hg38</code></li>
           <li>Click the <strong>Save</strong> button</li>
         </ul>
       </blockquote>
@@ -793,7 +825,7 @@ with the <strong>Multiple datasets</strong> option.</p>
       <ul>
         <li><em>“Load picard dictionary file from?”</em>: <code class="language-plaintext highlighter-rouge">Local cache</code>
           <ul>
-            <li>In <em>“Use dictionary from the list”</em>: <code class="language-plaintext highlighter-rouge">Human (Homo sapiens): hg19</code></li>
+            <li>In <em>“Use dictionary from the list”</em>: <code class="language-plaintext highlighter-rouge">Human (Homo sapiens): hg38</code></li>
           </ul>
         </li>
         <li><em>“Select coordinate dataset or dataset collection?”</em>: your <span class="notranslate">BED</span> file to be converted</li>
@@ -959,7 +991,7 @@ uploaded <strong>VCF</strong> file</li>
         <li><em>“Output format”</em>: <code class="language-plaintext highlighter-rouge">VCF (only if input is VCF)</code></li>
         <li><em>“Genome source”</em>: <code class="language-plaintext highlighter-rouge">Locally installed snpEff database</code>
           <ul>
-            <li><em>“Genome”</em>: <code class="language-plaintext highlighter-rouge">Homo sapiens: hg19</code> (or a similarly named option)</li>
+            <li><em>“Genome”</em>: <code class="language-plaintext highlighter-rouge">Homo sapiens: hg38</code> (or a similarly named option)</li>
           </ul>
         </li>
         <li><em>“Produce Summary Stats”</em>: <code class="language-plaintext highlighter-rouge">Yes</code></li>
@@ -1075,7 +1107,7 @@ returned by genomic sequencing varies from tens of thousands (WES) to millions (
 
   <ul>
     <li>
-      <p>Download file Sample1.all_exons.hg19.vcf from the <em>dataset</em>, as learned in the <a href="http://0.0.0.0:4000/clinical_genomics/lectures/01.home.html">Home</a> section</p>
+      <p>Download a VCF file from the <em>dataset</em>, as learned in the <a href="http://0.0.0.0:4000/clinical_genomics/lectures/01.home.html">Home</a> section</p>
     </li>
     <li>
       <p>Go to <a href="http://wannovar.wglab.org/">wANNOVAR</a></p>
