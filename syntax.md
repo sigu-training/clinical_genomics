@@ -1,7 +1,7 @@
 ---
 layout: tutorial_hands_on
 
-title: Formatting instructions
+title: Computational genomics platform
 
 ---
 
