@@ -12,23 +12,13 @@
 #
 # collection names should be equal to github username, if not, add github: false tag
 ---
-abrusell:
-    name: Alessandro Bruselles
-    orcid: 0000-0002-1556-4998
+tgiangregorio:
+    name: Tania Giangregorio
+    
 
-aciolfi:
+easydorica:
     name: Andrea Ciolfi
-    orcid: 0000-0002-6191-0978
-
-gmauro:
-    name: Gianmauro Cuccuru
-
-m-giuseppe:
-    name: Giuseppe Marangi
-
-puva:
-    name: Paolo Uva
-    orcid: 0000-0002-9524-8492
+    
 
 tommasopippucci:
     name: Tommaso Pippucci

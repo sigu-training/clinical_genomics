@@ -55,13 +55,13 @@
 
         <div class="contributors-line">By: 
 
-<a href="/clinical_genomics/hall-of-fame#abrusell" class="contributor-badge"><img src="https://avatars.githubusercontent.com/abrusell" alt="Alessandro Bruselles">Alessandro Bruselles</a>, <a href="/clinical_genomics/hall-of-fame#aciolfi" class="contributor-badge"><img src="https://avatars.githubusercontent.com/aciolfi" alt="Andrea Ciolfi">Andrea Ciolfi</a>, <a href="/clinical_genomics/hall-of-fame#gmauro" class="contributor-badge"><img src="https://avatars.githubusercontent.com/gmauro" alt="Gianmauro Cuccuru">Gianmauro Cuccuru</a>, <a href="/clinical_genomics/hall-of-fame#m-giuseppe" class="contributor-badge"><img src="https://avatars.githubusercontent.com/m-giuseppe" alt="Giuseppe Marangi">Giuseppe Marangi</a>, <a href="/clinical_genomics/hall-of-fame#puva" class="contributor-badge"><img src="https://avatars.githubusercontent.com/puva" alt="Paolo Uva">Paolo Uva</a>, <a href="/clinical_genomics/hall-of-fame#tommasopippucci" class="contributor-badge"><img src="https://avatars.githubusercontent.com/tommasopippucci" alt="Tommaso Pippucci">Tommaso Pippucci</a>
+<a href="/clinical_genomics/hall-of-fame#abrusell" class="contributor-badge"><img src="https://avatars.githubusercontent.com/abrusell" alt="abrusell">abrusell</a>, <a href="/clinical_genomics/hall-of-fame#aciolfi" class="contributor-badge"><img src="https://avatars.githubusercontent.com/aciolfi" alt="aciolfi">aciolfi</a>, <a href="/clinical_genomics/hall-of-fame#gmauro" class="contributor-badge"><img src="https://avatars.githubusercontent.com/gmauro" alt="gmauro">gmauro</a>, <a href="/clinical_genomics/hall-of-fame#m-giuseppe" class="contributor-badge"><img src="https://avatars.githubusercontent.com/m-giuseppe" alt="m-giuseppe">m-giuseppe</a>, <a href="/clinical_genomics/hall-of-fame#puva" class="contributor-badge"><img src="https://avatars.githubusercontent.com/puva" alt="puva">puva</a>, <a href="/clinical_genomics/hall-of-fame#tommasopippucci" class="contributor-badge"><img src="https://avatars.githubusercontent.com/tommasopippucci" alt="Tommaso Pippucci">Tommaso Pippucci</a>
 
 </div>
 
         <blockquote class="overview">
             <h3>Overview</h3>
-            <strong><i class="fa fa-question-circle" aria-hidden="true"></i><span class="visually-hidden">question</span> Questions</strong>
+            <strong><i class="fa far fa-question-circle" aria-hidden="true"></i><span class="visually-hidden">question</span> Questions</strong>
             <ul>
             
             <li><p>What is the minimal depth of coverage of target regions in a typical clinical genomics setting?</p>
@@ -72,7 +72,7 @@
             
             </ul>
 
-            <strong><i class="fa fa-bullseye" aria-hidden="true"></i><span class="visually-hidden">objectives</span> Objectives</strong>
+            <strong><i class="fa fas fa-bullseye" aria-hidden="true"></i><span class="visually-hidden">objectives</span> Objectives</strong>
             <ul>
             
             <li><p>To calculate sequencing statistics</p>
@@ -95,7 +95,7 @@
             
 
             
-            <p><strong><i class="fa fa-hourglass-end" aria-hidden="true"></i><span class="visually-hidden">time</span> Time estimation:</strong> 2 hours</p>
+            <p><strong><i class="fa fas fa-hourglass-half" aria-hidden="true"></i><span class="visually-hidden">time</span> Time estimation:</strong> 2 hours</p>
             
 
             
@@ -105,7 +105,7 @@
 
             
 
-            <p><strong> <i class="fa fa-calendar" aria-hidden="true"></i><span class="visually-hidden">last_modification</span> Last modification:</strong> Oct 23, 2020 </p>
+            <p><strong> <i class="fa far fa-calendar" aria-hidden="true"></i><span class="visually-hidden">last_modification</span> Last modification:</strong> Oct 23, 2020 </p>
         </blockquote>
 
         <div class="container">
@@ -184,7 +184,7 @@ In particular, we’ll use the European <span class="notranslate">Galaxy</span> 
 
 <blockquote>
   <blockquote class="comment">
-    <h3 id="comment-bed-format-specifications"><i class="fa fa-commenting-o" aria-hidden="true"></i><span class="visually-hidden">comment</span> <span class="notranslate">BED</span> format specifications</h3>
+    <h3 id="comment-bed-format-specifications"><i class="fa far fa-comment-dots" aria-hidden="true"></i><span class="visually-hidden">comment</span> <span class="notranslate">BED</span> format specifications</h3>
     <p><strong><span class="notranslate">BED</span> files</strong> are tab-delimited files with one line for each genomic region.
 The first 3 fields (columns) are required:</p>
     <ol>
@@ -201,7 +201,7 @@ Additional details may be found here: <a href="https://genome.ucsc.edu/FAQ/FAQfo
 </blockquote>
 
 <blockquote class="notranslate hands_on">
-  <h3 id="hands_on-hands-on-compute-per-base-coverage-depth-with-bedtools"><i class="fa fa-pencil" aria-hidden="true"></i><span class="visually-hidden">hands_on</span> Hands-on: Compute per base coverage depth with <span class="notranslate">BED</span>tools</h3>
+  <h3 id="hands_on-hands-on-compute-per-base-coverage-depth-with-bedtools"><i class="fa fas fa-pencil-alt" aria-hidden="true"></i><span class="visually-hidden">hands_on</span> Hands-on: Compute per base coverage depth with <span class="notranslate">BED</span>tools</h3>
   <p>Before starting, you have to upload the files you need for the analysis,
    following standard <span class="notranslate">Galaxy</span> procedure.</p>
 
@@ -259,7 +259,7 @@ it means that the coverage value refers to nucleotide 50150071
 </blockquote>
 
 <blockquote class="notranslate hands_on">
-  <h3 id="hands_on-hands-on-sort-files"><i class="fa fa-pencil" aria-hidden="true"></i><span class="visually-hidden">hands_on</span> Hands-on: Sort files</h3>
+  <h3 id="hands_on-hands-on-sort-files"><i class="fa fas fa-pencil-alt" aria-hidden="true"></i><span class="visually-hidden">hands_on</span> Hands-on: Sort files</h3>
   <p>Since entries in the “coverage_depth.<span class="notranslate">bed</span>” may not be in the desired order, you can sort it by genomic positions.
    For this purpose you may want to use the <code class="language-plaintext highlighter-rouge">Sort</code> tool in the <code class="language-plaintext highlighter-rouge">Text Manipulation</code> section (check out the blue arrow in figure 3).</p>
 
@@ -284,13 +284,13 @@ it means that the coverage value refers to nucleotide 50150071
 </blockquote>
 
 <blockquote class="notranslate hands_on">
-  <h3 id="hands_on-hands-on-remove-duplicate-rows"><i class="fa fa-pencil" aria-hidden="true"></i><span class="visually-hidden">hands_on</span> Hands-on: Remove duplicate rows</h3>
+  <h3 id="hands_on-hands-on-remove-duplicate-rows"><i class="fa fas fa-pencil-alt" aria-hidden="true"></i><span class="visually-hidden">hands_on</span> Hands-on: Remove duplicate rows</h3>
   <p>If your file contains duplicated lines you may want to remove them for further processing.
    For this purpose you can use the <code class="language-plaintext highlighter-rouge">Unique lines assuming sorted input file</code> tool in the <code class="language-plaintext highlighter-rouge">Text Manipulation</code> section.</p>
 </blockquote>
 
 <blockquote class="notranslate hands_on">
-  <h3 id="hands_on-hands-on-some-manipulation-of-the-bed-file"><i class="fa fa-pencil" aria-hidden="true"></i><span class="visually-hidden">hands_on</span> Hands-on: Some manipulation of the <em><span class="notranslate">bed</span></em> file</h3>
+  <h3 id="hands_on-hands-on-some-manipulation-of-the-bed-file"><i class="fa fas fa-pencil-alt" aria-hidden="true"></i><span class="visually-hidden">hands_on</span> Hands-on: Some manipulation of the <em><span class="notranslate">bed</span></em> file</h3>
   <p>You may follow the following steps to manipulate the “sorted_coverage_depth.<span class="notranslate">bed</span>” and to obtain a <em><span class="notranslate">bed</span></em> file listing the exact base position to which each coverage value is referred.
    For instance instead of having “chr2 50149071 50149399 NRXN1 1 2335” in the first row of your file, you will get “chr2 50149071 50149072 NRXN1 2335”.</p>
 
@@ -330,7 +330,7 @@ it means that the coverage value refers to nucleotide 50150071
 </blockquote>
 
 <blockquote class="notranslate hands_on">
-  <h3 id="hands_on-hands-on-select-positions-with-low-coverage-depth"><i class="fa fa-pencil" aria-hidden="true"></i><span class="visually-hidden">hands_on</span> Hands-on: Select positions with low coverage depth</h3>
+  <h3 id="hands_on-hands-on-select-positions-with-low-coverage-depth"><i class="fa fas fa-pencil-alt" aria-hidden="true"></i><span class="visually-hidden">hands_on</span> Hands-on: Select positions with low coverage depth</h3>
   <p>The following procedure can be used to obtain a <em><span class="notranslate">bed</span></em> file listing base positions with a coverage depth lower than a certain threshold (for instance 20x).</p>
 
   <ol>
@@ -350,7 +350,7 @@ it means that the coverage value refers to nucleotide 50150071
 </blockquote>
 
 <blockquote class="notranslate hands_on">
-  <h3 id="hands_on-hands-on-merge-low-coverage-regions"><i class="fa fa-pencil" aria-hidden="true"></i><span class="visually-hidden">hands_on</span> Hands-on: Merge low coverage regions</h3>
+  <h3 id="hands_on-hands-on-merge-low-coverage-regions"><i class="fa fas fa-pencil-alt" aria-hidden="true"></i><span class="visually-hidden">hands_on</span> Hands-on: Merge low coverage regions</h3>
   <p>If you want to merge the positions with low coverage depth in larger genomic intervals to be used for further analyses (i.e.: Sanger sequencing of regions not covered by your NGS experiment), you may want to use the <code class="language-plaintext highlighter-rouge"><span class="notranslate">bed</span>tools MergeBED</code> tool in the <code class="language-plaintext highlighter-rouge">Operate on Genomic Intervals</code> section (see the blue arrow in figure 7).</p>
 
   <ol>
@@ -375,14 +375,14 @@ it means that the coverage value refers to nucleotide 50150071
   <p>The output file will have the following fields (columns): chromosome, starting and ending positions of low coverage regions, the minimum and the maximum coverage depth in each region.</p>
 
   <blockquote class="warning">
-    <h3 id="warning-bed-files-may-have-different-columns"><i class="fa fa-warning" aria-hidden="true"></i><span class="visually-hidden">warning</span> <span class="notranslate">BED</span> files may have different columns</h3>
+    <h3 id="warning-bed-files-may-have-different-columns"><i class="fa fas fa-exclamation-triangle" aria-hidden="true"></i><span class="visually-hidden">warning</span> <span class="notranslate">BED</span> files may have different columns</h3>
     <p>Please be aware that the columns to use for calculations may be different
 compared to the example here considered, depending on the amount of columns
 of your <em><span class="notranslate">bed</span></em> files.</p>
   </blockquote>
 
   <blockquote class="warning">
-    <h3 id="warning-preview-of-bed-files"><i class="fa fa-warning" aria-hidden="true"></i><span class="visually-hidden">warning</span> Preview of <span class="notranslate">BED</span> files</h3>
+    <h3 id="warning-preview-of-bed-files"><i class="fa fas fa-exclamation-triangle" aria-hidden="true"></i><span class="visually-hidden">warning</span> Preview of <span class="notranslate">BED</span> files</h3>
     <p>Please be aware that the <span class="notranslate">Galaxy</span> preview of your file shows a header row that
 does not properly define columns in your files
 (it is just a standard header for the UCSC <span class="notranslate">bed</span> format).</p>
@@ -428,7 +428,7 @@ It runs on a single sample at time:</p>
     <p><code class="language-plaintext highlighter-rouge">gatk CreateSomaticPanelOfNormals -R HSapiensReference_genome_hg19.fasta -V gendb://PoN_db -O panel_of_normals.vcf</code></p>
 
     <blockquote class="comment">
-      <h3 id="comment-note"><i class="fa fa-commenting-o" aria-hidden="true"></i><span class="visually-hidden">comment</span> Note</h3>
+      <h3 id="comment-note"><i class="fa far fa-comment-dots" aria-hidden="true"></i><span class="visually-hidden">comment</span> Note</h3>
       <p>The –genomicsdb-workspace-path must point to a non-existent or empty directory.</p>
     </blockquote>
   </li>
@@ -594,7 +594,7 @@ Three major bias sources are known to affect <em>EMRC</em> dramatically in targe
 <hr />
 
 <blockquote class="notranslate hands_on">
-  <h3 id="hands_on-hands-on-cnv-calling-with-exomedepth"><i class="fa fa-pencil" aria-hidden="true"></i><span class="visually-hidden">hands_on</span> Hands-on: CNV calling with ExomeDepth</h3>
+  <h3 id="hands_on-hands-on-cnv-calling-with-exomedepth"><i class="fa fas fa-pencil-alt" aria-hidden="true"></i><span class="visually-hidden">hands_on</span> Hands-on: CNV calling with ExomeDepth</h3>
   <p>ExomeDepth uses pairs of case and control exomes to identify copy number imbalances in case(s) compared to control(s).
    Here we provide a small data set including a pair of case/control BAM files and an exome target <span class="notranslate">BED</span> file restricted to a specific polymorphic region on chromosome 2q.</p>
 
@@ -674,7 +674,7 @@ Three major bias sources are known to affect <em>EMRC</em> dramatically in targe
 <strong>Figure 3</strong>. <strong><em>BAF</em> data distribution</strong> Panels a, b and c show the distributions of BAF values against the genotype calls generated by the HapMap consortium on SNP-array data ( a ), the genotype calls made by SAMtools ( b ) and the genotype calls made by GATK ( c ). For each genotype caller, the distribution of BAF values is reported for homozygous reference calls (HMr), heterozygous calls (HT) and homozygous alte<span class="notranslate">rna</span>tive calls (HMa). R is the Pearson correlation coefficient. Panels d–g show the distribution of BAF values in all the regions of the genome ( d ), in heterozygous regions ( e ), in homozygous regions ( f ) and in the X chromosome of male individuals ( g ). For each panel, the main plot reports the zoomed histogram, the left subplot shows the BAF values against genomic positions, whereas the right subplot shows the entire histogram of BAF values. (from <a href="https://academic.oup.com/bioinformatics/article/30/20/2852/2422169">Magi et al., 2014</a>)</p>
 
 <blockquote class="comment">
-  <h3 id="trophy-congratulations"><i class="fa fa-trophy" aria-hidden="true"></i><span class="visually-hidden">trophy</span> <strong>Congratulations!</strong></h3>
+  <h3 id="trophy-congratulations"><i class="fa fas fa-trophy" aria-hidden="true"></i><span class="visually-hidden">trophy</span> <strong>Congratulations!</strong></h3>
   <p>You successfully completed the advanced tutorial.</p>
 </blockquote>
 
@@ -695,12 +695,12 @@ Three major bias sources are known to affect <em>EMRC</em> dramatically in targe
 
                     
 
-                    
+                  
 
                     <h1>Citing this Tutorial</h1>
                     <p>
                         <ol>
-                            <li id="citation-text">Alessandro Bruselles, Andrea Ciolfi, Gianmauro Cuccuru, Giuseppe Marangi, Paolo Uva, Tommaso Pippucci, 2020 <b>Advanced data analysis of genomic data (Galaxy Training Materials)</b>. <a href="/clinical_genomics/advanced.html">/clinical_genomics/advanced.html</a> Online; accessed TODAY
+                            <li id="citation-text">abrusell, aciolfi, gmauro, m-giuseppe, puva, Tommaso Pippucci, 2020 <b>Advanced data analysis of genomic data (Galaxy Training Materials)</b>. <a href="/clinical_genomics/advanced.html">/clinical_genomics/advanced.html</a> Online; accessed TODAY
                             </li>
                             <li>
                             Batut et al., 2018 <b>Community-Driven Data Analysis Training for Biology</b> Cell Systems <a href="https://doi.org/10.1016%2Fj.cels.2018.05.012">10.1016/j.cels.2018.05.012</a>
@@ -715,7 +715,7 @@ Three major bias sources are known to affect <em>EMRC</em> dramatically in targe
 
                     <div class="highlighter-rouge"><div class="highlight"><pre class="highlight">
 <code id="citation-code">@misc{-,
-    author = "Alessandro Bruselles and Andrea Ciolfi and Gianmauro Cuccuru and Giuseppe Marangi and Paolo Uva and Tommaso Pippucci",
+    author = "abrusell and aciolfi and gmauro and m-giuseppe and puva and Tommaso Pippucci",
     title = "Advanced data analysis of genomic data (Galaxy Training Materials)",
     year = "2020",
     month = "10",
@@ -752,7 +752,7 @@ document.getElementById("citation-text").innerHTML = document.getElementById("ci
             </div>
         </div>
 
-        <!--h3><i class="fa fa-thumbs-up" aria-hidden="true"></i><span class="visually-hidden">congratulations</span> Congratulations on successfully completing this tutorial!</h3-->
+        <!--h3><i class="fa far fa-thumbs-up" aria-hidden="true"></i><span class="visually-hidden">congratulations</span> Congratulations on successfully completing this tutorial!</h3-->
 
         
 
@@ -762,7 +762,7 @@ document.getElementById("citation-text").innerHTML = document.getElementById("ci
         <br>
 
         <blockquote class="feedback">
-            <h3><i class="fa fa-comments-o" aria-hidden="true"></i><span class="visually-hidden">feedback</span> Give us feedback on this content!</h3>
+            <h3><i class="fa far fa-comments" aria-hidden="true"></i><span class="visually-hidden">feedback</span> Give us feedback on this content!</h3>
             <p>To give us feedback about these materials, or to get in touch with us, post a message in
                the forum <a href="https://groups.google.com/d/forum/sigu-training">https://groups.google.com/d/forum/sigu-training</a>.</p>
         </blockquote>
@@ -777,7 +777,7 @@ document.getElementById("citation-text").innerHTML = document.getElementById("ci
         </p>
         <p>
             Found a typo? Something is wrong in this tutorial? Edit it on
-            <a href="https://github.com/sigu-training/clinical_genomics/blob/master/index.md">GitHub</a>.
+            <a href="/blob/master/index.md">GitHub</a>.
         </p>
     </div>
 </footer>
